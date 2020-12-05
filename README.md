@@ -10,8 +10,6 @@
 
 ## Usage
 
-`export LIBUIDIR=`
-
 ## Development
 
 * Keep it simple
