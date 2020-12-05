@@ -8,6 +8,7 @@ class LibuiTest < Minitest::Test
   end
 
   def test_it_does_something_useful
-    assert false
+    pt = Libui::FFI::InitOptions.malloc
+    Libui::FFI.uiInit(pt)
   end
 end

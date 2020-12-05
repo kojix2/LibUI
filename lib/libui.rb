@@ -17,7 +17,7 @@ module Libui
                    File.expand_path('../vendor/libui.dylib', __dir__)
                  else # TODO: Mac
                    # File.expand_path("libui.so", ENV['LIBUIDIR'])
-                   File.expand_path('../vendor/libui.dll', __dir__)
+                   File.expand_path('../vendor/libui.so', __dir__)
                  end
 
   autoload :FFI, 'libui/ffi'
