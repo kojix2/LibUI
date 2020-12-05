@@ -9,6 +9,6 @@ class LibuiTest < Minitest::Test
 
   def test_it_does_something_useful
     pt = Libui::FFI::InitOptions.malloc
-    Libui::FFI.uiInit(pt)
+    assert_kind_of Fiddle::Pointer, Libui::FFI.uiInit(pt)
   end
 end
