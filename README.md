@@ -5,10 +5,12 @@
 ## Installation
 
 ```
-gem install libui
+# gem install libui
 ```
 
 ## Usage
+
+`export LIBUIDIR=`
 
 ## Development
 
