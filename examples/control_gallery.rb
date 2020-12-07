@@ -1,24 +1,25 @@
 require "libui"
+UI = LibUI
 
-options =  LibUI::FFI::InitOptions.malloc
-init    =  LibUI::FFI.uiInit(options)
+options =  UI::FFI::InitOptions.malloc
+init    =  UI::FFI.uiInit(options)
 
 unless init.size.zero?
   warn 'error'
-  warn LibUI::FFI.uiFreeInitError(init)
+  warn UI::FFI.uiFreeInitError(init)
 end
 
 should_quit = Fiddle::Closure::BlockCaller.new(0, []) do
   puts 'Bye Bye'
-  LibUI::FFI.uiControlDestroy(main_window)
-  LibUI::FFI.uiQuit
+  UI::FFI.uiControlDestroy(MAIN_WINDOW)
+  UI::FFI.uiQuit
   0
 end
 
 checkbox_toggle = Fiddle::Closure::BlockCaller.new(0, []) do
-  checked = LibUI::FFI.uiCheckboxChecked(ptr) == 1
-  LibUI::FFI.uiWindowSetTitle(MAIN_WINDOW, "Checkbox is #{checked}")
-  LibUI::FFI.uiCheckboxSetText(ptr, "I am the checkbox (#{checked})")
+  checked = UI::FFI.uiCheckboxChecked(ptr) == 1
+  UI::FFI.uiWindowSetTitle(MAIN_WINDOW, "Checkbox is #{checked}")
+  UI::FFI.uiCheckboxSetText(ptr, "I am the checkbox (#{checked})")
   0
 end
 
@@ -34,144 +35,144 @@ end
 
 # Create 'File' menu with a few items and callbacks
 # when the items are clicked
-menu = LibUI::FFI.uiNewMenu("File")
-open_menu_item = LibUI::FFI.uiMenuAppendItem(menu, "Open")
-LibUI::FFI.uiMenuItemOnClicked(open_menu_item, open_menu_item_clicked, nil)
-save_menu_item = LibUI::FFI.uiMenuAppendItem(menu, "Save")
-LibUI::FFI.uiMenuItemOnClicked(save_menu_item, save_menu_item_clicked, nil)
-LibUI::FFI.uiMenuAppendQuitItem(menu)
-LibUI::FFI.uiOnShouldQuit(should_quit, nil)
+menu = UI::FFI.uiNewMenu("File")
+open_menu_item = UI::FFI.uiMenuAppendItem(menu, "Open")
+UI::FFI.uiMenuItemOnClicked(open_menu_item, open_menu_item_clicked, nil)
+save_menu_item = UI::FFI.uiMenuAppendItem(menu, "Save")
+UI::FFI.uiMenuItemOnClicked(save_menu_item, save_menu_item_clicked, nil)
+UI::FFI.uiMenuAppendQuitItem(menu)
+UI::FFI.uiOnShouldQuit(should_quit, nil)
 
 # Create 'Edit' menu
-edit_menu = LibUI::FFI.uiNewMenu("Edit")
-LibUI::FFI.uiMenuAppendCheckItem(edit_menu, "Checkable Item")
-LibUI::FFI.uiMenuAppendSeparator(edit_menu)
-disabled_item = LibUI::FFI.uiMenuAppendItem(edit_menu, "Disabled Item");
-LibUI::FFI.uiMenuItemDisable(disabled_item);
+edit_menu = UI::FFI.uiNewMenu("Edit")
+UI::FFI.uiMenuAppendCheckItem(edit_menu, "Checkable Item")
+UI::FFI.uiMenuAppendSeparator(edit_menu)
+disabled_item = UI::FFI.uiMenuAppendItem(edit_menu, "Disabled Item");
+UI::FFI.uiMenuItemDisable(disabled_item);
 
-preferences = LibUI::FFI.uiMenuAppendPreferencesItem(menu)
+preferences = UI::FFI.uiMenuAppendPreferencesItem(menu)
 
-help_menu = LibUI::FFI.uiNewMenu("Help")
-LibUI::FFI.uiMenuAppendItem(help_menu, "Help")
-LibUI::FFI.uiMenuAppendAboutItem(help_menu)
+help_menu = UI::FFI.uiNewMenu("Help")
+UI::FFI.uiMenuAppendItem(help_menu, "Help")
+UI::FFI.uiMenuAppendAboutItem(help_menu)
 
 
-vbox = LibUI::FFI.uiNewVerticalBox
-hbox = LibUI::FFI.uiNewHorizontalBox
-LibUI::FFI.uiBoxSetPadded(vbox, 1)
-LibUI::FFI.uiBoxSetPadded(hbox, 1)
+vbox = UI::FFI.uiNewVerticalBox
+hbox = UI::FFI.uiNewHorizontalBox
+UI::FFI.uiBoxSetPadded(vbox, 1)
+UI::FFI.uiBoxSetPadded(hbox, 1)
 
-LibUI::FFI.uiBoxAppend(vbox, hbox , 1)
+UI::FFI.uiBoxAppend(vbox, hbox , 1)
 
-group = LibUI::FFI.uiNewGroup("Basic Controls")
-LibUI::FFI.uiGroupSetMargined(group, 1)
-LibUI::FFI.uiBoxAppend(hbox, group, 0)
+group = UI::FFI.uiNewGroup("Basic Controls")
+UI::FFI.uiGroupSetMargined(group, 1)
+UI::FFI.uiBoxAppend(hbox, group, 0)
 
-inner = LibUI::FFI.uiNewVerticalBox
-LibUI::FFI.uiBoxSetPadded(inner, 1)
-LibUI::FFI.uiGroupSetChild(group, inner)
+inner = UI::FFI.uiNewVerticalBox
+UI::FFI.uiBoxSetPadded(inner, 1)
+UI::FFI.uiGroupSetChild(group, inner)
 
-button = LibUI::FFI.uiNewButton("Button")
+button = UI::FFI.uiNewButton("Button")
 button_clicked_callback = Fiddle::Closure::BlockCaller.new(0, []) do
-  LibUI::FFI.uiMsgBox(MAIN_WINDOW, "Information", "You clicked the button")
+  UI::FFI.uiMsgBox(MAIN_WINDOW, "Information", "You clicked the button")
   0
 end
 
-LibUI::FFI.uiButtonOnClicked(button, button_clicked_callback, nil)
-LibUI::FFI.uiBoxAppend(inner, button, 0)
-LibUI::FFI.uiBoxAppend(inner, LibUI::FFI.uiNewCheckbox("Checkbox"), 0)
-LibUI::FFI.uiBoxAppend(inner, LibUI::FFI.uiNewLabel("Label"), 0)
-LibUI::FFI.uiBoxAppend(inner, LibUI::FFI.uiNewHorizontalSeparator, 0)
-LibUI::FFI.uiBoxAppend(inner, LibUI::FFI.uiNewDatePicker, 0)
-LibUI::FFI.uiBoxAppend(inner, LibUI::FFI.uiNewTimePicker, 0)
-LibUI::FFI.uiBoxAppend(inner, LibUI::FFI.uiNewDateTimePicker, 0)
-LibUI::FFI.uiBoxAppend(inner, LibUI::FFI.uiNewFontButton, 0)
-LibUI::FFI.uiBoxAppend(inner, LibUI::FFI.uiNewColorButton, 0)
+UI::FFI.uiButtonOnClicked(button, button_clicked_callback, nil)
+UI::FFI.uiBoxAppend(inner, button, 0)
+UI::FFI.uiBoxAppend(inner, UI::FFI.uiNewCheckbox("Checkbox"), 0)
+UI::FFI.uiBoxAppend(inner, UI::FFI.uiNewLabel("Label"), 0)
+UI::FFI.uiBoxAppend(inner, UI::FFI.uiNewHorizontalSeparator, 0)
+UI::FFI.uiBoxAppend(inner, UI::FFI.uiNewDatePicker, 0)
+UI::FFI.uiBoxAppend(inner, UI::FFI.uiNewTimePicker, 0)
+UI::FFI.uiBoxAppend(inner, UI::FFI.uiNewDateTimePicker, 0)
+UI::FFI.uiBoxAppend(inner, UI::FFI.uiNewFontButton, 0)
+UI::FFI.uiBoxAppend(inner, UI::FFI.uiNewColorButton, 0)
 
-inner2 = LibUI::FFI.uiNewVerticalBox
-LibUI::FFI.uiBoxSetPadded(inner2, 1)
-LibUI::FFI.uiBoxAppend(hbox, inner2, 1)
+inner2 = UI::FFI.uiNewVerticalBox
+UI::FFI.uiBoxSetPadded(inner2, 1)
+UI::FFI.uiBoxAppend(hbox, inner2, 1)
 
-group = LibUI::FFI.uiNewGroup("Numbers")
-LibUI::FFI.uiGroupSetMargined(group, 1)
-LibUI::FFI.uiBoxAppend(inner2, group, 0)
+group = UI::FFI.uiNewGroup("Numbers")
+UI::FFI.uiGroupSetMargined(group, 1)
+UI::FFI.uiBoxAppend(inner2, group, 0)
 
-inner = LibUI::FFI.uiNewVerticalBox
-LibUI::FFI.uiBoxSetPadded(inner, 1)
-LibUI::FFI.uiGroupSetChild(group, inner)
+inner = UI::FFI.uiNewVerticalBox
+UI::FFI.uiBoxSetPadded(inner, 1)
+UI::FFI.uiGroupSetChild(group, inner)
 
-spinbox = LibUI::FFI.uiNewSpinbox(0, 100)
+spinbox = UI::FFI.uiNewSpinbox(0, 100)
 spinbox_changed_callback = Fiddle::Closure::BlockCaller.new(0, [1,1]) do |ptr|
-  puts "New Spinbox value: #{LibUI::FFI.uiSpinboxValue(ptr)}"
+  puts "New Spinbox value: #{UI::FFI.uiSpinboxValue(ptr)}"
   0
 end
-LibUI::FFI.uiSpinboxSetValue(spinbox,42)
-LibUI::FFI.uiSpinboxOnChanged(spinbox, spinbox_changed_callback, nil)
-LibUI::FFI.uiBoxAppend(inner, spinbox, 0);
+UI::FFI.uiSpinboxSetValue(spinbox,42)
+UI::FFI.uiSpinboxOnChanged(spinbox, spinbox_changed_callback, nil)
+UI::FFI.uiBoxAppend(inner, spinbox, 0);
 
-slider = LibUI::FFI.uiNewSlider(0, 100)
+slider = UI::FFI.uiNewSlider(0, 100)
 slider_changed_callback = Fiddle::Closure::BlockCaller.new(0, [1,1]) do |ptr|
-  puts "New Slider value: #{LibUI::FFI.uiSliderValue(ptr)}"
+  puts "New Slider value: #{UI::FFI.uiSliderValue(ptr)}"
   0
 end
-LibUI::FFI.uiSliderOnChanged(slider, slider_changed_callback, nil)
-LibUI::FFI.uiBoxAppend(inner, slider, 0)
+UI::FFI.uiSliderOnChanged(slider, slider_changed_callback, nil)
+UI::FFI.uiBoxAppend(inner, slider, 0)
 
-progressbar = LibUI::FFI.uiNewProgressBar
-LibUI::FFI.uiBoxAppend(inner, progressbar, 0)
+progressbar = UI::FFI.uiNewProgressBar
+UI::FFI.uiBoxAppend(inner, progressbar, 0)
 
-group = LibUI::FFI.uiNewGroup("Lists")
-LibUI::FFI.uiGroupSetMargined(group, 1)
-LibUI::FFI.uiBoxAppend(inner2, group, 0)
+group = UI::FFI.uiNewGroup("Lists")
+UI::FFI.uiGroupSetMargined(group, 1)
+UI::FFI.uiBoxAppend(inner2, group, 0)
 
-inner = LibUI::FFI.uiNewVerticalBox
-LibUI::FFI.uiBoxSetPadded(inner, 1)
-LibUI::FFI.uiGroupSetChild(group, inner)
+inner = UI::FFI.uiNewVerticalBox
+UI::FFI.uiBoxSetPadded(inner, 1)
+UI::FFI.uiGroupSetChild(group, inner)
 
 combobox_selected_callback = Fiddle::Closure::BlockCaller.new(0, [1, 1]) do |ptr|
-  puts "New combobox selection: #{LibUI::FFI.uiComboboxSelected(ptr)}"
+  puts "New combobox selection: #{UI::FFI.uiComboboxSelected(ptr)}"
 end
-cbox = LibUI::FFI.uiNewCombobox
-LibUI::FFI.uiComboboxAppend(cbox, "Combobox Item 1")
-LibUI::FFI.uiComboboxAppend(cbox, "Combobox Item 2")
-LibUI::FFI.uiComboboxAppend(cbox, "Combobox Item 3")
-LibUI::FFI.uiBoxAppend(inner, cbox, 0)
-LibUI::FFI.uiComboboxOnSelected(cbox, combobox_selected_callback, nil)
+cbox = UI::FFI.uiNewCombobox
+UI::FFI.uiComboboxAppend(cbox, "Combobox Item 1")
+UI::FFI.uiComboboxAppend(cbox, "Combobox Item 2")
+UI::FFI.uiComboboxAppend(cbox, "Combobox Item 3")
+UI::FFI.uiBoxAppend(inner, cbox, 0)
+UI::FFI.uiComboboxOnSelected(cbox, combobox_selected_callback, nil)
 
-ebox = LibUI::FFI.uiNewEditableCombobox
-LibUI::FFI.uiEditableComboboxAppend(ebox, "Editable Item 1")
-LibUI::FFI.uiEditableComboboxAppend(ebox, "Editable Item 2")
-LibUI::FFI.uiEditableComboboxAppend(ebox, "Editable Item 3")
-LibUI::FFI.uiBoxAppend(inner, ebox, 0)
+ebox = UI::FFI.uiNewEditableCombobox
+UI::FFI.uiEditableComboboxAppend(ebox, "Editable Item 1")
+UI::FFI.uiEditableComboboxAppend(ebox, "Editable Item 2")
+UI::FFI.uiEditableComboboxAppend(ebox, "Editable Item 3")
+UI::FFI.uiBoxAppend(inner, ebox, 0)
 
-rb = LibUI::FFI.uiNewRadioButtons
-LibUI::FFI.uiRadioButtonsAppend(rb, "Radio Button 1")
-LibUI::FFI.uiRadioButtonsAppend(rb, "Radio Button 2")
-LibUI::FFI.uiRadioButtonsAppend(rb, "Radio Button 3")
-LibUI::FFI.uiBoxAppend(inner, rb, 1)
+rb = UI::FFI.uiNewRadioButtons
+UI::FFI.uiRadioButtonsAppend(rb, "Radio Button 1")
+UI::FFI.uiRadioButtonsAppend(rb, "Radio Button 2")
+UI::FFI.uiRadioButtonsAppend(rb, "Radio Button 3")
+UI::FFI.uiBoxAppend(inner, rb, 1)
 
-tab = LibUI::FFI.uiNewTab
-hbox1 = LibUI::FFI.uiNewHorizontalBox 
-LibUI::FFI.uiTabAppend(tab, "Page 1", hbox1)
-LibUI::FFI.uiTabAppend(tab, "Page 2", LibUI::FFI.uiNewHorizontalBox)
-LibUI::FFI.uiTabAppend(tab, "Page 3", LibUI::FFI.uiNewHorizontalBox)
-LibUI::FFI.uiBoxAppend(inner2, tab, 1)
+tab = UI::FFI.uiNewTab
+hbox1 = UI::FFI.uiNewHorizontalBox 
+UI::FFI.uiTabAppend(tab, "Page 1", hbox1)
+UI::FFI.uiTabAppend(tab, "Page 2", UI::FFI.uiNewHorizontalBox)
+UI::FFI.uiTabAppend(tab, "Page 3", UI::FFI.uiNewHorizontalBox)
+UI::FFI.uiBoxAppend(inner2, tab, 1)
 
 text_changed_callback = Fiddle::Closure::BlockCaller.new(0, [1, 1]) do |ptr|
-  puts "Current textbox data: '#{LibUI::FFI.uiEntryText(ptr)}'"
+  puts "Current textbox data: '#{UI::FFI.uiEntryText(ptr)}'"
 end
 
-text_entry = LibUI::FFI.uiNewEntry
-LibUI::FFI.uiEntrySetText text_entry, "Please enter your feeli/ngs"
-LibUI::FFI.uiEntryOnChanged(text_entry, text_changed_callback, nil)
-LibUI::FFI.uiBoxAppend(hbox1, text_entry, 1)
+text_entry = UI::FFI.uiNewEntry
+UI::FFI.uiEntrySetText text_entry, "Please enter your feeli/ngs"
+UI::FFI.uiEntryOnChanged(text_entry, text_changed_callback, nil)
+UI::FFI.uiBoxAppend(hbox1, text_entry, 1)
 
-MAIN_WINDOW = LibUI::FFI.uiNewWindow("hello world", 600, 600, 1)
-LibUI::FFI.uiWindowSetMargined(MAIN_WINDOW, 1)
-LibUI::FFI.uiWindowSetChild(MAIN_WINDOW, vbox)
+MAIN_WINDOW = UI::FFI.uiNewWindow("hello world", 600, 600, 1)
+UI::FFI.uiWindowSetMargined(MAIN_WINDOW, 1)
+UI::FFI.uiWindowSetChild(MAIN_WINDOW, vbox)
 
-LibUI::FFI.uiWindowOnClosing(MAIN_WINDOW,should_quit, nil)
-LibUI::FFI.uiControlShow(MAIN_WINDOW)
+UI::FFI.uiWindowOnClosing(MAIN_WINDOW,should_quit, nil)
+UI::FFI.uiControlShow(MAIN_WINDOW)
 
-LibUI::FFI.uiMain
-LibUI::FFI.uiQuit
+UI::FFI.uiMain
+UI::FFI.uiQuit
