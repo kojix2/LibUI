@@ -2,12 +2,12 @@
 
 require 'fiddle/import'
 
-module Libui
+module LibUI
   module FFI
     extend Fiddle::Importer
 
     begin
-      dlload Libui.ffi_lib
+      dlload LibUI.ffi_lib
     rescue LoadError
       raise LoadError, 'Could not find libui'
     end

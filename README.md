@@ -1,6 +1,6 @@
-# Libui
+# libui
 
-[Libui](https://github.com/andlabs/libui) - a portable GUI library -for Ruby
+[libui](https://github.com/andlabs/libui) - a portable GUI library -for Ruby
 
 ## Installation
 

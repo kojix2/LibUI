@@ -4,7 +4,7 @@ require_relative 'lib/libui/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'libui'
-  spec.version       = Libui::VERSION
+  spec.version       = LibUI::VERSION
   spec.summary       = 'Ruby bindings to libui'
   spec.homepage      = 'https://github.com/kojix2/libui'
   spec.license       = 'MIT'

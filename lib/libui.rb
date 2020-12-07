@@ -2,7 +2,7 @@
 
 require_relative 'libui/version'
 
-module Libui
+module LibUI
   class Error < StandardError; end
 
   class << self

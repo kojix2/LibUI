@@ -2,13 +2,13 @@
 
 require 'test_helper'
 
-class LibuiTest < Minitest::Test
+class LibUITest < Minitest::Test
   def test_that_it_has_a_version_number
-    refute_nil ::Libui::VERSION
+    refute_nil ::LibUI::VERSION
   end
 
   def test_it_does_something_useful
-    pt = Libui::FFI::InitOptions.malloc
-    assert_kind_of Fiddle::Pointer, Libui::FFI.uiInit(pt)
+    pt = LibUI::FFI::InitOptions.malloc
+    assert_kind_of Fiddle::Pointer, LibUI::FFI.uiInit(pt)
   end
 end
