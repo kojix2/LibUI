@@ -214,5 +214,29 @@ module LibUI
     extern 'char *uiSaveFile(uiWindow *parent)'
     extern 'void uiMsgBox(uiWindow *parent, const char *title, const char *description)'
     extern 'void uiMsgBoxError(uiWindow *parent, const char *title, const char *description)'
+
+    # uiArea
+    extern 'void uiAreaSetSize(uiArea *a, int width, int height)'
+    extern 'void uiAreaQueueRedrawAll(uiArea *a)'
+    extern 'void uiAreaScrollTo(uiArea *a, double x, double y, double width, double height)'
+    extern 'void uiAreaBeginUserWindowMove(uiArea *a)'
+    typealias 'uiWindowResizeEdge', 'char' # FIXME: uint8
+    extern 'void uiAreaBeginUserWindowResize(uiArea *a, uiWindowResizeEdge edge)'
+    extern 'uiArea *uiNewArea(uiAreaHandler *ah)'
+    extern 'uiArea *uiNewScrollingArea(uiAreaHandler *ah, int width, int height)'
+
+    #
+
+    # uiFontButton
+    extern 'void uiFontButtonFont(uiFontButton *b, uiFontDescriptor *desc)'
+    extern 'void uiFontButtonOnChanged(uiFontButton *b, void (*f)(uiFontButton *, void *), void *data)'
+    extern 'uiFontButton *uiNewFontButton(void)'
+    extern 'void uiFreeFontButtonFont(uiFontDescriptor *desc)'
+
+    # uiColorButton
+    extern 'void uiColorButtonColor(uiColorButton *b, double *r, double *g, double *bl, double *a)'
+    extern 'void uiColorButtonSetColor(uiColorButton *b, double r, double g, double bl, double a)'
+    extern 'void uiColorButtonOnChanged(uiColorButton *b, void (*f)(uiColorButton *, void *), void *data)'
+    extern 'uiColorButton *uiNewColorButton(void)'
   end
 end
