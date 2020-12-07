@@ -16,7 +16,14 @@
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/libui.
+Bug reports and pull requests are welcome on GitHub at https://github.com/kojix2/libui.
+
+## Acknowledgement
+
+libui-ruby ispired this project.
+* https://github.com/jamescook/libui-ruby
+
+While libui-ruby uses FFI, this gem uses Fiddle.
 
 ## License
 
