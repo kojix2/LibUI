@@ -1,11 +1,12 @@
 # libui
+[![Gem Version](https://badge.fury.io/rb/libui.svg)](https://badge.fury.io/rb/libui)
 
 [libui](https://github.com/andlabs/libui) - a portable GUI library -for Ruby
 
 ## Installation
 
 ```
-# gem install libui
+gem install libui --pre
 ```
 
 ## Usage
