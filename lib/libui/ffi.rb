@@ -175,5 +175,44 @@ module LibUI
     extern 'void uiRadioButtonsSetSelected(uiRadioButtons *r, int n)'
     extern 'void uiRadioButtonsOnSelected(uiRadioButtons *r, void (*f)(uiRadioButtons *, void *), void *data)'
     extern 'uiRadioButtons *uiNewRadioButtons(void)'
+    
+    # uiDataTimePicker
+    extern 'void uiDateTimePickerTime(uiDateTimePicker *d, struct tm *time)'
+    extern 'void uiDateTimePickerSetTime(uiDateTimePicker *d, const struct tm *time)'
+    extern 'void uiDateTimePickerOnChanged(uiDateTimePicker *d, void (*f)(uiDateTimePicker *, void *), void *data)'
+    extern 'uiDateTimePicker *uiNewDateTimePicker(void)'
+    extern 'uiDateTimePicker *uiNewDatePicker(void)'
+    extern 'uiDateTimePicker *uiNewTimePicker(void)'
+    
+    # uiMultilineEntry
+    extern 'char *uiMultilineEntryText(uiMultilineEntry *e)'
+    extern 'void uiMultilineEntrySetText(uiMultilineEntry *e, const char *text)'
+    extern 'void uiMultilineEntryAppend(uiMultilineEntry *e, const char *text)'
+    extern 'void uiMultilineEntryOnChanged(uiMultilineEntry *e, void (*f)(uiMultilineEntry *e, void *data), void *data)'
+    extern 'int uiMultilineEntryReadOnly(uiMultilineEntry *e)'
+    extern 'void uiMultilineEntrySetReadOnly(uiMultilineEntry *e, int readonly)'
+    extern 'uiMultilineEntry *uiNewMultilineEntry(void)'
+    extern 'uiMultilineEntry *uiNewNonWrappingMultilineEntry(void)'
+    
+    # uiMenuItem
+    extern 'void uiMenuItemEnable(uiMenuItem *m)'
+    extern 'void uiMenuItemDisable(uiMenuItem *m)'
+    extern 'void uiMenuItemOnClicked(uiMenuItem *m, void (*f)(uiMenuItem *sender, uiWindow *window, void *data), void *data)'
+    extern 'int uiMenuItemChecked(uiMenuItem *m)'
+    extern 'void uiMenuItemSetChecked(uiMenuItem *m, int checked)'
+
+    # uiMenu
+    extern 'uiMenuItem *uiMenuAppendItem(uiMenu *m, const char *name)'
+    extern 'uiMenuItem *uiMenuAppendCheckItem(uiMenu *m, const char *name)'
+    extern 'uiMenuItem *uiMenuAppendQuitItem(uiMenu *m)'
+    extern 'uiMenuItem *uiMenuAppendPreferencesItem(uiMenu *m)'
+    extern 'uiMenuItem *uiMenuAppendAboutItem(uiMenu *m)'
+    extern 'void uiMenuAppendSeparator(uiMenu *m)'
+    extern 'uiMenu *uiNewMenu(const char *name)'
+
+    extern 'char *uiOpenFile(uiWindow *parent)'
+    extern 'char *uiSaveFile(uiWindow *parent)'
+    extern 'void uiMsgBox(uiWindow *parent, const char *title, const char *description)'
+    extern 'void uiMsgBoxError(uiWindow *parent, const char *title, const char *description)'
   end
 end
