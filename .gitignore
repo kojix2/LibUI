@@ -7,4 +7,5 @@
 /spec/reports/
 /tmp/
 *.lock
+/vendor/bundle
 /vendor/*libui*
