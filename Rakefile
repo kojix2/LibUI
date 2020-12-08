@@ -25,8 +25,18 @@ def download_official(library, remote_lib, file)
   dir = Dir.mktmpdir
   Dir.chdir(dir) do
     File.binwrite(file, URI.open(url).read)
-    command = file.end_with?('.zip') ? 'unzip' : 'tar xf'
-    system "#{command} #{file}"
+    if file.end_with?('zip')
+      # `unzip` not available on Windows
+      require 'zip'
+      Zip::File.open(file) do |zip|
+        zip.each do |entry|
+          entry.extract(entry.name)
+        end
+      end
+    else
+      # Tar available on Windows 10
+      system "tar xf #{file}"
+    end
     path = remote_lib.to_s
     FileUtils.cp(path, File.expand_path("vendor/#{library}", __dir__))
     puts "Saved vendor/#{library}"
