@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'libui'
 
 options = LibUI::FFI::InitOptions.malloc
-init    = LibUI::FFI.uiInit(options)
+init = LibUI::FFI.uiInit(options)
 
 unless init.size.zero?
   warn 'error'
