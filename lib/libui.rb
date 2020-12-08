@@ -8,6 +8,7 @@ module LibUI
   class << self
     attr_accessor :ffi_lib
   end
+
   self.ffi_lib = case RbConfig::CONFIG['host_os']
                  when /mswin|msys|mingw|cygwin|bccwin|wince|emc/
                    # File.expand_path("libui.dll", ENV['LIBUIDIR'])
@@ -20,5 +21,19 @@ module LibUI
                    File.expand_path('../vendor/libui.so', __dir__)
                  end
 
-  autoload :FFI, 'libui/ffi'
+  require_relative 'libui/ffi'
+
+  class << self
+    FFI.ffi_methods.each do |original_method_name|
+      name = original_method_name.delete_prefix('ui')
+                                 .gsub(/::/, '/')
+                                 .gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
+                                 .gsub(/([a-z\d])([A-Z])/, '\1_\2')
+                                 .tr('-', '_')
+                                 .downcase
+      define_method(name) do |*args|
+        FFI.public_send(original_method_name, *args)
+      end
+    end
+  end
 end
