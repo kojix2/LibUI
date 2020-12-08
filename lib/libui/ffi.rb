@@ -9,25 +9,44 @@ module LibUI
     begin
       dlload LibUI.ffi_lib
     rescue LoadError
-      raise LoadError, 'Could not find libui'
+      raise LoadError, 'Could not find libui shared library'
     end
 
-    typealias("uint32_t", "unsigned int")
+    class << self
+      attr_reader :ffi_methods
+
+      # Improved extern method.
+      # 1. Ignore functions that cannot be attached.
+      # 2. Available function (names) are stored in @ffi_methods.
+      # For compatiblity with older versions of GR.
+      def try_extern(signature, *opts)
+        @ffi_methods ||= []
+        begin
+          func = extern(signature, *opts)
+          @ffi_methods << func.name
+          func
+        rescue StandardError => e
+          warn "#{e.class.name}: #{e.message}"
+        end
+      end
+    end
+
+    typealias('uint32_t', 'unsigned int')
 
     InitOptions = struct(['size_t size'])
 
-    extern 'const char *uiInit(uiInitOptions *options)'
-    extern 'void uiUninit(void)'
-    extern 'void uiFreeInitError(const char *err)'
+    try_extern 'const char *uiInit(uiInitOptions *options)'
+    try_extern 'void uiUninit(void)'
+    try_extern 'void uiFreeInitError(const char *err)'
 
-    extern 'void uiMain(void)'
-    extern 'void uiMainSteps(void)'
-    extern 'int uiMainStep(int wait)'
-    extern 'void uiQuit(void)'
-    extern 'void uiQueueMain(void (*f)(void *data), void *data)'
-    extern 'void uiTimer(int milliseconds, int (*f)(void *data), void *data)'
-    extern 'void uiOnShouldQuit(int (*f)(void *data), void *data)'
-    extern 'void uiFreeText(char *text)'
+    try_extern 'void uiMain(void)'
+    try_extern 'void uiMainSteps(void)'
+    try_extern 'int uiMainStep(int wait)'
+    try_extern 'void uiQuit(void)'
+    try_extern 'void uiQueueMain(void (*f)(void *data), void *data)'
+    try_extern 'void uiTimer(int milliseconds, int (*f)(void *data), void *data)'
+    try_extern 'void uiOnShouldQuit(int (*f)(void *data), void *data)'
+    try_extern 'void uiFreeText(char *text)'
 
     struct ['uint32_t Signature',
             'uint32_t OSSignature',
@@ -43,200 +62,198 @@ module LibUI
             'int (*Enabled)(uiControl *)',
             'void (*Enable)(uiControl *)',
             'void (*Disable)(uiControl *)']
-    
-    extern 'void uiControlDestroy(uiControl *)'
-    extern 'uintptr_t uiControlHandle(uiControl *)'
-    extern 'uiControl *uiControlParent(uiControl *)'
-    extern 'void uiControlSetParent(uiControl *, uiControl *)'
-    extern 'int uiControlToplevel(uiControl *)'
-    extern 'int uiControlVisible(uiControl *)'
-    extern 'void uiControlShow(uiControl *)'
-    extern 'void uiControlHide(uiControl *)'
-    extern 'int uiControlEnabled(uiControl *)'
-    extern 'void uiControlEnable(uiControl *)'
-    extern 'void uiControlDisable(uiControl *)'
-    
-    extern 'uiControl *uiAllocControl(size_t n, uint32_t OSsig, uint32_t typesig, const char *typenamestr)'
-    extern 'void uiFreeControl(uiControl *)'
-    
-    extern 'void uiControlVerifySetParent(uiControl *, uiControl *)'
-    extern 'int uiControlEnabledToUser(uiControl *)'
-    
-    extern 'void uiUserBugCannotSetParentOnToplevel(const char *type)' 
+
+    try_extern 'void uiControlDestroy(uiControl *)'
+    try_extern 'uintptr_t uiControlHandle(uiControl *)'
+    try_extern 'uiControl *uiControlParent(uiControl *)'
+    try_extern 'void uiControlSetParent(uiControl *, uiControl *)'
+    try_extern 'int uiControlToplevel(uiControl *)'
+    try_extern 'int uiControlVisible(uiControl *)'
+    try_extern 'void uiControlShow(uiControl *)'
+    try_extern 'void uiControlHide(uiControl *)'
+    try_extern 'int uiControlEnabled(uiControl *)'
+    try_extern 'void uiControlEnable(uiControl *)'
+    try_extern 'void uiControlDisable(uiControl *)'
+
+    try_extern 'uiControl *uiAllocControl(size_t n, uint32_t OSsig, uint32_t typesig, const char *typenamestr)'
+    try_extern 'void uiFreeControl(uiControl *)'
+
+    try_extern 'void uiControlVerifySetParent(uiControl *, uiControl *)'
+    try_extern 'int uiControlEnabledToUser(uiControl *)'
+
+    try_extern 'void uiUserBugCannotSetParentOnToplevel(const char *type)'
 
     # uiWindow
-    extern 'char *uiWindowTitle(uiWindow *w)'
-    extern 'void uiWindowSetTitle(uiWindow *w, const char *title)'
-    extern 'void uiWindowContentSize(uiWindow *w, int *width, int *height)'
-    extern 'void uiWindowSetContentSize(uiWindow *w, int width, int height)'
-    extern 'int uiWindowFullscreen(uiWindow *w)'
-    extern 'void uiWindowSetFullscreen(uiWindow *w, int fullscreen)'
-    extern 'void uiWindowOnContentSizeChanged(uiWindow *w, void (*f)(uiWindow *, void *), void *data)'
-    extern 'void uiWindowOnClosing(uiWindow *w, int (*f)(uiWindow *w, void *data), void *data)'
-    extern 'int uiWindowBorderless(uiWindow *w)'
-    extern 'void uiWindowSetBorderless(uiWindow *w, int borderless)'
-    extern 'void uiWindowSetChild(uiWindow *w, uiControl *child)'
-    extern 'int uiWindowMargined(uiWindow *w)'
-    extern 'void uiWindowSetMargined(uiWindow *w, int margined)'
-    extern 'uiWindow *uiNewWindow(const char *title, int width, int height, int hasMenubar)'
-    
+    try_extern 'char *uiWindowTitle(uiWindow *w)'
+    try_extern 'void uiWindowSetTitle(uiWindow *w, const char *title)'
+    try_extern 'void uiWindowContentSize(uiWindow *w, int *width, int *height)'
+    try_extern 'void uiWindowSetContentSize(uiWindow *w, int width, int height)'
+    try_extern 'int uiWindowFullscreen(uiWindow *w)'
+    try_extern 'void uiWindowSetFullscreen(uiWindow *w, int fullscreen)'
+    try_extern 'void uiWindowOnContentSizeChanged(uiWindow *w, void (*f)(uiWindow *, void *), void *data)'
+    try_extern 'void uiWindowOnClosing(uiWindow *w, int (*f)(uiWindow *w, void *data), void *data)'
+    try_extern 'int uiWindowBorderless(uiWindow *w)'
+    try_extern 'void uiWindowSetBorderless(uiWindow *w, int borderless)'
+    try_extern 'void uiWindowSetChild(uiWindow *w, uiControl *child)'
+    try_extern 'int uiWindowMargined(uiWindow *w)'
+    try_extern 'void uiWindowSetMargined(uiWindow *w, int margined)'
+    try_extern 'uiWindow *uiNewWindow(const char *title, int width, int height, int hasMenubar)'
+
     # uiButton
-    extern 'char *uiButtonText(uiButton *b)'
-    extern 'void uiButtonSetText(uiButton *b, const char *text)'
-    extern 'void uiButtonOnClicked(uiButton *b, void (*f)(uiButton *b, void *data), void *data)'
-    extern 'uiButton *uiNewButton(const char *text)'
-    
+    try_extern 'char *uiButtonText(uiButton *b)'
+    try_extern 'void uiButtonSetText(uiButton *b, const char *text)'
+    try_extern 'void uiButtonOnClicked(uiButton *b, void (*f)(uiButton *b, void *data), void *data)'
+    try_extern 'uiButton *uiNewButton(const char *text)'
+
     # uiBox
-    extern 'void uiBoxAppend(uiBox *b, uiControl *child, int stretchy)'
-    extern 'void uiBoxDelete(uiBox *b, int index)'
-    extern 'int uiBoxPadded(uiBox *b)'
-    extern 'void uiBoxSetPadded(uiBox *b, int padded)'
-    extern 'uiBox *uiNewHorizontalBox(void)'
-    extern 'uiBox *uiNewVerticalBox(void)'
-    
+    try_extern 'void uiBoxAppend(uiBox *b, uiControl *child, int stretchy)'
+    try_extern 'void uiBoxDelete(uiBox *b, int index)'
+    try_extern 'int uiBoxPadded(uiBox *b)'
+    try_extern 'void uiBoxSetPadded(uiBox *b, int padded)'
+    try_extern 'uiBox *uiNewHorizontalBox(void)'
+    try_extern 'uiBox *uiNewVerticalBox(void)'
+
     # uiCheckbox
-    extern 'char *uiCheckboxText(uiCheckbox *c)'
-    extern 'void uiCheckboxSetText(uiCheckbox *c, const char *text)'
-    extern 'void uiCheckboxOnToggled(uiCheckbox *c, void (*f)(uiCheckbox *c, void *data), void *data)'
-    extern 'int uiCheckboxChecked(uiCheckbox *c)'
-    extern 'void uiCheckboxSetChecked(uiCheckbox *c, int checked)'
-    extern 'uiCheckbox *uiNewCheckbox(const char *text)'
-    
+    try_extern 'char *uiCheckboxText(uiCheckbox *c)'
+    try_extern 'void uiCheckboxSetText(uiCheckbox *c, const char *text)'
+    try_extern 'void uiCheckboxOnToggled(uiCheckbox *c, void (*f)(uiCheckbox *c, void *data), void *data)'
+    try_extern 'int uiCheckboxChecked(uiCheckbox *c)'
+    try_extern 'void uiCheckboxSetChecked(uiCheckbox *c, int checked)'
+    try_extern 'uiCheckbox *uiNewCheckbox(const char *text)'
+
     # uiEntry
-    extern 'char *uiEntryText(uiEntry *e)'
-    extern 'void uiEntrySetText(uiEntry *e, const char *text)'
-    extern 'void uiEntryOnChanged(uiEntry *e, void (*f)(uiEntry *e, void *data), void *data)'
-    extern 'int uiEntryReadOnly(uiEntry *e)'
-    extern 'void uiEntrySetReadOnly(uiEntry *e, int readonly)'
-    extern 'uiEntry *uiNewEntry(void)'
-    extern 'uiEntry *uiNewPasswordEntry(void)'
-    extern 'uiEntry *uiNewSearchEntry(void)'
-    
+    try_extern 'char *uiEntryText(uiEntry *e)'
+    try_extern 'void uiEntrySetText(uiEntry *e, const char *text)'
+    try_extern 'void uiEntryOnChanged(uiEntry *e, void (*f)(uiEntry *e, void *data), void *data)'
+    try_extern 'int uiEntryReadOnly(uiEntry *e)'
+    try_extern 'void uiEntrySetReadOnly(uiEntry *e, int readonly)'
+    try_extern 'uiEntry *uiNewEntry(void)'
+    try_extern 'uiEntry *uiNewPasswordEntry(void)'
+    try_extern 'uiEntry *uiNewSearchEntry(void)'
+
     # uiLabel
-    extern 'char *uiLabelText(uiLabel *l)'
-    extern 'void uiLabelSetText(uiLabel *l, const char *text)'
-    extern 'uiLabel *uiNewLabel(const char *text)'
-    
+    try_extern 'char *uiLabelText(uiLabel *l)'
+    try_extern 'void uiLabelSetText(uiLabel *l, const char *text)'
+    try_extern 'uiLabel *uiNewLabel(const char *text)'
+
     # uiTab
-    extern 'void uiTabAppend(uiTab *t, const char *name, uiControl *c)'
-    extern 'void uiTabInsertAt(uiTab *t, const char *name, int before, uiControl *c)'
-    extern 'void uiTabDelete(uiTab *t, int index)'
-    extern 'int uiTabNumPages(uiTab *t)'
-    extern 'int uiTabMargined(uiTab *t, int page)'
-    extern 'void uiTabSetMargined(uiTab *t, int page, int margined)'
-    extern 'uiTab *uiNewTab(void)'
-    
+    try_extern 'void uiTabAppend(uiTab *t, const char *name, uiControl *c)'
+    try_extern 'void uiTabInsertAt(uiTab *t, const char *name, int before, uiControl *c)'
+    try_extern 'void uiTabDelete(uiTab *t, int index)'
+    try_extern 'int uiTabNumPages(uiTab *t)'
+    try_extern 'int uiTabMargined(uiTab *t, int page)'
+    try_extern 'void uiTabSetMargined(uiTab *t, int page, int margined)'
+    try_extern 'uiTab *uiNewTab(void)'
+
     # uiGroup
-    extern 'char *uiGroupTitle(uiGroup *g)'
-    extern 'void uiGroupSetTitle(uiGroup *g, const char *title)'
-    extern 'void uiGroupSetChild(uiGroup *g, uiControl *c)'
-    extern 'int uiGroupMargined(uiGroup *g)'
-    extern 'void uiGroupSetMargined(uiGroup *g, int margined)'
-    extern 'uiGroup *uiNewGroup(const char *title)'
-    
+    try_extern 'char *uiGroupTitle(uiGroup *g)'
+    try_extern 'void uiGroupSetTitle(uiGroup *g, const char *title)'
+    try_extern 'void uiGroupSetChild(uiGroup *g, uiControl *c)'
+    try_extern 'int uiGroupMargined(uiGroup *g)'
+    try_extern 'void uiGroupSetMargined(uiGroup *g, int margined)'
+    try_extern 'uiGroup *uiNewGroup(const char *title)'
+
     # uiSpinbox
-    extern 'int uiSpinboxValue(uiSpinbox *s)'
-    extern 'void uiSpinboxSetValue(uiSpinbox *s, int value)'
-    extern 'void uiSpinboxOnChanged(uiSpinbox *s, void (*f)(uiSpinbox *s, void *data), void *data)'
-    extern 'uiSpinbox *uiNewSpinbox(int min, int max)'
-    
+    try_extern 'int uiSpinboxValue(uiSpinbox *s)'
+    try_extern 'void uiSpinboxSetValue(uiSpinbox *s, int value)'
+    try_extern 'void uiSpinboxOnChanged(uiSpinbox *s, void (*f)(uiSpinbox *s, void *data), void *data)'
+    try_extern 'uiSpinbox *uiNewSpinbox(int min, int max)'
+
     # uiSlider
-    extern 'int uiSliderValue(uiSlider *s)'
-    extern 'void uiSliderSetValue(uiSlider *s, int value)'
-    extern 'void uiSliderOnChanged(uiSlider *s, void (*f)(uiSlider *s, void *data), void *data)'
-    extern 'uiSlider *uiNewSlider(int min, int max)'
-    
+    try_extern 'int uiSliderValue(uiSlider *s)'
+    try_extern 'void uiSliderSetValue(uiSlider *s, int value)'
+    try_extern 'void uiSliderOnChanged(uiSlider *s, void (*f)(uiSlider *s, void *data), void *data)'
+    try_extern 'uiSlider *uiNewSlider(int min, int max)'
+
     # uiProgressBar
-    extern 'int uiProgressBarValue(uiProgressBar *p)'
-    extern 'void uiProgressBarSetValue(uiProgressBar *p, int n)'
-    extern 'uiProgressBar *uiNewProgressBar(void)'
-    
+    try_extern 'int uiProgressBarValue(uiProgressBar *p)'
+    try_extern 'void uiProgressBarSetValue(uiProgressBar *p, int n)'
+    try_extern 'uiProgressBar *uiNewProgressBar(void)'
+
     # uiSeparator
-    extern 'uiSeparator *uiNewHorizontalSeparator(void)'
-    extern 'uiSeparator *uiNewVerticalSeparator(void)'
-    
+    try_extern 'uiSeparator *uiNewHorizontalSeparator(void)'
+    try_extern 'uiSeparator *uiNewVerticalSeparator(void)'
+
     # uiCombobox
-    extern 'void uiComboboxAppend(uiCombobox *c, const char *text)'
-    extern 'int uiComboboxSelected(uiCombobox *c)'
-    extern 'void uiComboboxSetSelected(uiCombobox *c, int n)'
-    extern 'void uiComboboxOnSelected(uiCombobox *c, void (*f)(uiCombobox *c, void *data), void *data)'
-    extern 'uiCombobox *uiNewCombobox(void)'
-    
+    try_extern 'void uiComboboxAppend(uiCombobox *c, const char *text)'
+    try_extern 'int uiComboboxSelected(uiCombobox *c)'
+    try_extern 'void uiComboboxSetSelected(uiCombobox *c, int n)'
+    try_extern 'void uiComboboxOnSelected(uiCombobox *c, void (*f)(uiCombobox *c, void *data), void *data)'
+    try_extern 'uiCombobox *uiNewCombobox(void)'
+
     # uiEditableCombobox
-    extern 'void uiEditableComboboxAppend(uiEditableCombobox *c, const char *text)'
-    extern 'char *uiEditableComboboxText(uiEditableCombobox *c)'
-    extern 'void uiEditableComboboxSetText(uiEditableCombobox *c, const char *text)'
-    extern 'void uiEditableComboboxOnChanged(uiEditableCombobox *c, void (*f)(uiEditableCombobox *c, void *data), void *data)'
-    extern 'uiEditableCombobox *uiNewEditableCombobox(void)'
-    
+    try_extern 'void uiEditableComboboxAppend(uiEditableCombobox *c, const char *text)'
+    try_extern 'char *uiEditableComboboxText(uiEditableCombobox *c)'
+    try_extern 'void uiEditableComboboxSetText(uiEditableCombobox *c, const char *text)'
+    try_extern 'void uiEditableComboboxOnChanged(uiEditableCombobox *c, void (*f)(uiEditableCombobox *c, void *data), void *data)'
+    try_extern 'uiEditableCombobox *uiNewEditableCombobox(void)'
+
     # uiRadioButtons
-    extern 'void uiRadioButtonsAppend(uiRadioButtons *r, const char *text)'
-    extern 'int uiRadioButtonsSelected(uiRadioButtons *r)'
-    extern 'void uiRadioButtonsSetSelected(uiRadioButtons *r, int n)'
-    extern 'void uiRadioButtonsOnSelected(uiRadioButtons *r, void (*f)(uiRadioButtons *, void *), void *data)'
-    extern 'uiRadioButtons *uiNewRadioButtons(void)'
-    
+    try_extern 'void uiRadioButtonsAppend(uiRadioButtons *r, const char *text)'
+    try_extern 'int uiRadioButtonsSelected(uiRadioButtons *r)'
+    try_extern 'void uiRadioButtonsSetSelected(uiRadioButtons *r, int n)'
+    try_extern 'void uiRadioButtonsOnSelected(uiRadioButtons *r, void (*f)(uiRadioButtons *, void *), void *data)'
+    try_extern 'uiRadioButtons *uiNewRadioButtons(void)'
+
     # uiDataTimePicker
-    extern 'void uiDateTimePickerTime(uiDateTimePicker *d, struct tm *time)'
-    extern 'void uiDateTimePickerSetTime(uiDateTimePicker *d, const struct tm *time)'
-    extern 'void uiDateTimePickerOnChanged(uiDateTimePicker *d, void (*f)(uiDateTimePicker *, void *), void *data)'
-    extern 'uiDateTimePicker *uiNewDateTimePicker(void)'
-    extern 'uiDateTimePicker *uiNewDatePicker(void)'
-    extern 'uiDateTimePicker *uiNewTimePicker(void)'
-    
+    try_extern 'void uiDateTimePickerTime(uiDateTimePicker *d, struct tm *time)'
+    try_extern 'void uiDateTimePickerSetTime(uiDateTimePicker *d, const struct tm *time)'
+    try_extern 'void uiDateTimePickerOnChanged(uiDateTimePicker *d, void (*f)(uiDateTimePicker *, void *), void *data)'
+    try_extern 'uiDateTimePicker *uiNewDateTimePicker(void)'
+    try_extern 'uiDateTimePicker *uiNewDatePicker(void)'
+    try_extern 'uiDateTimePicker *uiNewTimePicker(void)'
+
     # uiMultilineEntry
-    extern 'char *uiMultilineEntryText(uiMultilineEntry *e)'
-    extern 'void uiMultilineEntrySetText(uiMultilineEntry *e, const char *text)'
-    extern 'void uiMultilineEntryAppend(uiMultilineEntry *e, const char *text)'
-    extern 'void uiMultilineEntryOnChanged(uiMultilineEntry *e, void (*f)(uiMultilineEntry *e, void *data), void *data)'
-    extern 'int uiMultilineEntryReadOnly(uiMultilineEntry *e)'
-    extern 'void uiMultilineEntrySetReadOnly(uiMultilineEntry *e, int readonly)'
-    extern 'uiMultilineEntry *uiNewMultilineEntry(void)'
-    extern 'uiMultilineEntry *uiNewNonWrappingMultilineEntry(void)'
-    
+    try_extern 'char *uiMultilineEntryText(uiMultilineEntry *e)'
+    try_extern 'void uiMultilineEntrySetText(uiMultilineEntry *e, const char *text)'
+    try_extern 'void uiMultilineEntryAppend(uiMultilineEntry *e, const char *text)'
+    try_extern 'void uiMultilineEntryOnChanged(uiMultilineEntry *e, void (*f)(uiMultilineEntry *e, void *data), void *data)'
+    try_extern 'int uiMultilineEntryReadOnly(uiMultilineEntry *e)'
+    try_extern 'void uiMultilineEntrySetReadOnly(uiMultilineEntry *e, int readonly)'
+    try_extern 'uiMultilineEntry *uiNewMultilineEntry(void)'
+    try_extern 'uiMultilineEntry *uiNewNonWrappingMultilineEntry(void)'
+
     # uiMenuItem
-    extern 'void uiMenuItemEnable(uiMenuItem *m)'
-    extern 'void uiMenuItemDisable(uiMenuItem *m)'
-    extern 'void uiMenuItemOnClicked(uiMenuItem *m, void (*f)(uiMenuItem *sender, uiWindow *window, void *data), void *data)'
-    extern 'int uiMenuItemChecked(uiMenuItem *m)'
-    extern 'void uiMenuItemSetChecked(uiMenuItem *m, int checked)'
+    try_extern 'void uiMenuItemEnable(uiMenuItem *m)'
+    try_extern 'void uiMenuItemDisable(uiMenuItem *m)'
+    try_extern 'void uiMenuItemOnClicked(uiMenuItem *m, void (*f)(uiMenuItem *sender, uiWindow *window, void *data), void *data)'
+    try_extern 'int uiMenuItemChecked(uiMenuItem *m)'
+    try_extern 'void uiMenuItemSetChecked(uiMenuItem *m, int checked)'
 
     # uiMenu
-    extern 'uiMenuItem *uiMenuAppendItem(uiMenu *m, const char *name)'
-    extern 'uiMenuItem *uiMenuAppendCheckItem(uiMenu *m, const char *name)'
-    extern 'uiMenuItem *uiMenuAppendQuitItem(uiMenu *m)'
-    extern 'uiMenuItem *uiMenuAppendPreferencesItem(uiMenu *m)'
-    extern 'uiMenuItem *uiMenuAppendAboutItem(uiMenu *m)'
-    extern 'void uiMenuAppendSeparator(uiMenu *m)'
-    extern 'uiMenu *uiNewMenu(const char *name)'
+    try_extern 'uiMenuItem *uiMenuAppendItem(uiMenu *m, const char *name)'
+    try_extern 'uiMenuItem *uiMenuAppendCheckItem(uiMenu *m, const char *name)'
+    try_extern 'uiMenuItem *uiMenuAppendQuitItem(uiMenu *m)'
+    try_extern 'uiMenuItem *uiMenuAppendPreferencesItem(uiMenu *m)'
+    try_extern 'uiMenuItem *uiMenuAppendAboutItem(uiMenu *m)'
+    try_extern 'void uiMenuAppendSeparator(uiMenu *m)'
+    try_extern 'uiMenu *uiNewMenu(const char *name)'
 
-    extern 'char *uiOpenFile(uiWindow *parent)'
-    extern 'char *uiSaveFile(uiWindow *parent)'
-    extern 'void uiMsgBox(uiWindow *parent, const char *title, const char *description)'
-    extern 'void uiMsgBoxError(uiWindow *parent, const char *title, const char *description)'
+    try_extern 'char *uiOpenFile(uiWindow *parent)'
+    try_extern 'char *uiSaveFile(uiWindow *parent)'
+    try_extern 'void uiMsgBox(uiWindow *parent, const char *title, const char *description)'
+    try_extern 'void uiMsgBoxError(uiWindow *parent, const char *title, const char *description)'
 
     # uiArea
-    extern 'void uiAreaSetSize(uiArea *a, int width, int height)'
-    extern 'void uiAreaQueueRedrawAll(uiArea *a)'
-    extern 'void uiAreaScrollTo(uiArea *a, double x, double y, double width, double height)'
-    extern 'void uiAreaBeginUserWindowMove(uiArea *a)'
+    try_extern 'void uiAreaSetSize(uiArea *a, int width, int height)'
+    try_extern 'void uiAreaQueueRedrawAll(uiArea *a)'
+    try_extern 'void uiAreaScrollTo(uiArea *a, double x, double y, double width, double height)'
+    try_extern 'void uiAreaBeginUserWindowMove(uiArea *a)'
     typealias 'uiWindowResizeEdge', 'char' # FIXME: uint8
-    extern 'void uiAreaBeginUserWindowResize(uiArea *a, uiWindowResizeEdge edge)'
-    extern 'uiArea *uiNewArea(uiAreaHandler *ah)'
-    extern 'uiArea *uiNewScrollingArea(uiAreaHandler *ah, int width, int height)'
-
-    #
+    try_extern 'void uiAreaBeginUserWindowResize(uiArea *a, uiWindowResizeEdge edge)'
+    try_extern 'uiArea *uiNewArea(uiAreaHandler *ah)'
+    try_extern 'uiArea *uiNewScrollingArea(uiAreaHandler *ah, int width, int height)'
 
     # uiFontButton
-    extern 'void uiFontButtonFont(uiFontButton *b, uiFontDescriptor *desc)'
-    extern 'void uiFontButtonOnChanged(uiFontButton *b, void (*f)(uiFontButton *, void *), void *data)'
-    extern 'uiFontButton *uiNewFontButton(void)'
-    extern 'void uiFreeFontButtonFont(uiFontDescriptor *desc)'
+    try_extern 'void uiFontButtonFont(uiFontButton *b, uiFontDescriptor *desc)'
+    try_extern 'void uiFontButtonOnChanged(uiFontButton *b, void (*f)(uiFontButton *, void *), void *data)'
+    try_extern 'uiFontButton *uiNewFontButton(void)'
+    try_extern 'void uiFreeFontButtonFont(uiFontDescriptor *desc)'
 
     # uiColorButton
-    extern 'void uiColorButtonColor(uiColorButton *b, double *r, double *g, double *bl, double *a)'
-    extern 'void uiColorButtonSetColor(uiColorButton *b, double r, double g, double bl, double a)'
-    extern 'void uiColorButtonOnChanged(uiColorButton *b, void (*f)(uiColorButton *, void *), void *data)'
-    extern 'uiColorButton *uiNewColorButton(void)'
+    try_extern 'void uiColorButtonColor(uiColorButton *b, double *r, double *g, double *bl, double *a)'
+    try_extern 'void uiColorButtonSetColor(uiColorButton *b, double r, double g, double bl, double a)'
+    try_extern 'void uiColorButtonOnChanged(uiColorButton *b, void (*f)(uiColorButton *, void *), void *data)'
+    try_extern 'uiColorButton *uiNewColorButton(void)'
   end
 end
