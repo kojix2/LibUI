@@ -2,38 +2,40 @@
 
 require 'libui'
 
-options = LibUI::FFI::InitOptions.malloc
-init = LibUI::FFI.uiInit(options)
+UI = LibUI
+
+options = UI::FFI::InitOptions.malloc
+init = UI.init(options)
 
 unless init.size.zero?
   warn 'error'
-  warn LibUI::FFI.uiFreeInitError(init)
+  warn UI.free_init_error(init)
 end
 
-main_window = LibUI::FFI.uiNewWindow('hello world', 300, 200, 1)
+main_window = UI.new_window('hello world', 300, 200, 1)
 
 should_quit = Fiddle::Closure::BlockCaller.new(
   Fiddle::TYPE_INT, [Fiddle::TYPE_VOIDP, Fiddle::TYPE_VOIDP]
 ) do |_pt1, _pt2|
   puts 'Bye Bye'
-  LibUI::FFI.uiControlDestroy(main_window)
-  LibUI::FFI.uiQuit
+  UI.control_destroy(main_window)
+  UI.quit
   0
 end
 
-button = LibUI::FFI.uiNewButton('Button')
+button = UI.new_button('Button')
 button_clicked_callback = Fiddle::Closure::BlockCaller.new(
   Fiddle::TYPE_VOIDP, [Fiddle::TYPE_VOIDP, Fiddle::TYPE_VOIDP]
 ) do |_pt1, _pt2|
-  LibUI::FFI.uiMsgBox(main_window, 'Information', 'You clicked the button')
+  UI.msg_box(main_window, 'Information', 'You clicked the button')
   0
 end
-LibUI::FFI.uiButtonOnClicked(button, button_clicked_callback, nil)
+UI.button_on_clicked(button, button_clicked_callback, nil)
 
-LibUI::FFI.uiWindowOnClosing(main_window, should_quit, nil)
+UI.window_on_closing(main_window, should_quit, nil)
 
-LibUI::FFI.uiWindowSetChild(main_window, button)
-LibUI::FFI.uiControlShow(main_window)
+UI.window_set_child(main_window, button)
+UI.control_show(main_window)
 
-LibUI::FFI.uiMain
-LibUI::FFI.uiQuit
+UI.main
+UI.quit

@@ -2,25 +2,27 @@
 
 require 'libui'
 
-options = LibUI::FFI::InitOptions.malloc
-init    = LibUI::FFI.uiInit(options)
+UI = LibUI
+
+options = UI::FFI::InitOptions.malloc
+init    = UI.init(options)
 
 unless init.size.zero?
   warn 'error'
-  warn LibUI::FFI.uiFreeInitError(init)
+  warn UI.free_init_error(init)
 end
 
-main_window = LibUI::FFI.uiNewWindow('hello world', 300, 200, 1)
+main_window = UI.new_window('hello world', 300, 200, 1)
 
 should_quit = Fiddle::Closure::BlockCaller.new(Fiddle::TYPE_VOIDP, [Fiddle::TYPE_VOIDP]) do |_pt|
   puts 'Bye Bye'
-  LibUI::FFI.uiControlDestroy(main_window)
-  LibUI::FFI.uiQuit
+  UI.control_destroy(main_window)
+  UI.quit
   0
 end
 
-LibUI::FFI.uiControlShow(main_window)
-LibUI::FFI.uiWindowOnClosing(main_window, should_quit, nil)
+UI.control_show(main_window)
+UI.window_on_closing(main_window, should_quit, nil)
 
-LibUI::FFI.uiMain
-LibUI::FFI.uiQuit
+UI.main
+UI.quit
