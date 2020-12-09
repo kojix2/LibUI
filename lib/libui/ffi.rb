@@ -254,5 +254,21 @@ module LibUI
     try_extern 'void uiColorButtonSetColor(uiColorButton *b, double r, double g, double bl, double a)'
     try_extern 'void uiColorButtonOnChanged(uiColorButton *b, void (*f)(uiColorButton *, void *), void *data)'
     try_extern 'uiColorButton *uiNewColorButton(void)'
+
+    # uiForm
+    try_extern 'void uiFormAppend(uiForm *f, const char *label, uiControl *c, int stretchy)'
+    try_extern 'void uiFormDelete(uiForm *f, int index)'
+    try_extern 'int uiFormPadded(uiForm *f)'
+    try_extern 'void uiFormSetPadded(uiForm *f, int padded)'
+    try_extern 'uiForm *uiNewForm(void)'
+
+    # uiGrid
+    typealias 'uiAlign', 'int' # enum
+    typealias 'uiAt', 'int' # enum
+    try_extern 'void uiGridAppend(uiGrid *g, uiControl *c, int left, int top, int xspan, int yspan, int hexpand, uiAlign halign, int vexpand, uiAlign valign)'
+    try_extern 'void uiGridInsertAt(uiGrid *g, uiControl *c, uiControl *existing, uiAt at, int xspan, int yspan, int hexpand, uiAlign halign, int vexpand, uiAlign valign)'
+    try_extern 'int uiGridPadded(uiGrid *g)'
+    try_extern 'void uiGridSetPadded(uiGrid *g, int padded)'
+    try_extern 'uiGrid *uiNewGrid(void)'
   end
 end
