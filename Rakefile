@@ -44,17 +44,21 @@ def download_official(library, remote_lib, file)
 end
 
 namespace :vendor do
+  desc 'Download libui.so for Linux to vendor directory'
   task :linux do
     download_official('libui.so', 'libui.so.0', 'libui-alpha4.1-linux-amd64-shared.tgz')
   end
 
+  desc 'Download libui.dylib for Mac to vendor directory'
   task :mac do
     download_official('libui.dylib', 'libui.A.dylib', 'libui-alpha4.1-darwin-amd64-shared.tgz')
   end
 
+  desc 'Download libui.dll for Windows to vendor directory'
   task :windows do
     download_official('libui.dll', 'libui.dll', 'libui-alpha4.1-windows-amd64-shared.zip')
   end
 
+  desc 'Download libui.so, libui.dylib, and libui.dll to vendor directory'
   task all: %i[linux mac windows]
 end
