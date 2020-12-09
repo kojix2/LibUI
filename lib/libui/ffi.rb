@@ -238,7 +238,7 @@ module LibUI
     try_extern 'void uiAreaQueueRedrawAll(uiArea *a)'
     try_extern 'void uiAreaScrollTo(uiArea *a, double x, double y, double width, double height)'
     try_extern 'void uiAreaBeginUserWindowMove(uiArea *a)'
-    typealias 'uiWindowResizeEdge', 'char' # FIXME: uint8
+    typealias 'uiWindowResizeEdge', 'int' # enum
     try_extern 'void uiAreaBeginUserWindowResize(uiArea *a, uiWindowResizeEdge edge)'
     try_extern 'uiArea *uiNewArea(uiAreaHandler *ah)'
     try_extern 'uiArea *uiNewScrollingArea(uiAreaHandler *ah, int width, int height)'
