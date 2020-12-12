@@ -4,7 +4,7 @@ require 'libui'
 
 UI = LibUI
 
-init = UI.init(options)
+init = UI.init
 
 main_window = UI.new_window('hello world', 300, 200, 1)
 
