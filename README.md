@@ -1,13 +1,17 @@
 # libui
+
+![build](https://github.com/kojix2/libui/workflows/build/badge.svg)
 [![Gem Version](https://badge.fury.io/rb/libui.svg)](https://badge.fury.io/rb/libui)
 
-[libui](https://github.com/andlabs/libui) - a portable GUI library -for Ruby
+:radio_button: [libui](https://github.com/andlabs/libui) - a portable GUI library -for Ruby
 
 ## Installation
 
 ```sh
 gem install libui --pre
 ```
+
+The libui gem package contains the official release of the libui shared library version 4.1 for Windows, Mac, and Linux.
 
 ## Usage
 
