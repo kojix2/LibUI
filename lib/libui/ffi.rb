@@ -401,6 +401,11 @@ module LibUI
 
     try_extern 'uiAttribute *uiNewUnderlineColorAttribute(uiUnderlineColor u, double r, double g, double b, double a)'
     try_extern 'void uiAttributeUnderlineColor(const uiAttribute *a, uiUnderlineColor *u, double *r, double *g, double *b, double *alpha)'
+
+    # uiOpenTypeFeatures
+
+    typealias 'uiOpenTypeFeaturesForEachFunc', 'void*'
+
     try_extern 'uiOpenTypeFeatures *uiNewOpenTypeFeatures(void)'
     try_extern 'void uiFreeOpenTypeFeatures(uiOpenTypeFeatures *otf)'
     try_extern 'uiOpenTypeFeatures *uiOpenTypeFeaturesClone(const uiOpenTypeFeatures *otf)'
@@ -410,6 +415,11 @@ module LibUI
     try_extern 'void uiOpenTypeFeaturesForEach(const uiOpenTypeFeatures *otf, uiOpenTypeFeaturesForEachFunc f, void *data)'
     try_extern 'uiAttribute *uiNewFeaturesAttribute(const uiOpenTypeFeatures *otf)'
     try_extern 'const uiOpenTypeFeatures *uiAttributeFeatures(const uiAttribute *a)'
+
+    # uiAttributedString
+
+    typealias 'uiAttributedStringForEachAttributeFunc', 'void*'
+
     try_extern 'uiAttributedString *uiNewAttributedString(const char *initialString)'
     try_extern 'void uiFreeAttributedString(uiAttributedString *s)'
     try_extern 'const char *uiAttributedStringString(const uiAttributedString *s)'
