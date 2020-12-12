@@ -11,26 +11,26 @@ unless init.size.zero?
   warn UI.free_init_error(init)
 end
 
-should_quit = Fiddle::Closure::BlockCaller.new(0, []) do
+should_quit = proc do
   puts 'Bye Bye'
   UI.control_destroy(MAIN_WINDOW)
   UI.quit
   0
 end
 
-checkbox_toggle = Fiddle::Closure::BlockCaller.new(0, []) do
+checkbox_toggle = proc do
   checked = UI.checkbox_checked(ptr) == 1
   UI.window_set_title(MAIN_WINDOW, "Checkbox is #{checked}")
   UI.checkbox_set_text(ptr, "I am the checkbox (#{checked})")
   0
 end
 
-open_menu_item_clicked = Fiddle::Closure::BlockCaller.new(0, []) do
+open_menu_item_clicked = proc do
   puts "Clicked 'Open'"
   0
 end
 
-save_menu_item_clicked = Fiddle::Closure::BlockCaller.new(0, []) do
+save_menu_item_clicked = proc do
   puts "Clicked 'Save'"
   0
 end
@@ -74,7 +74,7 @@ UI.box_set_padded(inner, 1)
 UI.group_set_child(group, inner)
 
 button = UI.new_button('Button')
-button_clicked_callback = Fiddle::Closure::BlockCaller.new(0, []) do
+button_clicked_callback = proc do
   UI.msg_box(MAIN_WINDOW, 'Information', 'You clicked the button')
   0
 end
@@ -103,7 +103,7 @@ UI.box_set_padded(inner, 1)
 UI.group_set_child(group, inner)
 
 spinbox = UI.new_spinbox(0, 100)
-spinbox_changed_callback = Fiddle::Closure::BlockCaller.new(0, [1, 1]) do |ptr|
+spinbox_changed_callback = proc do |ptr|
   puts "New Spinbox value: #{UI.spinbox_value(ptr)}"
   0
 end
@@ -112,7 +112,7 @@ UI.spinbox_on_changed(spinbox, spinbox_changed_callback, nil)
 UI.box_append(inner, spinbox, 0)
 
 slider = UI.new_slider(0, 100)
-slider_changed_callback = Fiddle::Closure::BlockCaller.new(0, [1, 1]) do |ptr|
+slider_changed_callback = proc do |ptr|
   puts "New Slider value: #{UI.slider_value(ptr)}"
   0
 end
@@ -130,7 +130,7 @@ inner = UI.new_vertical_box
 UI.box_set_padded(inner, 1)
 UI.group_set_child(group, inner)
 
-combobox_selected_callback = Fiddle::Closure::BlockCaller.new(0, [1, 1]) do |ptr|
+combobox_selected_callback = proc do |ptr|
   puts "New combobox selection: #{UI.combobox_selected(ptr)}"
 end
 cbox = UI.new_combobox
@@ -159,7 +159,7 @@ UI.tab_append(tab, 'Page 2', UI.new_horizontal_box)
 UI.tab_append(tab, 'Page 3', UI.new_horizontal_box)
 UI.box_append(inner2, tab, 1)
 
-text_changed_callback = Fiddle::Closure::BlockCaller.new(0, [1, 1]) do |ptr|
+text_changed_callback = proc do |ptr|
   puts "Current textbox data: '#{UI.entry_text(ptr)}'"
 end
 

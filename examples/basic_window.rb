@@ -14,15 +14,14 @@ end
 
 main_window = UI.new_window('hello world', 300, 200, 1)
 
-should_quit = Fiddle::Closure::BlockCaller.new(Fiddle::TYPE_VOIDP, [Fiddle::TYPE_VOIDP]) do |_pt|
+UI.control_show(main_window)
+
+UI.window_on_closing(main_window) do
   puts 'Bye Bye'
   UI.control_destroy(main_window)
   UI.quit
   0
 end
-
-UI.control_show(main_window)
-UI.window_on_closing(main_window, should_quit, nil)
 
 UI.main
 UI.quit

@@ -2,6 +2,75 @@
 
 require 'fiddle/import'
 
+module Fiddle
+  class Function
+    attr_accessor :inner_functions, :argtype
+  end
+
+  module Importer
+    def parse_signature(signature, tymap = nil)
+      tymap ||= {}
+      ret, func, args = split_signature(signature)
+      symname = func
+      ctype   = parse_ctype(ret, tymap)
+      inner_funcs = []                                                    # Added
+      argtype = split_arguments(args).collect.with_index do |arg, idx|    # Added with_index
+        if arg =~ /\(\*.*\)\(.*\)/                                        # Added
+          func_arg = arg.sub('(*', ' ').sub(')', '')                      # Added
+          inner_funcs[idx] = parse_signature(func_arg)                    # Added
+        end                                                               # Added
+        parse_ctype(arg, tymap)
+      end
+      # Added inner_funcs. Original method return only 3 values.
+      [symname, ctype, argtype, inner_funcs]
+    end
+
+    # refactored
+    def split_signature(signature)
+      case compact(signature)
+      when /^(?:[\w*\s]+)\(\*(\w+)\((.*?)\)\)(?:\[\w*\]|\(.*?\));?$/
+        func = Regexp.last_match(1)
+        args = Regexp.last_match(2)
+        [TYPE_VOIDP, func, args]
+      when /^([\w*\s]+[*\s])(\w+)\((.*?)\);?$/
+        ret  = Regexp.last_match(1).strip
+        func = Regexp.last_match(2)
+        args = Regexp.last_match(3)
+        [ret, func, args]
+      else
+        raise("can't parse the function prototype: #{signature}")
+      end
+    end
+
+    def extern(signature, *opts)
+      symname, ctype, argtype, inner_funcs = parse_signature(signature, type_alias)
+      opt = parse_bind_options(opts)
+      f = import_function(symname, ctype, argtype, opt[:call_type])
+
+      f.inner_functions = inner_funcs # Added
+      f.argtype         = argtype     # Added
+
+      name = symname.gsub(/@.+/, '')
+      @func_map[name] = f
+      # define_method(name){|*args,&block| f.call(*args,&block)}
+      begin
+        /^(.+?):(\d+)/ =~ caller.first
+        file = Regexp.last_match(1)
+        line = Regexp.last_match(2).to_i
+      rescue StandardError
+        file, line = __FILE__, __LINE__ + 3
+      end
+      module_eval(<<-EOS, file, line)
+        def #{name}(*args, &block)
+          @func_map['#{name}'].call(*args,&block)
+        end
+      EOS
+      module_function(name)
+      f
+    end
+  end
+end
+
 module LibUI
   module FFI
     extend Fiddle::Importer
@@ -13,17 +82,11 @@ module LibUI
     end
 
     class << self
-      attr_reader :ffi_methods
+      attr_reader :func_map
 
-      # Improved extern method.
-      # 1. Ignore functions that cannot be attached.
-      # 2. Available function (names) are stored in @ffi_methods.
       def try_extern(signature, *opts)
-        @ffi_methods ||= []
         begin
-          func = extern(signature, *opts)
-          @ffi_methods << func.name
-          func
+          extern(signature, *opts)
         rescue StandardError => e
           warn "#{e.class.name}: #{e.message}"
         end
