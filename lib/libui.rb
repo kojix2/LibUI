@@ -55,12 +55,22 @@ module LibUI
 
         # Make it possible to omit the last nil. This may be an over-optimization.
         siz = func.argtype.size - 1
-        if args.size == siz
-          args[siz] = nil
-        end
-        
+        args[siz] = nil if args.size == siz
+
         FFI.public_send(original_method_name, *args)
       end
     end
+
+    module CustomMethods
+      def init(opt = FFI::InitOptions.malloc)
+        i = super(opt)
+        unless i.size.zero?
+          warn 'error'
+          warn UI.free_init_error(init)
+        end
+      end
+    end
+
+    prepend CustomMethods
   end
 end
