@@ -15,7 +15,7 @@ class LibUITest < Minitest::Test
 
   def test_method_call
     pt = LibUI::FFI::InitOptions.malloc
-    assert_kind_of Fiddle::Pointer, LibUI.init(pt)
+    assert_nil LibUI.init(pt)
     assert_nil LibUI.quit
   end
 end
