@@ -27,7 +27,7 @@ module LibUI
   require_relative 'libui/ffi'
 
   class << self
-    FFI.func_map.keys.each do |original_method_name|
+    FFI.func_map.each_key do |original_method_name|
       # Convert snake_case to CamelCase.
       name = original_method_name.delete_prefix('ui')
                                  .gsub(/::/, '/')

@@ -3,7 +3,6 @@
 require 'fiddle/import'
 
 module Fiddle
-
   # Change the Function to hold a little more information.
   # FIXME: Give inner_function a better name.
   class Function
@@ -19,10 +18,10 @@ module Fiddle
       inner_funcs = []                                                    # Added
       argtype = split_arguments(args).collect.with_index do |arg, idx|    # Added with_index
         # Check if it is a function pointer or not
-        if arg =~ /\(\*.*\)\(.*\)/                                        # Added
+        if arg =~ /\(\*.*\)\(.*\)/ # Added
           # From the arguments, create a notation that looks like a function declaration
           # int(*f)(int *, void *) -> int f(int *, void *)
-          func_arg = arg.sub('(*', ' ').sub(')', '')                      # Added
+          func_arg = arg.sub('(*', ' ').sub(')', '') # Added
           # Use Fiddle's parse_signature method again.
           inner_funcs[idx] = parse_signature(func_arg)                    # Added
         end                                                               # Added
@@ -92,11 +91,9 @@ module LibUI
       attr_reader :func_map
 
       def try_extern(signature, *opts)
-        begin
-          extern(signature, *opts)
-        rescue StandardError => e
-          warn "#{e.class.name}: #{e.message}"
-        end
+        extern(signature, *opts)
+      rescue StandardError => e
+        warn "#{e.class.name}: #{e.message}"
       end
     end
 
