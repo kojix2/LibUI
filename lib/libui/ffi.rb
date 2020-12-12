@@ -35,17 +35,17 @@ module Fiddle
     def split_signature(signature)
       case compact(signature)
       when /^(?:[\w*\s]+)\(\*(\w+)\((.*?)\)\)(?:\[\w*\]|\(.*?\));?$/
+        ret  = TYPE_VOIDP
         func = Regexp.last_match(1)
         args = Regexp.last_match(2)
-        [TYPE_VOIDP, func, args]
       when /^([\w*\s]+[*\s])(\w+)\((.*?)\);?$/
         ret  = Regexp.last_match(1).strip
         func = Regexp.last_match(2)
         args = Regexp.last_match(3)
-        [ret, func, args]
       else
         raise("can't parse the function prototype: #{signature}")
       end
+      [ret, func, args]
     end
 
     def extern(signature, *opts)
