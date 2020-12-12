@@ -4,13 +4,7 @@ require 'libui'
 
 UI = LibUI
 
-options = UI::FFI::InitOptions.malloc
-init    = UI.init(options)
-
-unless init.size.zero?
-  warn 'error'
-  warn UI.free_init_error(init)
-end
+init = UI.init(options)
 
 main_window = UI.new_window('hello world', 300, 200, 1)
 

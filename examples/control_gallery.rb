@@ -3,13 +3,7 @@
 require 'libui'
 UI = LibUI
 
-options =  UI::FFI::InitOptions.malloc
-init    =  UI.init(options)
-
-unless init.size.zero?
-  warn 'error'
-  warn UI.free_init_error(init)
-end
+init = UI.init
 
 should_quit = proc do
   puts 'Bye Bye'
