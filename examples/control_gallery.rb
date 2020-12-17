@@ -12,13 +12,6 @@ should_quit = proc do
   0
 end
 
-checkbox_toggle = proc do
-  checked = UI.checkbox_checked(ptr) == 1
-  UI.window_set_title(MAIN_WINDOW, "Checkbox is #{checked}")
-  UI.checkbox_set_text(ptr, "I am the checkbox (#{checked})")
-  0
-end
-
 open_menu_item_clicked = proc do
   puts "Clicked 'Open'"
   0
@@ -72,10 +65,19 @@ button_clicked_callback = proc do
   UI.msg_box(MAIN_WINDOW, 'Information', 'You clicked the button')
   0
 end
-
 UI.button_on_clicked(button, button_clicked_callback, nil)
 UI.box_append(inner, button, 0)
-UI.box_append(inner, UI.new_checkbox('Checkbox'), 0)
+
+checkbox = UI.new_checkbox('Checkbox')
+checkbox_toggle_callback = proc do |ptr|
+  checked = UI.checkbox_checked(ptr) == 1
+  UI.window_set_title(MAIN_WINDOW, "Checkbox is #{checked}")
+  UI.checkbox_set_text(ptr, "I am the checkbox (#{checked})")
+  0
+end
+UI.checkbox_on_toggled(checkbox, checkbox_toggle_callback, nil)
+UI.box_append(inner, checkbox, 0)
+
 UI.box_append(inner, UI.new_label('Label'), 0)
 UI.box_append(inner, UI.new_horizontal_separator, 0)
 UI.box_append(inner, UI.new_date_picker, 0)
