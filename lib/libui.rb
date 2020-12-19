@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'libui/version'
+require_relative 'libui/utils'
 
 module LibUI
   class Error < StandardError; end
@@ -28,14 +29,7 @@ module LibUI
 
   class << self
     FFI.func_map.each_key do |original_method_name|
-      # Convert snake_case to CamelCase.
-      name = original_method_name.delete_prefix('ui')
-                                 .gsub(/::/, '/')
-                                 .gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
-                                 .gsub(/([a-z\d])([A-Z])/, '\1_\2')
-                                 .tr('-', '_')
-                                 .downcase
-
+      name = Utils.convert_to_ruby_method(original_method_name)
       func = FFI.func_map[original_method_name]
 
       define_method(name) do |*args, &blk|

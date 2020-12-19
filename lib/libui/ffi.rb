@@ -95,6 +95,10 @@ module LibUI
       rescue StandardError => e
         warn "#{e.class.name}: #{e.message}"
       end
+
+      def ffi_methods
+        @ffi_methods ||= func_map.each_key.to_a
+      end
     end
 
     typealias('uint32_t', 'unsigned int')
