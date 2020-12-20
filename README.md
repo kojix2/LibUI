@@ -44,6 +44,15 @@ UI.quit
 
 See [examples](https://github.com/kojix2/libui/tree/main/examples) directory.
 
+## General Rules
+
+* The method names are snake_case.
+* If the last argument is nil, it can be omitted.
+* You can pass a block as a callback. 
+  * Please return 0 explicitly in the block.
+  * The block will be converted to a Proc object and added to the last argument.
+  * Even in that case, it is possible to omit the last argument nil.
+
 ## Development
 
 ```sh
@@ -54,7 +63,16 @@ bundle exec rake vendor:all
 bundle exec rake test
 ```
 
-* Keep it simple.
+Use the following rake tasks to download the libui binary files and save them in the vendor directory.
+
+`rake -T`
+
+```
+rake vendor:all       # Download libui.so, libui.dylib, and libui.dll to ve...
+rake vendor:linux     # Download libui.so for Linux to vendor directory
+rake vendor:mac       # Download libui.dylib for Mac to vendor directory
+rake vendor:windows   # Download libui.dll for Windows to vendor directory
+```
 
 ## Contributing
 
