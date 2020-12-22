@@ -55,6 +55,20 @@ UI.new_window('Tiny Midi Player', 200, 50, 1).tap do |main_window|
   end
 
   UI.new_horizontal_box.tap do |hbox|
+    UI.new_vertical_box.tap do |vbox|
+      UI.new_button('▶').tap do |button1|
+        UI.button_on_clicked(button1, play_midi)
+        UI.box_append(vbox, button1, 1)
+      end
+      UI.new_button('■').tap do |button2|
+        UI.button_on_clicked(button2, stop_midi)
+        at_exit(&stop_midi)
+        UI.box_append(vbox, button2, 1)
+      end
+      UI.box_append(hbox, vbox, 0)
+    end
+    UI.window_set_child(main_window, hbox)
+
     UI.new_combobox.tap do |cbox|
       midi_files.each do |path|
         name = File.basename(path)
@@ -70,20 +84,6 @@ UI.new_window('Tiny Midi Player', 200, 50, 1).tap do |main_window|
       end
       UI.box_append(hbox, cbox, 1)
     end
-
-    UI.new_vertical_box.tap do |vbox|
-      UI.new_button('Play').tap do |button1|
-        UI.button_on_clicked(button1, play_midi)
-        UI.box_append(vbox, button1, 1)
-      end
-      UI.new_button('Stop').tap do |button2|
-        UI.button_on_clicked(button2, stop_midi)
-        at_exit(&stop_midi)
-        UI.box_append(vbox, button2, 1)
-      end
-      UI.box_append(hbox, vbox, 0)
-    end
-    UI.window_set_child(main_window, hbox)
   end
   UI.control_show(main_window)
 end
