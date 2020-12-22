@@ -84,15 +84,15 @@ font_descriptor = UI::FFI::FontDescriptor.malloc
 
 UI.font_button_on_changed(font_button) do
   UI.font_button_font(font_button, font_descriptor)
-  p family: font_descriptor.Family.to_s,
-    size: font_descriptor.Size,
-    weight: font_descriptor.Weight,
-    italic: font_descriptor.Italic,
+  p family:  font_descriptor.Family.to_s,
+    size:    font_descriptor.Size,
+    weight:  font_descriptor.Weight,
+    italic:  font_descriptor.Italic,
     stretch: font_descriptor.Stretch
 end
 ```
 
-### How to create an executable (.exe) 
+### How to create an executable (.exe) on Windows 
 
 OCRA (One-Click Ruby Application) builds Windows executables from Ruby source code. 
 * https://github.com/larsch/ocra/
