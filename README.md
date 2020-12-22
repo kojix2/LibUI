@@ -11,7 +11,7 @@
 gem install libui --pre
 ```
 
-The libui gem package contains the official release of the libui shared library version 4.1 for Windows, Mac, and Linux.
+The libui gem uses the standard Ruby library [Fiddle](https://github.com/ruby/fiddle) to call C functions. And this gem contains the official release of the libui shared library version 4.1 for Windows, Mac, and Linux. That means there is no need to install anything other than this gem.
 
 ## Usage
 
@@ -44,7 +44,7 @@ UI.quit
 
 See [examples](https://github.com/kojix2/libui/tree/main/examples) directory.
 
-## General Rules
+### General Rules
 
 * The method names are snake_case.
 * If the last argument is nil, it can be omitted.
@@ -52,6 +52,50 @@ See [examples](https://github.com/kojix2/libui/tree/main/examples) directory.
   * Please return 0 explicitly in the block.
   * The block will be converted to a Proc object and added to the last argument.
   * Even in that case, it is possible to omit the last argument nil.
+  
+### Not object oriented?
+
+* At the moment, it is not object-oriented.
+  * Instead of providing a half-baked object-oriented approach, leave it as is.
+
+### How to use fiddle pointers?
+
+```ruby
+require 'libui'
+UI = LibUI
+UI.init
+```
+
+Convert a pointer to a string.
+
+```ruby
+label = UI.new_label("Ruby")
+p pointer = UI.label_text(label) # #<Fiddle::Pointer>
+p pointer.to_s # Ruby
+```
+
+If you need to use C structs, you can do the following.
+
+```ruby
+font_button = UI.new_font_button
+
+# Allocate memory 
+font_descriptor = UI::FFI::FontDescriptor.malloc
+
+UI.font_button_on_changed(font_button) do
+  UI.font_button_font(font_button, font_descriptor)
+  p family: font_descriptor.Family.to_s,
+    size: font_descriptor.Size,
+    weight: font_descriptor.Weight,
+    italic: font_descriptor.Italic,
+    stretch: font_descriptor.Stretch
+end
+```
+
+### How to create an executable (.exe) 
+
+OCRA (One-Click Ruby Application) builds Windows executables from Ruby source code. 
+* https://github.com/larsch/ocra/
 
 ## Development
 
