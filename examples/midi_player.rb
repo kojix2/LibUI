@@ -2,7 +2,8 @@ require 'libui'
 
 music_directory = File.expand_path(ARGV[0] || '~/Music/')
 midi_files      = Dir.glob(File.join(music_directory, '**/*.mid'))
-VERSION         = '0.0.1'
+                     .sort_by { |path| File.basename(path) }
+VERSION = '0.0.1'.freeze
 
 @pid = nil
 
