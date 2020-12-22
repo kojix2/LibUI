@@ -46,6 +46,8 @@ See [examples](https://github.com/kojix2/libui/tree/main/examples) directory.
 
 ### General Rules
 
+Compared to original libui written in C,
+
 * The method names are snake_case.
 * If the last argument is nil, it can be omitted.
 * You can pass a block as a callback. 
