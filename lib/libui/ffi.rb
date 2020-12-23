@@ -12,9 +12,15 @@ module Fiddle
   module Importer
     def parse_signature(signature, tymap = nil)
       tymap ||= {}
-      ret, func, args = split_signature(signature)
+      ctype, func, args = case compact(signature)
+                          when /^(?:[\w\*\s]+)\(\*(\w+)\((.*?)\)\)(?:\[\w*\]|\(.*?\));?$/
+                            [TYPE_VOIDP, $1, $2]
+                          when /^([\w\*\s]+[\*\s])(\w+)\((.*?)\);?$/
+                            [parse_ctype($1.strip, tymap), $2, $3]
+                          else
+                            raise("can't parserake the function prototype: #{signature}")
+                          end
       symname = func
-      ctype   = parse_ctype(ret, tymap)
       inner_funcs = []                                                    # Added
       argtype = split_arguments(args).collect.with_index do |arg, idx|    # Added with_index
         # Check if it is a function pointer or not
@@ -29,23 +35,6 @@ module Fiddle
       end
       # Added inner_funcs. Original method return only 3 values.
       [symname, ctype, argtype, inner_funcs]
-    end
-
-    # refactored
-    def split_signature(signature)
-      case compact(signature)
-      when /^(?:[\w*\s]+)\(\*(\w+)\((.*?)\)\)(?:\[\w*\]|\(.*?\));?$/
-        ret  = TYPE_VOIDP
-        func = Regexp.last_match(1)
-        args = Regexp.last_match(2)
-      when /^([\w*\s]+[*\s])(\w+)\((.*?)\);?$/
-        ret  = Regexp.last_match(1).strip
-        func = Regexp.last_match(2)
-        args = Regexp.last_match(3)
-      else
-        raise("can't parse the function prototype: #{signature}")
-      end
-      [ret, func, args]
     end
 
     def extern(signature, *opts)
