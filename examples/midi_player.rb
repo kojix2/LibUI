@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require 'libui'
 
 music_directory = File.expand_path(ARGV[0] || '~/Music/')
 midi_files      = Dir.glob(File.join(music_directory, '**/*.mid'))
                      .sort_by { |path| File.basename(path) }
-VERSION = '0.0.1'.freeze
+VERSION = '0.0.1'
 
 @pid = nil
 
@@ -76,7 +78,7 @@ UI.new_window('Tiny Midi Player', 200, 50, 1).tap do |main_window|
       end
       UI.combobox_on_selected(cbox) do |ptr|
         @selected_file = midi_files[UI.combobox_selected(ptr)]
-        if @th && @th.alive?
+        if @th&.alive?
           stop_midi.call
           play_midi.call
         end
