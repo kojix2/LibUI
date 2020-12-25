@@ -11,7 +11,11 @@
 gem install libui
 ```
 
-The libui gem uses the standard Ruby library [Fiddle](https://github.com/ruby/fiddle) to call C functions. And this gem contains the official release of the libui shared library version 4.1 for Windows, Mac, and Linux. That means there is no need to install anything other than this gem.
+The libui gem uses the standard Ruby library [Fiddle](https://github.com/ruby/fiddle) to call C functions. And this gem contains the official release of the libui shared library version 4.1 for Windows, Mac, and Linux (only 1.4MB in total). That means there is no need to install anything other than this gem.
+
+| windows | Mac | Linux |
+|---------|-----|-------|
+|<img src="https://user-images.githubusercontent.com/5798442/103118046-900ea780-46b0-11eb-81fc-32626762e4df.png">|<img src="https://user-images.githubusercontent.com/5798442/103118059-99980f80-46b0-11eb-9d12-324ec4d297c9.png">|<img src="https://user-images.githubusercontent.com/5798442/103118068-a0bf1d80-46b0-11eb-8c5c-3bdcc3dcfb26.png">|
 
 ## Usage
 
