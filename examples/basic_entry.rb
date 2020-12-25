@@ -20,6 +20,7 @@ UI.window_set_child(main_window, hbox)
 entry = UI.new_entry
 UI.entry_on_changed(entry) do
   puts UI.entry_text(entry).to_s
+  $stdout.flush # For Windows
 end
 UI.box_append(hbox, entry, 1)
 
