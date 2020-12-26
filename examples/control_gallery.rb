@@ -148,7 +148,7 @@ UI.tab_append(tab, 'Page 3', UI.new_horizontal_box)
 UI.box_append(inner2, tab, 1)
 
 text_entry = UI.new_entry
-UI.entry_set_text text_entry, 'Please enter your feeli/ngs'
+UI.entry_set_text text_entry, 'Please enter your feelings'
 UI.entry_on_changed(text_entry) do |ptr|
   puts "Current textbox data: '#{UI.entry_text(ptr)}'"
 end
