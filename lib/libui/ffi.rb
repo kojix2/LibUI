@@ -13,10 +13,10 @@ module Fiddle
     def parse_signature(signature, tymap = nil)
       tymap ||= {}
       ctype, func, args = case compact(signature)
-                          when /^(?:[\w\*\s]+)\(\*(\w+)\((.*?)\)\)(?:\[\w*\]|\(.*?\));?$/
-                            [TYPE_VOIDP, $1, $2]
-                          when /^([\w\*\s]+[\*\s])(\w+)\((.*?)\);?$/
-                            [parse_ctype($1.strip, tymap), $2, $3]
+                          when /^(?:[\w*\s]+)\(\*(\w+)\((.*?)\)\)(?:\[\w*\]|\(.*?\));?$/
+                            [TYPE_VOIDP, Regexp.last_match(1), Regexp.last_match(2)]
+                          when /^([\w*\s]+[*\s])(\w+)\((.*?)\);?$/
+                            [parse_ctype(Regexp.last_match(1).strip, tymap), Regexp.last_match(2), Regexp.last_match(3)]
                           else
                             raise("can't parserake the function prototype: #{signature}")
                           end
@@ -273,7 +273,20 @@ module LibUI
     try_extern 'void uiRadioButtonsOnSelected(uiRadioButtons *r, void (*f)(uiRadioButtons *, void *), void *data)'
     try_extern 'uiRadioButtons *uiNewRadioButtons(void)'
 
-    # uiDateTimePicker # Fixme: struct tm
+    # uiDateTimePicker
+
+    # time.h
+    TM = struct [
+      'int tm_sec',
+      'int tm_min',
+      'int tm_hour',
+      'int tm_mday',
+      'int tm_mon',
+      'int tm_year',
+      'int tm_wday',
+      'int tm_yday',
+      'int tm_isdst'
+    ]
 
     try_extern 'void uiDateTimePickerTime(uiDateTimePicker *d, struct tm *time)'
     try_extern 'void uiDateTimePickerSetTime(uiDateTimePicker *d, const struct tm *time)'
