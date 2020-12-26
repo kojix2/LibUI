@@ -16,12 +16,14 @@ end
 menu = UI.new_menu('File')
 open_menu_item = UI.menu_append_item(menu, 'Open')
 UI.menu_item_on_clicked(open_menu_item) do
-  puts UI.open_file(MAIN_WINDOW)
+  pt = UI.open_file(MAIN_WINDOW)
+  puts pt unless pt.null?
   0
 end
 save_menu_item = UI.menu_append_item(menu, 'Save')
 UI.menu_item_on_clicked(save_menu_item) do
-  puts UI.save_file(MAIN_WINDOW)
+  pt = UI.save_file(MAIN_WINDOW)
+  puts pt unless pt.null?
   0
 end
 
