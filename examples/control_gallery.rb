@@ -12,27 +12,23 @@ should_quit = proc do
   0
 end
 
-open_menu_item_clicked = proc do
-  puts "Clicked 'Open'"
-  0
-end
-
-save_menu_item_clicked = proc do
-  puts "Clicked 'Save'"
-  0
-end
-
-# Create 'File' menu with a few items and callbacks
-# when the items are clicked
+# File menu
 menu = UI.new_menu('File')
 open_menu_item = UI.menu_append_item(menu, 'Open')
-UI.menu_item_on_clicked(open_menu_item, open_menu_item_clicked, nil)
+UI.menu_item_on_clicked(open_menu_item) do
+  puts UI.open_file(MAIN_WINDOW)
+  0
+end
 save_menu_item = UI.menu_append_item(menu, 'Save')
-UI.menu_item_on_clicked(save_menu_item, save_menu_item_clicked, nil)
-UI.menu_append_quit_item(menu)
-UI.on_should_quit(should_quit, nil)
+UI.menu_item_on_clicked(save_menu_item) do
+  puts UI.save_file(MAIN_WINDOW)
+  0
+end
 
-# Create 'Edit' menu
+UI.menu_append_quit_item(menu)
+UI.on_should_quit(should_quit)
+
+# Edit menu
 edit_menu = UI.new_menu('Edit')
 UI.menu_append_check_item(edit_menu, 'Checkable Item_')
 UI.menu_append_separator(edit_menu)
@@ -41,6 +37,7 @@ UI.menu_item_disable(disabled_item)
 
 preferences = UI.menu_append_preferences_item(menu)
 
+# Help menu
 help_menu = UI.new_menu('Help')
 UI.menu_append_item(help_menu, 'Help')
 UI.menu_append_about_item(help_menu)
@@ -61,21 +58,19 @@ UI.box_set_padded(inner, 1)
 UI.group_set_child(group, inner)
 
 button = UI.new_button('Button')
-button_clicked_callback = proc do
+UI.button_on_clicked(button) do
   UI.msg_box(MAIN_WINDOW, 'Information', 'You clicked the button')
   0
 end
-UI.button_on_clicked(button, button_clicked_callback, nil)
 UI.box_append(inner, button, 0)
 
 checkbox = UI.new_checkbox('Checkbox')
-checkbox_toggle_callback = proc do |ptr|
+UI.checkbox_on_toggled(checkbox) do |ptr|
   checked = UI.checkbox_checked(ptr) == 1
   UI.window_set_title(MAIN_WINDOW, "Checkbox is #{checked}")
   UI.checkbox_set_text(ptr, "I am the checkbox (#{checked})")
   0
 end
-UI.checkbox_on_toggled(checkbox, checkbox_toggle_callback, nil)
 UI.box_append(inner, checkbox, 0)
 
 UI.box_append(inner, UI.new_label('Label'), 0)
@@ -99,20 +94,18 @@ UI.box_set_padded(inner, 1)
 UI.group_set_child(group, inner)
 
 spinbox = UI.new_spinbox(0, 100)
-spinbox_changed_callback = proc do |ptr|
+UI.spinbox_set_value(spinbox, 42)
+UI.spinbox_on_changed(spinbox) do |ptr|
   puts "New Spinbox value: #{UI.spinbox_value(ptr)}"
   0
 end
-UI.spinbox_set_value(spinbox, 42)
-UI.spinbox_on_changed(spinbox, spinbox_changed_callback, nil)
 UI.box_append(inner, spinbox, 0)
 
 slider = UI.new_slider(0, 100)
-slider_changed_callback = proc do |ptr|
+UI.slider_on_changed(slider) do |ptr|
   puts "New Slider value: #{UI.slider_value(ptr)}"
   0
 end
-UI.slider_on_changed(slider, slider_changed_callback, nil)
 UI.box_append(inner, slider, 0)
 
 progressbar = UI.new_progress_bar
@@ -126,15 +119,14 @@ inner = UI.new_vertical_box
 UI.box_set_padded(inner, 1)
 UI.group_set_child(group, inner)
 
-combobox_selected_callback = proc do |ptr|
-  puts "New combobox selection: #{UI.combobox_selected(ptr)}"
-end
 cbox = UI.new_combobox
 UI.combobox_append(cbox, 'combobox Item 1')
 UI.combobox_append(cbox, 'combobox Item 2')
 UI.combobox_append(cbox, 'combobox Item 3')
 UI.box_append(inner, cbox, 0)
-UI.combobox_on_selected(cbox, combobox_selected_callback, nil)
+UI.combobox_on_selected(cbox) do |ptr|
+  puts "New combobox selection: #{UI.combobox_selected(ptr)}"
+end
 
 ebox = UI.new_editable_combobox
 UI.editable_combobox_append(ebox, 'Editable Item 1')
@@ -155,20 +147,18 @@ UI.tab_append(tab, 'Page 2', UI.new_horizontal_box)
 UI.tab_append(tab, 'Page 3', UI.new_horizontal_box)
 UI.box_append(inner2, tab, 1)
 
-text_changed_callback = proc do |ptr|
-  puts "Current textbox data: '#{UI.entry_text(ptr)}'"
-end
-
 text_entry = UI.new_entry
 UI.entry_set_text text_entry, 'Please enter your feeli/ngs'
-UI.entry_on_changed(text_entry, text_changed_callback, nil)
+UI.entry_on_changed(text_entry) do |ptr|
+  puts "Current textbox data: '#{UI.entry_text(ptr)}'"
+end
 UI.box_append(hbox1, text_entry, 1)
 
 MAIN_WINDOW = UI.new_window('hello world', 600, 600, 1)
 UI.window_set_margined(MAIN_WINDOW, 1)
 UI.window_set_child(MAIN_WINDOW, vbox)
 
-UI.window_on_closing(MAIN_WINDOW, should_quit, nil)
+UI.window_on_closing(MAIN_WINDOW, should_quit)
 UI.control_show(MAIN_WINDOW)
 
 UI.main
