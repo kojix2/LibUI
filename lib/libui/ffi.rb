@@ -13,9 +13,9 @@ module Fiddle
     def parse_signature(signature, tymap = nil)
       tymap ||= {}
       ctype, func, args = case compact(signature)
-                          when /^(?:[\w*\s]+)\(\*(\w+)\((.*?)\)\)(?:\[\w*\]|\(.*?\));?$/
+                          when /^(?:[\w\*\s]+)\(\*(\w+)\((.*?)\)\)(?:\[\w*\]|\(.*?\));?$/
                             [TYPE_VOIDP, Regexp.last_match(1), Regexp.last_match(2)]
-                          when /^([\w*\s]+[*\s])(\w+)\((.*?)\);?$/
+                          when /^([\w\*\s]+[*\s])(\w+)\((.*?)\);?$/
                             [parse_ctype(Regexp.last_match(1).strip, tymap), Regexp.last_match(2), Regexp.last_match(3)]
                           else
                             raise("can't parserake the function prototype: #{signature}")
