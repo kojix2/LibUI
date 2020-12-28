@@ -3,7 +3,7 @@
 require 'libui'
 UI = LibUI
 
-init = UI.init
+UI.init
 
 should_quit = proc do
   puts 'Bye Bye'

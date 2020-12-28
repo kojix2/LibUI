@@ -7,7 +7,7 @@ class TinyMidiPlayer
   VERSION = '0.0.1'
 
   def initialize
-    init = UI.init
+    UI.init
     @pid = nil
     @music_directory = File.expand_path(ARGV[0] || '~/Music/')
     @midi_files      = Dir.glob(File.join(@music_directory, '**/*.mid'))
@@ -34,7 +34,7 @@ class TinyMidiPlayer
       begin
         @pid = spawn "timidity #{@selected_file}"
         @th = Process.detach @pid
-      rescue Errno::ENOENT => e
+      rescue Errno::ENOENT
         warn 'Timidty++ not found. Please install Timidity++.'
         warn 'https://sourceforge.net/projects/timidity/'
       end
