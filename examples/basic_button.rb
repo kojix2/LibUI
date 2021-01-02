@@ -12,7 +12,6 @@ button = UI.new_button('Button')
 
 UI.button_on_clicked(button) do
   UI.msg_box(main_window, 'Information', 'You clicked the button')
-  0
 end
 
 UI.window_on_closing(main_window) do

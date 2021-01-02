@@ -8,7 +8,7 @@ handler = UI::FFI::AreaHandler.malloc
 area    = UI.new_area(handler)
 brush   = UI::FFI::DrawBrush.malloc
 
-handler_draw_event = Fiddle::Closure::BlockCaller.new(1, [1, 1, 1]) do |_, _, area_draw_params|
+handler_draw_event = Fiddle::Closure::BlockCaller.new(0, [1, 1, 1]) do |_, _, area_draw_params|
   path = UI.draw_new_path(0)
   UI.draw_path_add_rectangle(path, 0, 0, 400, 400)
   UI.draw_path_end(path)
@@ -20,7 +20,6 @@ handler_draw_event = Fiddle::Closure::BlockCaller.new(1, [1, 1, 1]) do |_, _, ar
   area_draw_params = UI::FFI::AreaDrawParams.new(area_draw_params)
   UI.draw_fill(area_draw_params.Context, path, brush.to_ptr)
   UI.draw_free_path(path)
-  0
 end
 
 handler.Draw         = handler_draw_event

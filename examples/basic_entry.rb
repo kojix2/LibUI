@@ -21,7 +21,6 @@ entry = UI.new_entry
 UI.entry_on_changed(entry) do
   puts UI.entry_text(entry).to_s
   $stdout.flush # For Windows
-  0
 end
 UI.box_append(hbox, entry, 1)
 

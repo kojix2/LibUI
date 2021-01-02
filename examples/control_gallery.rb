@@ -18,13 +18,11 @@ open_menu_item = UI.menu_append_item(menu, 'Open')
 UI.menu_item_on_clicked(open_menu_item) do
   pt = UI.open_file(MAIN_WINDOW)
   puts pt unless pt.null?
-  0
 end
 save_menu_item = UI.menu_append_item(menu, 'Save')
 UI.menu_item_on_clicked(save_menu_item) do
   pt = UI.save_file(MAIN_WINDOW)
   puts pt unless pt.null?
-  0
 end
 
 UI.menu_append_quit_item(menu)
@@ -70,7 +68,6 @@ UI.group_set_child(group, inner)
 button = UI.new_button('Button')
 UI.button_on_clicked(button) do
   UI.msg_box(MAIN_WINDOW, 'Information', 'You clicked the button')
-  0
 end
 UI.box_append(inner, button, 0)
 
@@ -80,7 +77,6 @@ UI.checkbox_on_toggled(checkbox) do |ptr|
   checked = UI.checkbox_checked(ptr) == 1
   UI.window_set_title(MAIN_WINDOW, "Checkbox is #{checked}")
   UI.checkbox_set_text(ptr, "I am the checkbox (#{checked})")
-  0
 end
 UI.box_append(inner, checkbox, 0)
 
@@ -123,7 +119,6 @@ spinbox = UI.new_spinbox(0, 100)
 UI.spinbox_set_value(spinbox, 42)
 UI.spinbox_on_changed(spinbox) do |ptr|
   puts "New Spinbox value: #{UI.spinbox_value(ptr)}"
-  0
 end
 UI.box_append(inner, spinbox, 0)
 
@@ -139,7 +134,6 @@ UI.slider_on_changed(slider) do |ptr|
   v = UI.slider_value(ptr)
   puts "New Slider value: #{v}"
   UI.progress_bar_set_value(progressbar, v)
-  0
 end
 
 # Group - Lists
@@ -159,7 +153,6 @@ UI.combobox_append(cbox, 'combobox Item 3')
 UI.box_append(inner, cbox, 0)
 UI.combobox_on_selected(cbox) do |ptr|
   puts "New combobox selection: #{UI.combobox_selected(ptr)}"
-  0
 end
 
 # Editable Combobox
@@ -190,7 +183,6 @@ text_entry = UI.new_entry
 UI.entry_set_text text_entry, 'Please enter your feelings'
 UI.entry_on_changed(text_entry) do |ptr|
   puts "Current textbox data: '#{UI.entry_text(ptr)}'"
-  0
 end
 UI.box_append(hbox1, text_entry, 1)
 

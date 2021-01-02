@@ -25,7 +25,6 @@ class TinyMidiPlayer
         @pid = nil
       end
     end
-    0
   end
 
   def play_midi
@@ -39,7 +38,6 @@ class TinyMidiPlayer
         warn 'https://sourceforge.net/projects/timidity/'
       end
     end
-    0
   end
 
   def show_version(main_window)
@@ -48,7 +46,6 @@ class TinyMidiPlayer
                "Written in Ruby\n" \
                "https://github.com/kojix2/libui\n" \
                "Version #{VERSION}")
-    0
   end
 
   def create_gui

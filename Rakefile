@@ -39,14 +39,14 @@ def download_official(library, remote_lib, file, md5sum_expected)
         system "tar xf #{file}"
       end
       path = remote_lib.to_s
-      print "Check md5sum..."
+      print 'Check md5sum...'
       actual_md5sum = Digest::MD5.hexdigest(File.binread(path))
       if actual_md5sum == md5sum_expected
-        puts "OK."
+        puts 'OK.'
         FileUtils.cp(path, File.expand_path("vendor/#{library}", __dir__))
         puts "Saved vendor/#{library}"
       else
-        puts "Failed."
+        puts 'Failed.'
         warn 'Error: md5sum does not match'
         warn "  library:         #{library}"
         warn "  remote_lib:      #{remote_lib}"

@@ -23,7 +23,6 @@ UI.date_time_picker_on_changed(date_time_picker) do
     wday: time.tm_wday,
     yday: time.tm_yday,
     isdst: time.tm_isdst
-  0
 end
 UI.box_append(vbox, date_time_picker, 1)
 

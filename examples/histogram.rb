@@ -61,7 +61,7 @@ def construct_graph(datapoints, width, height, should_extend)
 end
 
 handler_draw_event = Fiddle::Closure::BlockCaller.new(
-  1, [1, 1, 1]
+  0, [1, 1, 1]
 ) do |_area_handler, _area, area_draw_params|
   area_draw_params = UI::FFI::AreaDrawParams.new(area_draw_params)
   path = UI.draw_new_path(0) # winding
@@ -116,14 +116,13 @@ handler_draw_event = Fiddle::Closure::BlockCaller.new(
   brush.A = graph_a[0, 8].unpack1('d')
   UI.draw_stroke(area_draw_params.Context, path, brush, dsp)
   UI.draw_free_path(path)
-  0
 end
 
 handler.Draw         = handler_draw_event
 handler.MouseEvent   = Fiddle::Closure::BlockCaller.new(0, [0]) {}
 handler.MouseCrossed = Fiddle::Closure::BlockCaller.new(0, [0]) {}
 handler.DragBroken   = Fiddle::Closure::BlockCaller.new(0, [0]) {}
-handler.KeyEvent     = Fiddle::Closure::BlockCaller.new(0, [0]) {}
+handler.KeyEvent     = Fiddle::Closure::BlockCaller.new(1, [0]) {0}
 
 UI.freeInitError(init) unless init.nil?
 
@@ -135,16 +134,14 @@ UI.box_set_padded(vbox, 1)
 UI.box_append(hbox, vbox, 0)
 UI.box_append(hbox, histogram, 1)
 
-spinbox_changed = proc do |_ptr|
-  UI.area_queue_redraw_all(histogram)
-  0
-end
-
-10.times do |i|
-  datapoints << UI.new_spinbox(0, 100)
-  UI.spinbox_set_value(datapoints[i], Random.new.rand(90))
-  UI.spinbox_on_changed(datapoints[i], spinbox_changed, nil)
-  UI.box_append(vbox, datapoints[i], 0)
+datapoints = Array.new(10) do |i|
+  UI.new_spinbox(0, 100).tap do |datapoint|
+    UI.spinbox_set_value(datapoint, Random.new.rand(90))
+    UI.spinbox_on_changed(datapoint) do
+      UI.area_queue_redraw_all(histogram)
+    end
+    UI.box_append(vbox, datapoint, 0)
+  end
 end
 
 def set_solid_brush(brush, color, alpha)
@@ -159,12 +156,10 @@ end
 set_solid_brush(brush, blue, 1.0)
 UI.color_button_set_color(color_button, brush.R, brush.G, brush.B, brush.A)
 
-color_changed = proc do |_ptr|
+UI.color_button_on_changed(color_button) do
   UI.area_queue_redraw_all(histogram)
-  0
 end
 
-UI.color_button_on_changed(color_button, color_changed, nil)
 UI.box_append(vbox, color_button, 0)
 
 MAIN_WINDOW = UI.new_window('histogram example', 640, 480, 1)
@@ -177,8 +172,8 @@ should_quit = proc do |_ptr|
   0
 end
 
-UI.window_on_closing(MAIN_WINDOW, should_quit, nil)
-UI.on_should_quit(should_quit, nil)
+UI.window_on_closing(MAIN_WINDOW, should_quit)
+UI.on_should_quit(should_quit)
 UI.control_show(MAIN_WINDOW)
 
 UI.main
