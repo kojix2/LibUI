@@ -4,9 +4,8 @@ require 'fiddle/import'
 
 module Fiddle
   # Change the Function to hold a little more information.
-  # FIXME: Give inner_function a better name.
   class Function
-    attr_accessor :inner_functions, :argtype
+    attr_accessor :callback_functions, :argtype
   end
 
   module Importer
@@ -21,32 +20,32 @@ module Fiddle
                             raise("can't parserake the function prototype: #{signature}")
                           end
       symname = func
-      inner_funcs = []                                                    # Added
-      argtype = split_arguments(args).collect.with_index do |arg, idx|    # Added with_index
+      callback_funcs = []                                                       # Added
+      argtype = split_arguments(args).collect.with_index do |arg, idx|          # Added with_index
         # Check if it is a function pointer or not
-        if arg =~ /\(\*.*\)\(.*\)/ # Added
+        if arg =~ /\(\*.*\)\(.*\)/                                              # Added
           # From the arguments, create a notation that looks like a function declaration
           # int(*f)(int *, void *) -> int f(int *, void *)
-          func_arg = arg.sub('(*', ' ').sub(')', '') # Added
+          func_arg = arg.sub('(*', ' ').sub(')', '')                            # Added
           # Use Fiddle's parse_signature method again.
-          inner_funcs[idx] = parse_signature(func_arg)                    # Added
-        end                                                               # Added
+          callback_funcs[idx] = parse_signature(func_arg)                       # Added
+        end                                                                     # Added
         parse_ctype(arg, tymap)
       end
-      # Added inner_funcs. Original method return only 3 values.
-      [symname, ctype, argtype, inner_funcs]
+      # Added callback_funcs. Original method return only 3 values.
+      [symname, ctype, argtype, callback_funcs]
     end
 
     def extern(signature, *opts)
-      symname, ctype, argtype, inner_funcs = parse_signature(signature, type_alias)
+      symname, ctype, argtype, callback_funcs = parse_signature(signature, type_alias)
       opt = parse_bind_options(opts)
-      f = import_function(symname, ctype, argtype, opt[:call_type])
+      func = import_function(symname, ctype, argtype, opt[:call_type])
 
-      f.inner_functions = inner_funcs # Added
-      f.argtype         = argtype     # Added
+      func.callback_functions = callback_funcs                                  # Added
+      func.argtype            = argtype                                         # Added
 
       name = symname.gsub(/@.+/, '')
-      @func_map[name] = f
+      @func_map[name] = func
       # define_method(name){|*args,&block| f.call(*args,&block)}
       begin
         /^(.+?):(\d+)/ =~ caller.first
@@ -61,7 +60,7 @@ module Fiddle
         end
       EOS
       module_function(name)
-      f
+      func
     end
   end
 end
