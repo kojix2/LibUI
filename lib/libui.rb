@@ -41,7 +41,9 @@ module LibUI
           if arg.is_a?(Proc)
             # The types of the function arguments are recorded beforehand.
             # See the monkey patch in ffi.rb.
-            Fiddle::Closure::BlockCaller.new(*func.callback_functions[idx][1..2], &arg)
+            Fiddle::Closure::BlockCaller.new(
+              *func.callback_argument_types[idx][1..2], &arg
+            )
           else
             arg
           end

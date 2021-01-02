@@ -5,7 +5,7 @@ require 'fiddle/import'
 module Fiddle
   # Change the Function to hold a little more information.
   class Function
-    attr_accessor :callback_functions
+    attr_accessor :callback_argument_types
     attr_reader   :argument_types
   end
 
@@ -21,7 +21,7 @@ module Fiddle
                             raise("can't parserake the function prototype: #{signature}")
                           end
       symname = func
-      callback_funcs = []                                                       # Added
+      callback_argument_types = {}                                              # Added
       argtype = split_arguments(args).collect.with_index do |arg, idx|          # Added with_index
         # Check if it is a function pointer or not
         if arg =~ /\(\*.*\)\(.*\)/                                              # Added
@@ -29,20 +29,20 @@ module Fiddle
           # int(*f)(int *, void *) -> int f(int *, void *)
           func_arg = arg.sub('(*', ' ').sub(')', '')                            # Added
           # Use Fiddle's parse_signature method again.
-          callback_funcs[idx] = parse_signature(func_arg)                       # Added
-        end                                                                     # Added
+          callback_argument_types[idx] = parse_signature(func_arg)              # Added
+        end
         parse_ctype(arg, tymap)
       end
-      # Added callback_funcs. Original method return only 3 values.
-      [symname, ctype, argtype, callback_funcs]
+      # Added callback_argument_types. Original method return only 3 values.
+      [symname, ctype, argtype, callback_argument_types]
     end
 
     def extern(signature, *opts)
-      symname, ctype, argtype, callback_funcs = parse_signature(signature, type_alias)
+      symname, ctype, argtype, callback_argument_types = parse_signature(signature, type_alias)
       opt = parse_bind_options(opts)
       func = import_function(symname, ctype, argtype, opt[:call_type])
 
-      func.callback_functions = callback_funcs                                  # Added
+      func.callback_argument_types = callback_argument_types                    # Added
 
       name = symname.gsub(/@.+/, '')
       @func_map[name] = func
