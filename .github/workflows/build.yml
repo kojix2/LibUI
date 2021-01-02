@@ -14,9 +14,18 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
+      - name: Cache libui shared library
+        id: cache-libui
+        uses: actions/cache@v2
+        with:
+          path: vendor
+          key: ${{ runner.os }}-libui-${{ hashFiles('libui.so') }}
+          restore-keys: |
+            ${{ runner.os }}-libui
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
-      - run: bundle install
-      - run: bundle exec rake vendor:all
-      - run: bundle exec rake test
+      - run: |
+          bundle install --jobs 4 --retry 3
+          bundle exec rake vendor:all
+          bundle exec rake test
