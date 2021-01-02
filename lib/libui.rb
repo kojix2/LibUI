@@ -41,14 +41,14 @@ module LibUI
           if arg.is_a?(Proc)
             # The types of the function arguments are recorded beforehand.
             # See the monkey patch in ffi.rb.
-            Fiddle::Closure::BlockCaller.new(*func.inner_functions[idx][1..2], &arg)
+            Fiddle::Closure::BlockCaller.new(*func.callback_functions[idx][1..2], &arg)
           else
             arg
           end
         end
 
         # Make it possible to omit the last nil. This may be an over-optimization.
-        siz = func.argtype.size - 1
+        siz = func.argument_types.size - 1
         args[siz] = nil if args.size == siz
 
         FFI.public_send(original_method_name, *args)

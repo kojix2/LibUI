@@ -5,7 +5,8 @@ require 'fiddle/import'
 module Fiddle
   # Change the Function to hold a little more information.
   class Function
-    attr_accessor :callback_functions, :argtype
+    attr_accessor :callback_functions
+    attr_reader   :argument_types
   end
 
   module Importer
@@ -42,7 +43,6 @@ module Fiddle
       func = import_function(symname, ctype, argtype, opt[:call_type])
 
       func.callback_functions = callback_funcs                                  # Added
-      func.argtype            = argtype                                         # Added
 
       name = symname.gsub(/@.+/, '')
       @func_map[name] = func
