@@ -5,8 +5,10 @@ require 'fiddle/import'
 module Fiddle
   # Change the Function to hold a little more information.
   class Function
-    attr_accessor :callback_argument_types
-    attr_reader   :argument_types
+    # Note:
+    # Ruby 2.7 Fiddle::Function dose not have @argument_types
+    # Ruby 3.0 Fiddle::Function has @argument_types
+    attr_accessor :callback_argument_types, :argument_types
   end
 
   module Importer
@@ -43,6 +45,9 @@ module Fiddle
       func = import_function(symname, ctype, argtype, opt[:call_type])
 
       func.callback_argument_types = callback_argument_types                    # Added
+      # Ruby 2.7 Fiddle::Function dose not have @argument_types
+      # Ruby 3.0 Fiddle::Function has @argument_types
+      func.argument_types = argtype
 
       name = symname.gsub(/@.+/, '')
       @func_map[name] = func
