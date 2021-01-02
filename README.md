@@ -1,4 +1,4 @@
-# libui
+# LibUI
 
 ![build](https://github.com/kojix2/libui/workflows/build/badge.svg)
 [![Gem Version](https://badge.fury.io/rb/libui.svg)](https://badge.fury.io/rb/libui)
