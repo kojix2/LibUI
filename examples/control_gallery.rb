@@ -159,6 +159,7 @@ UI.combobox_append(cbox, 'combobox Item 3')
 UI.box_append(inner, cbox, 0)
 UI.combobox_on_selected(cbox) do |ptr|
   puts "New combobox selection: #{UI.combobox_selected(ptr)}"
+  0
 end
 
 # Editable Combobox
@@ -189,6 +190,7 @@ text_entry = UI.new_entry
 UI.entry_set_text text_entry, 'Please enter your feelings'
 UI.entry_on_changed(text_entry) do |ptr|
   puts "Current textbox data: '#{UI.entry_text(ptr)}'"
+  0
 end
 UI.box_append(hbox1, text_entry, 1)
 

@@ -17,6 +17,7 @@ UI.font_button_on_changed(font_button) do
     weight: font_descriptor.Weight,
     italic: font_descriptor.Italic,
     stretch: font_descriptor.Stretch
+  0
 end
 
 UI.window_on_closing(main_window) do
