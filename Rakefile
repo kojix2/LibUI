@@ -22,6 +22,18 @@ def download_official(library, remote_lib, file, md5sum_expected)
   require 'tmpdir'
 
   url = "https://github.com/andlabs/libui/releases/download/#{version}/#{file}"
+  target_path = File.expand_path("vendor/#{library}", __dir__)
+
+  if File.exist?(target_path)
+    puts "#{target_path} already exist."
+    if check_md5sum(target_path, md5sum_expected)
+      puts "No need to download #{library}."
+      return
+    else
+      puts 'Download the file and replace it.'
+    end
+  end
+
   puts "Downloading #{file}..."
   Dir.mktmpdir do |dir|
     Dir.chdir(dir) do
@@ -38,23 +50,28 @@ def download_official(library, remote_lib, file, md5sum_expected)
         # Tar available on Windows 10
         system "tar xf #{file}"
       end
-      path = remote_lib.to_s
-      print 'Check md5sum...'
-      actual_md5sum = Digest::MD5.hexdigest(File.binread(path))
-      if actual_md5sum == md5sum_expected
-        puts 'OK.'
-        FileUtils.cp(path, File.expand_path("vendor/#{library}", __dir__))
-        puts "Saved vendor/#{library}"
-      else
-        puts 'Failed.'
-        warn 'Error: md5sum does not match'
-        warn "  library:         #{library}"
-        warn "  remote_lib:      #{remote_lib}"
-        warn "  file:            #{file}"
-        warn "  actual_md5sum:   #{actual_md5sum}"
-        warn "  expected_md5sum: #{md5sum_expected}"
+      path = remote_lib
+      if check_md5sum(path, md5sum_expected)
+        FileUtils.cp(path, target_path)
+        puts "Saved #{target_path}"
       end
     end
+  end
+end
+
+def check_md5sum(path, md5sum_expected)
+  print 'Check md5sum...'
+  actual_md5sum = Digest::MD5.hexdigest(File.binread(path))
+  if actual_md5sum == md5sum_expected
+    puts 'OK.'
+    true
+  else
+    puts 'Failed.'
+    warn 'Error: md5sum does not match'
+    warn "  path:            #{path}"
+    warn "  actual_md5sum:   #{actual_md5sum}"
+    warn "  expected_md5sum: #{md5sum_expected}"
+    false
   end
 end
 
