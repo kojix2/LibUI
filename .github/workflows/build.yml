@@ -5,16 +5,18 @@ on:
 jobs:
   build:
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    name: ${{ matrix.os }} Ruby ${{ matrix.ruby }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os:   [ubuntu-latest, macos-latest, windows-latest]
+        ruby: [ '2.7', '3.0' ]
     runs-on: ${{ matrix.os }}
     steps:
-    - uses: actions/checkout@v2
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.7
-    - run: bundle install
-    - run: bundle exec rake vendor:all
-    - run: bundle exec rake test
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+      - run: bundle install
+      - run: bundle exec rake vendor:all
+      - run: bundle exec rake test
