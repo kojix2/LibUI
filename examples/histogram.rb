@@ -119,10 +119,14 @@ handler_draw_event = Fiddle::Closure::BlockCaller.new(
 end
 
 handler.Draw         = handler_draw_event
-handler.MouseEvent   = Fiddle::Closure::BlockCaller.new(0, [0]) {}
-handler.MouseCrossed = Fiddle::Closure::BlockCaller.new(0, [0]) {}
-handler.DragBroken   = Fiddle::Closure::BlockCaller.new(0, [0]) {}
-handler.KeyEvent     = Fiddle::Closure::BlockCaller.new(1, [0]) {0}
+
+# Assigning to local variables
+# This is intended to protect Fiddle::Closure from garbage collection.
+# See https://github.com/kojix2/LibUI/issues/8
+handler.MouseEvent   = (c1 = Fiddle::Closure::BlockCaller.new(0, [0]) {})
+handler.MouseCrossed = (c2 = Fiddle::Closure::BlockCaller.new(0, [0]) {})
+handler.DragBroken   = (c3 = Fiddle::Closure::BlockCaller.new(0, [0]) {})
+handler.KeyEvent     = (c4 = Fiddle::Closure::BlockCaller.new(1, [0]) { 0 })
 
 UI.freeInitError(init) unless init.nil?
 
