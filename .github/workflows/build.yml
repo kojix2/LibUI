@@ -38,4 +38,7 @@ jobs:
           bundle config path vendor/bundle
           bundle install --jobs 4 --retry 3
       - run: bundle exec rake vendor:all
-      - run: bundle exec rake test
+      - name: Rake test (XVFB)
+        uses: GabrielBB/xvfb-action@v1
+        with:
+          run: bundle exec rake test
