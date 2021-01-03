@@ -75,6 +75,10 @@ handler_draw_event = Fiddle::Closure::BlockCaller.new(
   dsp.Join = 0 # miter
   dsp.Thickness = 2
   dsp.MiterLimit = 10 # DEFAULT_MITER_LIMIT
+  dashes = Fiddle::Pointer.malloc(8)
+  dsp.Dashes = dashes
+  dsp.NumDashes = 0
+  dsp.DashPhase = 0
 
   # draw axes
   set_solid_brush(brush, 0x000000, 1.0) # black
@@ -83,6 +87,7 @@ handler_draw_event = Fiddle::Closure::BlockCaller.new(
   path = UI.draw_new_path(0) # winding
   UI.draw_path_new_figure(path, X_OFF_LEFT, Y_OFF_TOP)
   UI.draw_path_line_to(path, X_OFF_LEFT, Y_OFF_TOP + graph_height)
+  UI.draw_path_line_to(path, X_OFF_LEFT + graph_width, Y_OFF_TOP + graph_height)
   UI.draw_path_end(path)
   UI.draw_stroke(area_draw_params.Context, path, brush, dsp)
   UI.draw_free_path(path)
@@ -138,7 +143,7 @@ UI.box_set_padded(vbox, 1)
 UI.box_append(hbox, vbox, 0)
 UI.box_append(hbox, histogram, 1)
 
-datapoints = Array.new(10) do |i|
+datapoints = Array.new(10) do
   UI.new_spinbox(0, 100).tap do |datapoint|
     UI.spinbox_set_value(datapoint, Random.new.rand(90))
     UI.spinbox_on_changed(datapoint) do
