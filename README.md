@@ -24,21 +24,23 @@ gem install libui
 
 ```ruby
 require 'libui'
+
 UI = LibUI
 
 UI.init
 
-main_window = UI.new_window('hello world', 300, 200, 1)
+main_window = UI.new_window('hello world', 200, 100, 1)
+
+button = UI.new_button('Button')
+
+UI.button_on_clicked(button) do
+  UI.msg_box(main_window, 'Information', 'You clicked the button')
+end
+
 UI.window_on_closing(main_window) do
   puts 'Bye Bye'
   UI.control_destroy(main_window)
   UI.quit
-  0
-end
-
-button = UI.new_button('Button')
-UI.button_on_clicked(button) do
-  UI.msg_box(main_window, 'Information', 'You clicked the button')
   0
 end
 
@@ -58,7 +60,6 @@ Compared to original libui written in C,
 * The method names are snake_case.
 * If the last argument is nil, it can be omitted.
 * You can pass a block as a callback. 
-  * Please return 0 explicitly in the block.
   * The block will be converted to a Proc object and added to the last argument.
   * Even in that case, it is possible to omit the last argument nil.
   
