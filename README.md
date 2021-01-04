@@ -102,6 +102,13 @@ UI.font_button_on_changed(font_button) do
 end
 ```
 
+* Callbacks
+  * In Ruby/Fiddle, C callback function is written as an object of
+    `Fiddle::Closure::BlockCaller` or `Fiddle::Closure`. 
+    In this case, you need to be careful about Ruby's garbage collection. 
+    If the function object is collected, memory will be freed 
+    and a segmentation violation will occur when the callback is invoked.
+
 ### How to create an executable (.exe) on Windows 
 
 OCRA (One-Click Ruby Application) builds Windows executables from Ruby source code. 
