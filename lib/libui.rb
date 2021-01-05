@@ -67,10 +67,10 @@ module LibUI
     module CustomMethods
       def init(opt = FFI::InitOptions.malloc)
         i = super(opt)
-        unless i.size.zero?
-          warn 'error'
-          warn UI.free_init_error(init)
-        end
+        return if i.size.zero?
+
+        warn 'error'
+        warn UI.free_init_error(init)
       end
     end
 
