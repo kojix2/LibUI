@@ -47,9 +47,11 @@ module LibUI
             # Protect from GC
             # See https://github.com/kojix2/LibUI/issues/8
             receiver = args[0]
-            callbacks = receiver.instance_variable_get(:@callbacks) || []
-            callbacks << callback
-            receiver.instance_variable_set(:@callbacks, callback)
+            if receiver.instance_variable_defined?(:@callbacks)
+              receiver.instance_variable_get(:@callbacks) << callback
+            else
+              receiver.instance_variable_set(:@callbacks, [callback])
+            end
             callback
           else
             arg
