@@ -8,7 +8,7 @@ module LibUI
       # Converting camel case to underscore case in ruby
       # https://stackoverflow.com/questions/1509915/converting-camel-case-to-underscore-case-in-ruby#1509939
       def underscore(str)
-        str.gsub(/::/, '/')
+        str.gsub(/::/, '/') # Maybe we don't need it.
            .gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
            .gsub(/([a-z\d])([A-Z])/, '\1_\2')
            .tr('-', '_')
