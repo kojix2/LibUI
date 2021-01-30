@@ -9,9 +9,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os:   [ubuntu-latest, macos-latest, windows-latest]
+        os:   [ 'ubuntu', 'macos', 'windows']
         ruby: [ '2.7', '3.0' ]
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}-latest
     steps:
       - uses: actions/checkout@v2
       - name: Cache libui shared library
