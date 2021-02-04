@@ -137,7 +137,10 @@ rake vendor:windows   # Download libui.dll for Windows to vendor directory
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/kojix2/libui.
+Would you like to add your commits to libui?
+* Please feel free to send us your [pull requests](https://github.com/kojix2/libui/pulls).
+  * Small corrections, such as typofixes, are appreciated.
+* Did you find any bugs?　Write it in the [issues](https://github.com/kojix2/LibUI/issue) section!
 
 ## Acknowledgement
 
