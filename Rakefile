@@ -78,7 +78,7 @@ end
 
 namespace :vendor do
   desc 'Download libui.so for Linux to vendor directory'
-  task :linux do
+  task :linux_x64 do
     download_official(
       'libui.so',
       'libui.so.0',
@@ -87,8 +87,18 @@ namespace :vendor do
     )
   end
 
+  desc 'Download libui.so for Linux to vendor directory'
+  task :linux_x86 do
+    download_official(
+      'libui.so',
+      'libui.so.0',
+      'libui-alpha4.1-linux-386-shared.tgz',
+      '9a67de44d3dd3b2134bc801b0fab58eec247f6b18fdc3e43917845cac2217bcb'
+    )
+  end
+
   desc 'Download libui.dylib for Mac to vendor directory'
-  task :mac do
+  task :mac_x64 do
     download_official(
       'libui.dylib',
       'libui.A.dylib',
@@ -98,7 +108,7 @@ namespace :vendor do
   end
 
   desc 'Download libui.dll for Windows to vendor directory'
-  task :windows do
+  task :windows_x64 do
     download_official(
       'libui.dll',
       'libui.dll',
@@ -107,6 +117,16 @@ namespace :vendor do
     )
   end
 
+  desc 'Download libui.dll for Windows to vendor directory'
+  task :windows_x86 do
+    download_official(
+      'libui.dll',
+      'libui.dll',
+      'libui-alpha4.1-windows-386-shared.zip',
+      'e2b8b1e6710c7461e55dfc0454606613942109e4b0c0212b97eb682b3ae3a1b3'
+    )
+  end
+
   desc 'Download libui.so, libui.dylib, and libui.dll to vendor directory'
-  task all: %i[linux mac windows]
+  task all_x64: %i[linux_x64 mac_x64 windows_x64]
 end
