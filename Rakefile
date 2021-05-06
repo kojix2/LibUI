@@ -2,7 +2,7 @@
 
 require 'bundler/gem_tasks'
 require 'rake/testtask'
-require 'digest/md5'
+require 'digest'
 
 Rake::TestTask.new(:test) do |t|
   t.libs << 'test'
@@ -16,17 +16,18 @@ def version
   'alpha4.1'
 end
 
-def download_official(library, remote_lib, file, md5sum_expected)
+def download_official(library, remote_lib, file, sha256sum_expected)
   require 'fileutils'
   require 'open-uri'
   require 'tmpdir'
 
   url = "https://github.com/andlabs/libui/releases/download/#{version}/#{file}"
+  FileUtils.mkdir_p(File.expand_path('vendor', __dir__))
   target_path = File.expand_path("vendor/#{library}", __dir__)
 
   if File.exist?(target_path)
     puts "#{target_path} already exist."
-    if check_md5sum(target_path, md5sum_expected)
+    if check_sha256sum(target_path, sha256sum_expected)
       puts "No need to download #{library}."
       return
     else
@@ -51,7 +52,7 @@ def download_official(library, remote_lib, file, md5sum_expected)
         system "tar xf #{file}"
       end
       path = remote_lib
-      if check_md5sum(path, md5sum_expected)
+      if check_sha256sum(path, sha256sum_expected)
         FileUtils.cp(path, target_path)
         puts "Saved #{target_path}"
       end
@@ -59,18 +60,18 @@ def download_official(library, remote_lib, file, md5sum_expected)
   end
 end
 
-def check_md5sum(path, md5sum_expected)
-  print 'Check md5sum...'
-  actual_md5sum = Digest::MD5.hexdigest(File.binread(path))
-  if actual_md5sum == md5sum_expected
+def check_sha256sum(path, sha256sum_expected)
+  print 'Check sha256sum...'
+  actual_sha256sum = Digest::SHA256.hexdigest(File.binread(path))
+  if actual_sha256sum == sha256sum_expected
     puts 'OK.'
     true
   else
     puts 'Failed.'
-    warn 'Error: md5sum does not match'
-    warn "  path:            #{path}"
-    warn "  actual_md5sum:   #{actual_md5sum}"
-    warn "  expected_md5sum: #{md5sum_expected}"
+    warn 'Error: sha256sum does not match'
+    warn "  path:               #{path}"
+    warn "  actual_sha256sum:   #{actual_sha256sum}"
+    warn "  expected_sha256sum: #{sha256sum_expected}"
     false
   end
 end
@@ -82,7 +83,7 @@ namespace :vendor do
       'libui.so',
       'libui.so.0',
       'libui-alpha4.1-linux-amd64-shared.tgz',
-      '29216166d47a866b6b8df308f9cf990b'
+      'ad517cfc4e402b6070138bfd25804508f9115f91db9330344f0a07f39f6470de'
     )
   end
 
@@ -92,7 +93,7 @@ namespace :vendor do
       'libui.dylib',
       'libui.A.dylib',
       'libui-alpha4.1-darwin-amd64-shared.tgz',
-      'af6665c9c65eb7c6a09496ccea6aa36d'
+      'a3ff09380c1d117d76b6afc68d6e29b7a19c65286c8f1d1039a88e03e999aab4'
     )
   end
 
@@ -102,7 +103,7 @@ namespace :vendor do
       'libui.dll',
       'libui.dll',
       'libui-alpha4.1-windows-amd64-shared.zip',
-      '9da0a8556133fbc46c08c956a0ef5746'
+      '9635cab1528af6ce11dca22e08bf505d7e6b728f2f4c1d97fe7986ea91a0e168'
     )
   end
 
