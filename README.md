@@ -20,6 +20,8 @@ gem install libui
 |---------|-----|-------|
 |<img src="https://user-images.githubusercontent.com/5798442/103118046-900ea780-46b0-11eb-81fc-32626762e4df.png">|<img src="https://user-images.githubusercontent.com/5798442/103118059-99980f80-46b0-11eb-9d12-324ec4d297c9.png">|<img src="https://user-images.githubusercontent.com/5798442/103118068-a0bf1d80-46b0-11eb-8c5c-3bdcc3dcfb26.png">|
 
+Note: If you are using the 32-bit (x86) version of Ruby, you need to download the 32-bit (x86) native dll. See [Development](#development).
+
 ## Usage
 
 ```ruby
@@ -120,20 +122,26 @@ OCRA (One-Click Ruby Application) builds Windows executables from Ruby source co
 git clone https://github.com/kojix2/libui
 cd libui
 bundle install
-bundle exec rake vendor:all
+bundle exec rake vendor:all_x64 # download shared libraries for all platforms
 bundle exec rake test
 ```
 
-Use the following rake tasks to download the libui binary files and save them in the vendor directory.
+You can use the following rake tasks to download the shared library required for your platform.
 
 `rake -T`
 
 ```
-rake vendor:all       # Download libui.so, libui.dylib, and libui.dll to ve...
-rake vendor:linux     # Download libui.so for Linux to vendor directory
-rake vendor:mac       # Download libui.dylib for Mac to vendor directory
-rake vendor:windows   # Download libui.dll for Windows to vendor directory
+rake vendor:all_x64      # Download libui.so, libui.dylib, and libui.dll to...
+rake vendor:linux_x64    # Download libui.so for Linux to vendor directory
+rake vendor:linux_x86    # Download libui.so for Linux to vendor directory
+rake vendor:mac_x64      # Download libui.dylib for Mac to vendor directory
+rake vendor:windows_x64  # Download libui.dll for Windows to vendor directory
+rake vendor:windows_x86  # Download libui.dll for Windows to vendor directory
 ```
+
+For example, If you are using a 32-bit (x86) version of Ruby on Windows, type `rake vendor:windows_x86`.
+
+Or Set environment variable `LIBUIDIR` to specify the path to the shared library.
 
 ## Contributing
 
