@@ -1,3 +1,5 @@
+# Michael Ende (1929-1995)
+
 require 'libui'
 
 UI = LibUI
@@ -6,41 +8,91 @@ UI.init
 
 handler = UI::FFI::AreaHandler.malloc
 area    = UI.new_area(handler)
-font_button = UI.new_font_button
 
-STR = <<-EOS
+str1 = \
+  '  At last Ygramul sensed that something was coming toward ' \
+  'her. With the speed of lightning, she turned about, confronting ' \
+  'Atreyu with an enormous steel-blue face. Her single eye had a ' \
+  'vertical pupil, which stared at Atreyu with inconceivable malignancy. '
 
-EOS
+str2 = \
+  '  A cry of fear escaped Bastian. '
 
-str = UI.new_attributed_string(STR)
+str3 = \
+  '  A cry of terror passed through the ravine and echoed from ' \
+  'side to side. Ygramul turned her eye to left and right, to see if ' \
+  'someone else had arrived, for that sound could not have been ' \
+  'made by the boy who stood there as though paralyzed with ' \
+  'horror. '
+
+str4 = \
+  '  Could she have heard my cry? Bastion wondered in alarm. ' \
+  "But that's not possible. "
+
+str5 = \
+  '  And then Atreyu heard Ygramuls voice. It was very high ' \
+  'and slightly hoarse, not at all the right kind of voice for that ' \
+  'enormous face. Her lips did not move as she spoke. It was the ' \
+  'buzzing of a great swarm of hornets that shaped itself into ' \
+  'words. '
+
+str = ''
+attr_str = UI.new_attributed_string(str)
+
+def attr_str.append(what, color)
+  case color
+  when :red
+    color_attribute = UI.new_color_attribute(0.0, 0.5, 0.0, 0.0)
+  when :green
+    color_attribute = UI.new_color_attribute(0.5, 0.0, 0.25, 0.0)
+  end
+  start = UI.attributed_string_len(self)
+  UI.attributed_string_append_unattributed(self, what)
+  UI.attributed_string_set_attribute(self, color_attribute, start, start + what.size)
+  UI.attributed_string_append_unattributed(self, "\n\n")
+end
+
+attr_str.append(str1, :red)
+attr_str.append(str2, :green)
+attr_str.append(str3, :red)
+attr_str.append(str4, :green)
+attr_str.append(str5, :red)
+
+Georgia = 'Georgia'
 
 handler_draw_event = Fiddle::Closure::BlockCaller.new(0, [1, 1, 1]) do |_, _, adp|
   area_draw_params = UI::FFI::AreaDrawParams.new(adp)
   default_font = UI::FFI::FontDescriptor.malloc
+  default_font.Family = Georgia
+  default_font.Size = 13
+  default_font.Weight = 600
+  default_font.Italic = 0
+  default_font.Stretch = 4
   params = UI::FFI::DrawTextLayoutParams.malloc
 
-  UI.font_button_font(font_button, default_font)
-  params.String = str
+  # UI.font_button_font(font_button, default_font)
+  params.String = attr_str
   params.DefaultFont = default_font
   params.Width = area_draw_params.AreaWidth
   params.Align = 0
   text_layout = UI.draw_new_text_layout(params)
   UI.draw_text(area_draw_params.Context, text_layout, 0, 0)
   UI.draw_free_text_layout(text_layout)
-  UI.free_font_button_font(default_font)
 end
 
 handler.Draw         = handler_draw_event
-handler.MouseEvent   = Fiddle::Closure::BlockCaller.new(0, [0]) {}
-handler.MouseCrossed = Fiddle::Closure::BlockCaller.new(0, [0]) {}
-handler.DragBroken   = Fiddle::Closure::BlockCaller.new(0, [0]) {}
-handler.KeyEvent     = Fiddle::Closure::BlockCaller.new(0, [0]) {}
+# Assigning to local variables
+# This is intended to protect Fiddle::Closure from garbage collection.
+handler.MouseEvent   = (c1 = Fiddle::Closure::BlockCaller.new(0, [0]) {})
+handler.MouseCrossed = (c2 = Fiddle::Closure::BlockCaller.new(0, [0]) {})
+handler.DragBroken   = (c3 = Fiddle::Closure::BlockCaller.new(0, [0]) {})
+handler.KeyEvent     = (c4 = Fiddle::Closure::BlockCaller.new(0, [0]) {})
 
 box = UI.new_vertical_box
 UI.box_set_padded(box, 1)
 UI.box_append(box, area, 1)
 
-main_window = UI.new_window('Basic Draw Text', 300, 200, 1)
+main_window = UI.new_window('Basic Draw Text', 600, 400, 1)
 UI.window_set_margined(main_window, 1)
 UI.window_set_child(main_window, box)
 
