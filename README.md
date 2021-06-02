@@ -3,7 +3,7 @@
 ![build](https://github.com/kojix2/libui/workflows/build/badge.svg)
 [![Gem Version](https://badge.fury.io/rb/libui.svg)](https://badge.fury.io/rb/libui)
 
-:radio_button: [libui](https://github.com/andlabs/libui) - a portable GUI library -for Ruby
+:radio_button: [libui](https://github.com/andlabs/libui) - a portable GUI library - for Ruby
 
 ## Installation
 
@@ -110,6 +110,13 @@ end
     In this case, you need to be careful about Ruby's garbage collection. 
     If the function object is collected, memory will be freed 
     and a segmentation violation will occur when the callback is invoked.
+
+```ruby
+# to a local variable to prevent it from being collected by GC.
+handler.MouseEvent   = (c1 = Fiddle::Closure::BlockCaller.new(0, [0]) {})
+handler.MouseCrossed = (c2 = Fiddle::Closure::BlockCaller.new(0, [0]) {})
+handler.DragBroken   = (c3 = Fiddle::Closure::BlockCaller.new(0, [0]) {})
+```
 
 ### How to create an executable (.exe) on Windows 
 
