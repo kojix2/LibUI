@@ -52,11 +52,11 @@ def attr_str.append(what, color)
   UI.attributed_string_append_unattributed(self, "\n\n")
 end
 
-attr_str.append(str1, :red)
-attr_str.append(str2, :green)
-attr_str.append(str3, :red)
-attr_str.append(str4, :green)
-attr_str.append(str5, :red)
+attr_str.append(str1, :green)
+attr_str.append(str2, :red)
+attr_str.append(str3, :green)
+attr_str.append(str4, :red)
+attr_str.append(str5, :green)
 
 Georgia = 'Georgia'
 
