@@ -1,5 +1,3 @@
-# Michael Ende (1929-1995)
-
 require 'libui'
 
 UI = LibUI
@@ -8,6 +6,12 @@ UI.init
 
 handler = UI::FFI::AreaHandler.malloc
 area    = UI.new_area(handler)
+
+# Michael Ende (1929-1995)
+# The Neverending Story is a fantasy novel by German writer Michael Ende,
+# The English version, translated by Ralph Manheim, was published in 1983.
+
+TITLE = 'Michael Ende (1929-1995) The Neverending Story'
 
 str1 = \
   '  At last Ygramul sensed that something was coming toward ' \
@@ -92,7 +96,7 @@ box = UI.new_vertical_box
 UI.box_set_padded(box, 1)
 UI.box_append(box, area, 1)
 
-main_window = UI.new_window('Basic Draw Text', 600, 400, 1)
+main_window = UI.new_window(TITLE, 600, 400, 1)
 UI.window_set_margined(main_window, 1)
 UI.window_set_child(main_window, box)
 
