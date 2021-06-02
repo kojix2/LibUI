@@ -46,9 +46,9 @@ attr_str = UI.new_attributed_string(str)
 def attr_str.append(what, color)
   case color
   when :red
-    color_attribute = UI.new_color_attribute(0.0, 0.5, 0.0, 0.0)
+    color_attribute = UI.new_color_attribute(0.0, 0.5, 0.0, 0.7)
   when :green
-    color_attribute = UI.new_color_attribute(0.5, 0.0, 0.25, 0.0)
+    color_attribute = UI.new_color_attribute(0.5, 0.0, 0.25, 0.7)
   end
   start = UI.attributed_string_len(self)
   UI.attributed_string_append_unattributed(self, what)
@@ -69,7 +69,7 @@ handler_draw_event = Fiddle::Closure::BlockCaller.new(0, [1, 1, 1]) do |_, _, ad
   default_font = UI::FFI::FontDescriptor.malloc
   default_font.Family = Georgia
   default_font.Size = 13
-  default_font.Weight = 600
+  default_font.Weight = 500
   default_font.Italic = 0
   default_font.Stretch = 4
   params = UI::FFI::DrawTextLayoutParams.malloc
