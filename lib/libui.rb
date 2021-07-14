@@ -10,14 +10,7 @@ module LibUI
     attr_accessor :ffi_lib
   end
 
-  lib_name = case RbConfig::CONFIG['host_os']
-             when /mswin|msys|mingw|cygwin|bccwin|wince|emc/
-               'libui.dll'
-             when /darwin|mac os/
-               'libui.dylib'
-             else
-               'libui.so'
-             end
+  lib_name = "libui.#{RbConfig::CONFIG["SOEXT"]}"
 
   self.ffi_lib = if ENV['LIBUIDIR'] && !ENV['LIBUIDIR'].empty?
                    File.expand_path(lib_name, ENV['LIBUIDIR'])
