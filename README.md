@@ -123,6 +123,27 @@ handler.DragBroken   = (c3 = Fiddle::Closure::BlockCaller.new(0, [0]) {})
 OCRA (One-Click Ruby Application) builds Windows executables from Ruby source code. 
 * https://github.com/larsch/ocra/
 
+In order to build a exe with Ocra, include 3 DLLs from ruby_builtin_dlls folder:
+
+```sh
+ocra examples/control_gallery.rb        ^
+  --dll ruby_builtin_dlls/libssp-0.dll  ^
+  --dll ruby_builtin_dlls/libgmp-10.dll ^
+  --dll ruby_builtin_dlls/libffi-7.dll  ^
+  --gem-all=fiddle                      ^
+```
+
+Add additional options below if necessary.
+
+```sh
+  --window                              ^
+  --add-all-core                        ^
+  --chdir-first                         ^
+  --icon assets\app.ico                 ^
+  --verbose                             ^
+  --output out\gallery.exe
+```
+
 ## Development
 
 ```sh
