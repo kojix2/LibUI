@@ -69,7 +69,7 @@ Compared to original libui written in C,
 
 * At the moment, it is not object-oriented.
   * Instead of providing a half-baked object-oriented approach, leave it as is.
-  * (A list of DSLs for LibUI](https://github.com/kojix2/LibUI/wiki/DSL-for-LibUI)
+* [A list of DSLs for LibUI.](https://github.com/kojix2/LibUI/wiki/DSL-for-LibUI)
 
 ### How to use fiddle pointers?
 
