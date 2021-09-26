@@ -2,6 +2,8 @@
 
 # NOTE:
 # This example displays images that can be freely downloaded from the Studio Ghibli website.
+# https://www.ghibli.jp/works/red-turtle/
+# "Please feel free to use them within the scope of common sense."　Toshio Suzuki (producer)
 
 require 'libui'
 require 'chunky_png'
@@ -11,7 +13,7 @@ UI = LibUI
 
 UI.init
 
-main_window = UI.new_window('The Red Turtle', 310, 350, 0)
+main_window = UI.new_window('The Red Turtle (2016)', 310, 350, 0)
 
 hbox = UI.new_horizontal_box
 UI.window_set_child(main_window, hbox)
@@ -58,7 +60,7 @@ table_params.Model = model
 table_params.RowBackgroundColorModelColumn = -1
 
 table = UI.new_table(table_params)
-UI.table_append_image_column(table, 'www.ghibli.jp/works/red-turtle', -1)
+UI.table_append_image_column(table, 'Directed by Michaël Dudok de Wit', -1)
 
 UI.box_append(hbox, table, 1)
 UI.control_show(main_window)
