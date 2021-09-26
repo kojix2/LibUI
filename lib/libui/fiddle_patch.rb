@@ -1,15 +1,5 @@
-require 'fiddle/import'
-
-module Fiddle
-  # Change the Function to hold a little more information.
-  class Function
-    # Note:
-    # Ruby 2.7 Fiddle::Function dose not have @argument_types
-    # Ruby 3.0 Fiddle::Function has @argument_types
-    attr_accessor :callback_argument_types, :argument_types
-  end
-
-  module Importer
+module LibUI
+  module FiddlePatch
     def parse_signature(signature, tymap = nil)
       tymap ||= {}
       ctype, func, args = case compact(signature)
@@ -42,10 +32,29 @@ module Fiddle
       opt = parse_bind_options(opts)
       func = import_function(symname, ctype, argtype, opt[:call_type])
 
-      func.callback_argument_types = callback_argument_types                    # Added
+      # callback_argument_types
+      func.instance_variable_set(:@callback_argument_types, 
+                                   callback_argument_types) # Added
+      # attr_reader
+      def func.callback_argument_types
+        @callback_argument_types
+      end
+
+      # argument_types
       # Ruby 2.7 Fiddle::Function dose not have @argument_types
       # Ruby 3.0 Fiddle::Function has @argument_types
-      func.argument_types = argtype
+      if func.instance_variable_defined?(:@argument_types)
+        # check if @argument_types are the same
+        if func.instance_variable_get(:@argument_types) != argtype
+          warn "#{symname} func.argument_types:#{func.argument_types} != argtype #{argtype}"
+        end
+      else
+        func.instance_variable_set(:@argument_types, argtype)
+      end
+      # attr_reader
+      def func.argument_types
+        @argument_types
+      end
 
       name = symname.gsub(/@.+/, '')
       @func_map[name] = func
@@ -66,4 +75,5 @@ module Fiddle
       func
     end
   end
+  private_constant :FiddlePatch
 end

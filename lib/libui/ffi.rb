@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
 require 'fiddle/import'
-require_relative 'fiddle_ext'
+require_relative 'fiddle_patch'
 
 module LibUI
   module FFI
     extend Fiddle::Importer
+    extend FiddlePatch
 
     begin
       dlload LibUI.ffi_lib
