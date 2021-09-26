@@ -14,8 +14,8 @@ UI.window_set_child(main_window, hbox)
 data = [
   %w[cat meow],
   %w[dog woof],
-  %w[checken cock-a-doodle-doo],
-  %w[hourse neigh],
+  %w[chicken cock-a-doodle-doo],
+  %w[horse neigh],
   %w[cow moo]
 ]
 
