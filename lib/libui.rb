@@ -34,6 +34,9 @@ module LibUI
   end
 
   # UI_ENUM
+  # https://github.com/andlabs/libui/blob/master/ui.h
+
+  # ForEach
   ForEachContinue    =    0
   ForEachStop        =    1
 
