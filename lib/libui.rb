@@ -66,6 +66,8 @@ module LibUI
   DrawLineJoinRound = 1
   DrawLineJoinBevel = 2
 
+  DrawDefaultMiterLimit = 10.0
+
   # DrawFillMode
   DrawFillModeWinding   = 0
   DrawFillModeAlternate = 1
@@ -194,4 +196,8 @@ module LibUI
   TableValueTypeImage  = 1
   TableValueTypeInt    = 2
   TableValueTypeColor  = 3
+
+  # editable
+  TableModelColumnNeverEditable  = -1
+  TableModelColumnAlwaysEditable = -2
 end
