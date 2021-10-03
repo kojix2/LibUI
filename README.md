@@ -69,7 +69,10 @@ Compared to original libui written in C,
 
 * At the moment, it is not object-oriented.
   * Instead of providing a half-baked object-oriented approach, leave it as is.
-* [A list of DSLs for LibUI.](https://github.com/kojix2/LibUI/wiki/DSL-for-LibUI)
+
+### DSLs for LibUI
+  * [Glimmer DSL for LibUI](https://github.com/AndyObtiva/glimmer-dsl-libui)
+  * [libui_paradise](https://rubygems.org/gems/libui_paradise)
 
 ### How to use fiddle pointers?
 
