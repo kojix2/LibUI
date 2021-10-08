@@ -36,12 +36,12 @@ rescue StandardError => e
 end
 
 # Protects BlockCaller objects from garbage collection.
-@blockcaller = []
+@block_callers = []
 def rbcallback(*args, &block)
   args << [0] if args.size == 1 # Argument types are ommited
-  blockcaller = Fiddle::Closure::BlockCaller.new(*args, &block)
-  @blockcaller << blockcaller
-  blockcaller
+  block_caller = Fiddle::Closure::BlockCaller.new(*args, &block)
+  @block_callers << block_caller
+  block_caller
 end
 
 model_handler = UI::FFI::TableModelHandler.malloc
