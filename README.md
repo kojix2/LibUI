@@ -64,7 +64,9 @@ Compared to original libui written in C,
 * You can pass a block as a callback. 
   * The block will be converted to a Proc object and added to the last argument.
   * Even in that case, it is possible to omit the last argument nil.
-  
+
+You can use [the documentation for libui's Go bindings](https://pkg.go.dev/github.com/andlabs/ui) as a reference.
+
 ### Not object oriented?
 
 * At the moment, it is not object-oriented.
