@@ -9,7 +9,8 @@ UI.init
 main_window = UI.new_window('hello world', 300, 200, 1)
 
 font_button = UI.new_font_button
-font_descriptor = UI::FFI::FontDescriptor.malloc(Fiddle::RUBY_FREE)
+font_descriptor = UI::FFI::FontDescriptor.malloc
+font_descriptor = Fiddle::RUBY_FREE
 UI.font_button_on_changed(font_button) do
   UI.font_button_font(font_button, font_descriptor)
   p family: font_descriptor.Family.to_s,

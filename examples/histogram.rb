@@ -11,9 +11,11 @@ Y_OFF_BOTTOM = 20
 POINT_RADIUS = 5
 
 init         = UI.init
-handler      = UI::FFI::AreaHandler.malloc(Fiddle::RUBY_FREE)
+handler      = UI::FFI::AreaHandler.malloc
+handler.to_ptr.free = Fiddle::RUBY_FREE
 histogram    = UI.new_area(handler)
-brush        = UI::FFI::DrawBrush.malloc(Fiddle::RUBY_FREE)
+brush        = UI::FFI::DrawBrush.malloc
+brush.free   = Fiddle::RUBY_FREE
 color_button = UI.new_color_button
 blue         = 0x1E90FF
 datapoints   = []
@@ -24,7 +26,8 @@ def graph_size(area_width, area_height)
   [graph_width, graph_height]
 end
 
-matrix = UI::FFI::DrawMatrix.malloc(Fiddle::RUBY_FREE)
+matrix = UI::FFI::DrawMatrix.malloc
+matrix.to_ptr.free = Fiddle::RUBY_FREE
 
 def point_locations(datapoints, width, height)
   xincr = width / 9.0 # 10 - 1 to make the last point be at the end
@@ -70,7 +73,8 @@ handler_draw_event = Fiddle::Closure::BlockCaller.new(
   set_solid_brush(brush, 0xFFFFFF, 1.0) # white
   UI.draw_fill(area_draw_params.Context, path, brush.to_ptr)
   UI.draw_free_path(path)
-  dsp = UI::FFI::DrawStrokeParams.malloc(Fiddle::RUBY_FREE)
+  dsp = UI::FFI::DrawStrokeParams.malloc
+  dsp.to_ptr.free = Fiddle::RUBY_FREE
   dsp.Cap = 0 # flat
   dsp.Join = 0 # miter
   dsp.Thickness = 2

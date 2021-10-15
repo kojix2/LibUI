@@ -28,7 +28,8 @@ def rbcallback(*args, &block)
   block_caller
 end
 
-model_handler = UI::FFI::TableModelHandler.malloc(Fiddle::RUBY_FREE)
+model_handler = UI::FFI::TableModelHandler.malloc
+model_handler.to_ptr.free = Fiddle::RUBY_FREE
 model_handler.NumColumns   = rbcallback(4) { 2 }
 model_handler.ColumnType   = rbcallback(4) { 0 }
 model_handler.NumRows      = rbcallback(4) { 5 }
@@ -39,7 +40,8 @@ model_handler.SetCellValue = rbcallback(0, [0]) {}
 
 model = UI.new_table_model(model_handler)
 
-table_params = UI::FFI::TableParams.malloc(Fiddle::RUBY_FREE)
+table_params = UI::FFI::TableParams.malloc
+table_params = Fiddle::RUBY_FREE
 table_params.Model = model
 table_params.RowBackgroundColorModelColumn = -1
 
