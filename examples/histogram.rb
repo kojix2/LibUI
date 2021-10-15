@@ -11,9 +11,9 @@ Y_OFF_BOTTOM = 20
 POINT_RADIUS = 5
 
 init         = UI.init
-handler      = UI::FFI::AreaHandler.malloc
+handler      = UI::FFI::AreaHandler.malloc(Fiddle::RUBY_FREE)
 histogram    = UI.new_area(handler)
-brush        = UI::FFI::DrawBrush.malloc
+brush        = UI::FFI::DrawBrush.malloc(Fiddle::RUBY_FREE)
 color_button = UI.new_color_button
 blue         = 0x1E90FF
 datapoints   = []
@@ -24,7 +24,7 @@ def graph_size(area_width, area_height)
   [graph_width, graph_height]
 end
 
-matrix = UI::FFI::DrawMatrix.malloc
+matrix = UI::FFI::DrawMatrix.malloc(Fiddle::RUBY_FREE)
 
 def point_locations(datapoints, width, height)
   xincr = width / 9.0 # 10 - 1 to make the last point be at the end
@@ -70,12 +70,12 @@ handler_draw_event = Fiddle::Closure::BlockCaller.new(
   set_solid_brush(brush, 0xFFFFFF, 1.0) # white
   UI.draw_fill(area_draw_params.Context, path, brush.to_ptr)
   UI.draw_free_path(path)
-  dsp = UI::FFI::DrawStrokeParams.malloc
+  dsp = UI::FFI::DrawStrokeParams.malloc(Fiddle::RUBY_FREE)
   dsp.Cap = 0 # flat
   dsp.Join = 0 # miter
   dsp.Thickness = 2
   dsp.MiterLimit = 10 # DEFAULT_MITER_LIMIT
-  dashes = Fiddle::Pointer.malloc(8)
+  dashes = Fiddle::Pointer.malloc(8, Fiddle::RUBY_FREE)
   dsp.Dashes = dashes
   dsp.NumDashes = 0
   dsp.DashPhase = 0
@@ -99,10 +99,10 @@ handler_draw_event = Fiddle::Closure::BlockCaller.new(
 
   # now get the color for the graph itself and set up the brush
   # uiColorButtonColor(colorButton, &graphR, &graphG, &graphB, &graphA)
-  graph_r = Fiddle::Pointer.malloc(8) # double
-  graph_g = Fiddle::Pointer.malloc(8) # double
-  graph_b = Fiddle::Pointer.malloc(8) # double
-  graph_a = Fiddle::Pointer.malloc(8) # double
+  graph_r = Fiddle::Pointer.malloc(8, Fiddle::RUBY_FREE) # double
+  graph_g = Fiddle::Pointer.malloc(8, Fiddle::RUBY_FREE)  # double
+  graph_b = Fiddle::Pointer.malloc(8, Fiddle::RUBY_FREE) # double
+  graph_a = Fiddle::Pointer.malloc(8, Fiddle::RUBY_FREE) # double
 
   UI.color_button_color(color_button, graph_r, graph_g, graph_b, graph_a)
   brush.Type = 0 # solid

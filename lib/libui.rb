@@ -24,7 +24,7 @@ module LibUI
   extend LibUIBase
 
   class << self
-    def init(opt = FFI::InitOptions.malloc)
+    def init(opt = FFI::InitOptions.malloc(Fiddle::RUBY_FREE))
       i = super(opt)
       return if i.size.zero?
 

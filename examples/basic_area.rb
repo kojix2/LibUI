@@ -4,9 +4,9 @@ UI = LibUI
 
 UI.init
 
-handler = UI::FFI::AreaHandler.malloc
+handler = UI::FFI::AreaHandler.malloc(Fiddle::RUBY_FREE)
 area    = UI.new_area(handler)
-brush   = UI::FFI::DrawBrush.malloc
+brush   = UI::FFI::DrawBrush.malloc(Fiddle::RUBY_FREE)
 
 handler_draw_event = Fiddle::Closure::BlockCaller.new(0, [1, 1, 1]) do |_, _, area_draw_params|
   path = UI.draw_new_path(0)

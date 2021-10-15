@@ -4,7 +4,7 @@ UI = LibUI
 
 UI.init
 
-handler = UI::FFI::AreaHandler.malloc
+handler = UI::FFI::AreaHandler.malloc(Fiddle::RUBY_FREE)
 area    = UI.new_area(handler)
 
 # Michael Ende (1929-1995)
@@ -66,13 +66,13 @@ Georgia = 'Georgia'
 
 handler_draw_event = Fiddle::Closure::BlockCaller.new(0, [1, 1, 1]) do |_, _, adp|
   area_draw_params = UI::FFI::AreaDrawParams.new(adp)
-  default_font = UI::FFI::FontDescriptor.malloc
+  default_font = UI::FFI::FontDescriptor.malloc(Fiddle::RUBY_FREE)
   default_font.Family = Georgia
   default_font.Size = 13
   default_font.Weight = 500
   default_font.Italic = 0
   default_font.Stretch = 4
-  params = UI::FFI::DrawTextLayoutParams.malloc
+  params = UI::FFI::DrawTextLayoutParams.malloc(Fiddle::RUBY_FREE)
 
   # UI.font_button_font(font_button, default_font)
   params.String = attr_str

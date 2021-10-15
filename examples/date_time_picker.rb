@@ -10,7 +10,7 @@ vbox = UI.new_vertical_box
 
 date_time_picker = UI.new_date_time_picker
 
-time = UI::FFI::TM.malloc
+time = UI::FFI::TM.malloc(Fiddle::RUBY_FREE)
 
 UI.date_time_picker_on_changed(date_time_picker) do
   UI.date_time_picker_time(date_time_picker, time)

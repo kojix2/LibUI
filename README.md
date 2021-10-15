@@ -98,7 +98,7 @@ If you need to use C structs, you can do the following.
 font_button = UI.new_font_button
 
 # Allocate memory 
-font_descriptor = UI::FFI::FontDescriptor.malloc
+font_descriptor = UI::FFI::FontDescriptor.malloc(Fiddle::RUBY_FREE)
 
 UI.font_button_on_changed(font_button) do
   UI.font_button_font(font_button, font_descriptor)
