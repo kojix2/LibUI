@@ -217,17 +217,33 @@ module LibUI
     # uiDateTimePicker
 
     # time.h
-    TM = struct [
-      'int tm_sec',
-      'int tm_min',
-      'int tm_hour',
-      'int tm_mday',
-      'int tm_mon',
-      'int tm_year',
-      'int tm_wday',
-      'int tm_yday',
-      'int tm_isdst'
-    ]
+    TM = if Fiddle::WINDOWS
+           struct [
+             'int tm_sec',
+             'int tm_min',
+             'int tm_hour',
+             'int tm_mday',
+             'int tm_mon',
+             'int tm_year',
+             'int tm_wday',
+             'int tm_yday',
+             'int tm_isdst'
+           ]
+         else # The GNU C Library (glibc)
+           struct [
+             'int tm_sec',
+             'int tm_min',
+             'int tm_hour',
+             'int tm_mday',
+             'int tm_mon',
+             'int tm_year',
+             'int tm_wday',
+             'int tm_yday',
+             'int tm_isdst',
+             'long tm_gmtoff',
+             'const char *tm_zone'
+           ]
+         end
 
     try_extern 'void uiDateTimePickerTime(uiDateTimePicker *d, struct tm *time)'
     try_extern 'void uiDateTimePickerSetTime(uiDateTimePicker *d, const struct tm *time)'
