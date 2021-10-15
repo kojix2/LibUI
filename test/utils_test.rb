@@ -4,13 +4,10 @@ require 'test_helper'
 
 class LibUIUtilsTest < Minitest::Test
   def test_convert_to_ruby_method
-    rbmethod = LibUI::Utils.convert_to_ruby_method('uiNewMatz')
-    assert_equal 'new_matz', rbmethod
-  end
-
-  def test_convert_to_ruby_method
-    rbmethod = LibUI::Utils.convert_to_ruby_method('AINewMatz')
-    assert_equal 'ai_new_matz', rbmethod
+    rbmethod1 = LibUI::Utils.convert_to_ruby_method('uiNewMatz')
+    rbmethod2 = LibUI::Utils.convert_to_ruby_method('AINewMatz')
+    assert_equal 'new_matz', rbmethod1
+    assert_equal 'ai_new_matz', rbmethod2
   end
 
   def test_underscore
