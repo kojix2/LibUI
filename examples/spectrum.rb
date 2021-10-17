@@ -1,3 +1,5 @@
+#! /usr/bin/env ruby
+
 require 'libui'
 require 'ffi-portaudio'
 require 'numo/narray'
