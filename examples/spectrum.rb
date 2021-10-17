@@ -1,9 +1,11 @@
 #! /usr/bin/env ruby
 
+# Please play your favorite music or video on your computer
+# when running this spectrum example.
+
 require 'libui'
-require 'ffi-portaudio'
-require 'numo/narray'
-require 'numo/pocketfft'
+require 'ffi-portaudio'  # https://github.com/nanki/ffi-portaudio
+require 'numo/pocketfft' # https://github.com/yoshoku/numo-pocketfft
 
 # ---------------------------------------------------------------------------- #
 
@@ -48,17 +50,14 @@ brush = UI::FFI::DrawBrush.malloc.tap do |b|
   b.A = 1.0
 end
 
+dashes = Fiddle::Pointer.malloc(8, Fiddle::RUBY_FREE)
 stroke_params = UI::FFI::DrawStrokeParams.malloc.tap do |sp|
-  dashes = Fiddle::Pointer.malloc(8, Fiddle::RUBY_FREE)
-  ndash = 4
-  offset = -50.0
-
   sp.Cap = UI::DrawLineCapFlat
   sp.Join = UI::DrawLineJoinMiter
   sp.MiterLimit = 10
   sp.Dashes = dashes
-  sp.NumDashes = ndash
-  sp.DashPhase = offset
+  sp.NumDashes = 0
+  sp.DashPhase = 0
   sp.Thickness = 1.0
 end
 
@@ -78,8 +77,8 @@ end
 
 handler.Draw = handler_draw_event
 n = Fiddle::Closure::BlockCaller.new(0, [0]) {}
-handler.MouseEvent   = n 
-handler.MouseCrossed = n 
+handler.MouseEvent   = n
+handler.MouseCrossed = n
 handler.DragBroken   = n
 handler.KeyEvent     = n
 
@@ -104,9 +103,9 @@ redraw = Fiddle::Closure::BlockCaller.new(4, [0]) do
   UI.area_queue_redraw_all(area)
   1
 end
-a = proc do
+timer = proc do
   UI.timer(100, redraw)
 end
-UI.queue_main(&a)
+UI.queue_main(&timer)
 UI.main
 UI.quit
