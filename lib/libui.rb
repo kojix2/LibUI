@@ -35,6 +35,21 @@ module LibUI
       warn 'error'
       warn UI.free_init_error(init)
     end
+
+    def open_type_features_add(otf, a, b, c, d, value)
+      a, b, c, d = [a, b, c, d].map { |s| s.is_a?(String) ? s.ord : s }
+      super(otf, a, b, c, d, value)
+    end
+
+    def open_type_features_remove(otf, a, b, c, d)
+      a, b, c, d = [a, b, c, d].map { |s| s.is_a?(String) ? s.ord : s }
+      super(otf, a, b, c, d)
+    end
+
+    def open_type_features_get(otf, a, b, c, d, value)
+      a, b, c, d = [a, b, c, d].map { |s| s.is_a?(String) ? s.ord : s }
+      super(otf, a, b, c, d, value)
+    end
   end
 
   # UI_ENUM

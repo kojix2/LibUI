@@ -63,11 +63,11 @@ def make_attribute_string
   UI.attributed_string_append_unattributed(attr_str,
                                            'and control over OpenType features such as ligatures (for instance, ')
   otf = UI.new_open_type_features
-  UI.open_type_features_add(otf, 'l'.ord, 'i'.ord, 'g'.ord, 'a'.ord, 0)
+  UI.open_type_features_add(otf, 'l', 'i', 'g', 'a', 0)
   attr1 = UI.new_features_attribute(otf)
   append_with_attribute(attr_str, 'afford', attr1, nil)
   UI.attributed_string_append_unattributed(attr_str, ' vs. ')
-  UI.open_type_features_add(otf, 'l'.ord, 'i'.ord, 'g'.ord, 'a'.ord, 1)
+  UI.open_type_features_add(otf, 'l', 'i', 'g', 'a', 1)
   attr1 = UI.new_features_attribute(otf)
   append_with_attribute(attr_str, 'afford', attr1, nil)
   UI.free_open_type_features(otf)
