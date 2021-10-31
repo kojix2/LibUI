@@ -41,7 +41,7 @@ model_handler.SetCellValue = rbcallback(0, [0]) {}
 model = UI.new_table_model(model_handler)
 
 table_params = UI::FFI::TableParams.malloc
-table_params = Fiddle::RUBY_FREE
+table_params.to_ptr.free = Fiddle::RUBY_FREE
 table_params.Model = model
 table_params.RowBackgroundColorModelColumn = -1
 
