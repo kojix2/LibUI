@@ -1,4 +1,4 @@
-#! /usr/bin/env ruby
+#!/usr/bin/env ruby
 
 # Please play your favorite music or video on your computer
 # when running this spectrum example.

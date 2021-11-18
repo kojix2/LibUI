@@ -36,7 +36,7 @@ module LibUI
 
     # https://github.com/andlabs/libui/blob/master/ui.h
     # keep same order
-    
+
     try_extern 'const char *uiInit(uiInitOptions *options)'
     try_extern 'void uiUninit(void)'
     try_extern 'void uiFreeInitError(const char *err)'

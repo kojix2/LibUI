@@ -104,7 +104,7 @@ handler_draw_event = Fiddle::Closure::BlockCaller.new(
   # now get the color for the graph itself and set up the brush
   # uiColorButtonColor(colorButton, &graphR, &graphG, &graphB, &graphA)
   graph_r = Fiddle::Pointer.malloc(8, Fiddle::RUBY_FREE) # double
-  graph_g = Fiddle::Pointer.malloc(8, Fiddle::RUBY_FREE)  # double
+  graph_g = Fiddle::Pointer.malloc(8, Fiddle::RUBY_FREE) # double
   graph_b = Fiddle::Pointer.malloc(8, Fiddle::RUBY_FREE) # double
   graph_a = Fiddle::Pointer.malloc(8, Fiddle::RUBY_FREE) # double
 
