@@ -12,24 +12,29 @@ module LibUI
 
         # The proc object is converted to a Closure::BlockCaller object.
         args.map!.with_index do |arg, idx|
-          if arg.is_a?(Proc)
-            # The types of the function arguments are recorded beforehand.
-            # See the monkey patch in ffi.rb.
-            callback = Fiddle::Closure::BlockCaller.new(
-              *func.callback_argument_types[idx][1..2], &arg
-            )
-            # Protect from GC
-            # See https://github.com/kojix2/LibUI/issues/8
-            receiver = args[0]
-            if receiver.instance_variable_defined?(:@callbacks)
-              receiver.instance_variable_get(:@callbacks) << callback
-            else
-              receiver.instance_variable_set(:@callbacks, [callback])
-            end
-            callback
+          next arg unless arg.is_a?(Proc)
+
+          # now arg must be Proc
+
+          # The types of the function arguments are recorded beforehand.
+          # See the monkey patch in ffi.rb.
+          callback = Fiddle::Closure::BlockCaller.new(
+            *func.callback_argument_types[idx][1..2], &arg
+          )
+          # Protect from GC
+          # by giving the owner object a reference to the callback.
+          # See https://github.com/kojix2/LibUI/issues/8
+          owner = if (idx == 0 or owner.frozen?) #  e.g. UI.queue_main{}; UI.timer(100) {}
+                    LibUIBase # or UI is better?
+                  else
+                    args[0] # receiver
+                  end
+          if owner.instance_variable_defined?(:@callbacks)
+            owner.instance_variable_get(:@callbacks) << callback
           else
-            arg
+            owner.instance_variable_set(:@callbacks, [callback])
           end
+          callback
         end
 
         # Make it possible to omit the last nil. This may be an over-optimization.

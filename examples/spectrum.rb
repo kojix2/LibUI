@@ -99,14 +99,12 @@ UI.window_on_closing(main_window) do
   0
 end
 UI.control_show(main_window)
-# FIXME
-redraw = Fiddle::Closure::BlockCaller.new(4, [0]) do
-  UI.area_queue_redraw_all(area)
-  1
+
+UI.queue_main do
+  UI.timer(100) do
+    UI.area_queue_redraw_all(area)
+    1
+  end
 end
-timer = proc do
-  UI.timer(100, redraw)
-end
-UI.queue_main(&timer)
 UI.main
 UI.quit

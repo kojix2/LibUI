@@ -124,10 +124,9 @@ handler.MouseCrossed = do_nothing
 handler.DragBroken   = do_nothing
 handler.KeyEvent     = key_event
 
-should_quit = proc do
+UI.on_should_quit do
   UI.control_destroy(main_window)
 end
-UI.on_should_quit(should_quit)
 
 @attr_str = make_attribute_string
 
