@@ -46,11 +46,11 @@ attr_str = UI.new_attributed_string(str)
 
 def attr_str.append(what, color)
   c = case color
-  when :red
-    [0.0, 0.5, 0.0, 0.7]
-  when :green
-    [0.5, 0.0, 0.25, 0.7]
-  end
+      when :red
+        [0.0, 0.5, 0.0, 0.7]
+      when :green
+        [0.5, 0.0, 0.25, 0.7]
+      end
   color_attribute = UI.new_color_attribute(*c)
   start = UI.attributed_string_len(self)
   UI.attributed_string_append_unattributed(self, what)
