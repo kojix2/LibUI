@@ -117,12 +117,12 @@ end
 
 handler.Draw = handler_draw_event
 
-n = Fiddle::Closure::BlockCaller.new(0, [0]) {}
-ke = Fiddle::Closure::BlockCaller.new(0, [0]) { 0 }
-handler.MouseEvent   = n
-handler.MouseCrossed = n
-handler.DragBroken   = n
-handler.KeyEvent     = ke
+do_nothing = Fiddle::Closure::BlockCaller.new(0, [0]) {}
+key_event  = Fiddle::Closure::BlockCaller.new(1, [0]) { 0 }
+handler.MouseEvent   = do_nothing
+handler.MouseCrossed = do_nothing
+handler.DragBroken   = do_nothing
+handler.KeyEvent     = key_event
 
 should_quit = proc do
   UI.control_destroy(main_window)

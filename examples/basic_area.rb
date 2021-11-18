@@ -24,11 +24,14 @@ handler_draw_event = Fiddle::Closure::BlockCaller.new(0, [1, 1, 1]) do |_, _, ar
   UI.draw_free_path(path)
 end
 
+do_nothing = Fiddle::Closure::BlockCaller.new(0, [0]) {}
+key_event  = Fiddle::Closure::BlockCaller.new(1, [0]) { 0 }
+
 handler.Draw         = handler_draw_event
-handler.MouseEvent   = Fiddle::Closure::BlockCaller.new(0, [0]) {}
-handler.MouseCrossed = Fiddle::Closure::BlockCaller.new(0, [0]) {}
-handler.DragBroken   = Fiddle::Closure::BlockCaller.new(0, [0]) {}
-handler.KeyEvent     = Fiddle::Closure::BlockCaller.new(0, [0]) {}
+handler.MouseEvent   = do_nothing
+handler.MouseCrossed = do_nothing
+handler.DragBroken   = do_nothing
+handler.KeyEvent     = key_event
 
 box = UI.new_vertical_box
 UI.box_set_padded(box, 1)

@@ -45,12 +45,13 @@ str = ''
 attr_str = UI.new_attributed_string(str)
 
 def attr_str.append(what, color)
-  case color
+  c = case color
   when :red
-    color_attribute = UI.new_color_attribute(0.0, 0.5, 0.0, 0.7)
+    [0.0, 0.5, 0.0, 0.7]
   when :green
-    color_attribute = UI.new_color_attribute(0.5, 0.0, 0.25, 0.7)
+    [0.5, 0.0, 0.25, 0.7]
   end
+  color_attribute = UI.new_color_attribute(*c)
   start = UI.attributed_string_len(self)
   UI.attributed_string_append_unattributed(self, what)
   UI.attributed_string_set_attribute(self, color_attribute, start, start + what.size)
@@ -87,13 +88,16 @@ handler_draw_event = Fiddle::Closure::BlockCaller.new(0, [1, 1, 1]) do |_, _, ad
   UI.draw_free_text_layout(text_layout)
 end
 
-handler.Draw         = handler_draw_event
+handler.Draw = handler_draw_event
+
 # Assigning to local variables
 # This is intended to protect Fiddle::Closure from garbage collection.
-handler.MouseEvent   = (c1 = Fiddle::Closure::BlockCaller.new(0, [0]) {})
-handler.MouseCrossed = (c2 = Fiddle::Closure::BlockCaller.new(0, [0]) {})
-handler.DragBroken   = (c3 = Fiddle::Closure::BlockCaller.new(0, [0]) {})
-handler.KeyEvent     = (c4 = Fiddle::Closure::BlockCaller.new(0, [0]) {})
+do_nothing = Fiddle::Closure::BlockCaller.new(0, [0]) {}
+key_event  = Fiddle::Closure::BlockCaller.new(1, [0]) { 0 }
+handler.MouseEvent   = do_nothing
+handler.MouseCrossed = do_nothing
+handler.DragBroken   = do_nothing
+handler.KeyEvent     = key_event
 
 box = UI.new_vertical_box
 UI.box_set_padded(box, 1)

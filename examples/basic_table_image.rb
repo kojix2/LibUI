@@ -18,9 +18,7 @@ main_window = UI.new_window('The Red Turtle (2016)', 310, 350, 0)
 hbox = UI.new_horizontal_box
 UI.window_set_child(main_window, hbox)
 
-IMAGES = []
-
-50.times do |i|
+IMAGES = Array.new(50) do |i|
   url = format('https://www.ghibli.jp/gallery/thumb-redturtle%03d.png', (i + 1))
   f = URI.open(url)
   canvas = ChunkyPNG::Canvas.from_io(f)
@@ -30,7 +28,7 @@ IMAGES = []
   height = canvas.height
   image = UI.new_image(width, height)
   UI.image_append(image, data, width, height, width * 4)
-  IMAGES << image
+  image
 rescue StandardError => e
   warn url, e.message
 end
