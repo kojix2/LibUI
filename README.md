@@ -2,6 +2,7 @@
 
 ![build](https://github.com/kojix2/libui/workflows/build/badge.svg)
 [![Gem Version](https://badge.fury.io/rb/libui.svg)](https://badge.fury.io/rb/libui)
+<a href="https://github.com/AndyObtiva/glimmer-dsl-libui"><img alt="glimmer-dsl-libui" src="https://github.com/AndyObtiva/glimmer/blob/master/images/glimmer-logo-hi-res.svg" width="50" height="50" align="right"></a>
 
 :radio_button: [libui](https://github.com/andlabs/libui) - a portable GUI library - for Ruby
 
@@ -69,12 +70,13 @@ You can use [the documentation for libui's Go bindings](https://pkg.go.dev/githu
 
 ### Not object oriented?
 
-* At the moment, it is not object-oriented.
-  * Instead of providing a half-baked object-oriented approach, leave it as is.
+LibUI is not object-oriented, but provides high portability with minimal implementation.
+If you want to write in an object-oriented way, please use the following DSLs built on top of LibUI.
 
 ### DSLs for LibUI
-  * [Glimmer DSL for LibUI](https://github.com/AndyObtiva/glimmer-dsl-libui)
-  * [libui_paradise](https://rubygems.org/gems/libui_paradise)
+
+* [Glimmer DSL for LibUI](https://github.com/AndyObtiva/glimmer-dsl-libui)
+* [libui_paradise](https://rubygems.org/gems/libui_paradise)
 
 ### How to use fiddle pointers?
 
@@ -100,6 +102,7 @@ font_button = UI.new_font_button
 # Allocate memory 
 font_descriptor = UI::FFI::FontDescriptor.malloc
 font_descriptor.to_ptr.free = Fiddle::RUBY_FREE
+# font_descriptor = UI::FFI::FontDescriptor.malloc(Fiddle::RUBY_FREE) # fiddle 1.0.1 or higher
 
 UI.font_button_on_changed(font_button) do
   UI.font_button_font(font_button, font_descriptor)
