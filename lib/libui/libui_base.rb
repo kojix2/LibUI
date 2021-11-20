@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module LibUI
   module LibUIBase
     FFI.func_map.each_key do |original_method_name|

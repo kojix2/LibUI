@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'fiddle/import'
 require_relative 'fiddle_patch'
 

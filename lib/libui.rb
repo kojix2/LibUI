@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require_relative 'libui/version'
 require_relative 'libui/utils'
 

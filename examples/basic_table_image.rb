@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # NOTE:
 # This example displays images that can be freely downloaded from the Studio Ghibli website.
 # https://www.ghibli.jp/works/red-turtle/
