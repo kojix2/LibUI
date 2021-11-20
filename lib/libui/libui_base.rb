@@ -16,7 +16,7 @@ module LibUI
 
           # now arg must be Proc
 
-          # The types of the function arguments are recorded beforehand.
+          # The types of the function arguments are stored in advance.
           # See the monkey patch in ffi.rb.
           callback = Fiddle::Closure::BlockCaller.new(
             *func.callback_argument_types[idx][1..2], &arg
@@ -24,7 +24,8 @@ module LibUI
           # Protect from GC
           # by giving the owner object a reference to the callback.
           # See https://github.com/kojix2/LibUI/issues/8
-          owner = if (idx == 0 or owner.frozen?) #  e.g. UI.queue_main{}; UI.timer(100) {}
+          owner = if idx == 0 or   # UI.queue_main{}
+                     owner.frozen? # UI.timer(100) {}
                     LibUIBase # or UI is better?
                   else
                     args[0] # receiver
