@@ -127,13 +127,12 @@ handler_draw_event = Fiddle::Closure::BlockCaller.new(
   UI.draw_free_path(path)
 end
 
-handler.Draw         = handler_draw_event
-
 # Assigning to local variables
 # This is intended to protect Fiddle::Closure from garbage collection.
 # See https://github.com/kojix2/LibUI/issues/8
 do_nothing = Fiddle::Closure::BlockCaller.new(0, [0]) {}
 key_event  = Fiddle::Closure::BlockCaller.new(1, [0]) { 0 }
+handler.Draw         = handler_draw_event
 handler.MouseEvent   = do_nothing
 handler.MouseCrossed = do_nothing
 handler.DragBroken   = do_nothing
