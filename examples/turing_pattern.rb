@@ -503,7 +503,7 @@ UI.box_append(vbox, @area, 1)
 
 # main widnow
 
-@main_window = UI.new_window('Turing Patt tn', 440, 560, 1)
+@main_window = UI.new_window('Turing Pattern', 440, 560, 1)
 UI.window_set_margined(@main_window, 1)
 UI.window_set_child(@main_window, vbox)
 
