@@ -237,13 +237,13 @@ end
 UI = LibUI
 UI.init
 
-width  = 100
-height = 100
-ratio      = 2
-pix_size   = 4
-model_width      = width * ratio
-model_height     = height * ratio
-
+width        = 100
+height       = 100
+ratio        = 2
+pix_size     = 4
+pointer_size = 5
+model_width  = width * ratio
+model_height = height * ratio
 
 @model = GrayScott::Model.new(width: model_width, height: model_height)
 @model.clear
@@ -268,28 +268,38 @@ UI.menu_item_on_clicked(menu_file_open) do
   unless pt.null?
     file_path = pt.to_s
     begin
-      model = Marshal.load(File.read(file_path))
-    rescue StandardError
-      UI.msg_box_error(@main_window, '⚠️ Error',
-                       "Failed to open file\n#{file_path}")
+      model = Marshal.load(File.binread(file_path))
+    rescue StandardError => e
+      UI.msg_box_error(
+        @main_window, '⚠️ Error',
+        "Failed to open file.\n" \
+        "#{file_path}\n" \
+        "#{e.message}"
+      )
       next
     end
     if model.width == @model.width &&
        model.height == @model.height
       @model = model
+      UI.area_queue_redraw_all(@area)
     else
-      UI.msg_box_error(@main_window, '⚠️ Error', 'File shape is different')
+      UI.msg_box_error(
+        @main_window, '⚠️ Error',
+        "File shape is different.\n" \
+        "file: width #{model.width} height #{model.height}\n" \
+        "model: width #{@model.width} height #{@model.height}"
+      )
     end
   end
 end
 
 @save_file_path = nil
 
-save_as = proc do
+save_model_as_proc = proc do
   pt = UI.save_file(@main_window)
   unless pt.null?
     @save_file_path = pt.to_s
-    Marshal.dump(@model, File.open(@save_file_path, 'w'))
+    Marshal.dump(@model, File.open(@save_file_path, 'wb'))
   end
 end
 
@@ -298,26 +308,28 @@ end
 menu_file_save = UI.menu_append_item(menu_file, 'Save Model')
 UI.menu_item_on_clicked(menu_file_save) do
   if @save_file_path
-    Marshal.dump(@model, File.open(@save_file_path, 'w'))
+    Marshal.dump(@model, File.open(@save_file_path, 'wb'))
   else
-    save_as.call
+    save_model_as_proc.call
   end
 end
 
 # menu File Save As
 
 menu_file_save_as = UI.menu_append_item(menu_file, 'Save Model As')
-UI.menu_item_on_clicked(menu_file_save_as, save_as)
+UI.menu_item_on_clicked(menu_file_save_as, save_model_as_proc)
 
 # menu File Quit
 
-menu_file_quit = UI.menu_append_item(menu_file, 'Quit')
-UI.menu_item_on_clicked(menu_file_quit) do
+quit_proc = proc do
   @running = false
   UI.control_destroy(@main_window)
   UI.quit
   0
 end
+
+menu_file_quit = UI.menu_append_item(menu_file, 'Quit')
+UI.menu_item_on_clicked(menu_file_quit, quit_proc)
 
 # menu Help
 
@@ -372,8 +384,11 @@ handler_mouse_event = Fiddle::Closure::BlockCaller.new(0, [1, 1, 1]) do |_, _, e
   if e.Down == 1
     x = e.X * (ratio / pix_size.to_f)
     y = e.Y * (ratio / pix_size.to_f)
-    yrange = ([(y - 5), 0].max)..([y, (model_height - 1)].min)
-    xrange = ([(x - 5), 0].max)..([x, (model_width - 1)].min)
+    next if x >= model_width + pointer_size ||
+            y >= model_height + pointer_size
+
+    yrange = ([(y - pointer_size), 0].max)..([y, (model_height - 1)].min)
+    xrange = ([(x - pointer_size), 0].max)..([x, (model_width - 1)].min)
     @model.u[yrange, xrange] = 0.5
     @model.v[yrange, xrange] = 0.5
     UI.area_queue_redraw_all(@area)
@@ -569,12 +584,7 @@ UI.box_append(vbox, @area, 1)
 UI.window_set_margined(@main_window, 1)
 UI.window_set_child(@main_window, vbox)
 
-UI.window_on_closing(@main_window) do
-  @running = false
-  UI.control_destroy(@main_window)
-  UI.quit
-  0
-end
+UI.window_on_closing(@main_window, quit_proc)
 UI.control_show(@main_window)
 
 # queue
