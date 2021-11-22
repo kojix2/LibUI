@@ -16,8 +16,11 @@ module LibUI
 
           # The types of the function arguments are stored in advance.
           # See the monkey patch in ffi.rb.
+          _f, ret_type, arg_types = func.callback_argument_types[idx]
+          # TODO: raise some nice error if _f is nil.
+          
           callback = Fiddle::Closure::BlockCaller.new(
-            *func.callback_argument_types[idx][1..2], &arg
+            ret_type, arg_types, &arg
           )
           # Protect from GC
           # by giving the owner object a reference to the callback.
