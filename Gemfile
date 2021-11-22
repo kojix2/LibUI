@@ -6,3 +6,5 @@ gemspec
 gem 'minitest'
 gem 'rake'
 gem 'rubyzip'
+gem 'numo-narray'
+gem 'chunky_png'

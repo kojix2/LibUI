@@ -21,8 +21,10 @@ WAIT_TIME = 200 # Increase this number if you cannot redraw in time.
 require 'libui'
 # A matrix calculation library for Ruby like NumPy.
 require 'numo/narray'
-# Generates an image from an NArray.
-require 'magro'
+
+# generate png image from narray(faster)
+# require 'magro'
+require 'chunky_png'
 
 module GrayScott
   # shorthand
@@ -209,7 +211,13 @@ end
 UI = LibUI
 UI.init
 
-@model = GrayScott::Model.new(width: 200, height: 200)
+width = 200 # devisible by ratio
+height = 200 # devisible by ratio
+ratio = 2
+pix_width = width / ratio
+pix_height = height / ratio
+pix_size = 4
+@model = GrayScott::Model.new(width: width, height: height)
 @model.clear
 @color_type = 'colorful'
 @uv = 'v'
@@ -291,12 +299,15 @@ handler_draw_event = Fiddle::Closure::BlockCaller.new(0, [1, 1, 1]) do |_, _, ar
   rgb = (GrayScott::Color.colorize(@model.public_send(@uv.to_sym), @color_type)
                          .cast_to(Numo::SFloat)
                          .inplace / 255.0)
-        .reshape!(100, 2, 100, 2, 3).sum(1, 3).inplace / 4.0 # Resize
+        .reshape!(pix_height, ratio, pix_width, ratio, 3).sum(1, 3) # Resize
+        .inplace / (ratio**2)
   # 200 x 200 => 100 x 100 because LibUI is slow...
-  100.times do |x|
-    100.times do |y|
+  pix_height.times do |y|
+    pix_width.times do |x|
       path = UI.draw_new_path(UI::DrawFillModeWinding)
-      UI.draw_path_add_rectangle(path, 4 * (x + 1), 4 * (y + 1), 4, 4)
+      UI.draw_path_add_rectangle(path,
+                                 pix_size * (x + 1), pix_size * (y + 1),
+                                 pix_size, pix_size)
       UI.draw_path_end(path)
       brush.Type = 0
       brush.R = rgb[y, x, 0]
@@ -315,10 +326,12 @@ key_event  = Fiddle::Closure::BlockCaller.new(1, [0]) { 0 }
 handler_mouse_event = Fiddle::Closure::BlockCaller.new(0, [1, 1, 1]) do |_, _, e|
   e = UI::FFI::AreaMouseEvent.new(e)
   if e.Down == 1
-    x = e.X / 2
-    y = e.Y / 2
-    @model.u[(y - 5)..y, (x - 5)..x] = 0.5
-    @model.v[(y - 5)..y, (x - 5)..x] = 0.5
+    x = e.X * (ratio / pix_size.to_f)
+    y = e.Y * (ratio / pix_size.to_f)
+    yrange = ([(y - 5), 0].max)..([y, (height - 1)].min)
+    xrange = ([(x - 5), 0].max)..([x, (width - 1)].min)
+    @model.u[yrange, xrange] = 0.5
+    @model.v[yrange, xrange] = 0.5
     UI.area_queue_redraw_all(@area)
   end
 end
@@ -472,7 +485,12 @@ UI.button_on_clicked(button_capture) do
   pt = UI.save_file(@main_window)
   unless pt.null?
     file_path = pt.to_s
-    Magro::IO.imsave(file_path, image)
+    if defined?(Magro::IO)
+      Magro::IO.imsave(file_path, image)
+    else
+      img = ChunkyPNG::Image.from_rgb_stream(width, height, image.to_string)
+      img.save(file_path)
+    end
   end
 end
 
