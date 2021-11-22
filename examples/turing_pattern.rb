@@ -42,6 +42,7 @@
 # impressive...
 
 WAIT_TIME = 200 # Increase this number if you cannot redraw in time.
+NUM_STEPS = 50  # Number of steps before being redrawn.
 
 require 'libui'
 # A matrix calculation library for Ruby like NumPy.
@@ -236,13 +237,15 @@ end
 UI = LibUI
 UI.init
 
-width = 200 # devisible by ratio
-height = 200 # devisible by ratio
-ratio = 2
-pix_width = width / ratio
-pix_height = height / ratio
-pix_size = 4
-@model = GrayScott::Model.new(width: width, height: height)
+width  = 100
+height = 100
+ratio      = 2
+pix_size   = 4
+model_width      = width * ratio
+model_height     = height * ratio
+
+
+@model = GrayScott::Model.new(width: model_width, height: model_height)
 @model.clear
 @color_type = 'colorful'
 @uv = 'v'
@@ -250,50 +253,66 @@ pix_size = 4
 
 # menu File
 
-menu = UI.new_menu('File')
-open_menu_item = UI.menu_append_item(menu, 'New file')
-UI.menu_item_on_clicked(open_menu_item) do
+menu_file = UI.new_menu('File')
+menu_file_new = UI.menu_append_item(menu_file, 'New')
+UI.menu_item_on_clicked(menu_file_new) do
   @model.clear
   UI.area_queue_redraw_all(@area)
 end
 
 # menu File Open
 
-open_menu_item = UI.menu_append_item(menu, 'Open model file')
-UI.menu_item_on_clicked(open_menu_item) do
+menu_file_open = UI.menu_append_item(menu_file, 'Open Model')
+UI.menu_item_on_clicked(menu_file_open) do
   pt = UI.open_file(@main_window)
   unless pt.null?
     file_path = pt.to_s
     begin
       model = Marshal.load(File.read(file_path))
     rescue StandardError
-      UI.msg_box(@main_window, '⚠️ Error', 'Failed to open file')
+      UI.msg_box_error(@main_window, '⚠️ Error',
+                       "Failed to open file\n#{file_path}")
       next
     end
     if model.width == @model.width &&
        model.height == @model.height
       @model = model
     else
-      UI.msg_box(@main_window, '⚠️ Error', 'File shape is different')
+      UI.msg_box_error(@main_window, '⚠️ Error', 'File shape is different')
     end
+  end
+end
+
+@save_file_path = nil
+
+save_as = proc do
+  pt = UI.save_file(@main_window)
+  unless pt.null?
+    @save_file_path = pt.to_s
+    Marshal.dump(@model, File.open(@save_file_path, 'w'))
   end
 end
 
 # menu File Save
 
-save_menu_item = UI.menu_append_item(menu, 'Save model file')
-UI.menu_item_on_clicked(save_menu_item) do
-  pt = UI.save_file(@main_window)
-  unless pt.null?
-    file_path = pt.to_s
-    Marshal.dump(@model, File.open(file_path, 'w'))
+menu_file_save = UI.menu_append_item(menu_file, 'Save Model')
+UI.menu_item_on_clicked(menu_file_save) do
+  if @save_file_path
+    Marshal.dump(@model, File.open(@save_file_path, 'w'))
+  else
+    save_as.call
   end
 end
 
+# menu File Save As
+
+menu_file_save_as = UI.menu_append_item(menu_file, 'Save Model As')
+UI.menu_item_on_clicked(menu_file_save_as, save_as)
+
 # menu File Quit
 
-save_menu_item = UI.menu_append_item(menu, 'Quit')
-UI.menu_item_on_clicked(save_menu_item) do
+menu_file_quit = UI.menu_append_item(menu_file, 'Quit')
+UI.menu_item_on_clicked(menu_file_quit) do
   @running = false
   UI.control_destroy(@main_window)
   UI.quit
@@ -302,9 +321,9 @@ end
 
 # menu Help
 
-menu = UI.new_menu('Help')
-open_menu_item = UI.menu_append_item(menu, 'About')
-UI.menu_item_on_clicked(open_menu_item) do
+menu_help = UI.new_menu('Help')
+menu_help_about = UI.menu_append_item(menu_help, 'About')
+UI.menu_item_on_clicked(menu_help_about) do
   UI.msg_box(@main_window,
              '🦓 Turing Pattern 🐠',
              "Written in Ruby\n" \
@@ -324,11 +343,11 @@ handler_draw_event = Fiddle::Closure::BlockCaller.new(0, [1, 1, 1]) do |_, _, ar
   rgb = (GrayScott::Color.colorize(@model.public_send(@uv.to_sym), @color_type)
                          .cast_to(Numo::SFloat)
                          .inplace / 255.0)
-        .reshape!(pix_height, ratio, pix_width, ratio, 3).sum(1, 3) # Resize
+        .reshape!(height, ratio, width, ratio, 3).sum(1, 3) # Resize
         .inplace / (ratio**2)
   # 200 x 200 => 100 x 100 because LibUI is slow...
-  pix_height.times do |y|
-    pix_width.times do |x|
+  height.times do |y|
+    width.times do |x|
       path = UI.draw_new_path(UI::DrawFillModeWinding)
       UI.draw_path_add_rectangle(path,
                                  pix_size * (x + 1), pix_size * (y + 1),
@@ -353,8 +372,8 @@ handler_mouse_event = Fiddle::Closure::BlockCaller.new(0, [1, 1, 1]) do |_, _, e
   if e.Down == 1
     x = e.X * (ratio / pix_size.to_f)
     y = e.Y * (ratio / pix_size.to_f)
-    yrange = ([(y - 5), 0].max)..([y, (height - 1)].min)
-    xrange = ([(x - 5), 0].max)..([x, (width - 1)].min)
+    yrange = ([(y - 5), 0].max)..([y, (model_height - 1)].min)
+    xrange = ([(x - 5), 0].max)..([x, (model_width - 1)].min)
     @model.u[yrange, xrange] = 0.5
     @model.v[yrange, xrange] = 0.5
     UI.area_queue_redraw_all(@area)
@@ -513,7 +532,7 @@ UI.button_on_clicked(button_capture) do
     if defined?(Magro::IO)
       Magro::IO.imsave(file_path, image)
     else
-      img = ChunkyPNG::Image.from_rgb_stream(width, height, image.to_string)
+      img = ChunkyPNG::Image.from_rgb_stream(model_width, model_height, image.to_string)
       img.save(file_path)
     end
   end
@@ -564,7 +583,7 @@ UI.queue_main do
   UI.timer(WAIT_TIME) do
     next 1 unless @running # do nothing
 
-    50.times do
+    NUM_STEPS.times do
       @model.step
     end
     UI.area_queue_redraw_all(@area)
