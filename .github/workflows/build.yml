@@ -25,6 +25,8 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
+      - name: Workaround for Ruby3.1 on Windows (Remove this!)
+      - run: gem install bundler --force
       - name: Bundle install
         run: |
           bundle config path vendor/bundle
