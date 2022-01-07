@@ -1,5 +1,6 @@
 require_relative 'libui/version'
 require_relative 'libui/utils'
+require 'rbconfig'
 
 module LibUI
   class Error < StandardError; end
