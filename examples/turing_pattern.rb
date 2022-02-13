@@ -336,10 +336,20 @@ UI.menu_item_on_clicked(menu_file_quit, quit_proc)
 menu_help = UI.new_menu('Help')
 menu_help_about = UI.menu_append_item(menu_help, 'About')
 UI.menu_item_on_clicked(menu_help_about) do
-  UI.msg_box(@main_window,
-             '🦓 Turing Pattern 🐠',
-             "Written in Ruby\n" \
-             "https://github.com/kojix2/LibUI\n")
+  UI.msg_box(
+    @main_window,
+    '🦓 Turing Pattern 🐠',
+    <<~HELP_MESSAGE
+      How to use
+
+      (1) Click on the red area several times. Blue dots will show up.
+      (2) Press the "▶ START" button.
+      (3) Try out different parameters.
+
+      Written in Ruby
+      https://github.com/kojix2/LibUI
+    HELP_MESSAGE
+  )
 end
 
 # area
