@@ -191,6 +191,12 @@ Would you like to add your commits to libui?
   * Small corrections, such as typofixes, are appreciated.
 * Did you find any bugs?　Write it in the [issues](https://github.com/kojix2/LibUI/issue) section!
 
+```
+Do you need commit rights to my repository?
+Do you want to get admin rights and take over the project?
+If so, please feel free to contact me @kojix2.
+```
+
 ## Acknowledgement
 
 This project is inspired by libui-ruby.
