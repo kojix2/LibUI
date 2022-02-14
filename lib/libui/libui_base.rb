@@ -18,7 +18,7 @@ module LibUI
           # See the monkey patch in ffi.rb.
           _f, ret_type, arg_types = func.callback_argument_types[idx]
           # TODO: raise some nice error if _f is nil.
-          
+
           callback = Fiddle::Closure::BlockCaller.new(
             ret_type, arg_types, &arg
           )
