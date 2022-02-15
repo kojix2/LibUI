@@ -67,7 +67,7 @@ Compared to original libui written in C,
 * If the last argument is nil, it can be omitted.
 * You can pass a block as a callback. 
   * The block will be converted to a Proc object and added to the last argument.
-  * Even in that case, it is possible to omit the last argument nil.
+  * Even in that case, it is possible to omit the last argument when nil.
 
 You can use [the documentation for libui's Go bindings](https://pkg.go.dev/github.com/andlabs/ui) as a reference.
 
@@ -118,7 +118,7 @@ end
 ```
 
 * Callbacks
-  * In Ruby/Fiddle, C callback function is written as an object of
+  * In Ruby/Fiddle, a C callback function is written as an object of
     `Fiddle::Closure::BlockCaller` or `Fiddle::Closure`. 
     In this case, you need to be careful about Ruby's garbage collection. 
     If the function object is collected, memory will be freed 
@@ -188,8 +188,8 @@ Or Set environment variable `LIBUIDIR` to specify the path to the shared library
 
 Would you like to add your commits to libui?
 * Please feel free to send us your [pull requests](https://github.com/kojix2/libui/pulls).
-  * Small corrections, such as typofixes, are appreciated.
-* Did you find any bugs?　Write it in the [issues](https://github.com/kojix2/LibUI/issue) section!
+  * Small corrections, such as typo fixes, are appreciated.
+* Did you find any bugs? Enter in the [issues](https://github.com/kojix2/LibUI/issues) section!
 
 ```
 Do you need commit rights to my repository?
