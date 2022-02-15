@@ -588,7 +588,7 @@ UI.box_append(vbox, hbox1, 0)
 UI.box_append(vbox, hbox2, 0)
 UI.box_append(vbox, @area, 1)
 
-# main widnow
+# main window
 
 @main_window = UI.new_window('Turing Pattern', 440, 560, 1)
 UI.window_set_margined(@main_window, 1)
