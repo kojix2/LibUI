@@ -215,6 +215,11 @@ module LibUI
   TableValueTypeInt    = 2
   TableValueTypeColor  = 3
 
+  # SortIndicator
+  SortIndicatorNone       = 0
+  SortIndicatorAscending  = 1
+  SortIndicatorDescending = 2
+
   # editable
   TableModelColumnNeverEditable  = -1
   TableModelColumnAlwaysEditable = -2

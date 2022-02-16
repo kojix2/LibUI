@@ -100,6 +100,8 @@ module LibUI
     try_extern 'void uiWindowSetChild(uiWindow *w, uiControl *child)'
     try_extern 'int uiWindowMargined(uiWindow *w)'
     try_extern 'void uiWindowSetMargined(uiWindow *w, int margined)'
+    try_extern 'int uiWindowResizeable(uiWindow *w)'
+    try_extern 'void uiWindowSetResizeable(uiWindow *w, int resizeable)'
     try_extern 'uiWindow *uiNewWindow(const char *title, int width, int height, int hasMenubar)'
 
     # uiButton
@@ -112,6 +114,7 @@ module LibUI
     # uiBox
 
     try_extern 'void uiBoxAppend(uiBox *b, uiControl *child, int stretchy)'
+    try_extern 'int uiBoxNumChildren(uiBox *b)'
     try_extern 'void uiBoxDelete(uiBox *b, int index)'
     try_extern 'int uiBoxPadded(uiBox *b)'
     try_extern 'void uiBoxSetPadded(uiBox *b, int padded)'
@@ -174,7 +177,10 @@ module LibUI
 
     try_extern 'int uiSliderValue(uiSlider *s)'
     try_extern 'void uiSliderSetValue(uiSlider *s, int value)'
+    try_extern 'int uiSliderHasToolTip(uiSlider *s)'
+    try_extern 'void uiSliderSetHasToolTip(uiSlider *s, int hasToolTip)'
     try_extern 'void uiSliderOnChanged(uiSlider *s, void (*f)(uiSlider *s, void *data), void *data)'
+    try_extern 'void uiSliderSetRange(uiSlider *s, int min, int max)'
     try_extern 'uiSlider *uiNewSlider(int min, int max)'
 
     # uiProgressBar
@@ -191,6 +197,10 @@ module LibUI
     # uiCombobox
 
     try_extern 'void uiComboboxAppend(uiCombobox *c, const char *text)'
+    try_extern 'void uiComboboxInsertAt(uiCombobox *c, int n, const char *text)'
+    try_extern 'void uiComboboxDelete(uiCombobox *c, int n)'
+    try_extern 'void uiComboboxClear(uiCombobox *c)'
+    try_extern 'int uiComboboxNumItems(uiCombobox *c)'
     try_extern 'int uiComboboxSelected(uiCombobox *c)'
     try_extern 'void uiComboboxSetSelected(uiCombobox *c, int n)'
     try_extern 'void uiComboboxOnSelected(uiCombobox *c, void (*f)(uiCombobox *c, void *data), void *data)'
@@ -280,6 +290,7 @@ module LibUI
     try_extern 'uiMenu *uiNewMenu(const char *name)'
 
     try_extern 'char *uiOpenFile(uiWindow *parent)'
+    try_extern 'char *uiOpenFolder(uiWindow *parent)'
     try_extern 'char *uiSaveFile(uiWindow *parent)'
     try_extern 'void uiMsgBox(uiWindow *parent, const char *title, const char *description)'
     try_extern 'void uiMsgBoxError(uiWindow *parent, const char *title, const char *description)'
@@ -370,6 +381,7 @@ module LibUI
     try_extern 'void uiDrawPathBezierTo(uiDrawPath *p, double c1x, double c1y, double c2x, double c2y, double endX, double endY)'
     try_extern 'void uiDrawPathCloseFigure(uiDrawPath *p)'
     try_extern 'void uiDrawPathAddRectangle(uiDrawPath *p, double x, double y, double width, double height)'
+    try_extern 'int uiDrawPathEnded(uiDrawPath *p)'
     try_extern 'void uiDrawPathEnd(uiDrawPath *p)'
     try_extern 'void uiDrawStroke(uiDrawContext *c, uiDrawPath *path, uiDrawBrush *b, uiDrawStrokeParams *p)'
     try_extern 'void uiDrawFill(uiDrawContext *c, uiDrawPath *path, uiDrawBrush *b)'
@@ -471,6 +483,9 @@ module LibUI
       'uiTextStretch Stretch'
     ]
 
+    try_extern 'void uiLoadControlFont(uiFontDescriptor *f)'
+    try_extern 'void uiFreeFontDescriptor(uiFontDescriptor *desc)'
+
     typealias 'uiDrawTextAlign', 'int'
 
     DrawTextLayoutParams = struct [
@@ -526,6 +541,7 @@ module LibUI
     # uiForm
 
     try_extern 'void uiFormAppend(uiForm *f, const char *label, uiControl *c, int stretchy)'
+    try_extern 'int uiFormNumChildren(uiForm *f)'
     try_extern 'void uiFormDelete(uiForm *f, int index)'
     try_extern 'int uiFormPadded(uiForm *f)'
     try_extern 'void uiFormSetPadded(uiForm *f, int padded)'
@@ -594,6 +610,16 @@ module LibUI
     try_extern 'void uiTableAppendCheckboxTextColumn(uiTable *t, const char *name, int checkboxModelColumn, int checkboxEditableModelColumn, int textModelColumn, int textEditableModelColumn, uiTableTextColumnOptionalParams *textParams)'
     try_extern 'void uiTableAppendProgressBarColumn(uiTable *t, const char *name, int progressModelColumn)'
     try_extern 'void uiTableAppendButtonColumn(uiTable *t, const char *name, int buttonModelColumn, int buttonClickableModelColumn)'
+    try_extern 'int uiTableHeaderVisible(uiTable *t)'
+    try_extern 'void uiTableHeaderSetVisible(uiTable *t, int visible)'
     try_extern 'uiTable *uiNewTable(uiTableParams *params)'
+
+    typealias 'uiSortIndicator', 'int'
+
+    try_extern 'void uiTableHeaderSetSortIndicator(uiTable *t, int column, uiSortIndicator indicator)'
+    try_extern 'uiSortIndicator uiTableHeaderSortIndicator(uiTable *t, int column)'
+    try_extern 'void uiTableHeaderOnClicked(uiTable *t,	void (*f)(uiTable *table, int column, void *data), void *data)'
+    try_extern 'int uiTableColumnWidth(uiTable *t, int column)'
+    try_extern 'void uiTableColumnSetWidth(uiTable *t, int column, int width)'
   end
 end
