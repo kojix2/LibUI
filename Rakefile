@@ -14,12 +14,22 @@ def version
   'alpha4.1'
 end
 
-def download_official(library, remote_lib, file, sha256sum_expected)
+def download_kojix2_release(library, remote_lib, file, sha256sum_expected)
+  url = "https://github.com/kojix2/LibUI/releases/download/v0.0.14/#{file}"
+  download_from_url(library, remote_lib, file, sha256sum_expected, url)
+end
+
+def download_andlabs_release(library, remote_lib, file, sha256sum_expected)
+  url = "https://github.com/andlabs/libui/releases/download/#{version}/#{file}"
+  download_from_url(library, remote_lib, file, sha256sum_expected, url)
+end
+
+def download_from_url(library, remote_lib, file, sha256sum_expected, url)
   require 'fileutils'
   require 'open-uri'
   require 'tmpdir'
 
-  url = "https://github.com/andlabs/libui/releases/download/#{version}/#{file}"
+
   FileUtils.mkdir_p(File.expand_path('vendor', __dir__))
   target_path = File.expand_path("vendor/#{library}", __dir__)
 
@@ -77,7 +87,7 @@ end
 namespace :vendor do
   desc 'Download libui.so for Linux to vendor directory'
   task :linux_x64 do
-    download_official(
+    download_andlabs_release(
       'libui.so',
       'libui.so.0',
       'libui-alpha4.1-linux-amd64-shared.tgz',
@@ -87,7 +97,7 @@ namespace :vendor do
 
   desc 'Download libui.so for Linux to vendor directory'
   task :linux_x86 do
-    download_official(
+    download_andlabs_release(
       'libui.so',
       'libui.so.0',
       'libui-alpha4.1-linux-386-shared.tgz',
@@ -96,8 +106,18 @@ namespace :vendor do
   end
 
   desc 'Download libui.dylib for Mac to vendor directory'
+  task :mac_arm do
+    download_kojix2_release(
+      'libui.dylib',
+      'libui.dylib',
+      'libui-alpha4.1-macos-arm64-dylib.tgz',
+      '6da2ff5acb6fba09b47eae0219b3aaefd002ace00003ab5d59689e396bcefff7',
+    )
+  end
+
+  desc 'Download libui.dylib for Mac to vendor directory'
   task :mac_x64 do
-    download_official(
+    download_andlabs_release(
       'libui.dylib',
       'libui.A.dylib',
       'libui-alpha4.1-darwin-amd64-shared.tgz',
@@ -107,7 +127,7 @@ namespace :vendor do
 
   desc 'Download libui.dll for Windows to vendor directory'
   task :windows_x64 do
-    download_official(
+    download_andlabs_release(
       'libui.dll',
       'libui.dll',
       'libui-alpha4.1-windows-amd64-shared.zip',
@@ -117,7 +137,7 @@ namespace :vendor do
 
   desc 'Download libui.dll for Windows to vendor directory'
   task :windows_x86 do
-    download_official(
+    download_andlabs_release(
       'libui.dll',
       'libui.dll',
       'libui-alpha4.1-windows-386-shared.zip',
