@@ -29,7 +29,6 @@ def download_from_url(library, remote_lib, file, sha256sum_expected, url)
   require 'open-uri'
   require 'tmpdir'
 
-
   FileUtils.mkdir_p(File.expand_path('vendor', __dir__))
   target_path = File.expand_path("vendor/#{library}", __dir__)
 
@@ -105,13 +104,13 @@ namespace :vendor do
     )
   end
 
-  desc 'Download libui.dylib for Mac to vendor directory'
+  desc 'Download libui.dylib for Mac to vendor directory (universal binary)'
   task :mac_arm do
     download_kojix2_release(
       'libui.dylib',
       'libui.dylib',
       'libui-alpha4.1-macos-arm64-dylib.tgz',
-      '6da2ff5acb6fba09b47eae0219b3aaefd002ace00003ab5d59689e396bcefff7',
+      '6da2ff5acb6fba09b47eae0219b3aaefd002ace00003ab5d59689e396bcefff7'
     )
   end
 
@@ -145,6 +144,9 @@ namespace :vendor do
     )
   end
 
-  desc 'Download libui.so, libui.dylib, and libui.dll to vendor directory'
+  desc 'Download [linux_64, mac_x64, windows_x64] to vendor directory'
   task all_x64: %i[linux_x64 mac_x64 windows_x64]
+
+  desc 'Downlaod [linux_x64, mac_arm, windows_x64] to vendor directory'
+  task default: %i[linux_x64 mac_arm windows_x64]
 end
