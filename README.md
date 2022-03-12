@@ -13,7 +13,7 @@ gem install libui
 ```
 
 * The gem package contains the [official release](https://github.com/andlabs/libui/releases/tag/alpha4.1) of the libui shared library versions 4.1 for Windows, Mac, and Linux. 
-  * Namely `libui.dll`, `libui.dylib`, and `libui.so` (only 1.4MB in total).
+  * Namely `libui.dll`, `libui.dylib`, and `libui.so` (only 1.8MB in total).
 * No dependency
   * The libui gem uses the standard Ruby library [Fiddle](https://github.com/ruby/fiddle) to call C functions. 
 
@@ -23,7 +23,6 @@ gem install libui
 
 Note:
 * If you are using the 32-bit (x86) version of Ruby, you need to download the 32-bit (x86) native dll. See [Development](#development).
-* ARM64/AARCH64 Support is limited. See ([#47](https://github.com/kojix2/LibUI/issues/47))
 * On Windows, libui may not work due to missing DLLs. In that case, you need to install [Visual C++ Redistributable](https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist). See ([#48](https://github.com/kojix2/LibUI/issues/48))
 
 ## Usage
@@ -71,12 +70,10 @@ Compared to original libui written in C,
 
 You can use [the documentation for libui's Go bindings](https://pkg.go.dev/github.com/andlabs/ui) as a reference.
 
-### Not object oriented?
+### DSLs for LibUI
 
 LibUI is not object-oriented, but provides high portability with minimal implementation.
 If you want to write in an object-oriented way, please use the following DSLs built on top of LibUI.
-
-### DSLs for LibUI
 
 * [Glimmer DSL for LibUI](https://github.com/AndyObtiva/glimmer-dsl-libui)
 * [libui_paradise](https://rubygems.org/gems/libui_paradise)
@@ -163,7 +160,7 @@ Add additional options below if necessary.
 git clone https://github.com/kojix2/libui
 cd libui
 bundle install
-bundle exec rake vendor:all_x64 # download shared libraries for all platforms
+bundle exec rake vendor:default # download shared libraries for all platforms
 bundle exec rake test
 ```
 
@@ -172,9 +169,10 @@ You can use the following rake tasks to download the shared library required for
 `rake -T`
 
 ```
-rake vendor:all_x64      # Download libui.so, libui.dylib, and libui.dll to...
+rake vendor:default      # Downlaod [linux_x64, mac_arm, windows_x64] to vendor directory
 rake vendor:linux_x64    # Download libui.so for Linux to vendor directory
 rake vendor:linux_x86    # Download libui.so for Linux to vendor directory
+rake vendor:mac_arm      # Download libui.dylib for Mac to vendor directory (universal binary)
 rake vendor:mac_x64      # Download libui.dylib for Mac to vendor directory
 rake vendor:windows_x64  # Download libui.dll for Windows to vendor directory
 rake vendor:windows_x86  # Download libui.dll for Windows to vendor directory
@@ -191,11 +189,8 @@ Would you like to add your commits to libui?
   * Small corrections, such as typo fixes, are appreciated.
 * Did you find any bugs? Enter in the [issues](https://github.com/kojix2/LibUI/issues) section!
 
-```
-Do you need commit rights to my repository?
-Do you want to get admin rights and take over the project?
-If so, please feel free to contact me @kojix2.
-```
+I have seen many OSS projects abandoned. The main reason is that no one has the right to commit to the original repository, except the founder.
+Do you need commit rights to my repository?　Do you want to get admin rights and take over the project? If so, please feel free to contact me @kojix2.
 
 ## Acknowledgement
 
