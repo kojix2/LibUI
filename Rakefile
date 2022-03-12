@@ -1,6 +1,7 @@
 require 'bundler/gem_tasks'
 require 'rake/testtask'
 require 'digest'
+require_relative 'lib/libui/version'
 
 Rake::TestTask.new(:test) do |t|
   t.libs << 'test'
@@ -15,7 +16,7 @@ def version
 end
 
 def download_kojix2_release(library, remote_lib, file, sha256sum_expected)
-  url = "https://github.com/kojix2/LibUI/releases/download/v0.0.14/#{file}"
+  url = "https://github.com/kojix2/LibUI/releases/download/v#{LibUI::VERSION}/#{file}"
   download_from_url(library, remote_lib, file, sha256sum_expected, url)
 end
 
