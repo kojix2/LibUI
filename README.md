@@ -190,7 +190,7 @@ Would you like to add your commits to libui?
 * Did you find any bugs? Enter in the [issues](https://github.com/kojix2/LibUI/issues) section!
 
 I have seen many OSS projects abandoned. The main reason is that no one has the right to commit to the original repository, except the founder.
-Do you need commit rights to my repository?　Do you want to get admin rights and take over the project? If so, please feel free to contact me @kojix2.
+Do you need commit rights to my repository? Do you want to get admin rights and take over the project? If so, please feel free to contact me @kojix2.
 
 ## Acknowledgement
 
