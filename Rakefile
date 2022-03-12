@@ -144,9 +144,6 @@ namespace :vendor do
     )
   end
 
-  desc 'Download [linux_64, mac_x64, windows_x64] to vendor directory'
-  task all_x64: %i[linux_x64 mac_x64 windows_x64]
-
   desc 'Downlaod [linux_x64, mac_arm, windows_x64] to vendor directory'
   task default: %i[linux_x64 mac_arm windows_x64]
 end
