@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  File: README
+  
+    &mdash; Documentation by YARD 0.9.27
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "README";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: README</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><div id='filecontents'>
+<h1 id="label-LibUI">LibUI</h1>
+
+<p><img src="https://github.com/kojix2/libui/workflows/build/badge.svg"> <a href="https://badge.fury.io/rb/libui"><img src="https://badge.fury.io/rb/libui.svg"></a> &lt;a href=“<a href="https://github.com/AndyObtiva/glimmer-dsl-libui"><img">github.com/AndyObtiva/glimmer-dsl-libui”><img</a> alt=“glimmer-dsl-libui” src=“<a href="https://github.com/AndyObtiva/glimmer/blob/master/images/glimmer-logo-hi-res.svg">github.com/AndyObtiva/glimmer/blob/master/images/glimmer-logo-hi-res.svg</a>” width=“50” height=“50” align=“right”&gt;&lt;/a&gt;</p>
+
+<p>:radio_button: <a href="https://github.com/libui-ng/libui-ng">libui</a> - a portable GUI library - for Ruby</p>
+
+<h2 id="label-Installation">Installation</h2>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_gem'>gem</span> <span class='id identifier rubyid_install'>install</span> <span class='id identifier rubyid_libui'>libui</span>
+</code></pre>
+<ul><li>
+<p>The gem package contains the <a href="https://github.com/andlabs/libui/releases/tag/alpha4.1">official release</a> of the libui shared library versions 4.1 for Windows, Mac, and Linux.</p>
+</li><li>
+<p>Namely <code>libui.dll</code>, <code>libui.dylib</code>, and <code>libui.so</code> (only 1.8MB in total).</p>
+</li><li>
+<p>No dependency</p>
+</li><li>
+<p>The libui gem uses the standard Ruby library <a href="https://github.com/ruby/fiddle">Fiddle</a> to call C functions.</p>
+</li></ul>
+
+<table role="table">
+<thead>
+<tr>
+<th>Windows</th>
+<th>Mac</th>
+<th>Linux</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&lt;img src=&quot;https://user-images.githubusercontent.com/5798442/103118046-900ea780-46b0-11eb-81fc-32626762e4df.png&quot;&gt;</td>
+<td>&lt;img src=&quot;https://user-images.githubusercontent.com/5798442/103118059-99980f80-46b0-11eb-9d12-324ec4d297c9.png&quot;&gt;</td>
+<td>&lt;img src=&quot;https://user-images.githubusercontent.com/5798442/103118068-a0bf1d80-46b0-11eb-8c5c-3bdcc3dcfb26.png&quot;&gt;</td>
+</tr>
+</tbody>
+</table>
+
+<p>Note: * If you are using the 32-bit (x86) version of Ruby, you need to download the 32-bit (x86) native dll. See <a href="#development">Development</a>. * On Windows, libui may not work due to missing DLLs. In that case, you need to install <a href="https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist">Visual C++ Redistributable</a>. See (<a href="https://github.com/kojix2/LibUI/issues/48">#48</a>)</p>
+
+<h2 id="label-Usage">Usage</h2>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>libui</span><span class='tstring_end'>&#39;</span></span>
+
+<span class='const'>UI</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="LibUI.html" title="LibUI (module)">LibUI</a></span></span>
+
+<span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_init'>init</span>
+
+<span class='id identifier rubyid_main_window'>main_window</span> <span class='op'>=</span> <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_new_window'>new_window</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>hello world</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='int'>200</span><span class='comma'>,</span> <span class='int'>100</span><span class='comma'>,</span> <span class='int'>1</span><span class='rparen'>)</span>
+
+<span class='id identifier rubyid_button'>button</span> <span class='op'>=</span> <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_new_button'>new_button</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Button</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+
+<span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_button_on_clicked'>button_on_clicked</span><span class='lparen'>(</span><span class='id identifier rubyid_button'>button</span><span class='rparen'>)</span> <span class='kw'>do</span>
+  <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_msg_box'>msg_box</span><span class='lparen'>(</span><span class='id identifier rubyid_main_window'>main_window</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Information</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>You clicked the button</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span>
+
+<span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_window_on_closing'>window_on_closing</span><span class='lparen'>(</span><span class='id identifier rubyid_main_window'>main_window</span><span class='rparen'>)</span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Bye Bye</span><span class='tstring_end'>&#39;</span></span>
+  <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_control_destroy'>control_destroy</span><span class='lparen'>(</span><span class='id identifier rubyid_main_window'>main_window</span><span class='rparen'>)</span>
+  <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_quit'>quit</span>
+  <span class='int'>0</span>
+<span class='kw'>end</span>
+
+<span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_window_set_child'>window_set_child</span><span class='lparen'>(</span><span class='id identifier rubyid_main_window'>main_window</span><span class='comma'>,</span> <span class='id identifier rubyid_button'>button</span><span class='rparen'>)</span>
+<span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_control_show'>control_show</span><span class='lparen'>(</span><span class='id identifier rubyid_main_window'>main_window</span><span class='rparen'>)</span>
+
+<span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_main'>main</span>
+<span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_quit'>quit</span>
+</code></pre>
+
+<p>See <a href="https://github.com/kojix2/libui/tree/main/examples">examples</a> directory.</p>
+
+<h3 id="label-General+Rules">General Rules</h3>
+
+<p>Compared to original libui written in C,</p>
+<ul><li>
+<p>The method names are snake_case.</p>
+</li><li>
+<p>If the last argument is nil, it can be omitted.</p>
+</li><li>
+<p>You can pass a block as a callback.</p>
+</li><li>
+<p>The block will be converted to a Proc object and added to the last argument.</p>
+</li><li>
+<p>Even in that case, it is possible to omit the last argument when nil.</p>
+</li></ul>
+
+<p>You can use <a href="https://pkg.go.dev/github.com/andlabs/ui">the documentation for libui’s Go bindings</a> as a reference.</p>
+
+<h3 id="label-DSLs+for+LibUI">DSLs for LibUI</h3>
+
+<p>LibUI is not object-oriented, but provides high portability with minimal implementation. If you want to write in an object-oriented way, please use the following DSLs built on top of LibUI.</p>
+<ul><li>
+<p><a href="https://github.com/AndyObtiva/glimmer-dsl-libui">Glimmer DSL for LibUI</a></p>
+</li><li>
+<p><a href="https://rubygems.org/gems/libui_paradise">libui_paradise</a></p>
+</li></ul>
+
+<h3 id="label-How+to+use+fiddle+pointers-3F">How to use fiddle pointers?</h3>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>libui</span><span class='tstring_end'>&#39;</span></span>
+<span class='const'>UI</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="LibUI.html" title="LibUI (module)">LibUI</a></span></span>
+<span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_init'>init</span>
+</code></pre>
+
+<p>Convert a pointer to a string.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_label'>label</span> <span class='op'>=</span> <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_new_label'>new_label</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Ruby</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='id identifier rubyid_p'>p</span> <span class='id identifier rubyid_pointer'>pointer</span> <span class='op'>=</span> <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_label_text'>label_text</span><span class='lparen'>(</span><span class='id identifier rubyid_label'>label</span><span class='rparen'>)</span> <span class='comment'># #&lt;Fiddle::Pointer&gt;
+</span><span class='id identifier rubyid_p'>p</span> <span class='id identifier rubyid_pointer'>pointer</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='comment'># Ruby
+</span></code></pre>
+
+<p>If you need to use C structs, you can do the following.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_font_button'>font_button</span> <span class='op'>=</span> <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_new_font_button'>new_font_button</span>
+
+<span class='comment'># Allocate memory 
+</span><span class='id identifier rubyid_font_descriptor'>font_descriptor</span> <span class='op'>=</span> <span class='const'>UI</span><span class='op'>::</span><span class='const'>FFI</span><span class='op'>::</span><span class='const'>FontDescriptor</span><span class='period'>.</span><span class='id identifier rubyid_malloc'>malloc</span>
+<span class='id identifier rubyid_font_descriptor'>font_descriptor</span><span class='period'>.</span><span class='id identifier rubyid_to_ptr'>to_ptr</span><span class='period'>.</span><span class='id identifier rubyid_free'>free</span> <span class='op'>=</span> <span class='const'>Fiddle</span><span class='op'>::</span><span class='const'>RUBY_FREE</span>
+<span class='comment'># font_descriptor = UI::FFI::FontDescriptor.malloc(Fiddle::RUBY_FREE) # fiddle 1.0.1 or higher
+</span>
+<span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_font_button_on_changed'>font_button_on_changed</span><span class='lparen'>(</span><span class='id identifier rubyid_font_button'>font_button</span><span class='rparen'>)</span> <span class='kw'>do</span>
+  <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_font_button_font'>font_button_font</span><span class='lparen'>(</span><span class='id identifier rubyid_font_button'>font_button</span><span class='comma'>,</span> <span class='id identifier rubyid_font_descriptor'>font_descriptor</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_p'>p</span> <span class='label'>family:</span>  <span class='id identifier rubyid_font_descriptor'>font_descriptor</span><span class='period'>.</span><span class='const'>Family</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span>
+    <span class='label'>size:</span>    <span class='id identifier rubyid_font_descriptor'>font_descriptor</span><span class='period'>.</span><span class='const'>Size</span><span class='comma'>,</span>
+    <span class='label'>weight:</span>  <span class='id identifier rubyid_font_descriptor'>font_descriptor</span><span class='period'>.</span><span class='const'>Weight</span><span class='comma'>,</span>
+    <span class='label'>italic:</span>  <span class='id identifier rubyid_font_descriptor'>font_descriptor</span><span class='period'>.</span><span class='const'>Italic</span><span class='comma'>,</span>
+    <span class='label'>stretch:</span> <span class='id identifier rubyid_font_descriptor'>font_descriptor</span><span class='period'>.</span><span class='const'>Stretch</span>
+<span class='kw'>end</span>
+</code></pre>
+<ul><li>
+<p>Callbacks</p>
+</li><li>
+<p>In Ruby/Fiddle, a C callback function is written as an object of <code>Fiddle::Closure::BlockCaller</code> or <code>Fiddle::Closure</code>. In this case, you need to be careful about Ruby’s garbage collection. If the function object is collected, memory will be freed and a segmentation violation will occur when the callback is invoked.</p>
+</li></ul>
+
+<pre class="code ruby"><code class="ruby"><span class='comment'># to a local variable to prevent it from being collected by GC.
+</span><span class='id identifier rubyid_handler'>handler</span><span class='period'>.</span><span class='const'>MouseEvent</span>   <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_c1'>c1</span> <span class='op'>=</span> <span class='const'>Fiddle</span><span class='op'>::</span><span class='const'>Closure</span><span class='op'>::</span><span class='const'>BlockCaller</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='int'>0</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_handler'>handler</span><span class='period'>.</span><span class='const'>MouseCrossed</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_c2'>c2</span> <span class='op'>=</span> <span class='const'>Fiddle</span><span class='op'>::</span><span class='const'>Closure</span><span class='op'>::</span><span class='const'>BlockCaller</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='int'>0</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_handler'>handler</span><span class='period'>.</span><span class='const'>DragBroken</span>   <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_c3'>c3</span> <span class='op'>=</span> <span class='const'>Fiddle</span><span class='op'>::</span><span class='const'>Closure</span><span class='op'>::</span><span class='const'>BlockCaller</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='int'>0</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+</code></pre>
+
+<h3 id="label-How+to+create+an+executable+-28.exe-29+on+Windows">How to create an executable (.exe) on Windows</h3>
+
+<p>OCRA (One-Click Ruby Application) builds Windows executables from Ruby source code. * <a href="https://github.com/larsch/ocra">github.com/larsch/ocra</a>/</p>
+
+<p>In order to build a exe with Ocra, include 3 DLLs from ruby_builtin_dlls folder:</p>
+
+<pre class="code ruby"><code class="ruby">ocra examples/control_gallery.rb        ^
+  --dll ruby_builtin_dlls/libssp-0.dll  ^
+  --dll ruby_builtin_dlls/libgmp-10.dll ^
+  --dll ruby_builtin_dlls/libffi-7.dll  ^
+  --gem-all=fiddle                      ^
+</code></pre>
+
+<p>Add additional options below if necessary.</p>
+
+<pre class="code ruby"><code class="ruby">--window                              ^
+  --add-all-core                        ^
+  --chdir-first                         ^
+  --icon assets\app.ico                 ^
+  --verbose                             ^
+  --output out\gallery.exe
+</code></pre>
+
+<h2 id="label-Development">Development</h2>
+
+<pre class="code ruby"><code class="ruby">git clone https://github.com/kojix2/libui
+cd libui
+bundle install
+bundle exec rake vendor:default # download shared libraries for all platforms
+bundle exec rake test
+</code></pre>
+
+<p>You can use the following rake tasks to download the shared library required for your platform.</p>
+
+<p><code>rake -T</code></p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_rake'>rake</span> <span class='label'>vendor:</span><span class='id identifier rubyid_default'>default</span>      <span class='comment'># Downlaod [linux_x64, mac_arm, windows_x64] to vendor directory
+</span><span class='id identifier rubyid_rake'>rake</span> <span class='label'>vendor:</span><span class='id identifier rubyid_linux_x64'>linux_x64</span>    <span class='comment'># Download libui.so for Linux to vendor directory
+</span><span class='id identifier rubyid_rake'>rake</span> <span class='label'>vendor:</span><span class='id identifier rubyid_linux_x86'>linux_x86</span>    <span class='comment'># Download libui.so for Linux to vendor directory
+</span><span class='id identifier rubyid_rake'>rake</span> <span class='label'>vendor:</span><span class='id identifier rubyid_mac_arm'>mac_arm</span>      <span class='comment'># Download libui.dylib for Mac to vendor directory (universal binary)
+</span><span class='id identifier rubyid_rake'>rake</span> <span class='label'>vendor:</span><span class='id identifier rubyid_mac_x64'>mac_x64</span>      <span class='comment'># Download libui.dylib for Mac to vendor directory
+</span><span class='id identifier rubyid_rake'>rake</span> <span class='label'>vendor:</span><span class='id identifier rubyid_windows_x64'>windows_x64</span>  <span class='comment'># Download libui.dll for Windows to vendor directory
+</span><span class='id identifier rubyid_rake'>rake</span> <span class='label'>vendor:</span><span class='id identifier rubyid_windows_x86'>windows_x86</span>  <span class='comment'># Download libui.dll for Windows to vendor directory
+</span></code></pre>
+
+<p>For example, If you are using a 32-bit (x86) version of Ruby on Windows, type <code>rake vendor:windows_x86</code>.</p>
+
+<p>Or Set environment variable <code>LIBUIDIR</code> to specify the path to the shared library.</p>
+
+<h2 id="label-Contributing">Contributing</h2>
+
+<p>Would you like to add your commits to libui? * Please feel free to send us your <a href="https://github.com/kojix2/libui/pulls">pull requests</a>.  * Small corrections, such as typo fixes, are appreciated. * Did you find any bugs? Enter in the <a href="https://github.com/kojix2/LibUI/issues">issues</a> section!</p>
+
+<p>I have seen many OSS projects abandoned. The main reason is that no one has the right to commit to the original repository, except the founder. Do you need commit rights to my repository? Do you want to get admin rights and take over the project? If so, please feel free to contact me @kojix2.</p>
+
+<h2 id="label-Acknowledgement">Acknowledgement</h2>
+
+<p>This project is inspired by libui-ruby.</p>
+<ul><li>
+<p><a href="https://github.com/jamescook/libui-ruby">github.com/jamescook/libui-ruby</a></p>
+</li></ul>
+
+<p>While libui-ruby uses <a href="https://github.com/ffi/ffi">Ruby-FFI</a>, this gem uses <a href="https://github.com/ruby/fiddle">Fiddle</a>.</p>
+
+<h2 id="label-License">License</h2>
+
+<p><a href="https://opensource.org/licenses/MIT">MIT License</a>.</p>
+</div></div>
+
+      <div id="footer">
+  Generated on Thu Mar 24 11:28:58 2022 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.27 (ruby-3.1.1).
+</div>
+
+    </div>
+  </body>
+</html>

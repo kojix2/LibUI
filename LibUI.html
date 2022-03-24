@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Module: LibUI
+  
+    &mdash; Documentation by YARD 0.9.27
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "LibUI";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index (L)</a> &raquo;
+    
+    
+    <span class="title">LibUI</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Module: LibUI
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/libui.rb<span class="defines">,<br />
+  lib/libui/ffi.rb,<br /> lib/libui/utils.rb,<br /> lib/libui/version.rb,<br /> lib/libui/libui_base.rb,<br /> lib/libui/fiddle_patch.rb</span>
+</dd>
+  </dl>
+  
+</div>
+
+<h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="LibUI/FFI.html" title="LibUI::FFI (module)">FFI</a></span>, <span class='object_link'><a href="LibUI/Utils.html" title="LibUI::Utils (module)">Utils</a></span>
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="LibUI/Error.html" title="LibUI::Error (class)">Error</a></span>
+    
+  
+</p>
+
+  
+    <h2>
+      Constant Summary
+      <small><a href="#" class="constants_summary_toggle">collapse</a></small>
+    </h2>
+
+    <dl class="constants">
+      
+        <dt id="ForEachContinue-constant" class="">ForEachContinue =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>ForEach</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='int'>0</span></pre></dd>
+      
+        <dt id="ForEachStop-constant" class="">ForEachStop =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>1</span></pre></dd>
+      
+        <dt id="WindowResizeEdgeLeft-constant" class="">WindowResizeEdgeLeft =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>WindowResizeEdge</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='int'>0</span></pre></dd>
+      
+        <dt id="WindowResizeEdgeTop-constant" class="">WindowResizeEdgeTop =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>1</span></pre></dd>
+      
+        <dt id="WindowResizeEdgeRight-constant" class="">WindowResizeEdgeRight =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>2</span></pre></dd>
+      
+        <dt id="WindowResizeEdgeBottom-constant" class="">WindowResizeEdgeBottom =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>3</span></pre></dd>
+      
+        <dt id="WindowResizeEdgeTopLeft-constant" class="">WindowResizeEdgeTopLeft =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>4</span></pre></dd>
+      
+        <dt id="WindowResizeEdgeTopRight-constant" class="">WindowResizeEdgeTopRight =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>5</span></pre></dd>
+      
+        <dt id="WindowResizeEdgeBottomLeft-constant" class="">WindowResizeEdgeBottomLeft =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>6</span></pre></dd>
+      
+        <dt id="WindowResizeEdgeBottomRight-constant" class="">WindowResizeEdgeBottomRight =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>7</span></pre></dd>
+      
+        <dt id="DrawBrushTypeSolid-constant" class="">DrawBrushTypeSolid =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>DrawBrushType</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='int'>0</span></pre></dd>
+      
+        <dt id="DrawBrushTypeLinearGradient-constant" class="">DrawBrushTypeLinearGradient =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>1</span></pre></dd>
+      
+        <dt id="DrawBrushTypeRadialGradient-constant" class="">DrawBrushTypeRadialGradient =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>2</span></pre></dd>
+      
+        <dt id="DrawBrushTypeImage-constant" class="">DrawBrushTypeImage =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>3</span></pre></dd>
+      
+        <dt id="DrawLineCapFlat-constant" class="">DrawLineCapFlat =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>DrawLineCap</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='int'>0</span></pre></dd>
+      
+        <dt id="DrawLineCapRound-constant" class="">DrawLineCapRound =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>1</span></pre></dd>
+      
+        <dt id="DrawLineCapSquare-constant" class="">DrawLineCapSquare =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>2</span></pre></dd>
+      
+        <dt id="DrawLineJoinMiter-constant" class="">DrawLineJoinMiter =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>DrawLineJoin</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='int'>0</span></pre></dd>
+      
+        <dt id="DrawLineJoinRound-constant" class="">DrawLineJoinRound =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>1</span></pre></dd>
+      
+        <dt id="DrawLineJoinBevel-constant" class="">DrawLineJoinBevel =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>2</span></pre></dd>
+      
+        <dt id="DrawDefaultMiterLimit-constant" class="">DrawDefaultMiterLimit =
+          
+        </dt>
+        <dd><pre class="code"><span class='float'>10.0</span></pre></dd>
+      
+        <dt id="DrawFillModeWinding-constant" class="">DrawFillModeWinding =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>DrawFillMode</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='int'>0</span></pre></dd>
+      
+        <dt id="DrawFillModeAlternate-constant" class="">DrawFillModeAlternate =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>1</span></pre></dd>
+      
+        <dt id="AttributeTypeFamily-constant" class="">AttributeTypeFamily =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>AttributeType</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='int'>0</span></pre></dd>
+      
+        <dt id="AttributeTypeSize-constant" class="">AttributeTypeSize =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>1</span></pre></dd>
+      
+        <dt id="AttributeTypeWeight-constant" class="">AttributeTypeWeight =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>2</span></pre></dd>
+      
+        <dt id="AttributeTypeItalic-constant" class="">AttributeTypeItalic =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>3</span></pre></dd>
+      
+        <dt id="AttributeTypeStretch-constant" class="">AttributeTypeStretch =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>4</span></pre></dd>
+      
+        <dt id="AttributeTypeColor-constant" class="">AttributeTypeColor =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>5</span></pre></dd>
+      
+        <dt id="AttributeTypeBackground-constant" class="">AttributeTypeBackground =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>6</span></pre></dd>
+      
+        <dt id="AttributeTypeUnderline-constant" class="">AttributeTypeUnderline =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>7</span></pre></dd>
+      
+        <dt id="AttributeTypeUnderlineColor-constant" class="">AttributeTypeUnderlineColor =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>8</span></pre></dd>
+      
+        <dt id="AttributeTypeFeatures-constant" class="">AttributeTypeFeatures =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>9</span></pre></dd>
+      
+        <dt id="TextWeightMinimum-constant" class="">TextWeightMinimum =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>TextWeight</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='int'>0</span></pre></dd>
+      
+        <dt id="TextWeightThin-constant" class="">TextWeightThin =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>100</span></pre></dd>
+      
+        <dt id="TextWeightUltraLight-constant" class="">TextWeightUltraLight =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>200</span></pre></dd>
+      
+        <dt id="TextWeightLight-constant" class="">TextWeightLight =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>300</span></pre></dd>
+      
+        <dt id="TextWeightBook-constant" class="">TextWeightBook =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>350</span></pre></dd>
+      
+        <dt id="TextWeightNormal-constant" class="">TextWeightNormal =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>400</span></pre></dd>
+      
+        <dt id="TextWeightMedium-constant" class="">TextWeightMedium =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>500</span></pre></dd>
+      
+        <dt id="TextWeightSemiBold-constant" class="">TextWeightSemiBold =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>600</span></pre></dd>
+      
+        <dt id="TextWeightBold-constant" class="">TextWeightBold =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>700</span></pre></dd>
+      
+        <dt id="TextWeightUltraBold-constant" class="">TextWeightUltraBold =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>800</span></pre></dd>
+      
+        <dt id="TextWeightHeavy-constant" class="">TextWeightHeavy =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>900</span></pre></dd>
+      
+        <dt id="TextWeightUltraHeavy-constant" class="">TextWeightUltraHeavy =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>950</span></pre></dd>
+      
+        <dt id="TextWeightMaximum-constant" class="">TextWeightMaximum =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>1000</span></pre></dd>
+      
+        <dt id="TextItalicNormal-constant" class="">TextItalicNormal =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>TextItalic</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='int'>0</span></pre></dd>
+      
+        <dt id="TextItalicOblique-constant" class="">TextItalicOblique =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>1</span></pre></dd>
+      
+        <dt id="TextItalicItalic-constant" class="">TextItalicItalic =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>2</span></pre></dd>
+      
+        <dt id="TextStretchUltraCondensed-constant" class="">TextStretchUltraCondensed =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>TextStretch</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='int'>0</span></pre></dd>
+      
+        <dt id="TextStretchExtraCondensed-constant" class="">TextStretchExtraCondensed =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>1</span></pre></dd>
+      
+        <dt id="TextStretchCondensed-constant" class="">TextStretchCondensed =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>2</span></pre></dd>
+      
+        <dt id="TextStretchSemiCondensed-constant" class="">TextStretchSemiCondensed =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>3</span></pre></dd>
+      
+        <dt id="TextStretchNormal-constant" class="">TextStretchNormal =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>4</span></pre></dd>
+      
+        <dt id="TextStretchSemiExpanded-constant" class="">TextStretchSemiExpanded =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>5</span></pre></dd>
+      
+        <dt id="TextStretchExpanded-constant" class="">TextStretchExpanded =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>6</span></pre></dd>
+      
+        <dt id="TextStretchExtraExpanded-constant" class="">TextStretchExtraExpanded =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>7</span></pre></dd>
+      
+        <dt id="TextStretchUltraExpanded-constant" class="">TextStretchUltraExpanded =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>8</span></pre></dd>
+      
+        <dt id="UnderlineNone-constant" class="">UnderlineNone =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>Underline</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='int'>0</span></pre></dd>
+      
+        <dt id="UnderlineSingle-constant" class="">UnderlineSingle =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>1</span></pre></dd>
+      
+        <dt id="UnderlineDouble-constant" class="">UnderlineDouble =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>2</span></pre></dd>
+      
+        <dt id="UnderlineSuggestion-constant" class="">UnderlineSuggestion =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>3</span></pre></dd>
+      
+        <dt id="UnderlineColorCustom-constant" class="">UnderlineColorCustom =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>UnderlineColor</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='int'>0</span></pre></dd>
+      
+        <dt id="UnderlineColorSpelling-constant" class="">UnderlineColorSpelling =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>1</span></pre></dd>
+      
+        <dt id="UnderlineColorGrammar-constant" class="">UnderlineColorGrammar =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>2</span></pre></dd>
+      
+        <dt id="UnderlineColorAuxiliary-constant" class="">UnderlineColorAuxiliary =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>3</span></pre></dd>
+      
+        <dt id="DrawTextAlignLeft-constant" class="">DrawTextAlignLeft =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>DrawTextAlign</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='int'>0</span></pre></dd>
+      
+        <dt id="DrawTextAlignCenter-constant" class="">DrawTextAlignCenter =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>1</span></pre></dd>
+      
+        <dt id="DrawTextAlignRight-constant" class="">DrawTextAlignRight =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>2</span></pre></dd>
+      
+        <dt id="ModifierCtrl-constant" class="">ModifierCtrl =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>Modifiers</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='lparen'>(</span><span class='int'>1</span> <span class='op'>&lt;&lt;</span> <span class='int'>0</span><span class='rparen'>)</span></pre></dd>
+      
+        <dt id="ModifierAlt-constant" class="">ModifierAlt =
+          
+        </dt>
+        <dd><pre class="code"><span class='lparen'>(</span><span class='int'>1</span> <span class='op'>&lt;&lt;</span> <span class='int'>1</span><span class='rparen'>)</span></pre></dd>
+      
+        <dt id="ModifierShift-constant" class="">ModifierShift =
+          
+        </dt>
+        <dd><pre class="code"><span class='lparen'>(</span><span class='int'>1</span> <span class='op'>&lt;&lt;</span> <span class='int'>2</span><span class='rparen'>)</span></pre></dd>
+      
+        <dt id="ModifierSuper-constant" class="">ModifierSuper =
+          
+        </dt>
+        <dd><pre class="code"><span class='lparen'>(</span><span class='int'>1</span> <span class='op'>&lt;&lt;</span> <span class='int'>3</span><span class='rparen'>)</span></pre></dd>
+      
+        <dt id="ExtKeyEscape-constant" class="">ExtKeyEscape =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>ExtKey</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='int'>1</span></pre></dd>
+      
+        <dt id="ExtKeyInsert-constant" class="">ExtKeyInsert =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>2</span></pre></dd>
+      
+        <dt id="ExtKeyDelete-constant" class="">ExtKeyDelete =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>3</span></pre></dd>
+      
+        <dt id="ExtKeyHome-constant" class="">ExtKeyHome =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>4</span></pre></dd>
+      
+        <dt id="ExtKeyEnd-constant" class="">ExtKeyEnd =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>5</span></pre></dd>
+      
+        <dt id="ExtKeyPageUp-constant" class="">ExtKeyPageUp =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>6</span></pre></dd>
+      
+        <dt id="ExtKeyPageDown-constant" class="">ExtKeyPageDown =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>7</span></pre></dd>
+      
+        <dt id="ExtKeyUp-constant" class="">ExtKeyUp =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>8</span></pre></dd>
+      
+        <dt id="ExtKeyDown-constant" class="">ExtKeyDown =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>9</span></pre></dd>
+      
+        <dt id="ExtKeyLeft-constant" class="">ExtKeyLeft =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>10</span></pre></dd>
+      
+        <dt id="ExtKeyRight-constant" class="">ExtKeyRight =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>11</span></pre></dd>
+      
+        <dt id="ExtKeyF1-constant" class="">ExtKeyF1 =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>12</span></pre></dd>
+      
+        <dt id="ExtKeyF2-constant" class="">ExtKeyF2 =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>13</span></pre></dd>
+      
+        <dt id="ExtKeyF3-constant" class="">ExtKeyF3 =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>14</span></pre></dd>
+      
+        <dt id="ExtKeyF4-constant" class="">ExtKeyF4 =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>15</span></pre></dd>
+      
+        <dt id="ExtKeyF5-constant" class="">ExtKeyF5 =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>16</span></pre></dd>
+      
+        <dt id="ExtKeyF6-constant" class="">ExtKeyF6 =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>17</span></pre></dd>
+      
+        <dt id="ExtKeyF7-constant" class="">ExtKeyF7 =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>18</span></pre></dd>
+      
+        <dt id="ExtKeyF8-constant" class="">ExtKeyF8 =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>19</span></pre></dd>
+      
+        <dt id="ExtKeyF9-constant" class="">ExtKeyF9 =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>20</span></pre></dd>
+      
+        <dt id="ExtKeyF10-constant" class="">ExtKeyF10 =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>21</span></pre></dd>
+      
+        <dt id="ExtKeyF11-constant" class="">ExtKeyF11 =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>22</span></pre></dd>
+      
+        <dt id="ExtKeyF12-constant" class="">ExtKeyF12 =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>23</span></pre></dd>
+      
+        <dt id="ExtKeyN0-constant" class="">ExtKeyN0 =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>24</span></pre></dd>
+      
+        <dt id="ExtKeyN1-constant" class="">ExtKeyN1 =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>25</span></pre></dd>
+      
+        <dt id="ExtKeyN2-constant" class="">ExtKeyN2 =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>26</span></pre></dd>
+      
+        <dt id="ExtKeyN3-constant" class="">ExtKeyN3 =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>27</span></pre></dd>
+      
+        <dt id="ExtKeyN4-constant" class="">ExtKeyN4 =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>28</span></pre></dd>
+      
+        <dt id="ExtKeyN5-constant" class="">ExtKeyN5 =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>29</span></pre></dd>
+      
+        <dt id="ExtKeyN6-constant" class="">ExtKeyN6 =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>30</span></pre></dd>
+      
+        <dt id="ExtKeyN7-constant" class="">ExtKeyN7 =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>31</span></pre></dd>
+      
+        <dt id="ExtKeyN8-constant" class="">ExtKeyN8 =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>32</span></pre></dd>
+      
+        <dt id="ExtKeyN9-constant" class="">ExtKeyN9 =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>33</span></pre></dd>
+      
+        <dt id="ExtKeyNDot-constant" class="">ExtKeyNDot =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>34</span></pre></dd>
+      
+        <dt id="ExtKeyNEnter-constant" class="">ExtKeyNEnter =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>35</span></pre></dd>
+      
+        <dt id="ExtKeyNAdd-constant" class="">ExtKeyNAdd =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>36</span></pre></dd>
+      
+        <dt id="ExtKeyNSubtract-constant" class="">ExtKeyNSubtract =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>37</span></pre></dd>
+      
+        <dt id="ExtKeyNMultiply-constant" class="">ExtKeyNMultiply =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>38</span></pre></dd>
+      
+        <dt id="ExtKeyNDivide-constant" class="">ExtKeyNDivide =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>39</span></pre></dd>
+      
+        <dt id="AlignFill-constant" class="">AlignFill =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>Align</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='int'>0</span></pre></dd>
+      
+        <dt id="AlignStart-constant" class="">AlignStart =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>1</span></pre></dd>
+      
+        <dt id="AlignCenter-constant" class="">AlignCenter =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>2</span></pre></dd>
+      
+        <dt id="AlignEnd-constant" class="">AlignEnd =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>3</span></pre></dd>
+      
+        <dt id="AtLeading-constant" class="">AtLeading =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>At</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='int'>0</span></pre></dd>
+      
+        <dt id="AtTop-constant" class="">AtTop =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>1</span></pre></dd>
+      
+        <dt id="AtTrailing-constant" class="">AtTrailing =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>2</span></pre></dd>
+      
+        <dt id="AtBottom-constant" class="">AtBottom =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>3</span></pre></dd>
+      
+        <dt id="TableValueTypeString-constant" class="">TableValueTypeString =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>TableValueType</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='int'>0</span></pre></dd>
+      
+        <dt id="TableValueTypeImage-constant" class="">TableValueTypeImage =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>1</span></pre></dd>
+      
+        <dt id="TableValueTypeInt-constant" class="">TableValueTypeInt =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>2</span></pre></dd>
+      
+        <dt id="TableValueTypeColor-constant" class="">TableValueTypeColor =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>3</span></pre></dd>
+      
+        <dt id="SortIndicatorNone-constant" class="">SortIndicatorNone =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>SortIndicator</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='int'>0</span></pre></dd>
+      
+        <dt id="SortIndicatorAscending-constant" class="">SortIndicatorAscending =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>1</span></pre></dd>
+      
+        <dt id="SortIndicatorDescending-constant" class="">SortIndicatorDescending =
+          
+        </dt>
+        <dd><pre class="code"><span class='int'>2</span></pre></dd>
+      
+        <dt id="TableModelColumnNeverEditable-constant" class="">TableModelColumnNeverEditable =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>editable</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='op'>-</span><span class='int'>1</span></pre></dd>
+      
+        <dt id="TableModelColumnAlwaysEditable-constant" class="">TableModelColumnAlwaysEditable =
+          
+        </dt>
+        <dd><pre class="code"><span class='op'>-</span><span class='int'>2</span></pre></dd>
+      
+        <dt id="VERSION-constant" class="">VERSION =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>0.0.14</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+  <h2>Class Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#ffi_lib-class_method" title="ffi_lib (class method)">.<strong>ffi_lib</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute ffi_lib.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#init-class_method" title="init (class method)">.<strong>init</strong>(opt = nil)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#open_type_features_add-class_method" title="open_type_features_add (class method)">.<strong>open_type_features_add</strong>(otf, a, b, c, d, value)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#open_type_features_get-class_method" title="open_type_features_get (class method)">.<strong>open_type_features_get</strong>(otf, a, b, c, d, value)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#open_type_features_remove-class_method" title="open_type_features_remove (class method)">.<strong>open_type_features_remove</strong>(otf, a, b, c, d)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  <div id="class_attr_details" class="attr_details">
+    <h2>Class Attribute Details</h2>
+    
+      
+      <span id="ffi_lib=-class_method"></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="ffi_lib-class_method">
+  
+    .<strong>ffi_lib</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute ffi_lib.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+9
+10
+11</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 9</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_ffi_lib'>ffi_lib</span>
+  <span class='ivar'>@ffi_lib</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="init-class_method">
+  
+    .<strong>init</strong>(opt = nil)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 26</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_init'>init</span><span class='lparen'>(</span><span class='id identifier rubyid_opt'>opt</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='kw'>unless</span> <span class='id identifier rubyid_opt'>opt</span>
+    <span class='id identifier rubyid_opt'>opt</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="LibUI/FFI.html" title="LibUI::FFI (module)">FFI</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="LibUI/FFI.html#InitOptions-constant" title="LibUI::FFI::InitOptions (constant)">InitOptions</a></span></span><span class='period'>.</span><span class='id identifier rubyid_malloc'>malloc</span>
+    <span class='id identifier rubyid_opt'>opt</span><span class='period'>.</span><span class='id identifier rubyid_to_ptr'>to_ptr</span><span class='period'>.</span><span class='id identifier rubyid_free'>free</span> <span class='op'>=</span> <span class='const'>Fiddle</span><span class='op'>::</span><span class='const'>RUBY_FREE</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_i'>i</span> <span class='op'>=</span> <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_opt'>opt</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_i'>i</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span><span class='period'>.</span><span class='id identifier rubyid_zero?'>zero?</span>
+
+  <span class='id identifier rubyid_warn'>warn</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>error</span><span class='tstring_end'>&#39;</span></span>
+  <span class='id identifier rubyid_warn'>warn</span> <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_free_init_error'>free_init_error</span><span class='lparen'>(</span><span class='id identifier rubyid_init'>init</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="open_type_features_add-class_method">
+  
+    .<strong>open_type_features_add</strong>(otf, a, b, c, d, value)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+38
+39
+40
+41</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 38</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_open_type_features_add'>open_type_features_add</span><span class='lparen'>(</span><span class='id identifier rubyid_otf'>otf</span><span class='comma'>,</span> <span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_ord'>ord</span> <span class='op'>:</span> <span class='id identifier rubyid_s'>s</span> <span class='rbrace'>}</span>
+  <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_otf'>otf</span><span class='comma'>,</span> <span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="open_type_features_get-class_method">
+  
+    .<strong>open_type_features_get</strong>(otf, a, b, c, d, value)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+48
+49
+50
+51</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 48</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_open_type_features_get'>open_type_features_get</span><span class='lparen'>(</span><span class='id identifier rubyid_otf'>otf</span><span class='comma'>,</span> <span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_ord'>ord</span> <span class='op'>:</span> <span class='id identifier rubyid_s'>s</span> <span class='rbrace'>}</span>
+  <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_otf'>otf</span><span class='comma'>,</span> <span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="open_type_features_remove-class_method">
+  
+    .<strong>open_type_features_remove</strong>(otf, a, b, c, d)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+43
+44
+45
+46</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 43</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_open_type_features_remove'>open_type_features_remove</span><span class='lparen'>(</span><span class='id identifier rubyid_otf'>otf</span><span class='comma'>,</span> <span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_ord'>ord</span> <span class='op'>:</span> <span class='id identifier rubyid_s'>s</span> <span class='rbrace'>}</span>
+  <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_otf'>otf</span><span class='comma'>,</span> <span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Thu Mar 24 11:28:58 2022 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.27 (ruby-3.1.1).
+</div>
+
+    </div>
+  </body>
+</html>
