@@ -70,13 +70,9 @@ Compared to original libui written in C,
 
 You can use [the documentation for libui's Go bindings](https://pkg.go.dev/github.com/andlabs/ui) as a reference.
 
-### DSLs for LibUI
+### Glimmer DSL for LibUI
 
-LibUI is not object-oriented, but provides high portability with minimal implementation.
-If you want to write in an object-oriented way, please use the following DSLs built on top of LibUI.
-
-* [Glimmer DSL for LibUI](https://github.com/AndyObtiva/glimmer-dsl-libui)
-* [libui_paradise](https://rubygems.org/gems/libui_paradise)
+If you want to write object-oriented, please use [Glimmer DSL for LibUI](https://github.com/AndyObtiva/glimmer-dsl-libui). This is recommended for most users. However, if your target is Windows users and you want to use ocra to create and distribute executables on Windows, you may not want to use DSLs. The more dependencies, the harder it is to run ocra.  [libui_paradise](https://rubygems.org/gems/libui_paradise) is another DSL for LibUI.
 
 ### How to use fiddle pointers?
 
@@ -155,6 +151,8 @@ Add additional options below if necessary.
 ```
 
 ## Development
+
+LibUI is not object-oriented, but it provides high portability with a minimal implementation. 
 
 ```sh
 git clone https://github.com/kojix2/libui
