@@ -243,7 +243,7 @@ bundle exec rake test
 
 <p>For example, If you are using a 32-bit (x86) version of Ruby on Windows, type <code>rake vendor:windows_x86</code>.</p>
 
-<p>Or Set environment variable <code>LIBUIDIR</code> to specify the path to the shared library.</p>
+<p>Or Set environment variable <code>LIBUIDIR</code> to specify the path to the shared library. This is especially useful on platforms where the LibUI gem does not provide shared library, such as the ARM architecture (used in devices like Raspberry Pi). You can compile C libui from source code on your platform and tell ruby LibUI where to find the shared libraries (See <a href="https://github.com/kojix2/LibUI/issues/46#issuecomment-1041575792">#46</a>).</p>
 
 <h2 id="label-Contributing">Contributing</h2>
 
@@ -266,7 +266,7 @@ bundle exec rake test
 </div></div>
 
       <div id="footer">
-  Generated on Mon Mar 28 01:32:43 2022 by
+  Generated on Mon Mar 28 02:22:10 2022 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.1.1).
 </div>
