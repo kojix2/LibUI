@@ -146,9 +146,16 @@
 
 <p>You can use <a href="https://pkg.go.dev/github.com/andlabs/ui">the documentation for libui’s Go bindings</a> as a reference.</p>
 
-<h3 id="label-Glimmer+DSL+for+LibUI">Glimmer DSL for LibUI</h3>
+<h3 id="label-DSLs+for+LibUI">DSLs for LibUI</h3>
 
-<p>If you want to write object-oriented, please use <a href="https://github.com/AndyObtiva/glimmer-dsl-libui">Glimmer DSL for LibUI</a>. This is recommended for most users. However, if your target is Windows users and you want to use ocra to create and distribute executables on Windows, you may not want to use DSLs. The more dependencies, the harder it is to run ocra. <a href="https://rubygems.org/gems/libui_paradise">libui_paradise</a> is another DSL for LibUI.</p>
+<p>LibUI is intentionally not object-oriented because it is a thin Ruby wrapper (binding) for the procedural C libui library, so it mirrors its API structure.</p>
+
+<p>It is recommended that you build actual applications using a DSL for LibUI because DSLs enable writing object-oriented code the Ruby way (instead of procedural code the C way):</p>
+<ul><li>
+<p><a href="https://github.com/AndyObtiva/glimmer-dsl-libui">Glimmer DSL for LibUI</a></p>
+</li><li>
+<p><a href="https://rubygems.org/gems/libui_paradise">libui_paradise</a></p>
+</li></ul>
 
 <h3 id="label-How+to+use+fiddle+pointers-3F">How to use fiddle pointers?</h3>
 
@@ -266,7 +273,7 @@ bundle exec rake test
 </div></div>
 
       <div id="footer">
-  Generated on Mon Mar 28 02:22:10 2022 by
+  Generated on Sun Apr  3 09:03:59 2022 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.1.1).
 </div>
