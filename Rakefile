@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'bundler/gem_tasks'
 require 'rake/testtask'
 require 'digest'
@@ -147,4 +149,40 @@ namespace :vendor do
 
   desc 'Downlaod [linux_x64, mac_arm, windows_x64] to vendor directory'
   task default: %i[linux_x64 mac_arm windows_x64]
+end
+
+def libui_ng_url_zip
+  'https://github.com/libui-ng/libui-ng/archive/refs/heads/master.zip'
+end
+
+namespace 'vendor' do
+  desc 'Build libui-ng latest master'
+  task 'libui-ng' do
+    require 'tmpdir'
+    require 'open-uri'
+    require 'zip'
+    vendor_dir = File.expand_path('vendor', __dir__)
+    Dir.mktmpdir do |dir|
+      Dir.chdir(dir) do
+        master = URI.open(libui_ng_url_zip)
+        File.binwrite('libui-ng.zip', master.read)
+        Zip::File.open('libui-ng.zip') do |zip|
+          zip.each do |entry|
+            entry.extract(entry.name)
+          end
+        end
+        Dir.chdir('libui-ng-master') do
+          sh 'meson setup build --buildtype=release'
+          sh 'ninja -C build'
+          lib = Dir['build/meson-out/libui.{so,dylib,dll}']
+          lib.each do |path|
+            name = File.basename(path)
+            to_path = File.join(vendor_dir, name)
+            path = File.expand_path(File.readlink(path), File.dirname(path)) if File.symlink?(path)
+            FileUtils.cp(path, to_path)
+          end
+        end
+      end
+    end
+  end
 end
