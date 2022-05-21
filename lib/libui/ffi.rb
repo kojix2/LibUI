@@ -280,7 +280,7 @@ module LibUI
     try_extern 'int uiMenuItemChecked(uiMenuItem *m)'
     try_extern 'void uiMenuItemSetChecked(uiMenuItem *m, int checked)'
 
-    # uiMenuiTableHeaderOnClickedu
+    # uiMenu
 
     try_extern 'uiMenuItem *uiMenuAppendItem(uiMenu *m, const char *name)'
     try_extern 'uiMenuItem *uiMenuAppendCheckItem(uiMenu *m, const char *name)'
