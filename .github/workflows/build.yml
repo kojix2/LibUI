@@ -13,7 +13,7 @@ jobs:
         ruby: [ '2.5', '2.6', '2.7', '3.0', '3.1' ]
     runs-on: ${{ matrix.os }}-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Cache libui shared library
         id: cache-libui
         uses: actions/cache@v2
@@ -25,11 +25,9 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
-      - name: Bundle install
-        run: |
-          bundle config path vendor/bundle
-          bundle install --jobs 4 --retry 3
-      - run: bundle exec rake vendor:default
+          bundler-cache: true
+      - name: Download libui shared libraries
+        run: bundle exec rake vendor:default
       - name: Rake test (XVFB)
         uses: GabrielBB/xvfb-action@v1
         with:
