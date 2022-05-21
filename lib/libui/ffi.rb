@@ -180,6 +180,7 @@ module LibUI
     try_extern 'int uiSliderHasToolTip(uiSlider *s)'
     try_extern 'void uiSliderSetHasToolTip(uiSlider *s, int hasToolTip)'
     try_extern 'void uiSliderOnChanged(uiSlider *s, void (*f)(uiSlider *s, void *data), void *data)'
+    try_extern 'void uiSliderOnReleased(uiSlider *s, void (*f)(uiSlider *s, void *data), void *data)'
     try_extern 'void uiSliderSetRange(uiSlider *s, int min, int max)'
     try_extern 'uiSlider *uiNewSlider(int min, int max)'
 
@@ -279,7 +280,7 @@ module LibUI
     try_extern 'int uiMenuItemChecked(uiMenuItem *m)'
     try_extern 'void uiMenuItemSetChecked(uiMenuItem *m, int checked)'
 
-    # uiMenu
+    # uiMenuiTableHeaderOnClickedu
 
     try_extern 'uiMenuItem *uiMenuAppendItem(uiMenu *m, const char *name)'
     try_extern 'uiMenuItem *uiMenuAppendCheckItem(uiMenu *m, const char *name)'
@@ -618,7 +619,7 @@ module LibUI
 
     try_extern 'void uiTableHeaderSetSortIndicator(uiTable *t, int column, uiSortIndicator indicator)'
     try_extern 'uiSortIndicator uiTableHeaderSortIndicator(uiTable *t, int column)'
-    try_extern 'void uiTableHeaderOnClicked(uiTable *t,	void (*f)(uiTable *table, int column, void *data), void *data)'
+    try_extern 'void uiTableHeaderOnClicked(uiTable *t, void (*f)(uiTable *table, int column, void *data), void *data)'
     try_extern 'int uiTableColumnWidth(uiTable *t, int column)'
     try_extern 'void uiTableColumnSetWidth(uiTable *t, int column, int width)'
   end
