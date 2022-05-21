@@ -52,7 +52,7 @@ def download_from_url(library, remote_lib, file, sha256sum_expected, url)
       begin
         File.binwrite(file, URI.open(url).read)
       rescue StandardError
-        puts "Download failed. Please check #{url}"
+        puts "[Rake] Download failed. Please check #{url}"
         return false
       end
 
@@ -114,6 +114,7 @@ def build_libui_ng
   require 'fileutils'
   require 'tmpdir'
   require 'zip'
+  require 'open3'
 
   FileUtils.mkdir_p(File.expand_path('vendor', __dir__))
   target_path = File.expand_path("vendor/#{lib_name}", __dir__)
@@ -127,7 +128,7 @@ def build_libui_ng
         content = URI.open(libui_ng_url_zip)
         File.binwrite('libui-ng.zip', content.read)
       rescue StandardError
-        puts '[Rake] failed.'
+        puts "[Rake] failed. Please check #{libui_ng_url_zip}"
         return false
       end
 
@@ -139,45 +140,42 @@ def build_libui_ng
       end
 
       Dir.chdir('libui-ng-master') do
-        stdout = $stdout.dup
+
+        build_log_path = File.expand_path('build.log', __dir__)
 
         puts '[Rake] Building libui-ng (meson)'
-        $stdout.reopen('build.log', 'a')
-        begin
-          sh 'meson setup build --buildtype=release'
-        rescue StandardError
-          $stdout.flush
-          $stdout.reopen(stdout)
-          log_path = File.expand_path('build.log', __dir__)
-          FileUtils.cp('build.log', log_path)
+        output, status = Open3.capture2e('meson', 'build', '--buildtype=release')
+        File.open(build_log_path, "a") do |f|
+          f.puts output
+        end
+        unless status.success?
           puts '[Rake] Error: Failed to build libui-ng. Please check meson.'
-          puts "[Rake] Error: See #{log_path}"
+          puts "[Rake] Error: See #{build_log_path}"
           return false
         end
-        $stdout.flush
-        $stdout.reopen(stdout)
 
         puts '[Rake] Building libui-ng (ninja)'
-        $stdout.reopen('build.log', 'a')
-        begin
-          sh 'ninja -C build'
-        rescue StandardError
-          $stdout.flush
-          $stdout.reopen(stdout)
-          log_path = File.expand_path('build.log', __dir__)
-          FileUtils.cp('build.log', log_path)
+        output, status = Open3.capture2e('ninja', '-C', 'build')
+        File.open(build_log_path, "a") do |f|
+          f.puts output
+        end
+        unless status.success?
           puts '[Rake] Error: Failed to build libui-ng. Please check ninja.'
-          puts "[Rake] Error: See #{log_path}"
+          puts "[Rake] Error: See #{build_log_path}"
           return false
         end
-        $stdout.flush
-        $stdout.reopen(stdout)
+
+        puts "[Rake] Saved #{build_log_path}"
 
         path = "build/meson-out/#{lib_name}"
 
         if File.exist?(path)
           puts "[Rake] Successfully built #{path}"
+        elsif !Dir["#{path}.*"].empty?
+          path = Dir["#{path}.*"].sort.last
+          puts "[Rake] Successfully built #{path}"
         else
+          puts "[Rake] Error: #{Dir['build/meson-out/*']}"
           puts "[Rake] Error: #{path} does not exist. Please check the build log."
           return false
         end
@@ -262,6 +260,7 @@ namespace :vendor do
 
   desc 'Build libui-ng latest master'
   task 'libui-ng' do
-    build_libui_ng
+    s = build_libui_ng
+    abort if s == false
   end
 end

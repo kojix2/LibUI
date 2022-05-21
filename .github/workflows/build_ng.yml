@@ -1,0 +1,41 @@
+name: build-ng
+on:
+  - push
+  - pull_request
+  - workflow_dispatch
+jobs:
+  build:
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    name: ${{ matrix.os }} Ruby ${{ matrix.ruby }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:   [ 'ubuntu', 'macos' ]
+        ruby: [ '2.5', '2.6', '2.7', '3.0', '3.1' ]
+    runs-on: ${{ matrix.os }}-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+      - name: Install meson ninja gtk3 (ubuntu)
+        if: ${{ matrix.os == 'ubuntu' }}
+        run: |
+          sudo apt update -yq
+          sudo apt install -yq meson ninja-build libgtk-3-dev
+      - name: Install meson ninja (macos)
+        if: ${{ matrix.os == 'macos' }}
+        run: |
+          brew install meson ninja
+      - name: Build libui-ng
+        run: bundle exec rake vendor:libui-ng
+      - uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: ${{ matrix.os }}-ruby${{ matrix.ruby }}-build.log
+          path: build.log
+      - name: Rake test (XVFB)
+        uses: GabrielBB/xvfb-action@v1
+        with:
+          run: bundle exec rake test
