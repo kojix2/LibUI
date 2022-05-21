@@ -17,6 +17,15 @@ def version
   'alpha4.1'
 end
 
+def lib_name
+  require 'rbconfig'
+  "libui.#{RbConfig::CONFIG['SOEXT']}"
+end
+
+def libui_ng_url_zip
+  'https://github.com/libui-ng/libui-ng/archive/refs/heads/master.zip'
+end
+
 def download_kojix2_release(library, remote_lib, file, sha256sum_expected)
   url = "https://github.com/kojix2/LibUI/releases/download/v#{LibUI::VERSION}/#{file}"
   download_from_url(library, remote_lib, file, sha256sum_expected, url)
@@ -35,20 +44,19 @@ def download_from_url(library, remote_lib, file, sha256sum_expected, url)
   FileUtils.mkdir_p(File.expand_path('vendor', __dir__))
   target_path = File.expand_path("vendor/#{library}", __dir__)
 
-  if File.exist?(target_path)
-    puts "#{target_path} already exist."
-    if check_sha256sum(target_path, sha256sum_expected)
-      puts "No need to download #{library}."
-      return
-    else
-      puts 'Download the file and replace it.'
-    end
-  end
+  return if check_file_exist(target_path, sha256sum_expected)
 
-  puts "Downloading #{file}..."
   Dir.mktmpdir do |dir|
     Dir.chdir(dir) do
-      File.binwrite(file, URI.open(url).read)
+      puts "[Rake] Downloading #{file}"
+      begin
+        File.binwrite(file, URI.open(url).read)
+      rescue StandardError
+        puts "Download failed. Please check #{url}"
+        return false
+      end
+
+      puts "[Rake] Extracting #{file}"
       if file.end_with?('zip')
         # `unzip` not available on Windows
         require 'zip'
@@ -61,28 +69,130 @@ def download_from_url(library, remote_lib, file, sha256sum_expected, url)
         # Tar available on Windows 10
         system "tar xf #{file}"
       end
+
       path = remote_lib
-      if check_sha256sum(path, sha256sum_expected)
-        FileUtils.cp(path, target_path)
-        puts "Saved #{target_path}"
-      end
+
+      puts '[Rake] Check sha256sum'
+      v = check_sha256sum(path, sha256sum_expected)
+      return false unless v
+
+      puts "[Rake] Copying #{path} to #{target_path}"
+      FileUtils.cp(path, target_path)
     end
   end
 end
 
+def check_file_exist(path, sha256sum)
+  if File.exist?(path)
+    puts "[Rake] #{path} already exist."
+    if check_sha256sum(path, sha256sum)
+      puts '[Rake] Skip downloading.'
+      return true
+    else
+      puts '[Rake] Download the file and replace it.'
+    end
+  end
+  false
+end
+
 def check_sha256sum(path, sha256sum_expected)
-  print 'Check sha256sum...'
   actual_sha256sum = Digest::SHA256.hexdigest(File.binread(path))
   if actual_sha256sum == sha256sum_expected
-    puts 'OK.'
+    puts '[Rake] sha256sum matches.'
     true
   else
-    puts 'Failed.'
-    warn 'Error: sha256sum does not match'
-    warn "  path:               #{path}"
-    warn "  actual_sha256sum:   #{actual_sha256sum}"
-    warn "  expected_sha256sum: #{sha256sum_expected}"
+    puts '[Rake] Warning: sha256sum does not match'
+    puts "[Rake]  path:               #{path}"
+    puts "[Rake]  actual_sha256sum:   #{actual_sha256sum}"
+    puts "[Rake]  expected_sha256sum: #{sha256sum_expected}"
     false
+  end
+end
+
+def build_libui_ng
+  require 'open-uri'
+  require 'fileutils'
+  require 'tmpdir'
+  require 'zip'
+
+  FileUtils.mkdir_p(File.expand_path('vendor', __dir__))
+  target_path = File.expand_path("vendor/#{lib_name}", __dir__)
+
+  # check_file_exist(target_path, sha256sum_expected)
+
+  Dir.mktmpdir do |dir|
+    Dir.chdir(dir) do
+      puts '[Rake] Downloading libui-ng'
+      begin
+        content = URI.open(libui_ng_url_zip)
+        File.binwrite('libui-ng.zip', content.read)
+      rescue StandardError
+        puts '[Rake] failed.'
+        return false
+      end
+
+      puts '[Rake] Extracting zip file'
+      Zip::File.open('libui-ng.zip') do |zip|
+        zip.each do |entry|
+          entry.extract(entry.name)
+        end
+      end
+
+      Dir.chdir('libui-ng-master') do
+        stdout = $stdout.dup
+
+        puts '[Rake] Building libui-ng (meson)'
+        $stdout.reopen('build.log', 'a')
+        begin
+          sh 'meson setup build --buildtype=release'
+        rescue StandardError
+          $stdout.flush
+          $stdout.reopen(stdout)
+          log_path = File.expand_path('build.log', __dir__)
+          FileUtils.cp('build.log', log_path)
+          puts '[Rake] Error: Failed to build libui-ng. Please check meson.'
+          puts "[Rake] Error: See #{log_path}"
+          return false
+        end
+        $stdout.flush
+        $stdout.reopen(stdout)
+
+        puts '[Rake] Building libui-ng (ninja)'
+        $stdout.reopen('build.log', 'a')
+        begin
+          sh 'ninja -C build'
+        rescue StandardError
+          $stdout.flush
+          $stdout.reopen(stdout)
+          log_path = File.expand_path('build.log', __dir__)
+          FileUtils.cp('build.log', log_path)
+          puts '[Rake] Error: Failed to build libui-ng. Please check ninja.'
+          puts "[Rake] Error: See #{log_path}"
+          return false
+        end
+        $stdout.flush
+        $stdout.reopen(stdout)
+
+        path = "build/meson-out/#{lib_name}"
+
+        if File.exist?(path)
+          puts "[Rake] Successfully built #{path}"
+        else
+          puts "[Rake] Error: #{path} does not exist. Please check the build log."
+          return false
+        end
+
+        puts "[Rake] Copying #{path} to #{target_path}"
+        if File.symlink?(path)
+          tpath = File.expand_path(File.readlink(path), File.dirname(path))
+          FileUtils.cp(tpath, target_path)
+        else
+          FileUtils.cp(path, target_path)
+        end
+
+        puts '[Rake] Scceeded.'
+      end
+    end
   end
 end
 
@@ -149,40 +259,9 @@ namespace :vendor do
 
   desc 'Downlaod [linux_x64, mac_arm, windows_x64] to vendor directory'
   task default: %i[linux_x64 mac_arm windows_x64]
-end
 
-def libui_ng_url_zip
-  'https://github.com/libui-ng/libui-ng/archive/refs/heads/master.zip'
-end
-
-namespace 'vendor' do
   desc 'Build libui-ng latest master'
   task 'libui-ng' do
-    require 'tmpdir'
-    require 'open-uri'
-    require 'zip'
-    vendor_dir = File.expand_path('vendor', __dir__)
-    Dir.mktmpdir do |dir|
-      Dir.chdir(dir) do
-        master = URI.open(libui_ng_url_zip)
-        File.binwrite('libui-ng.zip', master.read)
-        Zip::File.open('libui-ng.zip') do |zip|
-          zip.each do |entry|
-            entry.extract(entry.name)
-          end
-        end
-        Dir.chdir('libui-ng-master') do
-          sh 'meson setup build --buildtype=release'
-          sh 'ninja -C build'
-          lib = Dir['build/meson-out/libui.{so,dylib,dll}']
-          lib.each do |path|
-            name = File.basename(path)
-            to_path = File.join(vendor_dir, name)
-            path = File.expand_path(File.readlink(path), File.dirname(path)) if File.symlink?(path)
-            FileUtils.cp(path, to_path)
-          end
-        end
-      end
-    end
+    build_libui_ng
   end
 end

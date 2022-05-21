@@ -9,3 +9,4 @@
 *.lock
 /vendor/bundle
 /vendor/*libui*
+build.log
