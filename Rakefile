@@ -140,27 +140,36 @@ def build_libui_ng
       end
 
       Dir.chdir('libui-ng-master') do
-
         build_log_path = File.expand_path('build.log', __dir__)
 
         puts '[Rake] Building libui-ng (meson)'
-        output, status = Open3.capture2e('meson', 'build', '--buildtype=release')
-        File.open(build_log_path, "a") do |f|
+        begin
+          output, status = Open3.capture2e('meson', 'build', '--buildtype=release')
+        rescue Errno::ENOENT => e
+          puts "[Rake] #{e.message}"
+          return false
+        end
+        File.open(build_log_path, 'a') do |f|
           f.puts output
         end
         unless status.success?
-          puts '[Rake] Error: Failed to build libui-ng. Please check meson.'
+          puts '[Rake] Error: Failed to build libui-ng. (meson)'
           puts "[Rake] Error: See #{build_log_path}"
           return false
         end
 
         puts '[Rake] Building libui-ng (ninja)'
-        output, status = Open3.capture2e('ninja', '-C', 'build')
-        File.open(build_log_path, "a") do |f|
+        begin
+          output, status = Open3.capture2e('ninja', '-C', 'build')
+        rescue Errono::ENOENT => e
+          puts "[Rake] #{e.message}"
+          return false
+        end
+        File.open(build_log_path, 'a') do |f|
           f.puts output
         end
         unless status.success?
-          puts '[Rake] Error: Failed to build libui-ng. Please check ninja.'
+          puts '[Rake] Error: Failed to build libui-ng. (ninja)'
           puts "[Rake] Error: See #{build_log_path}"
           return false
         end
