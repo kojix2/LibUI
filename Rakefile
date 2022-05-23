@@ -181,7 +181,7 @@ def build_libui_ng
         if File.exist?(path)
           puts "[Rake] Successfully built #{path}"
         elsif !Dir["#{path}.*"].empty?
-          path = Dir["#{path}.*"].sort.last
+          path = Dir["#{path}.*"].max
           puts "[Rake] Successfully built #{path}"
         else
           puts "[Rake] Error: #{Dir['build/meson-out/*']}"
@@ -266,9 +266,11 @@ namespace :vendor do
 
   desc 'Downlaod [linux_x64, mac_arm, windows_x64] to vendor directory'
   task default: %i[linux_x64 mac_arm windows_x64]
+end
 
+namespace 'libui-ng' do
   desc 'Build libui-ng latest master'
-  task 'libui-ng' do
+  task 'build' do
     s = build_libui_ng
     abort if s == false
   end
