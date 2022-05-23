@@ -2,5 +2,5 @@
 
 cd "$(dirname "$0")"
 
-delta <(./ui_h.sh) <(./ui_ffi.sh)
-# diff <(./ui_h.sh) <(./ui_ffi.sh)
+delta <(./ui_ffi.sh) <(./ui_h.sh)
+# diff <(./ui_ffi.sh) <(./ui_h.sh)
