@@ -26,58 +26,65 @@ def libui_ng_url_zip
   'https://github.com/libui-ng/libui-ng/archive/refs/heads/master.zip'
 end
 
-def download_kojix2_release(library, remote_lib, file, sha256sum_expected)
-  url = "https://github.com/kojix2/LibUI/releases/download/v#{LibUI::VERSION}/#{file}"
-  download_from_url(library, remote_lib, file, sha256sum_expected, url)
+def download_libui_ng_development(libname, lib_path, file_name)
+  url = "https://nightly.link/libui-ng/libui-ng/workflows/build/master/#{file_name}"
+  download_from_url(libname, lib_path, file_name, true, url)
 end
 
-def download_andlabs_release(library, remote_lib, file, sha256sum_expected)
-  url = "https://github.com/andlabs/libui/releases/download/#{version}/#{file}"
-  download_from_url(library, remote_lib, file, sha256sum_expected, url)
+def download_kojix2_release(libname, lib_path, file_name, sha256sum_expected)
+  url = "https://github.com/kojix2/LibUI/releases/download/v#{LibUI::VERSION}/#{file_name}"
+  download_from_url(libname, lib_path, file_name, sha256sum_expected, url)
 end
 
-def download_from_url(library, remote_lib, file, sha256sum_expected, url)
+def download_andlabs_release(libname, lib_path, file_name, sha256sum_expected)
+  url = "https://github.com/andlabs/libui/releases/download/#{version}/#{file_name}"
+  download_from_url(libname, lib_path, file_name, sha256sum_expected, url)
+end
+
+def download_from_url(libname, lib_path, file_name, sha256sum_expected, url)
   require 'fileutils'
   require 'open-uri'
   require 'tmpdir'
 
   FileUtils.mkdir_p(File.expand_path('vendor', __dir__))
-  target_path = File.expand_path("vendor/#{library}", __dir__)
+  target_path = File.expand_path("vendor/#{libname}", __dir__)
 
   return if check_file_exist(target_path, sha256sum_expected)
 
   Dir.mktmpdir do |dir|
     Dir.chdir(dir) do
-      puts "[Rake] Downloading #{file}"
+      puts "[Rake] Downloading #{file_name}"
       begin
-        File.binwrite(file, URI.open(url).read)
+        File.binwrite(file_name, URI.open(url).read)
       rescue StandardError
         puts "[Rake] Download failed. Please check #{url}"
         return false
       end
 
-      puts "[Rake] Extracting #{file}"
-      if file.end_with?('zip')
+      puts "[Rake] Extracting #{file_name}"
+      if file_name.end_with?('zip')
         # `unzip` not available on Windows
         require 'zip'
-        Zip::File.open(file) do |zip|
+        Zip::File.open(file_name) do |zip|
           zip.each do |entry|
             entry.extract(entry.name)
           end
         end
       else
         # Tar available on Windows 10
-        system "tar xf #{file}"
+        system "tar xf #{file_name}"
       end
 
-      path = remote_lib
+      if sha256sum_expected == true
+        puts '[Rake] Skip sha256sum check (development build)'
+      else
+        puts '[Rake] Check sha256sum'
+        v = check_sha256sum(lib_path, sha256sum_expected)
+        retrun false unless v
+      end
 
-      puts '[Rake] Check sha256sum'
-      v = check_sha256sum(path, sha256sum_expected)
-      return false unless v
-
-      puts "[Rake] Copying #{path} to #{target_path}"
-      FileUtils.cp(path, target_path)
+      puts "[Rake] Copying #{lib_path} to #{target_path}"
+      FileUtils.cp(lib_path, target_path)
     end
   end
 end
@@ -96,6 +103,8 @@ def check_file_exist(path, sha256sum)
 end
 
 def check_sha256sum(path, sha256sum_expected)
+  return nil if sha256sum_expected == true
+
   actual_sha256sum = Digest::SHA256.hexdigest(File.binread(path))
   if actual_sha256sum == sha256sum_expected
     puts '[Rake] sha256sum matches.'
@@ -203,7 +212,7 @@ def build_libui_ng
   end
 end
 
-namespace :vendor do
+namespace 'vendor' do
   desc 'Download libui.so for Linux to vendor directory'
   task :linux_x64 do
     download_andlabs_release(
@@ -273,5 +282,23 @@ namespace 'libui-ng' do
   task 'build' do
     s = build_libui_ng
     abort if s == false
+  end
+
+  desc 'Download dev build for Ubuntu to vendor directory'
+  task :ubuntu_x64 do
+    download_libui_ng_development(
+      'libui.so',
+      'builddir/meson-out/libui.so',
+      'Ubuntu-x64-shared-debug.zip'
+    )
+  end
+
+  desc 'Download dev build for Mac to vendor directory'
+  task :mac do
+    download_libui_ng_development(
+      'libui.dylib',
+      'builddir/meson-out/libui.dylib',
+      'macOS-x64-shared-debug.zip'
+    )
   end
 end
