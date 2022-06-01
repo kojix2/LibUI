@@ -286,7 +286,7 @@ namespace 'libui-ng' do
     abort if s == false
   end
 
-  desc 'Download dev build for Ubuntu to vendor directory'
+  desc 'Download latest dev build for Ubuntu to vendor directory'
   task :ubuntu_x64 do
     download_libui_ng_development(
       'libui.so',
@@ -295,7 +295,7 @@ namespace 'libui-ng' do
     )
   end
 
-  desc 'Download dev build for Mac to vendor directory'
+  desc 'Download latest dev build for Mac to vendor directory'
   task :mac do
     download_libui_ng_development(
       'libui.dylib',
