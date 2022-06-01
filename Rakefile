@@ -22,8 +22,8 @@ def lib_name
   "libui.#{RbConfig::CONFIG['SOEXT']}"
 end
 
-def libui_ng_url_zip
-  'https://github.com/libui-ng/libui-ng/archive/refs/heads/master.zip'
+def libui_ng_url_zip(commit_hash = 'master')
+  "https://github.com/libui-ng/libui-ng/archive/#{commit_hash}.zip"
 end
 
 def download_libui_ng_development(libname, lib_path, file_name)
@@ -56,8 +56,8 @@ def download_from_url(libname, lib_path, file_name, sha256sum_expected, url)
       puts "[Rake] Downloading #{file_name}"
       begin
         File.binwrite(file_name, URI.open(url).read)
-      rescue StandardError
-        puts "[Rake] Download failed. Please check #{url}"
+      rescue StandardError => e
+        puts "[Rake] Failed. #{e.message}. Please check #{url}"
         return false
       end
 
@@ -118,7 +118,7 @@ def check_sha256sum(path, sha256sum_expected)
   end
 end
 
-def build_libui_ng
+def build_libui_ng(commit_hash)
   require 'open-uri'
   require 'fileutils'
   require 'tmpdir'
@@ -133,11 +133,13 @@ def build_libui_ng
   Dir.mktmpdir do |dir|
     Dir.chdir(dir) do
       puts '[Rake] Downloading libui-ng'
+      commit_hash = 'master' if commit_hash.nil?
+      url = libui_ng_url_zip(commit_hash)
       begin
-        content = URI.open(libui_ng_url_zip)
+        content = URI.open(url)
         File.binwrite('libui-ng.zip', content.read)
-      rescue StandardError
-        puts "[Rake] failed. Please check #{libui_ng_url_zip}"
+      rescue StandardError => e
+        puts "[Rake] Failed. #{e.message}. Please check #{url}"
         return false
       end
 
@@ -148,7 +150,7 @@ def build_libui_ng
         end
       end
 
-      Dir.chdir('libui-ng-master') do
+      Dir.chdir(Dir['libui-ng-*'].first) do
         build_log_path = File.expand_path('build.log', __dir__)
 
         puts '[Rake] Building libui-ng (meson)'
@@ -279,8 +281,8 @@ end
 
 namespace 'libui-ng' do
   desc 'Build libui-ng latest master'
-  task 'build' do
-    s = build_libui_ng
+  task 'build', 'hash' do |_, args|
+    s = build_libui_ng(args['hash'])
     abort if s == false
   end
 
