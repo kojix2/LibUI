@@ -13,6 +13,10 @@ end
 
 task default: :test
 
+def puts(str)
+  Kernel.puts('[Rake] ' + str)
+end
+
 def version
   'alpha4.1'
 end
@@ -53,15 +57,15 @@ def download_from_url(libname, lib_path, file_name, sha256sum_expected, url)
 
   Dir.mktmpdir do |dir|
     Dir.chdir(dir) do
-      puts "[Rake] Downloading #{file_name}"
+      puts "Downloading #{file_name}"
       begin
         File.binwrite(file_name, URI.open(url).read)
       rescue StandardError => e
-        puts "[Rake] Failed. #{e.message}. Please check #{url}"
+        puts "Failed. #{e.message}. Please check #{url}"
         return false
       end
 
-      puts "[Rake] Extracting #{file_name}"
+      puts "Extracting #{file_name}"
       if file_name.end_with?('zip')
         # `unzip` not available on Windows
         require 'zip'
@@ -76,14 +80,14 @@ def download_from_url(libname, lib_path, file_name, sha256sum_expected, url)
       end
 
       if sha256sum_expected == true
-        puts '[Rake] Skip sha256sum check (development build)'
+        puts 'Skip sha256sum check (development build)'
       else
-        puts '[Rake] Check sha256sum'
+        puts 'Check sha256sum'
         v = check_sha256sum(lib_path, sha256sum_expected)
         retrun false unless v
       end
 
-      puts "[Rake] Copying #{lib_path} to #{target_path}"
+      puts "Copying #{lib_path} to #{target_path}"
       FileUtils.cp(lib_path, target_path)
     end
   end
@@ -91,12 +95,12 @@ end
 
 def check_file_exist(path, sha256sum)
   if File.exist?(path)
-    puts "[Rake] #{path} already exist."
+    puts "#{path} already exist."
     if check_sha256sum(path, sha256sum)
-      puts '[Rake] Skip downloading.'
+      puts 'Skip downloading.'
       return true
     else
-      puts '[Rake] Download the file and replace it.'
+      puts 'Download the file and replace it.'
     end
   end
   false
@@ -107,13 +111,13 @@ def check_sha256sum(path, sha256sum_expected)
 
   actual_sha256sum = Digest::SHA256.hexdigest(File.binread(path))
   if actual_sha256sum == sha256sum_expected
-    puts '[Rake] sha256sum matches.'
+    puts 'sha256sum matches.'
     true
   else
-    puts '[Rake] Warning: sha256sum does not match'
-    puts "[Rake]  path:               #{path}"
-    puts "[Rake]  actual_sha256sum:   #{actual_sha256sum}"
-    puts "[Rake]  expected_sha256sum: #{sha256sum_expected}"
+    puts 'Warning: sha256sum does not match'
+    puts " path:               #{path}"
+    puts " actual_sha256sum:   #{actual_sha256sum}"
+    puts " expected_sha256sum: #{sha256sum_expected}"
     false
   end
 end
@@ -132,18 +136,18 @@ def build_libui_ng(commit_hash)
 
   Dir.mktmpdir do |dir|
     Dir.chdir(dir) do
-      puts '[Rake] Downloading libui-ng'
+      puts 'Downloading libui-ng'
       commit_hash = 'master' if commit_hash.nil?
       url = libui_ng_url_zip(commit_hash)
       begin
         content = URI.open(url)
         File.binwrite('libui-ng.zip', content.read)
       rescue StandardError => e
-        puts "[Rake] Failed. #{e.message}. Please check #{url}"
+        puts "Failed. #{e.message}. Please check #{url}"
         return false
       end
 
-      puts '[Rake] Extracting zip file'
+      puts 'Extracting zip file'
       Zip::File.open('libui-ng.zip') do |zip|
         zip.each do |entry|
           entry.extract(entry.name)
@@ -153,54 +157,54 @@ def build_libui_ng(commit_hash)
       Dir.chdir(Dir['libui-ng-*'].first) do
         build_log_path = File.expand_path('build.log', __dir__)
 
-        puts '[Rake] Building libui-ng (meson)'
+        puts 'Building libui-ng (meson)'
         begin
           output, status = Open3.capture2e('meson', 'build', '--buildtype=release')
         rescue Errno::ENOENT => e
-          puts "[Rake] #{e.message}"
+          puts "#{e.message}"
           return false
         end
         File.open(build_log_path, 'a') do |f|
           f.puts output
         end
         unless status.success?
-          puts '[Rake] Error: Failed to build libui-ng. (meson)'
-          puts "[Rake] Error: See #{build_log_path}"
+          puts 'Error: Failed to build libui-ng. (meson)'
+          puts "Error: See #{build_log_path}"
           return false
         end
 
-        puts '[Rake] Building libui-ng (ninja)'
+        puts 'Building libui-ng (ninja)'
         begin
           output, status = Open3.capture2e('ninja', '-C', 'build')
         rescue Errono::ENOENT => e
-          puts "[Rake] #{e.message}"
+          puts "#{e.message}"
           return false
         end
         File.open(build_log_path, 'a') do |f|
           f.puts output
         end
         unless status.success?
-          puts '[Rake] Error: Failed to build libui-ng. (ninja)'
-          puts "[Rake] Error: See #{build_log_path}"
+          puts 'Error: Failed to build libui-ng. (ninja)'
+          puts "Error: See #{build_log_path}"
           return false
         end
 
-        puts "[Rake] Saved #{build_log_path}"
+        puts "Saved #{build_log_path}"
 
         path = "build/meson-out/#{lib_name}"
 
         if File.exist?(path)
-          puts "[Rake] Successfully built #{path}"
+          puts "Successfully built #{path}"
         elsif !Dir["#{path}.*"].empty?
           path = Dir["#{path}.*"].max
-          puts "[Rake] Successfully built #{path}"
+          puts "Successfully built #{path}"
         else
-          puts "[Rake] Error: #{Dir['build/meson-out/*']}"
-          puts "[Rake] Error: #{path} does not exist. Please check the build log."
+          puts "Error: #{Dir['build/meson-out/*']}"
+          puts "Error: #{path} does not exist. Please check the build log."
           return false
         end
 
-        puts "[Rake] Copying #{path} to #{target_path}"
+        puts "Copying #{path} to #{target_path}"
         if File.symlink?(path)
           tpath = File.expand_path(File.readlink(path), File.dirname(path))
           FileUtils.cp(tpath, target_path)
@@ -208,7 +212,7 @@ def build_libui_ng(commit_hash)
           FileUtils.cp(path, target_path)
         end
 
-        puts '[Rake] Scceeded.'
+        puts 'Scceeded.'
       end
     end
   end
