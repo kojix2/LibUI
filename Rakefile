@@ -37,6 +37,12 @@ end
 
 def download_kojix2_release(libname, lib_path, file_name, sha256sum_expected)
   url = "https://github.com/kojix2/LibUI/releases/download/v#{LibUI::VERSION}/#{file_name}"
+  require 'open-uri'
+  begin
+    URI.parse(url).open
+  rescue OpenURI::HTTPError => e
+    url = "https://github.com/kojix2/LibUI/releases/download/v0.0.15/#{file_name}"
+  end
   download_from_url(libname, lib_path, file_name, sha256sum_expected, url)
 end
 
