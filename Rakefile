@@ -168,6 +168,7 @@ def build_libui_ng(commit_hash)
           output, status = Open3.capture2e('meson', 'build', '--buildtype=release')
         rescue Errno::ENOENT => e
           puts "#{e.message}"
+          puts "Make sure that meson is installed."
           return false
         end
         File.open(build_log_path, 'a') do |f|
@@ -184,6 +185,7 @@ def build_libui_ng(commit_hash)
           output, status = Open3.capture2e('ninja', '-C', 'build')
         rescue Errono::ENOENT => e
           puts "#{e.message}"
+          puts "Make sure that ninja is installed."
           return false
         end
         File.open(build_log_path, 'a') do |f|
