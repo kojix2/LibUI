@@ -10,6 +10,7 @@ curl -sL https://raw.githubusercontent.com/libui-ng/libui-ng/master/ui.h \
 
 curl -sL https://raw.githubusercontent.com/libui-ng/libui-ng/master/ui.h \
   | gcc -fpreprocessed -P -dD -E - \
+  | grep -vP "^#" \
   | sed -z -e "s/\n//g" -e "s/;/\n/g" -e "s/\t/ /g" -e 's/  */ /g' \
   | grep "_UI_EXTERN" \
   | sed -e "s/^[ \t]*//" -e "s/[ \t]*$//" \
