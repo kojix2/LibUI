@@ -64,24 +64,24 @@ module LibUI
       'void (*Enable)(uiControl *)',
       'void (*Disable)(uiControl *)'
     ]
-
-    try_extern 'void uiControlDestroy(uiControl *)'
-    try_extern 'uintptr_t uiControlHandle(uiControl *)'
-    try_extern 'uiControl *uiControlParent(uiControl *)'
-    try_extern 'void uiControlSetParent(uiControl *, uiControl *)'
-    try_extern 'int uiControlToplevel(uiControl *)'
-    try_extern 'int uiControlVisible(uiControl *)'
-    try_extern 'void uiControlShow(uiControl *)'
-    try_extern 'void uiControlHide(uiControl *)'
-    try_extern 'int uiControlEnabled(uiControl *)'
-    try_extern 'void uiControlEnable(uiControl *)'
-    try_extern 'void uiControlDisable(uiControl *)'
+  
+    try_extern 'void uiControlDestroy(uiControl *c)'
+    try_extern 'uintptr_t uiControlHandle(uiControl *c)'
+    try_extern 'uiControl *uiControlParent(uiControl *c)'
+    try_extern 'void uiControlSetParent(uiControl *c, uiControl *parent)'
+    try_extern 'int uiControlToplevel(uiControl *c)'
+    try_extern 'int uiControlVisible(uiControl *c)'
+    try_extern 'void uiControlShow(uiControl *c)'
+    try_extern 'void uiControlHide(uiControl *c)'
+    try_extern 'int uiControlEnabled(uiControl *c)'
+    try_extern 'void uiControlEnable(uiControl *c)'
+    try_extern 'void uiControlDisable(uiControl *c)'
 
     try_extern 'uiControl *uiAllocControl(size_t n, uint32_t OSsig, uint32_t typesig, const char *typenamestr)'
-    try_extern 'void uiFreeControl(uiControl *)'
+    try_extern 'void uiFreeControl(uiControl *c)'
 
-    try_extern 'void uiControlVerifySetParent(uiControl *, uiControl *)'
-    try_extern 'int uiControlEnabledToUser(uiControl *)'
+    try_extern 'void uiControlVerifySetParent(uiControl *c, uiControl *parent)'
+    try_extern 'int uiControlEnabledToUser(uiControl *c)'
 
     try_extern 'void uiUserBugCannotSetParentOnToplevel(const char *type)'
 
@@ -110,7 +110,7 @@ module LibUI
 
     try_extern 'char *uiButtonText(uiButton *b)'
     try_extern 'void uiButtonSetText(uiButton *b, const char *text)'
-    try_extern 'void uiButtonOnClicked(uiButton *b, void (*f)(uiButton *b, void *data), void *data)'
+    try_extern 'void uiButtonOnClicked(uiButton *b, void (*f)(uiButton *sender, void *senderData), void *data)'
     try_extern 'uiButton *uiNewButton(const char *text)'
 
     # uiBox
@@ -127,7 +127,7 @@ module LibUI
 
     try_extern 'char *uiCheckboxText(uiCheckbox *c)'
     try_extern 'void uiCheckboxSetText(uiCheckbox *c, const char *text)'
-    try_extern 'void uiCheckboxOnToggled(uiCheckbox *c, void (*f)(uiCheckbox *c, void *data), void *data)'
+    try_extern 'void uiCheckboxOnToggled(uiCheckbox *c, void (*f)(uiCheckbox *sender, void *senderData), void *data)'
     try_extern 'int uiCheckboxChecked(uiCheckbox *c)'
     try_extern 'void uiCheckboxSetChecked(uiCheckbox *c, int checked)'
     try_extern 'uiCheckbox *uiNewCheckbox(const char *text)'
@@ -136,7 +136,7 @@ module LibUI
 
     try_extern 'char *uiEntryText(uiEntry *e)'
     try_extern 'void uiEntrySetText(uiEntry *e, const char *text)'
-    try_extern 'void uiEntryOnChanged(uiEntry *e, void (*f)(uiEntry *e, void *data), void *data)'
+    try_extern 'void uiEntryOnChanged(uiEntry *e, void (*f)(uiEntry *sender, void *senderData), void *data)'
     try_extern 'int uiEntryReadOnly(uiEntry *e)'
     try_extern 'void uiEntrySetReadOnly(uiEntry *e, int readonly)'
     try_extern 'uiEntry *uiNewEntry(void)'
@@ -152,11 +152,11 @@ module LibUI
     # uiTab
 
     try_extern 'void uiTabAppend(uiTab *t, const char *name, uiControl *c)'
-    try_extern 'void uiTabInsertAt(uiTab *t, const char *name, int before, uiControl *c)'
+    try_extern 'void uiTabInsertAt(uiTab *t, const char *name, int index, uiControl *c)'
     try_extern 'void uiTabDelete(uiTab *t, int index)'
     try_extern 'int uiTabNumPages(uiTab *t)'
-    try_extern 'int uiTabMargined(uiTab *t, int page)'
-    try_extern 'void uiTabSetMargined(uiTab *t, int page, int margined)'
+    try_extern 'int uiTabMargined(uiTab *t, int index)'
+    try_extern 'void uiTabSetMargined(uiTab *t, int index, int margined)'
     try_extern 'uiTab *uiNewTab(void)'
 
     # uiGroup
@@ -172,7 +172,7 @@ module LibUI
 
     try_extern 'int uiSpinboxValue(uiSpinbox *s)'
     try_extern 'void uiSpinboxSetValue(uiSpinbox *s, int value)'
-    try_extern 'void uiSpinboxOnChanged(uiSpinbox *s, void (*f)(uiSpinbox *s, void *data), void *data)'
+    try_extern 'void uiSpinboxOnChanged(uiSpinbox *s, void (*f)(uiSpinbox *sender, void *senderData), void *data)'
     try_extern 'uiSpinbox *uiNewSpinbox(int min, int max)'
 
     # uiSlider
@@ -181,8 +181,8 @@ module LibUI
     try_extern 'void uiSliderSetValue(uiSlider *s, int value)'
     try_extern 'int uiSliderHasToolTip(uiSlider *s)'
     try_extern 'void uiSliderSetHasToolTip(uiSlider *s, int hasToolTip)'
-    try_extern 'void uiSliderOnChanged(uiSlider *s, void (*f)(uiSlider *s, void *data), void *data)'
-    try_extern 'void uiSliderOnReleased(uiSlider *s, void (*f)(uiSlider *s, void *data), void *data)'
+    try_extern 'void uiSliderOnChanged(uiSlider *s, void (*f)(uiSlider *sender, void *senderData), void *data)'
+    try_extern 'void uiSliderOnReleased(uiSlider *s, void (*f)(uiSlider *sender, void *senderData), void *data)'
     try_extern 'void uiSliderSetRange(uiSlider *s, int min, int max)'
     try_extern 'uiSlider *uiNewSlider(int min, int max)'
 
@@ -200,13 +200,13 @@ module LibUI
     # uiCombobox
 
     try_extern 'void uiComboboxAppend(uiCombobox *c, const char *text)'
-    try_extern 'void uiComboboxInsertAt(uiCombobox *c, int n, const char *text)'
-    try_extern 'void uiComboboxDelete(uiCombobox *c, int n)'
+    try_extern 'void uiComboboxInsertAt(uiCombobox *c, int index, const char *text)'
+    try_extern 'void uiComboboxDelete(uiCombobox *c, int index)'
     try_extern 'void uiComboboxClear(uiCombobox *c)'
     try_extern 'int uiComboboxNumItems(uiCombobox *c)'
     try_extern 'int uiComboboxSelected(uiCombobox *c)'
-    try_extern 'void uiComboboxSetSelected(uiCombobox *c, int n)'
-    try_extern 'void uiComboboxOnSelected(uiCombobox *c, void (*f)(uiCombobox *c, void *data), void *data)'
+    try_extern 'void uiComboboxSetSelected(uiCombobox *c, int index)'
+    try_extern 'void uiComboboxOnSelected(uiCombobox *c, void (*f)(uiCombobox *sender, void *senderData), void *data)'
     try_extern 'uiCombobox *uiNewCombobox(void)'
 
     # uiEditableCombobox
@@ -214,15 +214,15 @@ module LibUI
     try_extern 'void uiEditableComboboxAppend(uiEditableCombobox *c, const char *text)'
     try_extern 'char *uiEditableComboboxText(uiEditableCombobox *c)'
     try_extern 'void uiEditableComboboxSetText(uiEditableCombobox *c, const char *text)'
-    try_extern 'void uiEditableComboboxOnChanged(uiEditableCombobox *c, void (*f)(uiEditableCombobox *c, void *data), void *data)'
+    try_extern 'void uiEditableComboboxOnChanged(uiEditableCombobox *c, void (*f)(uiEditableCombobox *sender, void *senderData), void *data)'
     try_extern 'uiEditableCombobox *uiNewEditableCombobox(void)'
 
     # uiRadioButtons
 
     try_extern 'void uiRadioButtonsAppend(uiRadioButtons *r, const char *text)'
     try_extern 'int uiRadioButtonsSelected(uiRadioButtons *r)'
-    try_extern 'void uiRadioButtonsSetSelected(uiRadioButtons *r, int n)'
-    try_extern 'void uiRadioButtonsOnSelected(uiRadioButtons *r, void (*f)(uiRadioButtons *, void *), void *data)'
+    try_extern 'void uiRadioButtonsSetSelected(uiRadioButtons *r, int index)'
+    try_extern 'void uiRadioButtonsOnSelected(uiRadioButtons *r, void (*f)(uiRadioButtons *sender, void *senderData), void *data)'
     try_extern 'uiRadioButtons *uiNewRadioButtons(void)'
 
     # uiDateTimePicker
@@ -258,7 +258,7 @@ module LibUI
 
     try_extern 'void uiDateTimePickerTime(uiDateTimePicker *d, struct tm *time)'
     try_extern 'void uiDateTimePickerSetTime(uiDateTimePicker *d, const struct tm *time)'
-    try_extern 'void uiDateTimePickerOnChanged(uiDateTimePicker *d, void (*f)(uiDateTimePicker *, void *), void *data)'
+    try_extern 'void uiDateTimePickerOnChanged(uiDateTimePicker *d, void (*f)(uiDateTimePicker *sender, void *senderData), void *data)'
     try_extern 'uiDateTimePicker *uiNewDateTimePicker(void)'
     try_extern 'uiDateTimePicker *uiNewDatePicker(void)'
     try_extern 'uiDateTimePicker *uiNewTimePicker(void)'
@@ -268,7 +268,7 @@ module LibUI
     try_extern 'char *uiMultilineEntryText(uiMultilineEntry *e)'
     try_extern 'void uiMultilineEntrySetText(uiMultilineEntry *e, const char *text)'
     try_extern 'void uiMultilineEntryAppend(uiMultilineEntry *e, const char *text)'
-    try_extern 'void uiMultilineEntryOnChanged(uiMultilineEntry *e, void (*f)(uiMultilineEntry *e, void *data), void *data)'
+    try_extern 'void uiMultilineEntryOnChanged(uiMultilineEntry *e, void (*f)(uiMultilineEntry *sender, void *senderData), void *data)'
     try_extern 'int uiMultilineEntryReadOnly(uiMultilineEntry *e)'
     try_extern 'void uiMultilineEntrySetReadOnly(uiMultilineEntry *e, int readonly)'
     try_extern 'uiMultilineEntry *uiNewMultilineEntry(void)'
@@ -278,7 +278,7 @@ module LibUI
 
     try_extern 'void uiMenuItemEnable(uiMenuItem *m)'
     try_extern 'void uiMenuItemDisable(uiMenuItem *m)'
-    try_extern 'void uiMenuItemOnClicked(uiMenuItem *m, void (*f)(uiMenuItem *sender, uiWindow *window, void *data), void *data)'
+    try_extern 'void uiMenuItemOnClicked(uiMenuItem *m, void (*f)(uiMenuItem *sender, uiWindow *window, void *senderData), void *data)'
     try_extern 'int uiMenuItemChecked(uiMenuItem *m)'
     try_extern 'void uiMenuItemSetChecked(uiMenuItem *m, int checked)'
 
@@ -506,7 +506,7 @@ module LibUI
     # uiFontButton
 
     try_extern 'void uiFontButtonFont(uiFontButton *b, uiFontDescriptor *desc)'
-    try_extern 'void uiFontButtonOnChanged(uiFontButton *b, void (*f)(uiFontButton *, void *), void *data)'
+    try_extern 'void uiFontButtonOnChanged(uiFontButton *b, void (*f)(uiFontButton *sender, void *senderData), void *data)'
     try_extern 'uiFontButton *uiNewFontButton(void)'
     try_extern 'void uiFreeFontButtonFont(uiFontDescriptor *desc)'
 
@@ -538,7 +538,7 @@ module LibUI
 
     try_extern 'void uiColorButtonColor(uiColorButton *b, double *r, double *g, double *bl, double *a)'
     try_extern 'void uiColorButtonSetColor(uiColorButton *b, double r, double g, double bl, double a)'
-    try_extern 'void uiColorButtonOnChanged(uiColorButton *b, void (*f)(uiColorButton *, void *), void *data)'
+    try_extern 'void uiColorButtonOnChanged(uiColorButton *b, void (*f)(uiColorButton *sender, void *senderData), void *data)'
     try_extern 'uiColorButton *uiNewColorButton(void)'
 
     # uiForm
@@ -621,7 +621,7 @@ module LibUI
 
     try_extern 'void uiTableHeaderSetSortIndicator(uiTable *t, int column, uiSortIndicator indicator)'
     try_extern 'uiSortIndicator uiTableHeaderSortIndicator(uiTable *t, int column)'
-    try_extern 'void uiTableHeaderOnClicked(uiTable *t, void (*f)(uiTable *table, int column, void *data), void *data)'
+    try_extern 'void uiTableHeaderOnClicked(uiTable *t, void (*f)(uiTable *sender, int column, void *senderData), void *data)'
     try_extern 'int uiTableColumnWidth(uiTable *t, int column)'
     try_extern 'void uiTableColumnSetWidth(uiTable *t, int column, int width)'
   end
