@@ -64,7 +64,7 @@ module LibUI
       'void (*Enable)(uiControl *)',
       'void (*Disable)(uiControl *)'
     ]
-  
+
     try_extern 'void uiControlDestroy(uiControl *c)'
     try_extern 'uintptr_t uiControlHandle(uiControl *c)'
     try_extern 'uiControl *uiControlParent(uiControl *c)'
