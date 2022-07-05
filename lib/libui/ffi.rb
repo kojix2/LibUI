@@ -93,6 +93,10 @@ module LibUI
     try_extern 'void uiWindowSetContentSize(uiWindow *w, int width, int height)'
     try_extern 'int uiWindowFullscreen(uiWindow *w)'
     try_extern 'void uiWindowSetFullscreen(uiWindow *w, int fullscreen)'
+    try_extern 'void uiWindowOnContentSizeChanged(uiWindow *w, void (*f)(uiWindow *sender, void *senderData), void *data)'
+    try_extern 'void uiWindowOnClosing(uiWindow *w, int (*f)(uiWindow *sender, void *senderData), void *data)'
+    try_extern 'void uiWindowOnFocusChanged(uiWindow *w, void (*f)(uiWindow *sender, void *senderData), void *data)'
+    try_extern 'int uiWindowFocused(uiWindow *w)'
     try_extern 'int uiWindowBorderless(uiWindow *w)'
     try_extern 'void uiWindowSetBorderless(uiWindow *w, int borderless)'
     try_extern 'void uiWindowSetChild(uiWindow *w, uiControl *child)'
@@ -101,10 +105,6 @@ module LibUI
     try_extern 'int uiWindowResizeable(uiWindow *w)'
     try_extern 'void uiWindowSetResizeable(uiWindow *w, int resizeable)'
     try_extern 'uiWindow *uiNewWindow(const char *title, int width, int height, int hasMenubar)'
-    try_extern 'void uiWindowOnContentSizeChanged(uiWindow *w, void (*f)(uiWindow *, void *), void *data)'
-    try_extern 'void uiWindowOnClosing(uiWindow *w, int (*f)(uiWindow *w, void *data), void *data)'
-    try_extern 'void uiWindowOnFocusChanged(uiWindow *w, void (*f)(uiWindow *, void *), void *data)'
-    try_extern 'int uiWindowFocused(uiWindow *w)'
 
     # uiButton
 
