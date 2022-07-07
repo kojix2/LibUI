@@ -185,6 +185,20 @@ For example, If you are using a 32-bit (x86) version of Ruby on Windows, type `r
 
 Or Set environment variable `LIBUIDIR` to specify the path to the shared library. This is especially useful on platforms where the LibUI gem does not provide shared library, such as the ARM architecture (used in devices like Raspberry Pi). You can compile C libui from source code on your platform and tell ruby LibUI where to find the shared libraries (See [#46](https://github.com/kojix2/LibUI/issues/46#issuecomment-1041575792)).
 
+### libui-ng
+
+[libui-ng](https://github.com/libui-ng/libui-ng) is the successor project to libui. Rake tasks are available to build or download libui-ng shared libraries.
+
+```
+rake libui-ng:build[hash]  # Build libui-ng latest master
+rake libui-ng:mac          # Download latest dev build for Mac to vendor directory
+rake libui-ng:ubuntu_x64   # Download latest dev build for Ubuntu to vendor directory
+```
+
+```
+rake install
+```
+
 ## Contributing
 
 Would you like to add your commits to libui?
