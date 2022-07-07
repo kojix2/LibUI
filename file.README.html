@@ -252,6 +252,18 @@ bundle exec rake test
 
 <p>Or Set environment variable <code>LIBUIDIR</code> to specify the path to the shared library. This is especially useful on platforms where the LibUI gem does not provide shared library, such as the ARM architecture (used in devices like Raspberry Pi). You can compile C libui from source code on your platform and tell ruby LibUI where to find the shared libraries (See <a href="https://github.com/kojix2/LibUI/issues/46#issuecomment-1041575792">#46</a>).</p>
 
+<h3 id="label-libui-ng">libui-ng</h3>
+
+<p><a href="https://github.com/libui-ng/libui-ng">libui-ng</a> is the successor project to libui. Rake tasks are available to build or download libui-ng shared libraries.</p>
+
+<pre class="code ruby"><code class="ruby">rake libui-ng:build[hash]  # Build libui-ng latest master
+rake libui-ng:mac          # Download latest dev build for Mac to vendor directory
+rake libui-ng:ubuntu_x64   # Download latest dev build for Ubuntu to vendor directory
+</code></pre>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_rake'>rake</span> <span class='id identifier rubyid_install'>install</span>
+</code></pre>
+
 <h2 id="label-Contributing">Contributing</h2>
 
 <p>Would you like to add your commits to libui? * Please feel free to send us your <a href="https://github.com/kojix2/libui/pulls">pull requests</a>.  * Small corrections, such as typo fixes, are appreciated. * Did you find any bugs? Enter in the <a href="https://github.com/kojix2/LibUI/issues">issues</a> section!</p>
@@ -273,7 +285,7 @@ bundle exec rake test
 </div></div>
 
       <div id="footer">
-  Generated on Tue Jul  5 05:12:49 2022 by
+  Generated on Thu Jul  7 12:17:30 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.2).
 </div>
