@@ -292,7 +292,7 @@ namespace 'vendor' do
 end
 
 namespace 'libui-ng' do
-  desc 'Build libui-ng latest master'
+  desc 'Build libui-ng latest master [commit hash]'
   task 'build', 'hash' do |_, args|
     s = build_libui_ng(args['hash'])
     abort if s == false
