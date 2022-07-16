@@ -203,7 +203,7 @@ def build_libui_ng(commit_hash)
 
         if File.exist?(path)
           puts "Successfully built #{path}"
-        elsif path2 = Dir["#{path}.*"].filter { |f| File.file?(f) }.max
+        elsif path2 = Dir["#{path}.*"].select { |f| File.file?(f) }.max
           path = path2
           puts "Successfully built #{path}"
         else
