@@ -4,7 +4,6 @@ on:
   - pull_request
 jobs:
   build:
-    if: "!contains(github.event.head_commit.message, '[skip ci]')"
     name: ${{ matrix.os }} Ruby ${{ matrix.ruby }}
     strategy:
       fail-fast: false
