@@ -1,12 +1,19 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+unless system('which cargo', out: '/dev/null')
+  warn 'Rust package manager not found. The tokenizers gem requires rust.'
+end
+
 require 'libui'
 require 'onnxruntime'
 require 'tokenizers'
 require 'numo/narray'
 
 # GPT-2 model
+# Transformer-based language model for text generation.
+# https://github.com/onnx/models/tree/main/text/machine_comprehension/gpt-2
+
 
 Dir.chdir(__dir__) do
   unless File.exist?('gpt2-lm-head-10.onnx')
