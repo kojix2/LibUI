@@ -29,10 +29,20 @@ Dir.chdir(__dir__) do
   @model = OnnxRuntime::Model.new('gpt2-lm-head-10.onnx')
 end
 
-def predict(a)
-  o = @model.predict({ input1: [[a]] })
-  o = Numo::DFloat.cast(o['output1'][0])
-  o[true, -1, true].argmax
+def softmax(y)
+  Numo::NMath.exp(y) / Numo::NMath.exp(y).sum(1, keepdims: true)
+end
+
+def predict(a, prob: true)
+  outputs = @model.predict({ input1: [[a]] })
+  logits = Numo::DFloat.cast(outputs['output1'][0])
+  logits = logits[true, -1, true]
+  return logits.argmax unless prob
+
+  log_probs = softmax(logits)
+  idx = log_probs.sort_index
+  i = (log_probs[idx].cumsum < rand).count
+  idx[i]
 end
 
 def predict_text(s, max = 30)
