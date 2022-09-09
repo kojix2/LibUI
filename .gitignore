@@ -10,4 +10,8 @@
 /vendor/bundle
 /vendor/*libui*
 build.log
+
+# gpt2 exmaple
 *.onnx
+gpt2.bin
+gpt2.i2w

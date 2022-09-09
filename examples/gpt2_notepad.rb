@@ -1,31 +1,33 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-unless system('which cargo', out: '/dev/null')
-  warn 'Rust package manager not found. The tokenizers gem requires rust.'
-end
-
 require 'libui'
 require 'onnxruntime'
-require 'tokenizers'
+require 'blingfire'
 require 'numo/narray'
 
 # GPT-2 model
 # Transformer-based language model for text generation.
 # https://github.com/onnx/models/tree/main/text/machine_comprehension/gpt-2
 
-
 Dir.chdir(__dir__) do
-  unless File.exist?('gpt2-lm-head-10.onnx')
-    url = 'https://github.com/onnx/models/raw/main/text/machine_comprehension/gpt-2/model/gpt2-lm-head-10.onnx'
-    system("wget -c #{url}")
-  end
-end
+  %w[
+    https://github.com/microsoft/BlingFire/raw/master/dist-pypi/blingfire/gpt2.bin
+    https://github.com/microsoft/BlingFire/raw/master/dist-pypi/blingfire/gpt2.i2w
+    https://github.com/onnx/models/raw/main/text/machine_comprehension/gpt-2/model/gpt2-lm-head-10.onnx
+  ].each do |url|
+    fname = File.basename(url)
+    next if File.exist?(fname)
 
-@tokenizer = Tokenizers.from_pretrained('gpt2')
-@model = OnnxRuntime::Model.new(
-  File.expand_path('gpt2-lm-head-10.onnx', __dir__)
-)
+    print "Downloading #{fname}..."
+    require 'open-uri'
+    File.binwrite(fname, URI.open(url).read)
+    puts 'done'
+  end
+  @encoder = BlingFire.load_model('gpt2.bin')
+  @decoder = BlingFire.load_model('gpt2.i2w')
+  @model = OnnxRuntime::Model.new('gpt2-lm-head-10.onnx')
+end
 
 def predict(a)
   o = @model.predict({ input1: [[a]] })
@@ -34,17 +36,16 @@ def predict(a)
 end
 
 def predict_text(s, max = 30)
-  a = @tokenizer.encode(s).ids
+  a = @encoder.text_to_ids(s)
   max.times do
     id = predict(a)
     a << id
     break if id == 13 # .
   end
-  @tokenizer.decode(a)
+  @decoder.ids_to_text(a)
 end
 
 # GUI
-
 UI = LibUI
 
 UI.init
