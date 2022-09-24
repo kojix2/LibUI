@@ -190,7 +190,7 @@ Or Set environment variable `LIBUIDIR` to specify the path to the shared library
 [libui-ng](https://github.com/libui-ng/libui-ng) is the successor project to libui. Rake tasks are available to build or download libui-ng shared libraries.
 
 ```
-rake libui-ng:build[hash]  # Build libui-ng latest master
+rake libui-ng:build[hash]  # Build libui-ng latest master [commit hash]
 rake libui-ng:mac          # Download latest dev build for Mac to vendor directory
 rake libui-ng:ubuntu_x64   # Download latest dev build for Ubuntu to vendor directory
 ```
