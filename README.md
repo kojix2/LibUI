@@ -188,7 +188,11 @@ rake vendor:windows_x86  # Download libui.dll for Windows to vendor directory
 
 For example, If you are using a 32-bit (x86) version of Ruby on Windows, type `rake vendor:windows_x86`.
 
-Or Set environment variable `LIBUIDIR` to specify the path to the shared library. This is especially useful on platforms where the LibUI gem does not provide shared library, such as the ARM architecture (used in devices like Raspberry Pi). You can compile C libui from source code on your platform and tell ruby LibUI where to find the shared libraries (See [#46](https://github.com/kojix2/LibUI/issues/46#issuecomment-1041575792)).
+### Use C libui compiled from source code
+
+You can compile C libui from source code on your platform and tell ruby LibUI where to find the shared libraries. Set environment variable `LIBUIDIR` to specify the path to the shared library. (See [#46](https://github.com/kojix2/LibUI/issues/46#issuecomment-1041575792)). This is especially useful on platforms where the LibUI gem does not provide shared library, such as the ARM architecture (used in devices like Raspberry Pi).　
+
+Another simple approach is to replace the shared libraries in the gem vendor directory with the ones you have compiled.
 
 ### libui-ng
 
