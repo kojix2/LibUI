@@ -28,7 +28,7 @@ gem install libui
 Note:
 * If you are using the 32-bit (x86) version of Ruby, you need to download the 32-bit (x86) native dll. See [Development](#development).
 * On Windows, libui may not work due to missing DLLs. In that case, you need to install [Visual C++ Redistributable](https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist). See ([#48](https://github.com/kojix2/LibUI/issues/48))
-* [Raspberry Pi](https://www.raspberrypi.com/)　and other platform users will need to compile C libui. See [Development](#development).
+* [Raspberry Pi](https://www.raspberrypi.com/) and other platform users will need to compile C libui. See [Development](#development).
 
 ## Usage
 
@@ -190,7 +190,7 @@ For example, If you are using a 32-bit (x86) version of Ruby on Windows, type `r
 
 ### Use C libui compiled from source code
 
-You can compile C libui from source code on your platform and tell ruby LibUI where to find the shared libraries. Set environment variable `LIBUIDIR` to specify the path to the shared library. (See [#46](https://github.com/kojix2/LibUI/issues/46#issuecomment-1041575792)). This is especially useful on platforms where the LibUI gem does not provide shared library, such as the ARM architecture (used in devices like Raspberry Pi).　
+You can compile C libui from source code on your platform and tell ruby LibUI where to find the shared libraries. Set environment variable `LIBUIDIR` to specify the path to the shared library. (See [#46](https://github.com/kojix2/LibUI/issues/46#issuecomment-1041575792)). This is especially useful on platforms where the LibUI gem does not provide shared library, such as the ARM architecture (used in devices like Raspberry Pi).
 
 Another simple approach is to replace the shared libraries in the gem vendor directory with the ones you have compiled.
 
