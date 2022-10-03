@@ -28,6 +28,7 @@ gem install libui
 Note:
 * If you are using the 32-bit (x86) version of Ruby, you need to download the 32-bit (x86) native dll. See [Development](#development).
 * On Windows, libui may not work due to missing DLLs. In that case, you need to install [Visual C++ Redistributable](https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist). See ([#48](https://github.com/kojix2/LibUI/issues/48))
+* [Raspberry P](https://www.raspberrypi.com/)　and other platform users will need to compile C libui. See [Development](#development).
 
 ## Usage
 
