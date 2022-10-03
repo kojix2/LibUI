@@ -62,7 +62,11 @@
 
 <p><img src="https://github.com/kojix2/libui/workflows/build/badge.svg"> <a href="https://badge.fury.io/rb/libui"><img src="https://badge.fury.io/rb/libui.svg"></a> &lt;a href=“<a href="https://github.com/AndyObtiva/glimmer-dsl-libui"><img">github.com/AndyObtiva/glimmer-dsl-libui”><img</a> alt=“glimmer-dsl-libui” src=“<a href="https://github.com/AndyObtiva/glimmer/blob/master/images/glimmer-logo-hi-res.svg">github.com/AndyObtiva/glimmer/blob/master/images/glimmer-logo-hi-res.svg</a>” width=“50” height=“50” align=“right”&gt;&lt;/a&gt;</p>
 
-<p>:radio_button: <a href="https://github.com/libui-ng/libui-ng">libui</a> - a portable GUI library - for Ruby</p>
+<p>LibUI is a Ruby wrapper for libui and libui-ng.</p>
+
+<p>:rocket: <a href="https://github.com/libui-ng/libui-ng">libui-ng</a> - A cross-platform portable GUI library</p>
+
+<p>:radio_button: <a href="https://github.com/andlabs/libui">libui</a> - Original version by andlabs</p>
 
 <h2 id="label-Installation">Installation</h2>
 
@@ -95,7 +99,7 @@
 </tbody>
 </table>
 
-<p>Note: * If you are using the 32-bit (x86) version of Ruby, you need to download the 32-bit (x86) native dll. See <a href="#development">Development</a>. * On Windows, libui may not work due to missing DLLs. In that case, you need to install <a href="https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist">Visual C++ Redistributable</a>. See (<a href="https://github.com/kojix2/LibUI/issues/48">#48</a>)</p>
+<p>Note: * If you are using the 32-bit (x86) version of Ruby, you need to download the 32-bit (x86) native dll. See <a href="#development">Development</a>. * On Windows, libui may not work due to missing DLLs. In that case, you need to install <a href="https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist">Visual C++ Redistributable</a>. See (<a href="https://github.com/kojix2/LibUI/issues/48">#48</a>) * <a href="https://www.raspberrypi.com/">Raspberry Pi</a> and other platform users will need to compile C libui. See <a href="#development">Development</a>.</p>
 
 <h2 id="label-Usage">Usage</h2>
 
@@ -250,9 +254,15 @@ bundle exec rake test
 
 <p>For example, If you are using a 32-bit (x86) version of Ruby on Windows, type <code>rake vendor:windows_x86</code>.</p>
 
-<p>Or Set environment variable <code>LIBUIDIR</code> to specify the path to the shared library. This is especially useful on platforms where the LibUI gem does not provide shared library, such as the ARM architecture (used in devices like Raspberry Pi). You can compile C libui from source code on your platform and tell ruby LibUI where to find the shared libraries (See <a href="https://github.com/kojix2/LibUI/issues/46#issuecomment-1041575792">#46</a>).</p>
+<h3 id="label-Use+C+libui+compiled+from+source+code">Use C libui compiled from source code</h3>
+
+<p>You can compile C libui from source code on your platform and tell ruby LibUI where to find the shared libraries. Set environment variable <code>LIBUIDIR</code> to specify the path to the shared library. (See <a href="https://github.com/kojix2/LibUI/issues/46#issuecomment-1041575792">#46</a>). This is especially useful on platforms where the LibUI gem does not provide shared library, such as the ARM architecture (used in devices like Raspberry Pi).</p>
+
+<p>Another simple approach is to replace the shared libraries in the gem vendor directory with the ones you have compiled.</p>
 
 <h3 id="label-libui-ng">libui-ng</h3>
+
+<p>Version 0.0.X only supports libui. From version 0.1.X, we plan to support only libui-ng.</p>
 
 <p><a href="https://github.com/libui-ng/libui-ng">libui-ng</a> is the successor project to libui. Rake tasks are available to build or download libui-ng shared libraries.</p>
 
@@ -285,7 +295,7 @@ rake libui-ng:ubuntu_x64   # Download latest dev build for Ubuntu to vendor dire
 </div></div>
 
       <div id="footer">
-  Generated on Sat Sep 24 05:11:38 2022 by
+  Generated on Mon Oct  3 05:33:29 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.2).
 </div>
