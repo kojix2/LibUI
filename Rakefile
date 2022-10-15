@@ -17,25 +17,21 @@ def puts(str)
   Kernel.puts("[Rake] #{str}")
 end
 
-def version
-  'alpha4.1'
-end
-
+# Give platform specific file extension.
 def lib_name
   require 'rbconfig'
   "libui.#{RbConfig::CONFIG['SOEXT']}"
 end
 
-def libui_ng_url_zip(commit_hash = 'master')
+def url_libui_ng_source_zip(commit_hash = 'master')
   "https://github.com/libui-ng/libui-ng/archive/#{commit_hash}.zip"
 end
 
-def download_libui_ng_development(libname, lib_path, file_name)
-  url = "https://nightly.link/libui-ng/libui-ng/workflows/build/master/#{file_name}"
-  download_from_url(libname, lib_path, file_name, true, url)
+def url_libui_ng_nightly(file_name)
+  "https://nightly.link/libui-ng/libui-ng/workflows/build/master/#{file_name}"
 end
 
-def download_kojix2_release(libname, lib_path, file_name, sha256sum_expected)
+def url_kojix2_release(file_name)
   url = "https://github.com/kojix2/LibUI/releases/download/v#{LibUI::VERSION}/#{file_name}"
   require 'open-uri'
   begin
@@ -43,11 +39,25 @@ def download_kojix2_release(libname, lib_path, file_name, sha256sum_expected)
   rescue OpenURI::HTTPError => e
     url = "https://github.com/kojix2/LibUI/releases/download/v0.0.15/#{file_name}"
   end
+  url
+end
+
+def url_andlabs_release(file_name)
+  "https://github.com/andlabs/libui/releases/download/alpha4.1/#{file_name}"
+end
+
+def download_libui_ng_nightly(libname, lib_path, file_name)
+  url = url_libui_ng_nightly(file_name)
+  download_from_url(libname, lib_path, file_name, true, url)
+end
+
+def download_kojix2_release(libname, lib_path, file_name, sha256sum_expected)
+  url = url_kojix2_release(file_name)
   download_from_url(libname, lib_path, file_name, sha256sum_expected, url)
 end
 
 def download_andlabs_release(libname, lib_path, file_name, sha256sum_expected)
-  url = "https://github.com/andlabs/libui/releases/download/#{version}/#{file_name}"
+  url = url_andlabs_release(file_name)
   download_from_url(libname, lib_path, file_name, sha256sum_expected, url)
 end
 
@@ -144,7 +154,7 @@ def build_libui_ng(commit_hash)
     Dir.chdir(dir) do
       puts 'Downloading libui-ng'
       commit_hash = 'master' if commit_hash.nil?
-      url = libui_ng_url_zip(commit_hash)
+      url = url_libui_ng_source_zip(commit_hash)
       begin
         content = URI.open(url)
         File.binwrite('libui-ng.zip', content.read)
@@ -300,7 +310,7 @@ namespace 'libui-ng' do
 
   desc 'Download latest dev build for Ubuntu to vendor directory'
   task :ubuntu_x64 do
-    download_libui_ng_development(
+    download_libui_ng_nightly(
       'libui.so',
       'builddir/meson-out/libui.so',
       'Ubuntu-x64-shared-debug.zip'
@@ -309,7 +319,7 @@ namespace 'libui-ng' do
 
   desc 'Download latest dev build for Mac to vendor directory'
   task :mac do
-    download_libui_ng_development(
+    download_libui_ng_nightly(
       'libui.dylib',
       'builddir/meson-out/libui.dylib',
       'macOS-x64-shared-debug.zip'
