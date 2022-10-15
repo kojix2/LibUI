@@ -23,7 +23,7 @@ def lib_name
   "libui.#{RbConfig::CONFIG['SOEXT']}"
 end
 
-def libui_ng_url_zip(commit_hash = 'master')
+def url_libui_ng_source_zip(commit_hash = 'master')
   "https://github.com/libui-ng/libui-ng/archive/#{commit_hash}.zip"
 end
 
@@ -154,7 +154,7 @@ def build_libui_ng(commit_hash)
     Dir.chdir(dir) do
       puts 'Downloading libui-ng'
       commit_hash = 'master' if commit_hash.nil?
-      url = libui_ng_url_zip(commit_hash)
+      url = url_libui_ng_source_zip(commit_hash)
       begin
         content = URI.open(url)
         File.binwrite('libui-ng.zip', content.read)
