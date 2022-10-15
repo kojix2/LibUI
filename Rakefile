@@ -17,10 +17,7 @@ def puts(str)
   Kernel.puts("[Rake] #{str}")
 end
 
-def lib_version
-  'alpha4.1'
-end
-
+# Give platform specific file extension.
 def lib_name
   require 'rbconfig'
   "libui.#{RbConfig::CONFIG['SOEXT']}"
@@ -30,12 +27,11 @@ def libui_ng_url_zip(commit_hash = 'master')
   "https://github.com/libui-ng/libui-ng/archive/#{commit_hash}.zip"
 end
 
-def download_libui_ng_nightly(libname, lib_path, file_name)
-  url = "https://nightly.link/libui-ng/libui-ng/workflows/build/master/#{file_name}"
-  download_from_url(libname, lib_path, file_name, true, url)
+def url_libui_ng_nightly(file_name)
+  "https://nightly.link/libui-ng/libui-ng/workflows/build/master/#{file_name}"
 end
 
-def download_kojix2_release(libname, lib_path, file_name, sha256sum_expected)
+def url_kojix2_release(file_name)
   url = "https://github.com/kojix2/LibUI/releases/download/v#{LibUI::VERSION}/#{file_name}"
   require 'open-uri'
   begin
@@ -43,11 +39,25 @@ def download_kojix2_release(libname, lib_path, file_name, sha256sum_expected)
   rescue OpenURI::HTTPError => e
     url = "https://github.com/kojix2/LibUI/releases/download/v0.0.15/#{file_name}"
   end
+  url
+end
+
+def url_andlabs_release(file_name)
+  "https://github.com/andlabs/libui/releases/download/alpha4.1/#{file_name}"
+end
+
+def download_libui_ng_nightly(libname, lib_path, file_name)
+  url = url_libui_ng_nightly(file_name)
+  download_from_url(libname, lib_path, file_name, true, url)
+end
+
+def download_kojix2_release(libname, lib_path, file_name, sha256sum_expected)
+  url = url_kojix2_release(file_name)
   download_from_url(libname, lib_path, file_name, sha256sum_expected, url)
 end
 
 def download_andlabs_release(libname, lib_path, file_name, sha256sum_expected)
-  url = "https://github.com/andlabs/libui/releases/download/#{lib_version}/#{file_name}"
+  url = url_andlabs_release(file_name)
   download_from_url(libname, lib_path, file_name, sha256sum_expected, url)
 end
 
