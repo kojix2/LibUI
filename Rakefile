@@ -17,7 +17,7 @@ def puts(str)
   Kernel.puts("[Rake] #{str}")
 end
 
-def version
+def lib_version
   'alpha4.1'
 end
 
@@ -30,7 +30,7 @@ def libui_ng_url_zip(commit_hash = 'master')
   "https://github.com/libui-ng/libui-ng/archive/#{commit_hash}.zip"
 end
 
-def download_libui_ng_development(libname, lib_path, file_name)
+def download_libui_ng_nightly(libname, lib_path, file_name)
   url = "https://nightly.link/libui-ng/libui-ng/workflows/build/master/#{file_name}"
   download_from_url(libname, lib_path, file_name, true, url)
 end
@@ -47,7 +47,7 @@ def download_kojix2_release(libname, lib_path, file_name, sha256sum_expected)
 end
 
 def download_andlabs_release(libname, lib_path, file_name, sha256sum_expected)
-  url = "https://github.com/andlabs/libui/releases/download/#{version}/#{file_name}"
+  url = "https://github.com/andlabs/libui/releases/download/#{lib_version}/#{file_name}"
   download_from_url(libname, lib_path, file_name, sha256sum_expected, url)
 end
 
@@ -300,7 +300,7 @@ namespace 'libui-ng' do
 
   desc 'Download latest dev build for Ubuntu to vendor directory'
   task :ubuntu_x64 do
-    download_libui_ng_development(
+    download_libui_ng_nightly(
       'libui.so',
       'builddir/meson-out/libui.so',
       'Ubuntu-x64-shared-debug.zip'
@@ -309,7 +309,7 @@ namespace 'libui-ng' do
 
   desc 'Download latest dev build for Mac to vendor directory'
   task :mac do
-    download_libui_ng_development(
+    download_libui_ng_nightly(
       'libui.dylib',
       'builddir/meson-out/libui.dylib',
       'macOS-x64-shared-debug.zip'
