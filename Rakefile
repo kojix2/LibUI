@@ -2,6 +2,7 @@
 
 require 'bundler/gem_tasks'
 require 'rake/testtask'
+require 'rbconfig'
 require 'digest'
 require_relative 'lib/libui/version'
 
@@ -19,7 +20,6 @@ end
 
 # Give platform specific file extension.
 def lib_name
-  require 'rbconfig'
   "libui.#{RbConfig::CONFIG['SOEXT']}"
 end
 
@@ -285,6 +285,20 @@ namespace 'vendor' do
         'builddir/meson-out/libui.dll',
         'Win-x86-shared-release.zip'
       )
+    end
+
+    desc 'Download kojix2 pre-build for your platform to vendor directory'
+    task :auto do
+      # TODO: Add support for other platforms
+      case RUBY_PLATFORM 
+      when /linux/
+        Rake::Task['vendor:kojix2:ubuntu_x64'].invoke
+      when /darwin/
+        Rake::Task['vendor:kojix2:mac'].invoke
+      when /mingw/
+        Rake::Task['vendor:kojix2:windows_x64'].invoke
+        end
+      end
     end
   end
 end
