@@ -243,16 +243,17 @@ bundle exec rake test
 
 <p><code>rake -T</code></p>
 
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_rake'>rake</span> <span class='label'>vendor:</span><span class='id identifier rubyid_default'>default</span>      <span class='comment'># Downlaod [linux_x64, mac_arm, windows_x64] to vendor directory
-</span><span class='id identifier rubyid_rake'>rake</span> <span class='label'>vendor:</span><span class='id identifier rubyid_linux_x64'>linux_x64</span>    <span class='comment'># Download libui.so for Linux to vendor directory
-</span><span class='id identifier rubyid_rake'>rake</span> <span class='label'>vendor:</span><span class='id identifier rubyid_linux_x86'>linux_x86</span>    <span class='comment'># Download libui.so for Linux to vendor directory
-</span><span class='id identifier rubyid_rake'>rake</span> <span class='label'>vendor:</span><span class='id identifier rubyid_mac_arm'>mac_arm</span>      <span class='comment'># Download libui.dylib for Mac to vendor directory (universal binary)
-</span><span class='id identifier rubyid_rake'>rake</span> <span class='label'>vendor:</span><span class='id identifier rubyid_mac_x64'>mac_x64</span>      <span class='comment'># Download libui.dylib for Mac to vendor directory
-</span><span class='id identifier rubyid_rake'>rake</span> <span class='label'>vendor:</span><span class='id identifier rubyid_windows_x64'>windows_x64</span>  <span class='comment'># Download libui.dll for Windows to vendor directory
-</span><span class='id identifier rubyid_rake'>rake</span> <span class='label'>vendor:</span><span class='id identifier rubyid_windows_x86'>windows_x86</span>  <span class='comment'># Download libui.dll for Windows to vendor directory
-</span></code></pre>
+<pre class="code ruby"><code class="ruby">ake vendor:kojix2:auto           # Download kojix2 pre-build for your platform to vendor directory
+rake vendor:kojix2:mac            # Download kojix2 pre-build for Mac to vendor directory
+rake vendor:kojix2:ubuntu_x64     # Download kojix2 pre-build for Ubuntu to vendor directory
+rake vendor:kojix2:windows_x64    # Download kojix2 pre-build for Windows to vendor directory
+rake vendor:kojix2:windows_x86    # Download kojix2 pre-build for Windows to vendor directory
+rake vendor:libui-ng:build[hash]  # Build libui-ng latest master [commit hash]
+rake vendor:libui-ng:mac          # Download latest dev build for Mac to vendor directory
+rake vendor:libui-ng:ubuntu_x64   # Download latest dev build for Ubuntu to vendor directory
+</code></pre>
 
-<p>For example, If you are using a 32-bit (x86) version of Ruby on Windows, type <code>rake vendor:windows_x86</code>.</p>
+<p>For example, If you are using a 32-bit (x86) version of Ruby on Windows, type <code>vendor:kojix2:windows_x86</code>.</p>
 
 <h3 id="label-Use+C+libui+compiled+from+source+code">Use C libui compiled from source code</h3>
 
@@ -260,19 +261,12 @@ bundle exec rake test
 
 <p>Another simple approach is to replace the shared libraries in the gem vendor directory with the ones you have compiled.</p>
 
-<h3 id="label-libui-ng">libui-ng</h3>
-
-<p>Version 0.0.X only supports libui. From version 0.1.X, we plan to support only libui-ng.</p>
-
-<p><a href="https://github.com/libui-ng/libui-ng">libui-ng</a> is the successor project to libui. Rake tasks are available to build or download libui-ng shared libraries.</p>
-
-<pre class="code ruby"><code class="ruby">rake libui-ng:build[hash]  # Build libui-ng latest master [commit hash]
-rake libui-ng:mac          # Download latest dev build for Mac to vendor directory
-rake libui-ng:ubuntu_x64   # Download latest dev build for Ubuntu to vendor directory
-</code></pre>
-
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_rake'>rake</span> <span class='id identifier rubyid_install'>install</span>
-</code></pre>
+<h3 id="label-libui+or+libui-ng">libui or libui-ng</h3>
+<ul><li>
+<p>From version 0.1.X, we plan to support only libui-ng/libui-ng.</p>
+</li><li>
+<p>Version 0.0.X only supports andlabs/libui.</p>
+</li></ul>
 
 <h2 id="label-Contributing">Contributing</h2>
 
@@ -295,7 +289,7 @@ rake libui-ng:ubuntu_x64   # Download latest dev build for Ubuntu to vendor dire
 </div></div>
 
       <div id="footer">
-  Generated on Sun Nov 13 05:56:53 2022 by
+  Generated on Sun Nov 13 06:18:31 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-3.1.2).
 </div>
