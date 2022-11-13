@@ -12,10 +12,21 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = '>= 2.5'
 
-  spec.files = Dir['*.{md,txt}', '{lib}/**/*',
-                   'vendor/LICENSE', 'vendor/README.md', 'vendor/README_DYLIB.md',
-                   'vendor/libui.dll', 'vendor/libui.dylib', 'vendor/libui.so']
   spec.require_paths = 'lib'
+
+  spec.files = Dir['*.{md,txt}', '{lib}/**/*', 'vendor/{LICENSE,README}.md']
+  case spec.platform.to_s
+  when "x86_64-linux"
+    spec.files << "vendor/libui.so"
+  # when "aarch64-linux"
+    # spec.files << "vendor/libui.so"
+  when "x86_64-darwin", "arm64-darwin"
+    spec.files << "vendor/libui.dylib"
+  when "x64-mingw"
+    spec.files << "vendor/libui.dll"
+  else
+    spec.files.concat(Dir["vendor/*.{dll,dylib,so}"])
+  end
 
   # spec.add_dependency 'fiddle'
 end
