@@ -271,19 +271,19 @@ namespace 'vendor' do
 
     desc 'Download kojix2 pre-build for Windows to vendor directory'
     task :windows_x64 do
-      download_libui_ng_nightly(
+      download_kojix2_libui_ng_nightly(
         'libui.dll',
         'builddir/meson-out/libui.dll',
-        'Windows-x64-shared-release.zip'
+        'Win-x64-shared-release.zip'
       )
     end
 
     desc 'Download kojix2 pre-build for Windows to vendor directory'
     task :windows_x86 do
-      download_libui_ng_nightly(
+      download_kojix2_libui_ng_nightly(
         'libui.dll',
         'builddir/meson-out/libui.dll',
-        'Windows-x86-shared-release.zip'
+        'Win-x86-shared-release.zip'
       )
     end
   end
