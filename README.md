@@ -177,16 +177,17 @@ You can use the following rake tasks to download the shared library required for
 `rake -T`
 
 ```
-rake vendor:default      # Downlaod [linux_x64, mac_arm, windows_x64] to vendor directory
-rake vendor:linux_x64    # Download libui.so for Linux to vendor directory
-rake vendor:linux_x86    # Download libui.so for Linux to vendor directory
-rake vendor:mac_arm      # Download libui.dylib for Mac to vendor directory (universal binary)
-rake vendor:mac_x64      # Download libui.dylib for Mac to vendor directory
-rake vendor:windows_x64  # Download libui.dll for Windows to vendor directory
-rake vendor:windows_x86  # Download libui.dll for Windows to vendor directory
+ake vendor:kojix2:auto           # Download kojix2 pre-build for your platform to vendor directory
+rake vendor:kojix2:mac            # Download kojix2 pre-build for Mac to vendor directory
+rake vendor:kojix2:ubuntu_x64     # Download kojix2 pre-build for Ubuntu to vendor directory
+rake vendor:kojix2:windows_x64    # Download kojix2 pre-build for Windows to vendor directory
+rake vendor:kojix2:windows_x86    # Download kojix2 pre-build for Windows to vendor directory
+rake vendor:libui-ng:build[hash]  # Build libui-ng latest master [commit hash]
+rake vendor:libui-ng:mac          # Download latest dev build for Mac to vendor directory
+rake vendor:libui-ng:ubuntu_x64   # Download latest dev build for Ubuntu to vendor directory
 ```
 
-For example, If you are using a 32-bit (x86) version of Ruby on Windows, type `rake vendor:windows_x86`.
+For example, If you are using a 32-bit (x86) version of Ruby on Windows, type `vendor:kojix2:windows_x86`.
 
 ### Use C libui compiled from source code
 
@@ -194,21 +195,10 @@ You can compile C libui from source code on your platform and tell ruby LibUI wh
 
 Another simple approach is to replace the shared libraries in the gem vendor directory with the ones you have compiled.
 
-### libui-ng
+### libui or libui-ng
 
-Version 0.0.X only supports libui. From version 0.1.X, we plan to support only libui-ng.
-
-[libui-ng](https://github.com/libui-ng/libui-ng) is the successor project to libui. Rake tasks are available to build or download libui-ng shared libraries.
-
-```
-rake libui-ng:build[hash]  # Build libui-ng latest master [commit hash]
-rake libui-ng:mac          # Download latest dev build for Mac to vendor directory
-rake libui-ng:ubuntu_x64   # Download latest dev build for Ubuntu to vendor directory
-```
-
-```
-rake install
-```
+* From version 0.1.X, we plan to support only libui-ng/libui-ng.
+* Version 0.0.X only supports andlabs/libui. 
 
 ## Contributing
 
