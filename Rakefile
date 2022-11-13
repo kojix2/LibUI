@@ -18,15 +18,6 @@ def puts(str)
   Kernel.puts("[Rake] #{str}")
 end
 
-# ensure vendor files exist
-task :ensure_vendor do
-  shared_libraries.each do |file|
-    raise "Missing file: #{file}" unless File.exist?("vendor/#{file}")
-  end
-end
-
-Rake::Task['build'].enhance [:ensure_vendor]
-
 platforms = %w[x86_64-linux x86_64-darwin arm64-darwin x64-mingw]
 
 task :build_platform do
@@ -45,7 +36,7 @@ end
 task :release_platform do
   require_relative 'lib/libui/version'
 
-  Dir["pkg/libui-#{libui::VERSION}-*.gem"].each do |file|
+  Dir["pkg/libui-#{LibUI::VERSION}-*.gem"].each do |file|
     sh 'gem', 'push', file
   end
 end
