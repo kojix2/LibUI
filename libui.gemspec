@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
   case spec.platform.to_s
   when 'x86_64-linux'
     spec.files << 'vendor/libui.so'
-    # when "aarch64-linux"
+  # when "aarch64-linux"
     # spec.files << "vendor/libui.so"
   when 'x86_64-darwin', 'arm64-darwin'
     spec.files << 'vendor/libui.dylib'
