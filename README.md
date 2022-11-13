@@ -177,7 +177,7 @@ You can use the following rake tasks to download the shared library required for
 `rake -T`
 
 ```
-ake vendor:kojix2:auto           # Download kojix2 pre-build for your platform to vendor directory
+rake vendor:kojix2:auto           # Download kojix2 pre-build for your platform to vendor directory
 rake vendor:kojix2:mac            # Download kojix2 pre-build for Mac to vendor directory
 rake vendor:kojix2:ubuntu_x64     # Download kojix2 pre-build for Ubuntu to vendor directory
 rake vendor:kojix2:windows_x64    # Download kojix2 pre-build for Windows to vendor directory
