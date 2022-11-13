@@ -31,19 +31,11 @@ def url_libui_ng_nightly(file_name)
   "https://nightly.link/libui-ng/libui-ng/workflows/build/master/#{file_name}"
 end
 
-def url_kojix2_release(file_name)
-  url = "https://github.com/kojix2/LibUI/releases/download/v#{LibUI::VERSION}/#{file_name}"
-  require 'open-uri'
-  begin
-    URI.parse(url).open
-  rescue OpenURI::HTTPError => e
-    url = "https://github.com/kojix2/LibUI/releases/download/v0.0.15/#{file_name}"
-  end
-  url
-end
-
-def url_andlabs_release(file_name)
-  "https://github.com/andlabs/libui/releases/download/alpha4.1/#{file_name}"
+# kojix2/libui-ng (pre-build)
+# - release
+# - shared
+def url_kojix2_libui_ng_nightly(file_name)
+  "https://nightly.link/kojix2/libui-ng/workflows/pre-build/pre-build/#{file_name}"
 end
 
 def download_libui_ng_nightly(libname, lib_path, file_name)
@@ -51,14 +43,9 @@ def download_libui_ng_nightly(libname, lib_path, file_name)
   download_from_url(libname, lib_path, file_name, true, url)
 end
 
-def download_kojix2_release(libname, lib_path, file_name, sha256sum_expected)
-  url = url_kojix2_release(file_name)
-  download_from_url(libname, lib_path, file_name, sha256sum_expected, url)
-end
-
-def download_andlabs_release(libname, lib_path, file_name, sha256sum_expected)
-  url = url_andlabs_release(file_name)
-  download_from_url(libname, lib_path, file_name, sha256sum_expected, url)
+def download_kojix2_libui_ng_nightly(libname, lib_path, file_name)
+  url = url_kojix2_libui_ng_nightly(file_name)
+  download_from_url(libname, lib_path, file_name, true, url)
 end
 
 def download_from_url(libname, lib_path, file_name, sha256sum_expected, url)
@@ -237,92 +224,67 @@ def build_libui_ng(commit_hash)
 end
 
 namespace 'vendor' do
-  desc 'Download libui.so for Linux to vendor directory'
-  task :linux_x64 do
-    download_andlabs_release(
-      'libui.so',
-      'libui.so.0',
-      'libui-alpha4.1-linux-amd64-shared.tgz',
-      'ad517cfc4e402b6070138bfd25804508f9115f91db9330344f0a07f39f6470de'
-    )
+  namespace 'libui-ng' do
+    desc 'Build libui-ng latest master [commit hash]'
+    task 'build', 'hash' do |_, args|
+      s = build_libui_ng(args['hash'])
+      abort if s == false
+    end
+
+    desc 'Download latest dev build for Ubuntu to vendor directory'
+    task :ubuntu_x64 do
+      download_libui_ng_nightly(
+        'libui.so',
+        'builddir/meson-out/libui.so',
+        'Ubuntu-x64-shared-debug.zip'
+      )
+    end
+
+    desc 'Download latest dev build for Mac to vendor directory'
+    task :mac do
+      download_libui_ng_nightly(
+        'libui.dylib',
+        'builddir/meson-out/libui.dylib',
+        'macOS-x64-shared-debug.zip'
+      )
+    end
   end
 
-  desc 'Download libui.so for Linux to vendor directory'
-  task :linux_x86 do
-    download_andlabs_release(
-      'libui.so',
-      'libui.so.0',
-      'libui-alpha4.1-linux-386-shared.tgz',
-      '9a67de44d3dd3b2134bc801b0fab58eec247f6b18fdc3e43917845cac2217bcb'
-    )
-  end
+  namespace 'kojix2' do
+    desc 'Download kojix2 pre-build for Ubuntu to vendor directory'
+    task :ubuntu_x64 do
+      download_kojix2_libui_ng_nightly(
+        'libui.so',
+        'builddir/meson-out/libui.so',
+        'Ubuntu-x64-shared-release.zip'
+      )
+    end
 
-  desc 'Download libui.dylib for Mac to vendor directory (universal binary)'
-  task :mac_arm do
-    download_kojix2_release(
-      'libui.dylib',
-      'libui.dylib',
-      'libui-alpha4.1-macos-arm64-dylib.tgz',
-      '6da2ff5acb6fba09b47eae0219b3aaefd002ace00003ab5d59689e396bcefff7'
-    )
-  end
+    desc 'Download kojix2 pre-build for Mac to vendor directory'
+    task :mac do
+      download_kojix2_libui_ng_nightly(
+        'libui.dylib',
+        'builddir/meson-out/libui.dylib',
+        'macOS-x64-shared-release.zip'
+      )
+    end
 
-  desc 'Download libui.dylib for Mac to vendor directory'
-  task :mac_x64 do
-    download_andlabs_release(
-      'libui.dylib',
-      'libui.A.dylib',
-      'libui-alpha4.1-darwin-amd64-shared.tgz',
-      'a3ff09380c1d117d76b6afc68d6e29b7a19c65286c8f1d1039a88e03e999aab4'
-    )
-  end
+    desc 'Download kojix2 pre-build for Windows to vendor directory'
+    task :windows_x64 do
+      download_libui_ng_nightly(
+        'libui.dll',
+        'builddir/meson-out/libui.dll',
+        'Windows-x64-shared-release.zip'
+      )
+    end
 
-  desc 'Download libui.dll for Windows to vendor directory'
-  task :windows_x64 do
-    download_andlabs_release(
-      'libui.dll',
-      'libui.dll',
-      'libui-alpha4.1-windows-amd64-shared.zip',
-      '9635cab1528af6ce11dca22e08bf505d7e6b728f2f4c1d97fe7986ea91a0e168'
-    )
-  end
-
-  desc 'Download libui.dll for Windows to vendor directory'
-  task :windows_x86 do
-    download_andlabs_release(
-      'libui.dll',
-      'libui.dll',
-      'libui-alpha4.1-windows-386-shared.zip',
-      'e2b8b1e6710c7461e55dfc0454606613942109e4b0c0212b97eb682b3ae3a1b3'
-    )
-  end
-
-  desc 'Downlaod [linux_x64, mac_arm, windows_x64] to vendor directory'
-  task default: %i[linux_x64 mac_arm windows_x64]
-end
-
-namespace 'libui-ng' do
-  desc 'Build libui-ng latest master [commit hash]'
-  task 'build', 'hash' do |_, args|
-    s = build_libui_ng(args['hash'])
-    abort if s == false
-  end
-
-  desc 'Download latest dev build for Ubuntu to vendor directory'
-  task :ubuntu_x64 do
-    download_libui_ng_nightly(
-      'libui.so',
-      'builddir/meson-out/libui.so',
-      'Ubuntu-x64-shared-debug.zip'
-    )
-  end
-
-  desc 'Download latest dev build for Mac to vendor directory'
-  task :mac do
-    download_libui_ng_nightly(
-      'libui.dylib',
-      'builddir/meson-out/libui.dylib',
-      'macOS-x64-shared-debug.zip'
-    )
+    desc 'Download kojix2 pre-build for Windows to vendor directory'
+    task :windows_x86 do
+      download_libui_ng_nightly(
+        'libui.dll',
+        'builddir/meson-out/libui.dll',
+        'Windows-x86-shared-release.zip'
+      )
+    end
   end
 end
