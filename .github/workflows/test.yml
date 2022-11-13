@@ -13,20 +13,12 @@ jobs:
     runs-on: ${{ matrix.os }}-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Cache libui shared library
-        id: cache-libui
-        uses: actions/cache@v2
-        with:
-          path: vendor
-          key: ${{ runner.os }}-libui-${{ hashFiles('libui.so') }}
-          restore-keys: |
-            ${{ runner.os }}-libui
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
       - name: Download libui shared libraries
-        run: bundle exec rake vendor:default
+        run: bundle exec rake vendor:kojix2:auto
       - name: Rake test (XVFB)
         uses: GabrielBB/xvfb-action@v1
         with:
