@@ -16,16 +16,16 @@ Gem::Specification.new do |spec|
 
   spec.files = Dir['*.{md,txt}', '{lib}/**/*', 'vendor/{LICENSE,README}.md']
   case spec.platform.to_s
-  when "x86_64-linux"
-    spec.files << "vendor/libui.so"
-  # when "aarch64-linux"
+  when 'x86_64-linux'
+    spec.files << 'vendor/libui.so'
+    # when "aarch64-linux"
     # spec.files << "vendor/libui.so"
-  when "x86_64-darwin", "arm64-darwin"
-    spec.files << "vendor/libui.dylib"
-  when "x64-mingw"
-    spec.files << "vendor/libui.dll"
+  when 'x86_64-darwin', 'arm64-darwin'
+    spec.files << 'vendor/libui.dylib'
+  when 'x64-mingw'
+    spec.files << 'vendor/libui.dll'
   else
-    spec.files.concat(Dir["vendor/*.{dll,dylib,so}"])
+    spec.files.concat(Dir['vendor/*.{dll,dylib,so}'])
   end
 
   # spec.add_dependency 'fiddle'
