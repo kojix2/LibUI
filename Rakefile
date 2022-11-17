@@ -283,6 +283,15 @@ namespace 'vendor' do
       )
     end
 
+    desc 'Download kojix2 pre-build for Raspbian to vendor directory'
+    task :raspbian_64 do
+      download_kojix2_libui_ng_nightly(
+        'libui.so',
+        'builddir/meson-out/libui.so',
+        'Raspbian-aarch64-shared-release.zip'
+      )
+    end
+
     desc 'Download kojix2 pre-build for Mac to vendor directory'
     task :mac do
       download_kojix2_libui_ng_nightly(
