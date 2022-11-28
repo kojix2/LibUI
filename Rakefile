@@ -18,7 +18,14 @@ def puts(str)
   Kernel.puts("[Rake] #{str}")
 end
 
-platforms = %w[x86_64-linux x86_64-darwin arm64-darwin x64-mingw]
+platforms = %w[
+  x86_64-linux
+  aarch64-linux
+  x86_64-darwin
+  arm64-darwin
+  x64-mingw
+  x86-mingw32
+]
 
 task :build_platform do
   require 'fileutils'
@@ -44,6 +51,10 @@ end
 # Give platform specific file extension.
 def lib_name
   "libui.#{RbConfig::CONFIG['SOEXT']}"
+end
+
+def lib_name_dest
+  "libui.#{RbConfig::CONFIG['host_cpu']}.#{RbConfig::CONFIG['SOEXT']}"
 end
 
 def url_libui_ng_source_zip(commit_hash = 'master')
