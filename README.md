@@ -188,12 +188,22 @@ rake vendor:libui-ng:ubuntu_x64   # Download latest dev build for Ubuntu to vend
 ```
 
 For example, If you are using a 32-bit (x86) version of Ruby on Windows, type `vendor:kojix2:windows_x86`.
+These shared libraries are built using Github Actions; if the pre-build branch of kojix2/libui-ng is not updated for 3 months, it will not be available for download. Please let me know when that happens.
 
 ### Use C libui compiled from source code
 
 You can compile C libui from source code on your platform and tell ruby LibUI where to find the shared libraries. Set environment variable `LIBUIDIR` to specify the path to the shared library. (See [#46](https://github.com/kojix2/LibUI/issues/46#issuecomment-1041575792)). This is especially useful on platforms where the LibUI gem does not provide shared library, such as the ARM architecture (used in devices like Raspberry Pi).
 
 Another simple approach is to replace the shared libraries in the gem vendor directory with the ones you have compiled.
+
+### Publish gems
+
+```sh
+ls vendor             # check the vendor directory
+rm -rf pkg            # removed previously built gems
+rake build_platform
+rake release_platform 
+```
 
 ### libui or libui-ng
 
