@@ -626,10 +626,10 @@ module LibUI
     try_extern 'void uiTableHeaderOnClicked(uiTable *t, void (*f)(uiTable *sender, int column, void *senderData), void *data)'
     try_extern 'int uiTableColumnWidth(uiTable *t, int column)'
     try_extern 'void uiTableColumnSetWidth(uiTable *t, int column, int width)'
-    try_extern 'uiTableSelectionMode uiTableGetSelectionMode(uiTable *t)'
 
     typealias 'uiTableSelectionMode', 'int'
 
+    try_extern 'uiTableSelectionMode uiTableGetSelectionMode(uiTable *t)'
     try_extern 'void uiTableSetSelectionMode(uiTable *t, uiTableSelectionMode mode)'
     try_extern 'void uiTableOnSelectionChanged(uiTable *t, void (*f)(uiTable *t, void *data), void *data)'
     try_extern 'uiTableSelection* uiTableGetSelection(uiTable *t)'
