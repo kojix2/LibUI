@@ -616,6 +616,8 @@ module LibUI
     try_extern 'int uiTableHeaderVisible(uiTable *t)'
     try_extern 'void uiTableHeaderSetVisible(uiTable *t, int visible)'
     try_extern 'uiTable *uiNewTable(uiTableParams *params)'
+    try_extern 'void uiTableOnRowClicked(uiTable *t, void (*f)(uiTable *t, int row, void *data), void *data)'
+    try_extern 'void uiTableOnRowDoubleClicked(uiTable *t, void (*f)(uiTable *t, int row, void *data), void *data)'
 
     typealias 'uiSortIndicator', 'int'
 
@@ -624,5 +626,19 @@ module LibUI
     try_extern 'void uiTableHeaderOnClicked(uiTable *t, void (*f)(uiTable *sender, int column, void *senderData), void *data)'
     try_extern 'int uiTableColumnWidth(uiTable *t, int column)'
     try_extern 'void uiTableColumnSetWidth(uiTable *t, int column, int width)'
+    try_extern 'uiTableSelectionMode uiTableGetSelectionMode(uiTable *t)'
+
+    typealias 'uiTableSelectionMode', 'int'
+
+    try_extern 'void uiTableSetSelectionMode(uiTable *t, uiTableSelectionMode mode)'
+    try_extern 'void uiTableOnSelectionChanged(uiTable *t, void (*f)(uiTable *t, void *data), void *data)'
+    try_extern 'uiTableSelection* uiTableGetSelection(uiTable *t)'
+    try_extern 'void uiTableSetSelection(uiTable *t, uiTableSelection *sel)'
+    try_extern 'void uiFreeTableSelection(uiTableSelection* s)'
+
+    TableSelection = struct [
+      'int NumRows',
+      'int *Rows'
+    ]
   end
 end

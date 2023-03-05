@@ -51,8 +51,7 @@ module LibUI
     end
   end
 
-  # UI_ENUM
-  # https://github.com/andlabs/libui/blob/master/ui.h
+  ## UI_ENUM https://github.com/libui-ng/libui-ng/blob/master/ui.h
 
   # ForEach
   ForEachContinue    =    0
@@ -223,4 +222,10 @@ module LibUI
   # editable
   TableModelColumnNeverEditable  = -1
   TableModelColumnAlwaysEditable = -2
+
+  # TableSelectionMode
+  TableSelectionModeNone       = 0
+  TableSelectionModeZeroOrOne  = 1
+  TableSelectionModeOne        = 2
+  TableSelectionModeZeroOrMany = 3
 end
