@@ -210,7 +210,7 @@ rake release_platform
 
 ## Contributing
 
-Would you like to contribute to libui?
+Would you like to contribute to LibUI?
 * Please feel free to send us your [pull requests](https://github.com/kojix2/libui/pulls).
   * Small corrections, such as typo fixes, are appreciated.
 * Did you find any bugs? Submit them in the [issues](https://github.com/kojix2/LibUI/issues) section!
