@@ -89,6 +89,9 @@ module LibUI
 
     try_extern 'char *uiWindowTitle(uiWindow *w)'
     try_extern 'void uiWindowSetTitle(uiWindow *w, const char *title)'
+    try_extern 'void uiWindowPosition(uiWindow *w, int *x, int *y)'
+    try_extern 'void uiWindowSetPosition(uiWindow *w, int x, int y)'
+    try_extern 'void uiWindowOnPositionChanged(uiWindow *w, void (*f)(uiWindow *sender, void *senderData), void *data)'
     try_extern 'void uiWindowContentSize(uiWindow *w, int *width, int *height)'
     try_extern 'void uiWindowSetContentSize(uiWindow *w, int width, int height)'
     try_extern 'int uiWindowFullscreen(uiWindow *w)'
