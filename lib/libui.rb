@@ -35,6 +35,12 @@ module LibUI
       warn UI.free_init_error(init)
     end
 
+    # Gets the window position.
+    # Coordinates are measured from the top left corner of the screen.
+    # @param w [Fiddle::Pointer] Pointer of uiWindow instance.
+    # @return [Array] position of the window. [x, y]
+    # @note This method may return inaccurate or dummy values on Unix platforms.
+
     def window_position(w)
       x = Fiddle::Pointer.malloc(Fiddle::SIZEOF_INT, Fiddle::RUBY_FREE)
       y = Fiddle::Pointer.malloc(Fiddle::SIZEOF_INT, Fiddle::RUBY_FREE)
