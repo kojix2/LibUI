@@ -45,8 +45,8 @@ module LibUI
       x_ptr = Fiddle::Pointer.malloc(Fiddle::SIZEOF_INT, Fiddle::RUBY_FREE)
       y_ptr = Fiddle::Pointer.malloc(Fiddle::SIZEOF_INT, Fiddle::RUBY_FREE)
       super(w, x_ptr, y_ptr)
-      x = x_ptr[0]
-      y = y_ptr[0]
+      x = x_ptr[0, Fiddle::SIZEOF_INT].unpack1("i*")
+      y = y_ptr[0, Fiddle::SIZEOF_INT].unpack1("i*")
       [x, y]
     end
 
