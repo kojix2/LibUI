@@ -38,6 +38,6 @@ jobs:
           name: ${{ matrix.os }}-ruby${{ matrix.ruby }}-build.log
           path: build.log
       - name: Rake test (XVFB)
-        uses: GabrielBB/xvfb-action@v1
+        uses: coactions/setup-xvfb@v1
         with:
           run: bundle exec rake test
