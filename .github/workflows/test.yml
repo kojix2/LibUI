@@ -20,6 +20,6 @@ jobs:
       - name: Download libui shared libraries
         run: bundle exec rake vendor:kojix2:auto
       - name: Rake test (XVFB)
-        uses: GabrielBB/xvfb-action@v1
+        uses: coactions/setup-xvfb@v1
         with:
           run: bundle exec rake test
