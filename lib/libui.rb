@@ -44,7 +44,7 @@ module LibUI
     def window_position(w)
       x_ptr = Fiddle::Pointer.malloc(Fiddle::SIZEOF_INT, Fiddle::RUBY_FREE)
       y_ptr = Fiddle::Pointer.malloc(Fiddle::SIZEOF_INT, Fiddle::RUBY_FREE)
-      super(w, x, y)
+      super(w, x_ptr, y_ptr)
       x = x_ptr[0]
       y = y_ptr[0]
       [x, y]
