@@ -42,10 +42,12 @@ module LibUI
     # @note This method may return inaccurate or dummy values on Unix platforms.
 
     def window_position(w)
-      x = Fiddle::Pointer.malloc(Fiddle::SIZEOF_INT, Fiddle::RUBY_FREE)
-      y = Fiddle::Pointer.malloc(Fiddle::SIZEOF_INT, Fiddle::RUBY_FREE)
+      x_ptr = Fiddle::Pointer.malloc(Fiddle::SIZEOF_INT, Fiddle::RUBY_FREE)
+      y_ptr = Fiddle::Pointer.malloc(Fiddle::SIZEOF_INT, Fiddle::RUBY_FREE)
       super(w, x, y)
-      [x[0], y[0]]
+      x = x_ptr[0]
+      y = y_ptr[0]
+      [x, y]
     end
 
     def open_type_features_add(otf, a, b, c, d, value)
