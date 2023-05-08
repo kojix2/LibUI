@@ -35,6 +35,13 @@ module LibUI
       warn UI.free_init_error(init)
     end
 
+    def window_position(w)
+      x = Fiddle::Pointer.malloc(Fiddle::SIZEOF_INT, Fiddle::RUBY_FREE)
+      y = Fiddle::Pointer.malloc(Fiddle::SIZEOF_INT, Fiddle::RUBY_FREE)
+      super(w, x, y)
+      [x[0], y[0]]
+    end
+
     def open_type_features_add(otf, a, b, c, d, value)
       a, b, c, d = [a, b, c, d].map { |s| s.is_a?(String) ? s.ord : s }
       super(otf, a, b, c, d, value)
