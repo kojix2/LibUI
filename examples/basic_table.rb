@@ -52,11 +52,10 @@ UI.control_show(main_window)
 
 UI.window_on_closing(main_window) do
   puts 'Bye Bye'
-  UI.control_destroy(main_window)
-  UI.free_table_model(model)
   UI.quit
-  0
+  1
 end
 
 UI.main
-UI.quit
+UI.free_table_model(model)
+UI.uninit
