@@ -3,13 +3,6 @@ UI = LibUI
 
 UI.init
 
-should_quit = proc do
-  puts 'Bye Bye'
-  UI.control_destroy(MAIN_WINDOW)
-  UI.quit
-  0
-end
-
 # File menu
 menu = UI.new_menu('File')
 open_menu_item = UI.menu_append_item(menu, 'Open')
@@ -22,9 +15,21 @@ UI.menu_item_on_clicked(save_menu_item) do
   pt = UI.save_file(MAIN_WINDOW)
   puts pt unless pt.null?
 end
-
+UI.menu_append_separator(menu)
+should_quit_item = UI.menu_append_check_item(menu, 'Should Quit_')
+UI.menu_item_set_checked(should_quit_item, 1)
 UI.menu_append_quit_item(menu)
-UI.on_should_quit(should_quit)
+# onShouldQuit callback is called when the user presses the quit menu item.
+UI.on_should_quit do
+  if UI.menu_item_checked(should_quit_item) == 1
+    puts 'Bye Bye (on_should_quit)'
+    UI.control_destroy(MAIN_WINDOW) # You have to destroy the window manually.
+    1 # UI.quit is automatically called in the C function onQuitClicked().
+  else
+    UI.msg_box(MAIN_WINDOW, 'Warning', 'Please check "Should Quit"')
+    0 # Don't quit
+  end
+end
 
 # Edit menu
 edit_menu = UI.new_menu('Edit')
@@ -43,7 +48,11 @@ UI.menu_append_about_item(help_menu)
 # Main Window
 MAIN_WINDOW = UI.new_window('Control Gallery', 600, 500, 1)
 UI.window_set_margined(MAIN_WINDOW, 1)
-UI.window_on_closing(MAIN_WINDOW, should_quit)
+UI.window_on_closing(MAIN_WINDOW) do
+  puts 'Bye Bye'
+  UI.quit
+  1 # return 1 to destroys the window.
+end
 
 vbox = UI.new_vertical_box
 UI.window_set_child(MAIN_WINDOW, vbox)
@@ -187,4 +196,4 @@ UI.box_append(hbox1, text_entry, 1)
 UI.control_show(MAIN_WINDOW)
 
 UI.main
-UI.quit
+UI.uninit
