@@ -51,7 +51,9 @@ UI.window_set_margined(MAIN_WINDOW, 1)
 UI.window_on_closing(MAIN_WINDOW) do
   puts 'Bye Bye'
   UI.quit
-  1 # return 1 to destroys the window.
+  # return 1 to destroys the window automatically.
+  # return 0 to keep the window. (You can destroy it manually.)
+  1
 end
 
 vbox = UI.new_vertical_box
