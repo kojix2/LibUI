@@ -124,18 +124,13 @@ handler.MouseCrossed = do_nothing
 handler.DragBroken   = do_nothing
 handler.KeyEvent     = key_event
 
-UI.on_should_quit do
-  UI.control_destroy(main_window)
-end
-
 @attr_str = make_attribute_string
 
 main_window = UI.new_window('Text-Drawing Example', 640, 480, 1)
 UI.window_set_margined(main_window, 1)
 UI.window_on_closing(main_window) do
-  UI.control_destroy(main_window)
   UI.quit
-  0
+  1
 end
 
 hbox = UI.new_horizontal_box
