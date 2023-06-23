@@ -66,9 +66,8 @@ class TinyMidiPlayer
       UI.menu_item_on_clicked(version_item) { show_version(main_window) }
 
       UI.window_on_closing(main_window) do
-        UI.control_destroy(main_window)
         UI.quit
-        0
+        1
       end
 
       UI.new_horizontal_box.tap do |hbox|
@@ -101,7 +100,7 @@ class TinyMidiPlayer
       UI.control_show(main_window)
     end
     UI.main
-    UI.quit
+    UI.uninit
   end
 end
 
