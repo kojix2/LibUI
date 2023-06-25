@@ -108,11 +108,10 @@ UI.window_set_margined(main_window, 1)
 UI.window_set_child(main_window, box)
 
 UI.window_on_closing(main_window) do
-  UI.control_destroy(main_window)
   UI.quit
-  0
+  1
 end
 UI.control_show(main_window)
 
 UI.main
-UI.quit
+UI.uninit

@@ -180,15 +180,13 @@ MAIN_WINDOW = UI.new_window('histogram example', 640, 480, 1)
 UI.window_set_margined(MAIN_WINDOW, 1)
 UI.window_set_child(MAIN_WINDOW, hbox)
 
-should_quit = proc do |_ptr|
-  UI.control_destroy(MAIN_WINDOW)
+UI.window_on_closing(MAIN_WINDOW) do
+  puts 'Bye Bye'
   UI.quit
-  0
+  1
 end
 
-UI.window_on_closing(MAIN_WINDOW, should_quit)
-UI.on_should_quit(should_quit)
 UI.control_show(MAIN_WINDOW)
 
 UI.main
-UI.quit
+UI.uninit

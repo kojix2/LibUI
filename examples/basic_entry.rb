@@ -7,9 +7,8 @@ UI.init
 main_window = UI.new_window('Basic Entry', 300, 50, 1)
 UI.window_on_closing(main_window) do
   puts 'Bye Bye'
-  UI.control_destroy(main_window)
   UI.quit
-  0
+  1
 end
 
 hbox = UI.new_horizontal_box
@@ -33,4 +32,4 @@ UI.box_append(hbox, button, 0)
 
 UI.control_show(main_window)
 UI.main
-UI.quit
+UI.uninit

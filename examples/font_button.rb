@@ -20,13 +20,12 @@ end
 
 UI.window_on_closing(main_window) do
   puts 'Bye Bye'
-  UI.control_destroy(main_window)
   UI.quit
-  0
+  1
 end
 
 UI.window_set_child(main_window, font_button)
 UI.control_show(main_window)
 
 UI.main
-UI.quit
+UI.uninit

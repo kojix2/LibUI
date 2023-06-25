@@ -63,9 +63,8 @@ UI.init
 main_window = UI.new_window('GPT-2 Notepad', 500, 300, 1)
 UI.window_on_closing(main_window) do
   puts 'Bye Bye'
-  UI.control_destroy(main_window)
   UI.quit
-  0
+  1
 end
 
 hbox = UI.new_vertical_box
@@ -98,4 +97,4 @@ end
 
 UI.control_show(main_window)
 UI.main
-UI.quit
+UI.uninit

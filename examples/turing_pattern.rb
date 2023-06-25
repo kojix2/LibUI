@@ -321,15 +321,11 @@ UI.menu_item_on_clicked(menu_file_save_as, save_model_as_proc)
 
 # menu File Quit
 
-quit_proc = proc do
-  @running = false
+menu_file_quit = UI.menu_append_quit_item(menu_file)
+UI.on_should_quit do
   UI.control_destroy(@main_window)
-  UI.quit
-  0
+  1
 end
-
-menu_file_quit = UI.menu_append_item(menu_file, 'Quit')
-UI.menu_item_on_clicked(menu_file_quit, quit_proc)
 
 # menu Help
 
@@ -594,7 +590,10 @@ UI.box_append(vbox, @area, 1)
 UI.window_set_margined(@main_window, 1)
 UI.window_set_child(@main_window, vbox)
 
-UI.window_on_closing(@main_window, quit_proc)
+UI.window_on_closing(@main_window) do
+  UI.quit
+  1
+end
 UI.control_show(@main_window)
 
 # queue
@@ -612,4 +611,4 @@ UI.queue_main do
 end
 
 UI.main
-UI.quit
+UI.uninit

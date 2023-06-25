@@ -92,11 +92,10 @@ UI.window_set_margined(main_window, 1)
 UI.window_set_child(main_window, box)
 
 UI.window_on_closing(main_window) do
-  UI.control_destroy(main_window)
   UI.quit
   stream.close
   ::FFI::PortAudio::API.Pa_Terminate
-  0
+  1
 end
 UI.control_show(main_window)
 
@@ -107,4 +106,4 @@ UI.queue_main do
   end
 end
 UI.main
-UI.quit
+UI.uninit
