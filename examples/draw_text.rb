@@ -90,8 +90,6 @@ def draw_event(adp, attr_str, font_button, alignment)
   area_draw_params = UI::FFI::AreaDrawParams.new(adp)
   default_font = UI::FFI::FontDescriptor.malloc
   default_font.to_ptr.free = Fiddle::RUBY_FREE
-  default_font = UI::FFI::FontDescriptor.malloc
-  default_font.to_ptr.free = Fiddle::RUBY_FREE
   params = UI::FFI::DrawTextLayoutParams.malloc
   params.to_ptr.free = Fiddle::RUBY_FREE
 
