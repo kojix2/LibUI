@@ -8,3 +8,5 @@ gem 'minitest'
 gem 'numo-narray'
 gem 'rake'
 gem 'rubyzip'
+
+gem 'rake-compiler'

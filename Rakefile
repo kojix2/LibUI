@@ -387,3 +387,12 @@ namespace 'vendor' do
     end
   end
 end
+
+### Rake::ExtensionTask ###
+
+require 'rake/extensiontask'
+
+Rake::ExtensionTask.new('native') do |ext|
+  ext.lib_dir = 'lib/libui'
+  ext.ext_dir = 'ext/libui'
+end
