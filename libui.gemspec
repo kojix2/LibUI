@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
   spec.files = Dir['*.{md,txt}', '{lib}/**/*', 'vendor/{LICENSE,README}.md']
   spec.require_paths = 'lib'
 
-  spec.required_ruby_version = '>= 2.5'
+  spec.required_ruby_version = '>= 2.6'
 
   case spec.platform.to_s
   when 'x86_64-linux'
