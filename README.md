@@ -180,7 +180,7 @@ rake vendor:kojix2:mac            # Download kojix2 pre-build for Mac to vendor 
 rake vendor:kojix2:ubuntu_x64     # Download kojix2 pre-build for Ubuntu to vendor directory
 rake vendor:kojix2:windows_x64    # Download kojix2 pre-build for Windows to vendor directory
 rake vendor:kojix2:windows_x86    # Download kojix2 pre-build for Windows to vendor directory
-rake vendor:libui-ng:build[hash]  # Build libui-ng latest master [commit hash]
+rake vendor:build[hash]           # Build libui-ng latest master [commit hash]
 rake vendor:libui-ng:mac          # Download latest dev build for Mac to vendor directory
 rake vendor:libui-ng:ubuntu_x64   # Download latest dev build for Ubuntu to vendor directory
 ```
