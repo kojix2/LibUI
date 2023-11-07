@@ -9,13 +9,21 @@ module LibUI
     attr_accessor :ffi_lib
   end
 
-  lib_name = "libui.#{RbConfig::CONFIG['SOEXT']}"
+  lib_name = [
+    "libui.#{RbConfig::CONFIG['host_cpu']}.#{RbConfig::CONFIG['SOEXT']}",
+    "libui.#{RbConfig::CONFIG['SOEXT']}",
+  ]
 
-  self.ffi_lib = if ENV['LIBUIDIR'] && !ENV['LIBUIDIR'].empty?
-                   File.expand_path(lib_name, ENV['LIBUIDIR'])
-                 else
-                   File.expand_path("../vendor/#{lib_name}", __dir__)
-                 end
+  self.ffi_lib = \
+    if ENV['LIBUIDIR'] && !ENV['LIBUIDIR'].empty?
+      lib_name.lazy
+              .map { |name| File.expand_path(name, ENV['LIBUIDIR']) }
+              .find { |path| File.exist?(path) }
+    else
+      lib_name.lazy
+              .map { |name| File.expand_path("../vendor/#{name}", __dir__) }
+              .find { |path| File.exist?(path) }
+    end
 
   require_relative 'libui/ffi'
   require_relative 'libui/libui_base'

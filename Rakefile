@@ -18,7 +18,14 @@ def puts(str)
   Kernel.puts("[Rake] #{str}")
 end
 
-platforms = %w[x86_64-linux x86_64-darwin arm64-darwin x64-mingw]
+platforms = %w[
+  x86_64-linux
+  aarch64-linux
+  x86_64-darwin
+  arm64-darwin
+  x64-mingw
+  x86-mingw32
+]
 
 task :build_platform do
   require 'fileutils'
@@ -39,11 +46,6 @@ task :release_platform do
   Dir["pkg/libui-#{LibUI::VERSION}-*.gem"].each do |file|
     sh 'gem', 'push', file
   end
-end
-
-# Give platform specific file extension.
-def lib_name
-  "libui.#{RbConfig::CONFIG['SOEXT']}"
 end
 
 def url_libui_ng_source_zip(commit_hash = 'master')
@@ -156,9 +158,7 @@ def build_libui_ng(commit_hash)
   require 'open3'
 
   FileUtils.mkdir_p(File.expand_path('vendor', __dir__))
-  target_path = File.expand_path("vendor/#{lib_name}", __dir__)
-
-  # check_file_exist(target_path, sha256sum_expected)
+  target_path = File.expand_path("vendor/libui.#{RbConfig::CONFIG['host_cpu']}.#{RbConfig::CONFIG['SOEXT']}", __dir__)
 
   Dir.mktmpdir do |dir|
     Dir.chdir(dir) do
@@ -219,7 +219,7 @@ def build_libui_ng(commit_hash)
 
         puts "Saved #{build_log_path}"
 
-        path = "build/meson-out/#{lib_name}"
+        path = "build/meson-out/libui.#{RbConfig::CONFIG['SOEXT']}"
 
         if File.exist?(path)
           puts "Successfully built #{path}"
@@ -247,24 +247,24 @@ def build_libui_ng(commit_hash)
 end
 
 namespace 'vendor' do
-  namespace 'libui-ng' do
-    desc 'Build libui-ng latest master [commit hash]'
-    task 'build', 'hash' do |_, args|
-      s = build_libui_ng(args['hash'])
-      abort if s == false
-    end
+  desc 'Build libui-ng latest master [commit hash]'
+  task 'build', 'hash' do |_, args|
+    s = build_libui_ng(args['hash'])
+    abort if s == false
+  end
 
-    desc 'Download latest dev build for Ubuntu to vendor directory'
+  namespace 'libui-ng' do
+    desc 'Download latest official pre-build for Ubuntu to vendor directory'
     task :ubuntu_x64 do
       download_libui_ng_nightly(
-        'libui.so',
+        'libui.x86_64.so',
         'builddir/meson-out/libui.so',
         'Ubuntu-x64-shared-debug.zip'
       )
     end
 
-    desc 'Download latest dev build for Mac to vendor directory'
-    task :mac do
+    desc 'Download latest official pre-build for Mac to vendor directory'
+    task :macos do
       download_libui_ng_nightly(
         'libui.dylib',
         'builddir/meson-out/libui.dylib',
@@ -273,63 +273,76 @@ namespace 'vendor' do
     end
   end
 
-  namespace 'kojix2' do
-    desc 'Download kojix2 pre-build for Ubuntu to vendor directory'
-    task :ubuntu_x64 do
-      download_kojix2_libui_ng_nightly(
-        'libui.so',
-        'builddir/meson-out/libui.so',
-        'Ubuntu-x64-shared-release.zip'
-      )
-    end
+  desc 'Download pre-build for Ubuntu to vendor directory'
+  task :ubuntu_x64 do
+    download_kojix2_libui_ng_nightly(
+      'libui.x86_64.so',
+      'builddir/meson-out/libui.so',
+      'Ubuntu-x64-shared-release.zip'
+    )
+  end
 
-    desc 'Download kojix2 pre-build for Raspbian to vendor directory'
-    task :raspbian_64 do
-      download_kojix2_libui_ng_nightly(
-        'libui.so',
-        'builddir/meson-out/libui.so',
-        'Raspbian-aarch64-shared-release.zip'
-      )
-    end
+  desc 'Download pre-build for Raspbian to vendor directory'
+  task :raspbian_aarch64 do
+    download_kojix2_libui_ng_nightly(
+      'libui.aarch64.so',
+      'builddir/meson-out/libui.so',
+      'Raspbian-aarch64-shared-release.zip'
+    )
+  end
 
-    desc 'Download kojix2 pre-build for Mac to vendor directory'
-    task :mac do
-      download_kojix2_libui_ng_nightly(
-        'libui.dylib',
-        'builddir/meson-out/libui.dylib',
-        'macOS-x64-shared-release.zip'
-      )
-    end
+  desc 'Download pre-build for Mac to vendor directory'
+  task :macos_x64 do
+    download_kojix2_libui_ng_nightly(
+      'libui.x86_64.dylib',
+      'builddir/meson-out/libui.dylib',
+      'macOS-x64-shared-release.zip'
+    )
+  end
 
-    desc 'Download kojix2 pre-build for Windows to vendor directory'
-    task :windows_x64 do
-      download_kojix2_libui_ng_nightly(
-        'libui.dll',
-        'builddir/meson-out/libui.dll',
-        'Win-x64-shared-release.zip'
-      )
-    end
+  desc 'Download pre-build for Mac to vendor directory'
+  task :macos_arm64 do
+    download_kojix2_libui_ng_nightly(
+      'libui.arm64.dylib',
+      'builddir/meson-out/libui.dylib',
+      'macOS-x64-shared-release.zip'
+    )
+  end
 
-    desc 'Download kojix2 pre-build for Windows to vendor directory'
-    task :windows_x86 do
-      download_kojix2_libui_ng_nightly(
-        'libui.dll',
-        'builddir/meson-out/libui.dll',
-        'Win-x86-shared-release.zip'
-      )
-    end
+  desc 'Download pre-build for Windows to vendor directory'
+  task :windows_x64 do
+    download_kojix2_libui_ng_nightly(
+      'libui.x64.dll',
+      'builddir/meson-out/libui.dll',
+      'Win-x64-shared-release.zip'
+    )
+  end
 
-    desc 'Download kojix2 pre-build for your platform to vendor directory'
-    task :auto do
-      # TODO: Add support for other platforms
-      case RUBY_PLATFORM
-      when /linux/
-        Rake::Task['vendor:kojix2:ubuntu_x64'].invoke
-      when /darwin/
-        Rake::Task['vendor:kojix2:mac'].invoke
-      when /mingw/
-        Rake::Task['vendor:kojix2:windows_x64'].invoke
-      end
+  desc 'Download pre-build for Windows to vendor directory'
+  task :windows_x86 do
+    download_kojix2_libui_ng_nightly(
+      'libui.x86.dll',
+      'builddir/meson-out/libui.dll',
+      'Win-x86-shared-release.zip'
+    )
+  end
+
+  # desc 'Download pre-build for your platform to vendor directory'
+  # task :auto do
+  #   # TODO: Add support for other platforms
+  #   case RUBY_PLATFORM
+  #   when /linux/
+  #     Rake::Task['vendor:kojix2:ubuntu_x64'].invoke
+  #   when /darwin/
+  #     Rake::Task['vendor:kojix2:mac'].invoke
+  #   when /mingw/
+  #     Rake::Task['vendor:kojix2:windows_x64'].invoke
+  #   end
+  # end
+
+  task :clean do
+    (Dir['vendor/*'] - Dir['vendor/{LICENSE,README}.md']).each do |f|
+      FileUtils.rm_rf(f)
     end
   end
 end

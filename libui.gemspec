@@ -10,22 +10,26 @@ Gem::Specification.new do |spec|
   spec.authors       = ['kojix2']
   spec.email         = ['2xijok@gmail.com']
 
-  spec.required_ruby_version = '>= 2.5'
-
+  spec.files = Dir['*.{md,txt}', '{lib}/**/*', 'vendor/{LICENSE,README}.md']
   spec.require_paths = 'lib'
 
-  spec.files = Dir['*.{md,txt}', '{lib}/**/*', 'vendor/{LICENSE,README}.md']
+  spec.required_ruby_version = '>= 2.5'
+
   case spec.platform.to_s
   when 'x86_64-linux'
-    spec.files << 'vendor/libui.so'
-  # when "aarch64-linux"
-    # spec.files << "vendor/libui.so"
-  when 'x86_64-darwin', 'arm64-darwin'
-    spec.files << 'vendor/libui.dylib'
+    spec.files << 'vendor/libui.x86_64.so'
+  when 'aarch64-linux'
+    spec.files << 'vendor/libui.aarch64.so' # raspberry pi
+  when 'x86_64-darwin'
+    spec.files << 'vendor/libui.x86_64.dylib' # universal binary
+  when 'arm64-darwin'
+    spec.files << 'vendor/libui.arm64.dylib' # universal binary
   when 'x64-mingw'
-    spec.files << 'vendor/libui.dll'
+    spec.files << 'vendor/libui.x64.dll'
+  when 'x86-mingw32'
+    spec.files << 'vendor/libui.x86.dll'
   else
-    spec.files.concat(Dir['vendor/*.{dll,dylib,so}'])
+    spec.files.concat(Dir['vendor/*.{dll,dylib,so}']) # all
   end
 
   # spec.add_dependency 'fiddle'
