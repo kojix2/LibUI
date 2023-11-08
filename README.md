@@ -166,7 +166,7 @@ LibUI offers high portability with a minimal implementation.
 git clone https://github.com/kojix2/libui
 cd libui
 bundle install
-bundle exec rake vendor:default # download shared libraries for all platforms
+bundle exec rake vendor:auto
 bundle exec rake test
 ```
 
