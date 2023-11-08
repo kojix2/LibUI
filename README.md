@@ -16,19 +16,20 @@ LibUI is a Ruby wrapper for libui and libui-ng.
 gem install libui
 ```
 
-* The gem package includes the [official release](https://github.com/andlabs/libui/releases/tag/alpha4.1) of the libui shared library version 4.1 for Windows, Mac, and Linux.
-  * Namely `libui.dll`, `libui.dylib`, and `libui.so` (only 1.8MB in total).
-* No dependencies required.
-  * The libui gem uses the standard Ruby library [Fiddle](https://github.com/ruby/fiddle) to call C functions.
+- The gem package includes the [official release](https://github.com/andlabs/libui/releases/tag/alpha4.1) of the libui shared library version 4.1 for Windows, Mac, and Linux.
+  - Namely `libui.dll`, `libui.dylib`, and `libui.so` (only 1.8MB in total).
+- No dependencies required.
+  - The libui gem uses the standard Ruby library [Fiddle](https://github.com/ruby/fiddle) to call C functions.
 
-| Windows | Mac | Linux |
-|---------|-----|-------|
-|<img src="https://user-images.githubusercontent.com/5798442/103118046-900ea780-46b0-11eb-81fc-32626762e4df.png">|<img src="https://user-images.githubusercontent.com/5798442/103118059-99980f80-46b0-11eb-9d12-324ec4d297c9.png">|<img src="https://user-images.githubusercontent.com/5798442/103118068-a0bf1d80-46b0-11eb-8c5c-3bdcc3dcfb26.png">|
+| Windows                                                                                                          | Mac                                                                                                              | Linux                                                                                                            |
+| ---------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| <img src="https://user-images.githubusercontent.com/5798442/103118046-900ea780-46b0-11eb-81fc-32626762e4df.png"> | <img src="https://user-images.githubusercontent.com/5798442/103118059-99980f80-46b0-11eb-9d12-324ec4d297c9.png"> | <img src="https://user-images.githubusercontent.com/5798442/103118068-a0bf1d80-46b0-11eb-8c5c-3bdcc3dcfb26.png"> |
 
 Notes:
-* If you are using the 32-bit (x86) version of Ruby, you need to download the 32-bit (x86) native dll. See the [Development](#development) section.
-* On Windows, libui may not work due to missing DLLs. In that case, you need to install [Visual C++ Redistributable](https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist). See ([#48](https://github.com/kojix2/LibUI/issues/48))
-* Users with [Raspberry Pi](https://www.raspberrypi.com/) or other platforms will need to compile the C libui library. See the [Development](#development) section.
+
+- If you are using the 32-bit (x86) version of Ruby, you need to download the 32-bit (x86) native dll. See the [Development](#development) section.
+- On Windows, libui may not work due to missing DLLs. In that case, you need to install [Visual C++ Redistributable](https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist). See ([#48](https://github.com/kojix2/LibUI/issues/48))
+- Users with [Raspberry Pi](https://www.raspberrypi.com/) or other platforms will need to compile the C libui library. See the [Development](#development) section.
 
 ## Usage
 
@@ -67,11 +68,11 @@ For more examples, see the [examples](https://github.com/kojix2/libui/tree/main/
 
 Compared to the original libui library written in C:
 
-* Method names use snake_case.
-* The last argument can be omitted if it's nil.
-* A block can be passed as a callback.
-  * The block will be converted to a Proc object and added as the last argument.
-  * The last argument can still be omitted when nil.
+- Method names use snake_case.
+- The last argument can be omitted if it's nil.
+- A block can be passed as a callback.
+  - The block will be converted to a Proc object and added as the last argument.
+  - The last argument can still be omitted when nil.
 
 You can use [the documentation for libui's Go bindings](https://pkg.go.dev/github.com/andlabs/ui) as a reference.
 
@@ -81,8 +82,8 @@ LibUI is not object-oriented because it is a thin Ruby wrapper (binding) for the
 
 To build actual applications, it is recommended to use a DSL for LibUI, as they enable writing object-oriented code the Ruby way (instead of procedural code the C way):
 
-* [Glimmer DSL for LibUI](https://github.com/AndyObtiva/glimmer-dsl-libui)
-* [libui_paradise](https://rubygems.org/gems/libui_paradise)
+- [Glimmer DSL for LibUI](https://github.com/AndyObtiva/glimmer-dsl-libui)
+- [libui_paradise](https://rubygems.org/gems/libui_paradise)
 
 ### Working with fiddle pointers
 
@@ -120,9 +121,9 @@ UI.font_button_on_changed(font_button) do
 end
 ```
 
-* Callbacks
-  * In Ruby/Fiddle, a C callback function is written as an object of
-    `Fiddle::Closure::BlockCaller` or `Fiddle::Closure`. 
+- Callbacks
+  - In Ruby/Fiddle, a C callback function is written as an object of
+    `Fiddle::Closure::BlockCaller` or `Fiddle::Closure`.
     Be careful about Ruby's garbage collection - if the function object is collected, memory will be freed resulting in a segmentation violation when the callback is invoked.
 
 ```ruby
@@ -132,10 +133,11 @@ handler.MouseCrossed = (c2 = Fiddle::Closure::BlockCaller.new(0, [0]) {})
 handler.DragBroken   = (c3 = Fiddle::Closure::BlockCaller.new(0, [0]) {})
 ```
 
-### Creating a Windows executable (.exe) with OCRA 
+### Creating a Windows executable (.exe) with OCRA
 
-OCRA (One-Click Ruby Application) builds Windows executables from Ruby source code. 
-* https://github.com/larsch/ocra/
+OCRA (One-Click Ruby Application) builds Windows executables from Ruby source code.
+
+- https://github.com/larsch/ocra/
 
 To build an exe with Ocra, include 3 DLLs from the ruby_builtin_dlls folder:
 
@@ -160,15 +162,15 @@ Add additional options below if necessary:
 
 ## Development
 
-LibUI offers high portability with a minimal implementation.
-
 ```sh
 git clone https://github.com/kojix2/libui
 cd libui
 bundle install
-bundle exec rake vendor:auto
+bundle exec rake vendor:auto # vendor:build
 bundle exec rake test
 ```
+
+### Pre-built shared libraries for libui-ng
 
 Use the following rake tasks to download the shared library required for your platform:
 
@@ -186,12 +188,16 @@ rake vendor:windows_x64          # Download pre-build for Windows to vendor dire
 rake vendor:windows_x86          # Download pre-build for Windows to vendor directory
 ```
 
-For example, if you are using a 32-bit (x86) version of Ruby on Windows, type `vendor:kojix2:windows_x86`.
-These shared libraries are built using Github Actions; if the [pre-build branch](https://github.com/kojix2/libui-ng/tree/pre-build) of kojix2/libui-ng is not updated for 3 months, it will not be available for download. Please let me know when that happens.
+For example, if you are using a 32-bit (x86) version of Ruby on Windows, type `vendor:windows_x86`.
+These shared libraries are [artifacts](https://github.com/kojix2/libui-ng/actions/workflows/pre-build.yml) of the [pre-build branch](https://github.com/kojix2/libui-ng/tree/pre-build) of [kojix2/libui-ng](https://github.com/kojix2/libui-ng). In that case, please let us know.
 
 ### Using C libui compiled from source code
 
-You can compile C libui from source code on your platform and tell Ruby LibUI where to find the shared libraries. Set the environment variable `LIBUIDIR` to specify the path to the shared library. (See [#46](https://github.com/kojix2/LibUI/issues/46#issuecomment-1041575792)). This is especially useful on platforms where the LibUI gem does not provide shared library, such as the ARM architecture (used in devices like Raspberry Pi).
+The following Rake task will compile libui-ng. meson or ninja is required.
+
+`bundle exec rake vendor:build`
+
+Alternatively, you can tell Ruby LibUI the location of shared libraries. Set the environment variable `LIBUIDIR` to specify the path to the shared library. (See [#46](https://github.com/kojix2/LibUI/issues/46#issuecomment-1041575792)). This is especially useful on platforms where the LibUI gem does not provide shared library, such as the ARM architecture (used in devices like Raspberry Pi).
 
 Another simple approach is to replace the shared libraries in the gem vendor directory with the ones you have compiled.
 
@@ -201,20 +207,21 @@ Another simple approach is to replace the shared libraries in the gem vendor dir
 ls vendor             # check the vendor directory
 rm -rf pkg            # remove previously built gems
 rake build_platform
-rake release_platform 
+rake release_platform
 ```
 
 ### libui or libui-ng
 
-* From version 0.1.X, we plan to support only libui-ng/libui-ng.
-* Version 0.0.X only supports andlabs/libui.
+- From version 0.1.X, we plan to support only libui-ng/libui-ng.
+- Version 0.0.X only supports andlabs/libui.
 
 ## Contributing
 
 Would you like to contribute to LibUI?
-* Please feel free to send us your [pull requests](https://github.com/kojix2/libui/pulls).
-  * Small corrections, such as typo fixes, are appreciated.
-* Did you find any bugs? Submit them in the [issues](https://github.com/kojix2/LibUI/issues) section!
+
+- Please feel free to send us your [pull requests](https://github.com/kojix2/libui/pulls).
+  - Small corrections, such as typo fixes, are appreciated.
+- Did you find any bugs? Submit them in the [issues](https://github.com/kojix2/LibUI/issues) section!
 
 Many OSS projects become abandoned because only the founder has commit rights to the original repository.
 If you need commit rights to my repository or want to get admin rights and take over the project, please feel free to contact me @kojix2.
@@ -223,7 +230,7 @@ If you need commit rights to my repository or want to get admin rights and take 
 
 This project is inspired by libui-ruby.
 
-* https://github.com/jamescook/libui-ruby
+- https://github.com/jamescook/libui-ruby
 
 While libui-ruby uses [Ruby-FFI](https://github.com/ffi/ffi), this gem uses [Fiddle](https://github.com/ruby/fiddle).
 
