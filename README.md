@@ -223,8 +223,15 @@ Would you like to contribute to LibUI?
   - Small corrections, such as typo fixes, are appreciated.
 - Did you find any bugs? Submit them in the [issues](https://github.com/kojix2/LibUI/issues) section!
 
+Do you need commit rights?
+
 Many OSS projects become abandoned because only the founder has commit rights to the original repository.
 If you need commit rights to my repository or want to get admin rights and take over the project, please feel free to contact me @kojix2.
+
+Support libui-ng development
+
+- Contributing to the development of libui-ng is a contribution to the entire libui community, including Ruby's LibUI.
+- For example, it would be easier to release LibUI in Ruby if libui-ng could be built easily and official shared libraries could be distributed.
 
 ## Acknowledgements
 
