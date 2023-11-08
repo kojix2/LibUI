@@ -226,8 +226,8 @@ Would you like to contribute to LibUI?
 
 Do you need commit rights?
 
-Many OSS projects become abandoned because only the founder has commit rights to the original repository.
-If you need commit rights to my repository or want to get admin rights and take over the project, please feel free to contact me @kojix2.
+- If you need commit rights to my repository or want to get admin rights and take over the project, please feel free to contact @kojix2.
+- Many OSS projects become abandoned because only the founder has commit rights to the original repository.
 
 Support libui-ng development
 
