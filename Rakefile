@@ -331,11 +331,11 @@ namespace 'vendor' do
   task :auto do
     case RUBY_PLATFORM
     when /linux/
-      Rake::Task['vendor:kojix2:ubuntu_x64'].invoke
+      Rake::Task['vendor:ubuntu_x64'].invoke
     when /darwin/
-      Rake::Task['vendor:kojix2:mac_x64'].invoke # FIXME
+      Rake::Task['vendor:mac_x64'].invoke # FIXME
     when /mingw/
-      Rake::Task['vendor:kojix2:windows_x64'].invoke
+      Rake::Task['vendor:windows_x64'].invoke
     else
       puts "Unknown platform: #{RUBY_PLATFORM}"
       puts 'TODO: Add support for your platform'
