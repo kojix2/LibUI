@@ -3,6 +3,7 @@
 [![test](https://github.com/kojix2/LibUI/actions/workflows/test.yml/badge.svg)](https://github.com/kojix2/LibUI/actions/workflows/test.yml)
 [![Gem Version](https://badge.fury.io/rb/libui.svg)](https://badge.fury.io/rb/libui)
 <a href="https://github.com/AndyObtiva/glimmer-dsl-libui"><img alt="glimmer-dsl-libui" src="https://github.com/AndyObtiva/glimmer/blob/master/images/glimmer-logo-hi-res.svg" width="50" height="50" align="right"></a>
+[![Pre-build](https://github.com/kojix2/libui-ng/actions/workflows/pre-build.yml/badge.svg?branch=pre-build)](https://github.com/kojix2/libui-ng/actions/workflows/pre-build.yml)
 
 LibUI is a Ruby wrapper for libui and libui-ng.
 
