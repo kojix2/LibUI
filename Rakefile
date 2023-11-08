@@ -187,7 +187,7 @@ def build_libui_ng(commit_hash)
         begin
           output, status = Open3.capture2e('meson', 'build', '--buildtype=release')
         rescue Errno::ENOENT => e
-          puts e.message.to_s
+          puts e.message
           puts 'Make sure that meson is installed.'
           return false
         end
@@ -204,7 +204,7 @@ def build_libui_ng(commit_hash)
         begin
           output, status = Open3.capture2e('ninja', '-C', 'build')
         rescue Errono::ENOENT => e
-          puts e.message.to_s
+          puts e.message
           puts 'Make sure that ninja is installed.'
           return false
         end
@@ -296,7 +296,7 @@ namespace 'vendor' do
     download_kojix2_libui_ng_nightly(
       'libui.x86_64.dylib',
       'builddir/meson-out/libui.dylib',
-      'macOS-x64-shared-release.zip'
+      'macOS-x64-shared-release.zip' # universal binary?
     )
   end
 
@@ -305,7 +305,7 @@ namespace 'vendor' do
     download_kojix2_libui_ng_nightly(
       'libui.arm64.dylib',
       'builddir/meson-out/libui.dylib',
-      'macOS-x64-shared-release.zip'
+      'macOS-x64-shared-release.zip' # universal binary?
     )
   end
 
@@ -328,17 +328,19 @@ namespace 'vendor' do
   end
 
   # desc 'Download pre-build for your platform to vendor directory'
-  # task :auto do
-  #   # TODO: Add support for other platforms
-  #   case RUBY_PLATFORM
-  #   when /linux/
-  #     Rake::Task['vendor:kojix2:ubuntu_x64'].invoke
-  #   when /darwin/
-  #     Rake::Task['vendor:kojix2:mac'].invoke
-  #   when /mingw/
-  #     Rake::Task['vendor:kojix2:windows_x64'].invoke
-  #   end
-  # end
+  task :auto do
+    case RUBY_PLATFORM
+    when /linux/
+      Rake::Task['vendor:kojix2:ubuntu_x64'].invoke
+    when /darwin/
+      Rake::Task['vendor:kojix2:mac_x64'].invoke # FIXME
+    when /mingw/
+      Rake::Task['vendor:kojix2:windows_x64'].invoke
+    else
+      puts "Unknown platform: #{RUBY_PLATFORM}"
+      puts 'TODO: Add support for your platform'
+    end
+  end
 
   task :clean do
     (Dir['vendor/*'] - Dir['vendor/{LICENSE,README}.md']).each do |f|
