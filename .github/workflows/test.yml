@@ -18,7 +18,7 @@ jobs:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
       - name: Download libui shared libraries
-        run: bundle exec rake vendor:kojix2:auto
+        run: bundle exec rake vendor:auto
       - name: Rake test (XVFB)
         uses: coactions/setup-xvfb@v1
         with:
