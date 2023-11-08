@@ -99,7 +99,14 @@
 </tbody>
 </table>
 
-<p>Notes: * If you are using the 32-bit (x86) version of Ruby, you need to download the 32-bit (x86) native dll. See the <a href="#development">Development</a> section. * On Windows, libui may not work due to missing DLLs. In that case, you need to install <a href="https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist">Visual C++ Redistributable</a>. See (<a href="https://github.com/kojix2/LibUI/issues/48">#48</a>) * Users with <a href="https://www.raspberrypi.com/">Raspberry Pi</a> or other platforms will need to compile the C libui library. See the <a href="#development">Development</a> section.</p>
+<p>Notes:</p>
+<ul><li>
+<p>If you are using the 32-bit (x86) version of Ruby, you need to download the 32-bit (x86) native dll. See the <a href="#development">Development</a> section.</p>
+</li><li>
+<p>On Windows, libui may not work due to missing DLLs. In that case, you need to install <a href="https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist">Visual C++ Redistributable</a>. See (<a href="https://github.com/kojix2/LibUI/issues/48">#48</a>)</p>
+</li><li>
+<p>Users with <a href="https://www.raspberrypi.com/">Raspberry Pi</a> or other platforms will need to compile the C libui library. See the <a href="#development">Development</a> section.</p>
+</li></ul>
 
 <h2 id="label-Usage">Usage</h2>
 
@@ -207,7 +214,10 @@
 
 <h3 id="label-Creating+a+Windows+executable+-28.exe-29+with+OCRA">Creating a Windows executable (.exe) with OCRA</h3>
 
-<p>OCRA (One-Click Ruby Application) builds Windows executables from Ruby source code. * <a href="https://github.com/larsch/ocra">github.com/larsch/ocra</a>/</p>
+<p>OCRA (One-Click Ruby Application) builds Windows executables from Ruby source code.</p>
+<ul><li>
+<p><a href="https://github.com/larsch/ocra">github.com/larsch/ocra</a>/</p>
+</li></ul>
 
 <p>To build an exe with Ocra, include 3 DLLs from the ruby_builtin_dlls folder:</p>
 
@@ -230,14 +240,14 @@
 
 <h2 id="label-Development">Development</h2>
 
-<p>LibUI offers high portability with a minimal implementation.</p>
-
 <pre class="code ruby"><code class="ruby">git clone https://github.com/kojix2/libui
 cd libui
 bundle install
-bundle exec rake vendor:auto
+bundle exec rake vendor:auto # vendor:build
 bundle exec rake test
 </code></pre>
+
+<h3 id="label-Pre-built+shared+libraries+for+libui-ng">Pre-built shared libraries for libui-ng</h3>
 
 <p>Use the following rake tasks to download the shared library required for your platform:</p>
 
@@ -254,11 +264,15 @@ rake vendor:windows_x64          # Download pre-build for Windows to vendor dire
 rake vendor:windows_x86          # Download pre-build for Windows to vendor directory
 </code></pre>
 
-<p>For example, if you are using a 32-bit (x86) version of Ruby on Windows, type <code>vendor:kojix2:windows_x86</code>. These shared libraries are built using Github Actions; if the <a href="https://github.com/kojix2/libui-ng/tree/pre-build">pre-build branch</a> of kojix2/libui-ng is not updated for 3 months, it will not be available for download. Please let me know when that happens.</p>
+<p>For example, if you are using a 32-bit (x86) version of Ruby on Windows, type <code>vendor:windows_x86</code>. These shared libraries are <a href="https://github.com/kojix2/libui-ng/actions/workflows/pre-build.yml">artifacts</a> of the <a href="https://github.com/kojix2/libui-ng/tree/pre-build">pre-build branch</a> of <a href="https://github.com/kojix2/libui-ng">kojix2/libui-ng</a>. In that case, please let us know.</p>
 
 <h3 id="label-Using+C+libui+compiled+from+source+code">Using C libui compiled from source code</h3>
 
-<p>You can compile C libui from source code on your platform and tell Ruby LibUI where to find the shared libraries. Set the environment variable <code>LIBUIDIR</code> to specify the path to the shared library. (See <a href="https://github.com/kojix2/LibUI/issues/46#issuecomment-1041575792">#46</a>). This is especially useful on platforms where the LibUI gem does not provide shared library, such as the ARM architecture (used in devices like Raspberry Pi).</p>
+<p>The following Rake task will compile libui-ng. meson or ninja is required.</p>
+
+<p><code>bundle exec rake vendor:build</code></p>
+
+<p>Alternatively, you can tell Ruby LibUI the location of shared libraries. Set the environment variable <code>LIBUIDIR</code> to specify the path to the shared library. (See <a href="https://github.com/kojix2/LibUI/issues/46#issuecomment-1041575792">#46</a>). This is especially useful on platforms where the LibUI gem does not provide shared library, such as the ARM architecture (used in devices like Raspberry Pi).</p>
 
 <p>Another simple approach is to replace the shared libraries in the gem vendor directory with the ones you have compiled.</p>
 
@@ -279,7 +293,14 @@ rake release_platform
 
 <h2 id="label-Contributing">Contributing</h2>
 
-<p>Would you like to contribute to LibUI? * Please feel free to send us your <a href="https://github.com/kojix2/libui/pulls">pull requests</a>.  * Small corrections, such as typo fixes, are appreciated. * Did you find any bugs? Submit them in the <a href="https://github.com/kojix2/LibUI/issues">issues</a> section!</p>
+<p>Would you like to contribute to LibUI?</p>
+<ul><li>
+<p>Please feel free to send us your <a href="https://github.com/kojix2/libui/pulls">pull requests</a>.</p>
+</li><li>
+<p>Small corrections, such as typo fixes, are appreciated.</p>
+</li><li>
+<p>Did you find any bugs? Submit them in the <a href="https://github.com/kojix2/LibUI/issues">issues</a> section!</p>
+</li></ul>
 
 <p>Many OSS projects become abandoned because only the founder has commit rights to the original repository. If you need commit rights to my repository or want to get admin rights and take over the project, please feel free to contact me @kojix2.</p>
 
@@ -298,7 +319,7 @@ rake release_platform
 </div></div>
 
       <div id="footer">
-  Generated on Wed Nov  8 01:48:14 2023 by
+  Generated on Wed Nov  8 02:19:34 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-3.2.2).
 </div>
