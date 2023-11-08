@@ -58,6 +58,10 @@ module LibUI
       [x, y]
     end
 
+    # FIXME: This is a workaround for a old version of Fiddle.
+    # Fiddle 1.1.2 and above should be able to handle one charactor string.
+    # See https://github.com/ruby/fiddle/issues/96
+
     def open_type_features_add(otf, a, b, c, d, value)
       a, b, c, d = [a, b, c, d].map { |s| s.is_a?(String) ? s.ord : s }
       super(otf, a, b, c, d, value)
