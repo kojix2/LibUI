@@ -1,4 +1,12 @@
 module LibUI
+  # This module overrides Fiddle's mtehods
+  # - Fiddle::Importer#extern
+  # - Fiddle::CParser#parse_signature
+  # Original methods are in
+  # - https://github.com/ruby/fiddle/blob/master/lib/fiddle/import.rb
+  # - https://github.com/ruby/fiddle/blob/master/lib/fiddle/cparser.rb
+  # These changes add the ability to parse the signatures of functions given as arguments.
+
   module FiddlePatch
     def parse_signature(signature, tymap = nil)
       tymap ||= {}
