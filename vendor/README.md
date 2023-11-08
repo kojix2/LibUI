@@ -68,6 +68,16 @@ For the sake of completeness, I should note that the default value of `--layout`
 
 Backends other than `ninja` should work, but are untested by me.
 
+## Testing
+
+### Automated Unit Tests
+
+Run the included unit tests via `meson test -C build`. Alternatively you can also run the `unit` executable manually.
+
+### Manual Testing Suite
+
+Run the manual quality assurance test suite via `qa` and follow the instructions laid out within.
+
 ## Installation
 
 Meson also supports installing from source; if you use Ninja, just do
@@ -82,9 +92,13 @@ When running `meson`, the `--prefix` option will set the installation prefix. [T
 
 Can be built from AUR: https://aur.archlinux.org/packages/libui-ng-git/
 
-## Documentation
+## Documentation [WIP]
 
-Needs to be written. Consult `ui.h` and the examples for details for now.
+[API](https://libui-ng.github.io/libui-ng/), check the [modules](https://libui-ng.github.io/libui-ng/modules.html) section for an overview of (nearly all) uiControls.
+
+Consult the `ui.h` comments for the uiControls missing in the docs.
+
+Check the `examples` directory for fully fledged examples. Check out the `tests` directory and subdirectories for more real world usage.
 
 ## Language Bindings
 
@@ -96,7 +110,7 @@ Language | Bindings
 --- | ---
 C++ | [libui-cpp](https://github.com/billyquith/libui-cpp), [cpp-libui-qtlike](https://github.com/aoloe/cpp-libui-qtlike)
 C# / .NET Framework | [LibUI.Binding](https://github.com/NattyNarwhal/LibUI.Binding)
-C# / .NET Core | [DevZH.UI](https://github.com/noliar/DevZH.UI), [SharpUI](https://github.com/benpye/sharpui/), [SimplexiDev.UI](https://github.com/simplexidev/sdfx)
+C# / .NET Core | [DevZH.UI](https://github.com/noliar/DevZH.UI), [SharpUI](https://github.com/benpye/sharpui/)
 CHICKEN Scheme | [wasamasa/libui](https://github.com/wasamasa/libui)
 Common Lisp | [jinwoo/cl-ui](https://github.com/jinwoo/cl-ui)
 Crystal | [libui.cr](https://github.com/Fusion/libui.cr), [hedron](https://github.com/Qwerp-Derp/hedron), [iu](https://github.com/grkek/iu)
@@ -109,13 +123,13 @@ JavaScript/Node.js | [libui-node](https://github.com/parro-it/libui-node), [libu
 Julia | [Libui.jl](https://github.com/joa-quim/Libui.jl)
 Kotlin | [kotlin-libui](https://github.com/msink/kotlin-libui)
 Lua | [libuilua](https://github.com/zevv/libuilua), [libui-lua](https://github.com/mdombroski/libui-lua), [lui](http://tset.de/lui/index.html), [lui](https://github.com/zhaozg/lui)
-Nim | [ui](https://github.com/nim-lang/ui)
+Nim | [ui](https://github.com/nim-lang/ui), [uing](https://github.com/neroist/uing)
 Perl6 | [perl6-libui](https://github.com/Garland-g/perl6-libui)
-PHP | [ui](https://github.com/krakjoe/ui)
+PHP | [ui](https://github.com/krakjoe/ui), [Ardillo](https://github.com/ardillo-php/ext)
 Python | [pylibui](https://github.com/joaoventura/pylibui)
 Ring | [RingLibui](https://github.com/ring-lang/ring/tree/master/extensions/ringlibui)
 Ruby | [libui-ruby](https://github.com/jamescook/libui-ruby), [LibUI](https://github.com/kojix2/libui), [Glimmer DSL for LibUI](https://github.com/AndyObtiva/glimmer-dsl-libui)
-Rust | [libui-ng-sys](https://github.com/norepimorphism/libui-ng-sys), [boing](https://github.com/norepimorphism/boing), [libui-rs](https://github.com/rust-native-ui/libui-rs)
+Rust | [libui-ng-sys](https://github.com/norepimorphism/libui-ng-sys), [boing](https://github.com/norepimorphism/boing), [libui-rs](https://github.com/rust-native-ui/libui-rs), [libui](https://github.com/libui-rs/libui)
 Scala | [scalaui](https://github.com/lolgab/scalaui)
 Swift | [libui-swift](https://github.com/sclukey/libui-swift)
 
