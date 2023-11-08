@@ -175,14 +175,15 @@ Use the following rake tasks to download the shared library required for your pl
 `rake -T`
 
 ```
-rake vendor:kojix2:auto           # Download kojix2 pre-build for your platform to vendor directory
-rake vendor:kojix2:mac            # Download kojix2 pre-build for Mac to vendor directory
-rake vendor:kojix2:ubuntu_x64     # Download kojix2 pre-build for Ubuntu to vendor directory
-rake vendor:kojix2:windows_x64    # Download kojix2 pre-build for Windows to vendor directory
-rake vendor:kojix2:windows_x86    # Download kojix2 pre-build for Windows to vendor directory
-rake vendor:build[hash]           # Build libui-ng latest master [commit hash]
-rake vendor:libui-ng:mac          # Download latest dev build for Mac to vendor directory
-rake vendor:libui-ng:ubuntu_x64   # Download latest dev build for Ubuntu to vendor directory
+rake vendor:build[hash]          # Build libui-ng latest master [commit hash]
+rake vendor:libui-ng:macos       # Download latest official pre-build for Mac to vendor directory
+rake vendor:libui-ng:ubuntu_x64  # Download latest official pre-build for Ubuntu to vendor directory
+rake vendor:macos_arm64          # Download pre-build for Mac to vendor directory
+rake vendor:macos_x64            # Download pre-build for Mac to vendor directory
+rake vendor:raspbian_aarch64     # Download pre-build for Raspbian to vendor directory
+rake vendor:ubuntu_x64           # Download pre-build for Ubuntu to vendor directory
+rake vendor:windows_x64          # Download pre-build for Windows to vendor directory
+rake vendor:windows_x86          # Download pre-build for Windows to vendor directory
 ```
 
 For example, if you are using a 32-bit (x86) version of Ruby on Windows, type `vendor:kojix2:windows_x86`.
