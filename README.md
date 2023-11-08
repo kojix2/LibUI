@@ -186,7 +186,7 @@ rake vendor:libui-ng:ubuntu_x64   # Download latest dev build for Ubuntu to vend
 ```
 
 For example, if you are using a 32-bit (x86) version of Ruby on Windows, type `vendor:kojix2:windows_x86`.
-These shared libraries are built using Github Actions; if the pre-build branch of kojix2/libui-ng is not updated for 3 months, it will not be available for download. Please let me know when that happens.
+These shared libraries are built using Github Actions; if the [pre-build branch](https://github.com/kojix2/libui-ng/tree/pre-build) of kojix2/libui-ng is not updated for 3 months, it will not be available for download. Please let me know when that happens.
 
 ### Using C libui compiled from source code
 
