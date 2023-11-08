@@ -11,7 +11,7 @@ module LibUI
 
   lib_name = [
     "libui.#{RbConfig::CONFIG['host_cpu']}.#{RbConfig::CONFIG['SOEXT']}",
-    "libui.#{RbConfig::CONFIG['SOEXT']}",
+    "libui.#{RbConfig::CONFIG['SOEXT']}"
   ]
 
   self.ffi_lib = \
@@ -53,8 +53,8 @@ module LibUI
       x_ptr = Fiddle::Pointer.malloc(Fiddle::SIZEOF_INT, Fiddle::RUBY_FREE)
       y_ptr = Fiddle::Pointer.malloc(Fiddle::SIZEOF_INT, Fiddle::RUBY_FREE)
       super(w, x_ptr, y_ptr)
-      x = x_ptr[0, Fiddle::SIZEOF_INT].unpack1("i*")
-      y = y_ptr[0, Fiddle::SIZEOF_INT].unpack1("i*")
+      x = x_ptr[0, Fiddle::SIZEOF_INT].unpack1('i*')
+      y = y_ptr[0, Fiddle::SIZEOF_INT].unpack1('i*')
       [x, y]
     end
 

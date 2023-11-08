@@ -57,7 +57,6 @@ end
 # Gem::Platform::CURRENT.  This will correctly mark the gem with your ruby's
 # platform.
 
-
 platforms = %w[
   x86_64-linux
   aarch64-linux
