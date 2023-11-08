@@ -333,7 +333,7 @@ namespace 'vendor' do
     when /linux/
       Rake::Task['vendor:ubuntu_x64'].invoke
     when /darwin/
-      Rake::Task['vendor:mac_x64'].invoke # FIXME
+      Rake::Task['vendor:macos_x64'].invoke # FIXME
     when /mingw/
       Rake::Task['vendor:windows_x64'].invoke
     else
