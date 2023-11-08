@@ -152,7 +152,7 @@ def download_from_url(libname, lib_path, file_name, sha256sum_expected, url)
       else
         puts 'Check sha256sum'
         v = check_sha256sum(lib_path, sha256sum_expected)
-        retrun false unless v
+        return false unless v
       end
 
       puts "Copying #{lib_path} to #{target_path}"

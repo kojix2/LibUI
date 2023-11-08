@@ -59,7 +59,7 @@ module LibUI
     end
 
     # FIXME: This is a workaround for a old version of Fiddle.
-    # Fiddle 1.1.2 and above should be able to handle one charactor string.
+    # Fiddle 1.1.2 and above should be able to handle one character string.
     # See https://github.com/ruby/fiddle/issues/96
 
     def open_type_features_add(otf, a, b, c, d, value)
