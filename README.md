@@ -207,8 +207,12 @@ Another simple approach is to replace the shared libraries in the gem vendor dir
 ```sh
 ls vendor             # check the vendor directory
 rm -rf pkg            # remove previously built gems
-rake build_platform
-rake release_platform
+rake build_platform   # build gems
+
+# Check the contents of the gem
+find pkg -name *.gem -exec sh -c "echo; echo \# {}; tar -O -f {} -x data.tar.gz | tar zt" \;
+
+rake release_platform # publish gems
 ```
 
 ### libui or libui-ng
