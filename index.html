@@ -280,8 +280,12 @@ rake vendor:windows_x86          # Download pre-build for Windows to vendor dire
 
 <pre class="code ruby"><code class="ruby">ls vendor             # check the vendor directory
 rm -rf pkg            # remove previously built gems
-rake build_platform
-rake release_platform
+rake build_platform   # build gems
+
+# Check the contents of the gem
+find pkg -name *.gem -exec sh -c &quot;echo; echo \# {}; tar -O -f {} -x data.tar.gz | tar zt&quot; \;
+
+rake release_platform # publish gems
 </code></pre>
 
 <h3 id="label-libui+or+libui-ng">libui or libui-ng</h3>
@@ -331,7 +335,7 @@ rake release_platform
 </div></div>
 
       <div id="footer">
-  Generated on Wed Nov  8 23:45:36 2023 by
+  Generated on Thu Nov  9 02:37:30 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-3.2.2).
 </div>
