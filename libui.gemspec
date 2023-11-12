@@ -26,7 +26,7 @@ Gem::Specification.new do |spec|
     spec.files << 'vendor/libui.x86_64.dylib' # universal binary
   when 'arm64-darwin'
     spec.files << 'vendor/libui.arm64.dylib' # universal binary
-  when 'x64-mingw'
+  when 'x64-mingw32', 'x64-mingw-ucrt'
     spec.files << 'vendor/libui.x64.dll'
   when 'x86-mingw32'
     spec.files << 'vendor/libui.x86.dll'
