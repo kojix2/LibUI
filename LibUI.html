@@ -1248,7 +1248,6 @@
       <pre class="lines">
 
 
-34
 35
 36
 37
@@ -1258,10 +1257,11 @@
 41
 42
 43
-44</pre>
+44
+45</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 34</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 35</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_init'>init</span><span class='lparen'>(</span><span class='id identifier rubyid_opt'>opt</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>unless</span> <span class='id identifier rubyid_opt'>opt</span>
@@ -1305,13 +1305,13 @@
       <pre class="lines">
 
 
-65
 66
 67
-68</pre>
+68
+69</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 65</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 66</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_open_type_features_add'>open_type_features_add</span><span class='lparen'>(</span><span class='id identifier rubyid_otf'>otf</span><span class='comma'>,</span> <span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_ord'>ord</span> <span class='op'>:</span> <span class='id identifier rubyid_s'>s</span> <span class='rbrace'>}</span>
@@ -1337,13 +1337,13 @@
       <pre class="lines">
 
 
-75
 76
 77
-78</pre>
+78
+79</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 75</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 76</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_open_type_features_get'>open_type_features_get</span><span class='lparen'>(</span><span class='id identifier rubyid_otf'>otf</span><span class='comma'>,</span> <span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_ord'>ord</span> <span class='op'>:</span> <span class='id identifier rubyid_s'>s</span> <span class='rbrace'>}</span>
@@ -1369,13 +1369,13 @@
       <pre class="lines">
 
 
-70
 71
 72
-73</pre>
+73
+74</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 70</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 71</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_open_type_features_remove'>open_type_features_remove</span><span class='lparen'>(</span><span class='id identifier rubyid_otf'>otf</span><span class='comma'>,</span> <span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_ord'>ord</span> <span class='op'>:</span> <span class='id identifier rubyid_s'>s</span> <span class='rbrace'>}</span>
@@ -1458,17 +1458,17 @@
       <pre class="lines">
 
 
-52
 53
 54
 55
 56
 57
 58
-59</pre>
+59
+60</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 52</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 53</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_window_position'>window_position</span><span class='lparen'>(</span><span class='id identifier rubyid_w'>w</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_x_ptr'>x_ptr</span> <span class='op'>=</span> <span class='const'>Fiddle</span><span class='op'>::</span><span class='const'>Pointer</span><span class='period'>.</span><span class='id identifier rubyid_malloc'>malloc</span><span class='lparen'>(</span><span class='const'>Fiddle</span><span class='op'>::</span><span class='const'>SIZEOF_INT</span><span class='comma'>,</span> <span class='const'>Fiddle</span><span class='op'>::</span><span class='const'>RUBY_FREE</span><span class='rparen'>)</span>
@@ -1488,7 +1488,7 @@
 </div>
 
       <div id="footer">
-  Generated on Sun Nov 12 06:17:07 2023 by
+  Generated on Sun Nov 12 14:12:56 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-3.2.2).
 </div>
