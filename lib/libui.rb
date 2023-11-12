@@ -9,8 +9,9 @@ module LibUI
     attr_accessor :ffi_lib
   end
 
+  host_cpu = RbConfig::CONFIG['host_cpu'].gsub(/i[36]86/, 'x86')
   lib_name = [
-    "libui.#{RbConfig::CONFIG['host_cpu']}.#{RbConfig::CONFIG['SOEXT']}",
+    "libui.#{host_cpu}.#{RbConfig::CONFIG['SOEXT']}",
     "libui.#{RbConfig::CONFIG['SOEXT']}"
   ]
 
