@@ -11,7 +11,11 @@ module LibUI
 
   host_cpu = RbConfig::CONFIG['host_cpu'].gsub(/i[36]86/, 'x86')
   lib_name = [
-    "libui.#{host_cpu}.#{RbConfig::CONFIG['SOEXT']}",
+    # For libui-ng shared libraries compiled with (rake vendor:build)
+    "libui.#{RbConfig::CONFIG['host_cpu']}.#{RbConfig::CONFIG['SOEXT']}",
+    # For libui-ng shared library downloaded from RubyGems.org
+    "libui.#{host_cpu}.#{RbConfig::CONFIG['SOEXT']}", # gem
+    # For backward compatibility or manual compilation of libui-ng
     "libui.#{RbConfig::CONFIG['SOEXT']}"
   ]
 
