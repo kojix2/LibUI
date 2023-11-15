@@ -14,11 +14,11 @@ LibUI is a Ruby wrapper for libui and libui-ng.
 ## Installation
 
 ```sh
-gem install libui
+gem install libui --pre   # libui-ng
 ```
 
-- The gem package includes the [official release](https://github.com/andlabs/libui/releases/tag/alpha4.1) of the libui shared library version 4.1 for Windows, Mac, and Linux.
-  - Namely `libui.dll`, `libui.dylib`, and `libui.so` (only 1.8MB in total).
+- The gem package includes the libui-ng shared library for Windows, Mac, and Linux.
+  - Namely `libui.dll`, `libui.dylib`, or `libui.so`.
 - No dependencies required.
   - The libui gem uses the standard Ruby library [Fiddle](https://github.com/ruby/fiddle) to call C functions.
 
