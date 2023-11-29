@@ -2,6 +2,8 @@
 
 static VALUE mLibUI;
 static VALUE mNative;
+static VALUE mFFI;
+static VALUE cFFISingletonClass;
 
 static void *convert_to_pointer(VALUE FiddlePointer)
 {
@@ -101,6 +103,7 @@ mNative_uiDrawPathEnded(VALUE self, VALUE DrawPathFiddlePointer)
 static VALUE
 mNative_uiDrawPathEnd(VALUE self, VALUE DrawPathFiddlePointer)
 {
+    printf("uiDrawPathEnd\n");
     uiDrawPath *ptr = convert_to_pointer(DrawPathFiddlePointer);
 
     uiDrawPathEnd(ptr);
@@ -284,37 +287,46 @@ mNative_uiDrawRestore(VALUE self, VALUE DrawContextFiddlePointer)
     return Qnil;
 }
 
+#define RB_DEFINE_METHOD(klass, name, func, argc) \
+    rb_define_method(klass, name, func, argc);    \
+    rb_define_singleton_method(klass, name, func, argc);
+
 void Init_native(void)
 {
+    rb_require("libui");
     mLibUI = rb_define_module("LibUI");
     mNative = rb_define_module_under(mLibUI, "Native");
+    mFFI = rb_define_module_under(mLibUI, "FFI");
+    cFFISingletonClass = rb_singleton_class(mFFI);
 
-    rb_define_singleton_method(mNative, "uiDrawFreePath", mNative_uiDrawFreePath, 1);
-    rb_define_singleton_method(mNative, "uiDrawPathNewFigure", mNative_uiDrawPathNewFigure, 3);
-    rb_define_singleton_method(mNative, "uiDrawPathNewFigureWithArc", mNative_uiDrawPathNewFigureWithArc, 7);
-    rb_define_singleton_method(mNative, "uiDrawPathLineTo", mNative_uiDrawPathLineTo, 3);
-    rb_define_singleton_method(mNative, "uiDrawPathArcTo", mNative_uiDrawPathArcTo, 7);
-    rb_define_singleton_method(mNative, "uiDrawPathBezierTo", mNative_uiDrawPathBezierTo, 7);
-    rb_define_singleton_method(mNative, "uiDrawPathCloseFigure", mNative_uiDrawPathCloseFigure, 1);
-    rb_define_singleton_method(mNative, "uiDrawPathAddRectangle", mNative_uiDrawPathAddRectangle, 5);
-    rb_define_singleton_method(mNative, "uiDrawPathEnded", mNative_uiDrawPathEnded, 1);
-    rb_define_singleton_method(mNative, "uiDrawPathEnd", mNative_uiDrawPathEnd, 1);
-    rb_define_singleton_method(mNative, "uiDrawStroke", mNative_uiDrawStroke, 4);
-    rb_define_singleton_method(mNative, "uiDrawFill", mNative_uiDrawFill, 3);
+    RB_DEFINE_METHOD(mNative, "uiDrawFreePath", mNative_uiDrawFreePath, 1);
+    RB_DEFINE_METHOD(mNative, "uiDrawPathNewFigure", mNative_uiDrawPathNewFigure, 3);
+    RB_DEFINE_METHOD(mNative, "uiDrawPathNewFigureWithArc", mNative_uiDrawPathNewFigureWithArc, 7);
+    RB_DEFINE_METHOD(mNative, "uiDrawPathLineTo", mNative_uiDrawPathLineTo, 3);
+    RB_DEFINE_METHOD(mNative, "uiDrawPathArcTo", mNative_uiDrawPathArcTo, 7);
+    RB_DEFINE_METHOD(mNative, "uiDrawPathBezierTo", mNative_uiDrawPathBezierTo, 7);
+    RB_DEFINE_METHOD(mNative, "uiDrawPathCloseFigure", mNative_uiDrawPathCloseFigure, 1);
+    RB_DEFINE_METHOD(mNative, "uiDrawPathAddRectangle", mNative_uiDrawPathAddRectangle, 5);
+    RB_DEFINE_METHOD(mNative, "uiDrawPathEnded", mNative_uiDrawPathEnded, 1);
+    RB_DEFINE_METHOD(mNative, "uiDrawPathEnd", mNative_uiDrawPathEnd, 1);
+    RB_DEFINE_METHOD(mNative, "uiDrawStroke", mNative_uiDrawStroke, 4);
+    RB_DEFINE_METHOD(mNative, "uiDrawFill", mNative_uiDrawFill, 3);
 
-    rb_define_singleton_method(mNative, "uiDrawMatrixSetIdentity", mNative_uiDrawMatrixSetIdentity, 1);
-    rb_define_singleton_method(mNative, "uiDrawMatrixTranslate", mNative_uiDrawMatrixTranslate, 3);
-    rb_define_singleton_method(mNative, "uiDrawMatrixScale", mNative_uiDrawMatrixScale, 5);
-    rb_define_singleton_method(mNative, "uiDrawMatrixRotate", mNative_uiDrawMatrixRotate, 4);
-    rb_define_singleton_method(mNative, "uiDrawMatrixSkew", mNative_uiDrawMatrixSkew, 5);
-    rb_define_singleton_method(mNative, "uiDrawMatrixMultiply", mNative_uiDrawMatrixMultiply, 2);
-    rb_define_singleton_method(mNative, "uiDrawMatrixInvertible", mNative_uiDrawMatrixInvertible, 1);
-    rb_define_singleton_method(mNative, "uiDrawMatrixInvert", mNative_uiDrawMatrixInvert, 1);
-    rb_define_singleton_method(mNative, "uiDrawMatrixTransformPoint", mNative_uiDrawMatrixTransformPoint, 3);
-    rb_define_singleton_method(mNative, "uiDrawMatrixTransformSize", mNative_uiDrawMatrixTransformSize, 3);
+    RB_DEFINE_METHOD(mNative, "uiDrawMatrixSetIdentity", mNative_uiDrawMatrixSetIdentity, 1);
+    RB_DEFINE_METHOD(mNative, "uiDrawMatrixTranslate", mNative_uiDrawMatrixTranslate, 3);
+    RB_DEFINE_METHOD(mNative, "uiDrawMatrixScale", mNative_uiDrawMatrixScale, 5);
+    RB_DEFINE_METHOD(mNative, "uiDrawMatrixRotate", mNative_uiDrawMatrixRotate, 4);
+    RB_DEFINE_METHOD(mNative, "uiDrawMatrixSkew", mNative_uiDrawMatrixSkew, 5);
+    RB_DEFINE_METHOD(mNative, "uiDrawMatrixMultiply", mNative_uiDrawMatrixMultiply, 2);
+    RB_DEFINE_METHOD(mNative, "uiDrawMatrixInvertible", mNative_uiDrawMatrixInvertible, 1);
+    RB_DEFINE_METHOD(mNative, "uiDrawMatrixInvert", mNative_uiDrawMatrixInvert, 1);
+    RB_DEFINE_METHOD(mNative, "uiDrawMatrixTransformPoint", mNative_uiDrawMatrixTransformPoint, 3);
+    RB_DEFINE_METHOD(mNative, "uiDrawMatrixTransformSize", mNative_uiDrawMatrixTransformSize, 3);
 
-    rb_define_singleton_method(mNative, "uiDrawTransform", mNative_uiDrawTransform, 2);
-    rb_define_singleton_method(mNative, "uiDrawClip", mNative_uiDrawClip, 2);
-    rb_define_singleton_method(mNative, "uiDrawSave", mNative_uiDrawSave, 1);
-    rb_define_singleton_method(mNative, "uiDrawRestore", mNative_uiDrawRestore, 1);
+    RB_DEFINE_METHOD(mNative, "uiDrawTransform", mNative_uiDrawTransform, 2);
+    RB_DEFINE_METHOD(mNative, "uiDrawClip", mNative_uiDrawClip, 2);
+    RB_DEFINE_METHOD(mNative, "uiDrawSave", mNative_uiDrawSave, 1);
+    RB_DEFINE_METHOD(mNative, "uiDrawRestore", mNative_uiDrawRestore, 1);
+
+    rb_prepend_module(cFFISingletonClass, mNative);
 }
