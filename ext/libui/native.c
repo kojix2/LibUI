@@ -103,7 +103,6 @@ mNative_uiDrawPathEnded(VALUE self, VALUE DrawPathFiddlePointer)
 static VALUE
 mNative_uiDrawPathEnd(VALUE self, VALUE DrawPathFiddlePointer)
 {
-    printf("uiDrawPathEnd\n");
     uiDrawPath *ptr = convert_to_pointer(DrawPathFiddlePointer);
 
     uiDrawPathEnd(ptr);
