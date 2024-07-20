@@ -242,7 +242,7 @@ def build_libui_ng(commit_hash)
         puts 'Building libui-ng (ninja)'
         begin
           output, status = Open3.capture2e('ninja', '-C', 'build')
-        rescue Errono::ENOENT => e
+        rescue Errno::ENOENT => e
           puts e.message
           puts 'Make sure that ninja is installed.'
           return false
