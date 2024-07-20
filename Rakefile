@@ -142,7 +142,12 @@ def download_from_url(libname, lib_path, file_name, sha256sum_expected, url)
             zip.each do |entry|
               # make directory
               FileUtils.mkdir_p(File.dirname(entry.name))
-              entry.extract
+              # extract file
+              # FIXME: rubyzip stable version is v2.3.2 (2024-07-20).
+              # If you do not specify the dist file absolute path,
+              # it outputs a warning "unsafe" and does not extract the file on Windows.
+              # rubyzip github master branch does not have this problem.
+              entry.extract(File.expand_path(entry.name))
             end
           end
           puts "Extracted #{file_name} successfully."
