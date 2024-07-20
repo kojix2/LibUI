@@ -129,7 +129,7 @@ def download_from_url(libname, lib_path, file_name, sha256sum_expected, url)
         File.binwrite(file_name, URI.open(url).read)
       rescue StandardError => e
         puts "Failed to download #{file_name} from #{url}: #{e.message}"
-        return false
+        raise e
       end
       puts "Downloaded #{file_name} (#{File.size(file_name)} bytes) successfully."
 
@@ -148,7 +148,7 @@ def download_from_url(libname, lib_path, file_name, sha256sum_expected, url)
           puts "Extracted #{file_name} successfully."
         rescue StandardError => e
           puts "Failed to extract #{file_name}: #{e.message}"
-          return false
+          raise e
         end
       else
         begin
@@ -157,7 +157,7 @@ def download_from_url(libname, lib_path, file_name, sha256sum_expected, url)
           puts "Extracted #{file_name} successfully."
         rescue StandardError => e
           puts "Failed to extract #{file_name}: #{e.message}"
-          return false
+          raise e
         end
       end
 
@@ -179,6 +179,7 @@ def download_from_url(libname, lib_path, file_name, sha256sum_expected, url)
         end
       rescue StandardError => e
         puts "Failed to copy #{lib_path} to #{target_path}: #{e.message}"
+        raise e
       end
     end
   end
