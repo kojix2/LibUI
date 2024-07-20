@@ -14,8 +14,8 @@ end
 
 task default: :test
 
-def puts(str)
-  Kernel.puts("[Rake] #{str}")
+def log_message(message)
+  Kernel.puts("[Rake] #{message}")
 end
 
 # `gem help platform`
@@ -87,7 +87,7 @@ task :release_platform do
   end
 end
 
-def url_libui_ng_source_zip(commit_hash = 'master')
+def libui_ng_source_zip_url(commit_hash = 'master')
   "https://github.com/libui-ng/libui-ng/archive/#{commit_hash}.zip"
 end
 
@@ -102,38 +102,38 @@ def url_kojix2_libui_ng_nightly(file_name)
   "https://nightly.link/kojix2/libui-ng/workflows/pre-build/pre-build/#{file_name}"
 end
 
-def download_libui_ng_nightly(libname, lib_path, file_name)
+def download_libui_ng_nightly(library_name, library_path, file_name)
   url = url_libui_ng_nightly(file_name)
-  download_from_url(libname, lib_path, file_name, true, url)
+  download_and_extract(library_name, library_path, file_name, true, url)
 end
 
-def download_kojix2_libui_ng_nightly(libname, lib_path, file_name)
+def download_kojix2_libui_ng_nightly(library_name, library_path, file_name)
   url = url_kojix2_libui_ng_nightly(file_name)
-  download_from_url(libname, lib_path, file_name, true, url)
+  download_and_extract(library_name, library_path, file_name, true, url)
 end
 
-def download_from_url(libname, lib_path, file_name, sha256sum_expected, url)
+def download_and_extract(library_name, library_path, file_name, expected_sha256sum, url)
   require 'fileutils'
   require 'open-uri'
   require 'tmpdir'
 
   FileUtils.mkdir_p(File.expand_path('vendor', __dir__))
-  target_path = File.expand_path("vendor/#{libname}", __dir__)
+  target_path = File.expand_path("vendor/#{library_name}", __dir__)
 
-  return if check_file_exist(target_path, sha256sum_expected)
+  return if check_file_exist(target_path, expected_sha256sum)
 
   Dir.mktmpdir do |dir|
     Dir.chdir(dir) do
-      puts "Downloading #{file_name} from #{url}"
+      log_message "Downloading #{file_name} from #{url}"
       begin
         File.binwrite(file_name, URI.open(url).read)
       rescue StandardError => e
-        puts "Failed to download #{file_name} from #{url}: #{e.message}"
+        log_message "Failed to download #{file_name} from #{url}: #{e.message}"
         raise e
       end
-      puts "Downloaded #{file_name} (#{File.size(file_name)} bytes) successfully."
+      log_message "Downloaded #{file_name} (#{File.size(file_name)} bytes) successfully."
 
-      puts "Extracting #{file_name}"
+      log_message "Extracting #{file_name}"
       if file_name.end_with?('zip')
         begin
           # `unzip` not available on Windows
@@ -150,40 +150,40 @@ def download_from_url(libname, lib_path, file_name, sha256sum_expected, url)
               entry.extract(File.expand_path(entry.name))
             end
           end
-          puts "Extracted #{file_name} successfully."
+          log_message "Extracted #{file_name} successfully."
         rescue StandardError => e
-          puts "Failed to extract #{file_name}: #{e.message}"
+          log_message "Failed to extract #{file_name}: #{e.message}"
           raise e
         end
       else
         begin
           # Tar available on Windows 10
           system "tar xf #{file_name}"
-          puts "Extracted #{file_name} successfully."
+          log_message "Extracted #{file_name} successfully."
         rescue StandardError => e
-          puts "Failed to extract #{file_name}: #{e.message}"
+          log_message "Failed to extract #{file_name}: #{e.message}"
           raise e
         end
       end
 
-      if sha256sum_expected == true
-        puts 'Skip sha256sum check (development build)'
+      if expected_sha256sum == true
+        log_message 'Skip sha256sum check (development build)'
       else
-        puts 'Check sha256sum'
-        v = check_sha256sum(lib_path, sha256sum_expected)
+        log_message 'Check sha256sum'
+        v = check_sha256sum(library_path, expected_sha256sum)
         return false unless v
       end
 
       begin
         overwrite = File.exist?(target_path)
-        FileUtils.cp(lib_path, target_path)
+        FileUtils.cp(library_path, target_path)
         if overwrite
-          puts "Overwritten #{lib_path} (#{File.size(lib_path)} bytes) to #{target_path}"
+          log_message "Overwritten #{library_path} (#{File.size(library_path)} bytes) to #{target_path}"
         else
-          puts "Copied #{lib_path} (#{File.size(lib_path)} bytes) to #{target_path}"
+          log_message "Copied #{library_path} (#{File.size(library_path)} bytes) to #{target_path}"
         end
       rescue StandardError => e
-        puts "Failed to copy #{lib_path} to #{target_path}: #{e.message}"
+        log_message "Failed to copy #{library_path} to #{target_path}: #{e.message}"
         raise e
       end
     end
@@ -192,29 +192,29 @@ end
 
 def check_file_exist(path, sha256sum)
   if File.exist?(path)
-    puts "#{path} already exist."
+    log_message "#{path} already exist."
     if check_sha256sum(path, sha256sum)
-      puts 'Skip downloading.'
+      log_message 'Skip downloading.'
       return true
     else
-      puts 'Download the file and replace it.'
+      log_message 'Download the file and replace it.'
     end
   end
   false
 end
 
-def check_sha256sum(path, sha256sum_expected)
-  return nil if sha256sum_expected == true
+def check_sha256sum(path, expected_sha256sum)
+  return nil if expected_sha256sum == true
 
   actual_sha256sum = Digest::SHA256.hexdigest(File.binread(path))
-  if actual_sha256sum == sha256sum_expected
-    puts 'sha256sum matches.'
+  if actual_sha256sum == expected_sha256sum
+    log_message 'sha256sum matches.'
     true
   else
-    puts 'Warning: sha256sum does not match'
-    puts " path:               #{path}"
-    puts " actual_sha256sum:   #{actual_sha256sum}"
-    puts " expected_sha256sum: #{sha256sum_expected}"
+    log_message 'Warning: sha256sum does not match'
+    log_message " path:               #{path}"
+    log_message " actual_sha256sum:   #{actual_sha256sum}"
+    log_message " expected_sha256sum: #{expected_sha256sum}"
     false
   end
 end
@@ -231,18 +231,18 @@ def build_libui_ng(commit_hash)
 
   Dir.mktmpdir do |dir|
     Dir.chdir(dir) do
-      puts 'Downloading libui-ng'
+      log_message 'Downloading libui-ng'
       commit_hash = 'master' if commit_hash.nil?
-      url = url_libui_ng_source_zip(commit_hash)
+      url = libui_ng_source_zip_url(commit_hash)
       begin
         content = URI.open(url)
         File.binwrite('libui-ng.zip', content.read)
       rescue StandardError => e
-        puts "Failed. #{e.message}. Please check #{url}"
+        log_message "Failed. #{e.message}. Please check #{url}"
         return false
       end
 
-      puts 'Extracting zip file'
+      log_message 'Extracting zip file'
       Zip::File.open('libui-ng.zip') do |zip|
         zip.each do |entry|
           entry.extract(entry.name)
@@ -252,56 +252,56 @@ def build_libui_ng(commit_hash)
       Dir.chdir(Dir['libui-ng-*'].first) do
         build_log_path = File.expand_path('build.log', __dir__)
 
-        puts 'Building libui-ng (meson)'
+        log_message 'Building libui-ng (meson)'
         begin
           output, status = Open3.capture2e('meson', 'build', '--buildtype=release')
         rescue Errno::ENOENT => e
-          puts e.message
-          puts 'Make sure that meson is installed.'
+          log_message e.message
+          log_message 'Make sure that meson is installed.'
           return false
         end
         File.open(build_log_path, 'a') do |f|
-          f.puts output
+          f.log_message output
         end
         unless status.success?
-          puts 'Error: Failed to build libui-ng. (meson)'
-          puts "Error: See #{build_log_path}"
+          log_message 'Error: Failed to build libui-ng. (meson)'
+          log_message "Error: See #{build_log_path}"
           return false
         end
 
-        puts 'Building libui-ng (ninja)'
+        log_message 'Building libui-ng (ninja)'
         begin
           output, status = Open3.capture2e('ninja', '-C', 'build')
         rescue Errno::ENOENT => e
-          puts e.message
-          puts 'Make sure that ninja is installed.'
+          log_message e.message
+          log_message 'Make sure that ninja is installed.'
           return false
         end
         File.open(build_log_path, 'a') do |f|
-          f.puts output
+          f.log_message output
         end
         unless status.success?
-          puts 'Error: Failed to build libui-ng. (ninja)'
-          puts "Error: See #{build_log_path}"
+          log_message 'Error: Failed to build libui-ng. (ninja)'
+          log_message "Error: See #{build_log_path}"
           return false
         end
 
-        puts "Saved #{build_log_path}"
+        log_message "Saved #{build_log_path}"
 
         path = "build/meson-out/libui.#{RbConfig::CONFIG['SOEXT']}"
 
         if File.exist?(path)
-          puts "Successfully built #{path}"
+          log_message "Successfully built #{path}"
         elsif path2 = Dir["#{path}.*"].select { |f| File.file?(f) }.max
           path = path2
-          puts "Successfully built #{path}"
+          log_message "Successfully built #{path}"
         else
-          puts "Error: #{Dir['build/meson-out/*']}"
-          puts "Error: #{path} does not exist. Please check the build log."
+          log_message "Error: #{Dir['build/meson-out/*']}"
+          log_message "Error: #{path} does not exist. Please check the build log."
           return false
         end
 
-        puts "Copying #{path} to #{target_path}"
+        log_message "Copying #{path} to #{target_path}"
         if File.symlink?(path)
           tpath = File.expand_path(File.readlink(path), File.dirname(path))
           FileUtils.cp(tpath, target_path)
@@ -309,7 +309,7 @@ def build_libui_ng(commit_hash)
           FileUtils.cp(path, target_path)
         end
 
-        puts 'Scceeded.'
+        log_message 'Scceeded.'
       end
     end
   end
@@ -408,8 +408,8 @@ namespace 'vendor' do
     when /mingw/
       Rake::Task['vendor:windows_x64'].invoke
     else
-      puts "Unknown platform: #{RUBY_PLATFORM}"
-      puts 'TODO: Add support for your platform'
+      log_message "Unknown platform: #{RUBY_PLATFORM}"
+      log_message 'TODO: Add support for your platform'
     end
   end
 
