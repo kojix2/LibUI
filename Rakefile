@@ -124,30 +124,41 @@ def download_from_url(libname, lib_path, file_name, sha256sum_expected, url)
 
   Dir.mktmpdir do |dir|
     Dir.chdir(dir) do
-      puts "Downloading #{file_name}"
+      puts "Downloading #{file_name} from #{url}"
       begin
         File.binwrite(file_name, URI.open(url).read)
       rescue StandardError => e
-        puts "Failed. #{e.message}. Please check #{url}"
+        puts "Failed to download #{file_name} from #{url}: #{e.message}"
         return false
       end
+      puts "Downloaded #{file_name} (#{File.size(file_name)} bytes) successfully."
 
       puts "Extracting #{file_name}"
       if file_name.end_with?('zip')
-        # `unzip` not available on Windows
-        require 'zip'
-        # overwrite if file exists
-        Zip.on_exists_proc = true
-        Zip::File.open(file_name) do |zip|
-          zip.each do |entry|
-            # make directory
-            FileUtils.mkdir_p(File.dirname(entry.name))
-            entry.extract
+        begin
+          # `unzip` not available on Windows
+          require 'zip'
+          Zip::File.open(file_name) do |zip|
+            zip.each do |entry|
+              # make directory
+              FileUtils.mkdir_p(File.dirname(entry.name))
+              entry.extract
+            end
           end
+          puts "Extracted #{file_name} successfully."
+        rescue StandardError => e
+          puts "Failed to extract #{file_name}: #{e.message}"
+          return false
         end
       else
-        # Tar available on Windows 10
-        system "tar xf #{file_name}"
+        begin
+          # Tar available on Windows 10
+          system "tar xf #{file_name}"
+          puts "Extracted #{file_name} successfully."
+        rescue StandardError => e
+          puts "Failed to extract #{file_name}: #{e.message}"
+          return false
+        end
       end
 
       if sha256sum_expected == true
@@ -158,8 +169,17 @@ def download_from_url(libname, lib_path, file_name, sha256sum_expected, url)
         return false unless v
       end
 
-      puts "Copying #{lib_path} to #{target_path}"
-      FileUtils.cp(lib_path, target_path)
+      begin
+        overwrite = File.exist?(target_path)
+        FileUtils.cp(lib_path, target_path)
+        if overwrite
+          puts "Overwritten #{lib_path} to #{target_path}"
+        else
+          puts "Copied #{lib_path} to #{target_path}"
+        end
+      rescue StandardError => e
+        puts "Failed to copy #{lib_path} to #{target_path}: #{e.message}"
+      end
     end
   end
 end
