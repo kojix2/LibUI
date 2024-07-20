@@ -484,12 +484,12 @@
       <pre class="lines">
 
 
-16
-17
-18</pre>
+25
+26
+27</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui/ffi.rb', line 16</span>
+      <pre class="code"><span class="info file"># File 'lib/libui/ffi.rb', line 25</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_func_map'>func_map</span>
   <span class='ivar'>@func_map</span>
@@ -521,12 +521,12 @@
       <pre class="lines">
 
 
-24
-25
-26</pre>
+35
+36
+37</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui/ffi.rb', line 24</span>
+      <pre class="code"><span class="info file"># File 'lib/libui/ffi.rb', line 35</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_ffi_methods'>ffi_methods</span>
   <span class='ivar'>@ffi_methods</span> <span class='op'>||=</span> <span class='id identifier rubyid_func_map'>func_map</span><span class='period'>.</span><span class='id identifier rubyid_each_key'>each_key</span><span class='period'>.</span><span class='id identifier rubyid_to_a'>to_a</span>
@@ -551,19 +551,23 @@
       <pre class="lines">
 
 
-18
-19
-20
-21
-22</pre>
+27
+28
+29
+30
+31
+32
+33</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui/ffi.rb', line 18</span>
+      <pre class="code"><span class="info file"># File 'lib/libui/ffi.rb', line 27</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_try_extern'>try_extern</span><span class='lparen'>(</span><span class='id identifier rubyid_signature'>signature</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_opts'>opts</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_extern'>extern</span><span class='lparen'>(</span><span class='id identifier rubyid_signature'>signature</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_opts'>opts</span><span class='rparen'>)</span>
 <span class='kw'>rescue</span> <span class='const'>StandardError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
-  <span class='id identifier rubyid_warn'>warn</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='comment'># Do not raise error when the function is not found
+</span>  <span class='comment'># because some functions may not be available on older versions of libui.
+</span>  <span class='id identifier rubyid_warn'>warn</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -575,7 +579,7 @@
 </div>
 
       <div id="footer">
-  Generated on Sat Jul 20 09:24:23 2024 by
+  Generated on Sat Jul 20 11:14:29 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.36 (ruby-3.3.4).
 </div>
