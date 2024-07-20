@@ -173,9 +173,9 @@ def download_from_url(libname, lib_path, file_name, sha256sum_expected, url)
         overwrite = File.exist?(target_path)
         FileUtils.cp(lib_path, target_path)
         if overwrite
-          puts "Overwritten #{lib_path} to #{target_path}"
+          puts "Overwritten #{lib_path} (#{File.size(lib_path)} bytes) to #{target_path}"
         else
-          puts "Copied #{lib_path} to #{target_path}"
+          puts "Copied #{lib_path} (#{File.size(lib_path)} bytes) to #{target_path}"
         end
       rescue StandardError => e
         puts "Failed to copy #{lib_path} to #{target_path}: #{e.message}"
