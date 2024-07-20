@@ -261,7 +261,7 @@ def build_libui_ng(commit_hash)
           return false
         end
         File.open(build_log_path, 'a') do |f|
-          f.log_message output
+          f.puts output
         end
         unless status.success?
           log_message 'Error: Failed to build libui-ng. (meson)'
@@ -278,7 +278,7 @@ def build_libui_ng(commit_hash)
           return false
         end
         File.open(build_log_path, 'a') do |f|
-          f.log_message output
+          f.puts output
         end
         unless status.success?
           log_message 'Error: Failed to build libui-ng. (ninja)'
