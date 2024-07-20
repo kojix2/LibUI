@@ -1,15 +1,24 @@
 require 'fiddle/import'
 require_relative 'fiddle_patch'
+require_relative 'error'
 
 module LibUI
+  class Error < StandardError; end
+
   module FFI
     extend Fiddle::Importer
     extend FiddlePatch
 
-    begin
-      dlload LibUI.ffi_lib
-    rescue LoadError
-      raise LoadError, 'Could not find libui shared library'
+    if LibUI.ffi_lib.nil?
+      raise LibraryNotFoundError, 'Could not find libui shared library. LibUI.ffi_lib is nil.'
+    elsif !File.exist?(LibUI.ffi_lib)
+      raise LibraryNotFoundError, "Could not find libui shared library: #{LibUI.ffi_lib}"
+    else
+      begin
+        dlload LibUI.ffi_lib
+      rescue LoadError
+        raise LibraryLoadError, "Could not load libui shared library: #{LibUI.ffi_lib}"
+      end
     end
 
     class << self
@@ -18,6 +27,8 @@ module LibUI
       def try_extern(signature, *opts)
         extern(signature, *opts)
       rescue StandardError => e
+        # Do not raise error when the function is not found
+        # because some functions may not be available on older versions of libui.
         warn "#{e.class.name}: #{e.message}"
       end
 

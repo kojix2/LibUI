@@ -1,10 +1,9 @@
 require_relative 'libui/version'
 require_relative 'libui/utils'
+require_relative 'libui/error'
 require 'rbconfig'
 
 module LibUI
-  class Error < StandardError; end
-
   class << self
     attr_accessor :ffi_lib
   end
