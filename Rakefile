@@ -393,6 +393,11 @@ namespace 'vendor' do
 
   # desc 'Download pre-build for your platform to vendor directory'
   task :auto do
+    p RUBY_PLATFORM
+    # how to distinguish between x86_64 and aarch64?
+    
+    p RbConfig::CONFIG['host_cpu']
+
     case RUBY_PLATFORM
     when /linux/
       Rake::Task['vendor:ubuntu_x64'].invoke
