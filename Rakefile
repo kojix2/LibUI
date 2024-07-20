@@ -136,9 +136,13 @@ def download_from_url(libname, lib_path, file_name, sha256sum_expected, url)
       if file_name.end_with?('zip')
         # `unzip` not available on Windows
         require 'zip'
+        # overwrite if file exists
+        Zip.on_exists_proc = true
         Zip::File.open(file_name) do |zip|
           zip.each do |entry|
-            entry.extract(entry.name)
+            # make directory
+            FileUtils.mkdir_p(File.dirname(entry.name))
+            entry.extract
           end
         end
       else
