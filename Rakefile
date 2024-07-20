@@ -4,6 +4,12 @@ require 'bundler/gem_tasks'
 require 'rake/testtask'
 require 'rbconfig'
 require 'digest'
+require 'fileutils'
+require 'open-uri'
+require 'tmpdir'
+require 'zip'
+require 'open3'
+
 require_relative 'lib/libui/version'
 
 Rake::TestTask.new(:test) do |t|
@@ -67,8 +73,6 @@ platforms = %w[
 ]
 
 task :build_platform do
-  require 'fileutils'
-
   platforms.each do |platform|
     sh 'gem', 'build', '--platform', platform
   end
@@ -80,8 +84,6 @@ task :build_platform do
 end
 
 task :release_platform do
-  require_relative 'lib/libui/version'
-
   Dir["pkg/libui-#{LibUI::VERSION}-*.gem"].each do |file|
     sh 'gem', 'push', file
   end
@@ -220,12 +222,6 @@ def check_sha256sum(path, expected_sha256sum)
 end
 
 def build_libui_ng(commit_hash)
-  require 'open-uri'
-  require 'fileutils'
-  require 'tmpdir'
-  require 'zip'
-  require 'open3'
-
   FileUtils.mkdir_p(File.expand_path('vendor', __dir__))
   target_path = File.expand_path("vendor/libui.#{RbConfig::CONFIG['host_cpu']}.#{RbConfig::CONFIG['SOEXT']}", __dir__)
 
@@ -404,7 +400,7 @@ namespace 'vendor' do
     when /darwin/ && /arm/
       Rake::Task['vendor:macos_arm64'].invoke
     when /darwin/ && /x86_64/
-      Rake::Task['vendor:macos_x64'].invoke # FIXME
+      Rake::Task['vendor:macos_x64'].invoke
     when /mingw/
       Rake::Task['vendor:windows_x64'].invoke
     else
