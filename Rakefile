@@ -114,6 +114,25 @@ def download_kojix2_libui_ng_nightly(library_name, library_path, file_name)
   download_and_extract(library_name, library_path, file_name, true, url)
 end
 
+def extract_zip(file_name)
+  Zip::File.open(file_name) do |zip|
+    zip.each do |entry|
+      FileUtils.mkdir_p(File.dirname(entry.name))
+      # FIXME: rubyzip stable version is v2.3.2 (2024-07-20).
+      # If you do not specify the dist file absolute path,
+      # it outputs a warning "unsafe" and does not extract the file on Windows.
+      # rubyzip github master branch does not have this problem.
+      entry.extract(File.expand_path(entry.name))
+    end
+  end
+end
+
+def extract_tar(file_name)
+  # Tar available on Windows 10
+  system "tar xf #{file_name}"
+  log_message "Extracted #{file_name} successfully."
+end
+
 def download_and_extract(library_name, library_path, file_name, expected_sha256sum, url)
   require 'fileutils'
   require 'open-uri'
@@ -138,20 +157,7 @@ def download_and_extract(library_name, library_path, file_name, expected_sha256s
       log_message "Extracting #{file_name}"
       if file_name.end_with?('zip')
         begin
-          # `unzip` not available on Windows
-          require 'zip'
-          Zip::File.open(file_name) do |zip|
-            zip.each do |entry|
-              # make directory
-              FileUtils.mkdir_p(File.dirname(entry.name))
-              # extract file
-              # FIXME: rubyzip stable version is v2.3.2 (2024-07-20).
-              # If you do not specify the dist file absolute path,
-              # it outputs a warning "unsafe" and does not extract the file on Windows.
-              # rubyzip github master branch does not have this problem.
-              entry.extract(File.expand_path(entry.name))
-            end
-          end
+          extract_zip(file_name)
           log_message "Extracted #{file_name} successfully."
         rescue StandardError => e
           log_message "Failed to extract #{file_name}: #{e.message}"
@@ -159,8 +165,7 @@ def download_and_extract(library_name, library_path, file_name, expected_sha256s
         end
       else
         begin
-          # Tar available on Windows 10
-          system "tar xf #{file_name}"
+          extract_tar(file_name)
           log_message "Extracted #{file_name} successfully."
         rescue StandardError => e
           log_message "Failed to extract #{file_name}: #{e.message}"
