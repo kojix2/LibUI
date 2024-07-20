@@ -396,7 +396,9 @@ namespace 'vendor' do
     case RUBY_PLATFORM
     when /linux/
       Rake::Task['vendor:ubuntu_x64'].invoke
-    when /darwin/
+    when /darwin/ && /arm/
+      Rake::Task['vendor:macos_arm64'].invoke
+    when /darwin/ && /x86_64/
       Rake::Task['vendor:macos_x64'].invoke # FIXME
     when /mingw/
       Rake::Task['vendor:windows_x64'].invoke
