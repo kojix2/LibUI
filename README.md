@@ -13,8 +13,10 @@ LibUI is a Ruby wrapper for libui and libui-ng.
 
 ## Installation
 
+It is recommended to use libui-ng, via the --pre commandline flag:
+
 ```sh
-gem install libui --pre   # libui-ng; this would, for instance, fetch the gem libui-0.1.3.pre-x86_64-linux.gem
+gem install libui --pre # libui-ng; this will fetch libui-0.1.3.pre-x86_64-linux.gem
 ```
 
 If for some reason you would like to install the slightly older libui-0.1.2.gem release, issue:
