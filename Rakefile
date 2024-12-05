@@ -100,12 +100,12 @@ def url_kojix2_libui_ng_nightly(file_name)
   "https://nightly.link/kojix2/libui-ng/workflows/pre-build/pre-build/#{file_name}"
 end
 
-def download_kojix2_libui_ng_nightly(library_name, library_path, file_name)
+def fetch_kojix2_libui_ng_nightly(library_name, library_path, file_name)
   url = url_kojix2_libui_ng_nightly(file_name)
-  download_and_extract(library_name, library_path, file_name, true, url)
+  fetch_and_extract_file(library_name, library_path, file_name, true, url)
 end
 
-def extract_zip(file_name)
+def extract_zip_file(file_name)
   Zip::File.open(file_name) do |zip|
     zip.each do |entry|
       FileUtils.mkdir_p(File.dirname(entry.name))
@@ -118,7 +118,7 @@ def extract_zip(file_name)
   end
 end
 
-def extract_tar(file_name)
+def extract_tar_file(file_name)
   # Tar available on Windows 10
   system "tar xf #{file_name}"
   log_message "Extracted #{file_name} successfully."
@@ -135,7 +135,7 @@ rescue StandardError => e
   raise e
 end
 
-def download_and_extract(library_name, library_path, file_name, expected_sha256sum, url)
+def fetch_and_extract_file(library_name, library_path, file_name, expected_sha256sum, url)
   FileUtils.mkdir_p(File.expand_path('vendor', __dir__))
   target_path = File.expand_path("vendor/#{library_name}", __dir__)
 
@@ -148,7 +148,7 @@ def download_and_extract(library_name, library_path, file_name, expected_sha256s
       log_message "Extracting #{file_name}"
       if file_name.end_with?('zip')
         begin
-          extract_zip(file_name)
+          extract_zip_file(file_name)
           log_message "Extracted #{file_name} successfully."
         rescue StandardError => e
           log_message "Failed to extract #{file_name}: #{e.message}"
@@ -156,7 +156,7 @@ def download_and_extract(library_name, library_path, file_name, expected_sha256s
         end
       else
         begin
-          extract_tar(file_name)
+          extract_tar_file(file_name)
           log_message "Extracted #{file_name} successfully."
         rescue StandardError => e
           log_message "Failed to extract #{file_name}: #{e.message}"
@@ -168,7 +168,7 @@ def download_and_extract(library_name, library_path, file_name, expected_sha256s
         log_message 'Skip sha256sum check (development build)'
       else
         log_message 'Check sha256sum'
-        v = check_sha256sum(library_path, expected_sha256sum)
+        v = verify_sha256sum(library_path, expected_sha256sum)
         return false unless v
       end
 
@@ -191,7 +191,7 @@ end
 def check_file_exist(path, sha256sum)
   if File.exist?(path)
     log_message "#{path} already exist."
-    if check_sha256sum(path, sha256sum)
+    if verify_sha256sum(path, sha256sum)
       log_message 'Skip downloading.'
       return true
     else
@@ -201,7 +201,7 @@ def check_file_exist(path, sha256sum)
   false
 end
 
-def check_sha256sum(path, expected_sha256sum)
+def verify_sha256sum(path, expected_sha256sum)
   return nil if expected_sha256sum == true
 
   actual_sha256sum = Digest::SHA256.hexdigest(File.binread(path))
@@ -327,7 +327,7 @@ namespace 'vendor' do
     os, arch = name.to_s.split('_')
     desc "Download pre-build for #{os} #{arch} to vendor directory"
     task name do
-      download_kojix2_libui_ng_nightly(*args)
+      fetch_kojix2_libui_ng_nightly(*args)
     end
   end
 
