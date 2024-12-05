@@ -188,53 +188,24 @@ def fetch_and_extract_file(library_name, library_path, file_name, expected_sha25
   FileUtils.mkdir_p(File.expand_path('vendor', __dir__))
   target_path = File.expand_path("vendor/#{library_name}", __dir__)
 
-  return if check_file_exist(target_path, expected_sha256sum)
+  return if file_already_exists?(target_path, expected_sha256sum)
 
   Dir.mktmpdir do |dir|
     Dir.chdir(dir) do
-      download_file(file_name, url, dir)
-
-      log_message "Extracting #{file_name}"
-      if file_name.end_with?('zip')
-        begin
-          extract_zip_file(file_name)
-          log_message "Extracted #{file_name} successfully."
-        rescue StandardError => e
-          log_message "Failed to extract #{file_name}: #{e.message}"
-          raise e
-        end
-      else
-        begin
-          extract_tar_file(file_name)
-          log_message "Extracted #{file_name} successfully."
-        rescue StandardError => e
-          log_message "Failed to extract #{file_name}: #{e.message}"
-          raise e
-        end
-      end
-
-      if expected_sha256sum == true
-        log_message 'Skip sha256sum check (development build)'
-      else
-        log_message 'Check sha256sum'
-        v = verify_sha256sum(library_path, expected_sha256sum)
-        return false unless v
-      end
-
-      begin
-        overwrite = File.exist?(target_path)
-        FileUtils.cp(library_path, target_path)
-        if overwrite
-          log_message "Overwritten #{library_path} (#{File.size(library_path)} bytes) to #{target_path}"
-        else
-          log_message "Copied #{library_path} (#{File.size(library_path)} bytes) to #{target_path}"
-        end
-      rescue StandardError => e
-        log_message "Failed to copy #{library_path} to #{target_path}: #{e.message}"
-        raise e
-      end
+      download_and_verify(file_name, url, dir, expected_sha256sum)
+      extract_file(file_name, dir)
+      copy_file_to_target(library_path, target_path)
     end
   end
+end
+
+def download_and_verify(file_name, url, temp_dir, expected_sha256sum)
+  file_path = download_file(file_name, url, temp_dir)
+  return if expected_sha256sum == true # Skip checksum verification for development builds
+
+  return if verify_sha256sum(file_path, expected_sha256sum)
+
+  raise "Checksum verification failed for #{file_name}"
 end
 
 def download_file(file_name, url, temp_dir)
@@ -248,7 +219,19 @@ rescue StandardError => e
   raise e
 end
 
-def extract_zip_file(file_name)
+def extract_file(file_name, dir)
+  log_message "Extracting #{file_name}"
+  if file_name.end_with?('.zip')
+    extract_zip(file_name, dir)
+  else
+    extract_tar(file_name)
+  end
+rescue StandardError => e
+  log_message "Failed to extract #{file_name}: #{e.message}"
+  raise e
+end
+
+def extract_zip(file_name, dir)
   Zip::File.open(file_name) do |zip|
     zip.each do |entry|
       FileUtils.mkdir_p(File.dirname(entry.name))
@@ -256,25 +239,27 @@ def extract_zip_file(file_name)
       # If you do not specify the dist file absolute path,
       # it outputs a warning "unsafe" and does not extract the file on Windows.
       # rubyzip github master branch does not have this problem.
-      entry.extract(File.expand_path(entry.name))
+      entry.extract(File.expand_path(entry.name, dir))
     end
   end
 end
 
-def extract_tar_file(file_name)
+def extract_tar(file_name)
   # Tar available on Windows 10
-  system "tar xf #{file_name}"
+  success = system "tar xf #{file_name}"
+  raise "Failed to extract #{file_name}" unless success
+
   log_message "Extracted #{file_name} successfully."
 end
 
-def check_file_exist(path, sha256sum)
+def file_already_exists?(path, sha256sum)
   if File.exist?(path)
-    log_message "#{path} already exist."
+    log_message "#{path} already exists."
     if verify_sha256sum(path, sha256sum)
-      log_message 'Skip downloading.'
+      log_message 'Skipping download.'
       return true
     else
-      log_message 'Download the file and replace it.'
+      log_message 'Checksum mismatch. Re-downloading the file.'
     end
   end
   false
@@ -294,6 +279,20 @@ def verify_sha256sum(path, expected_sha256sum)
     log_message " expected_sha256sum: #{expected_sha256sum}"
     false
   end
+end
+
+def copy_file_to_target(src, dest)
+  FileUtils.mkdir_p(File.dirname(dest))
+  overwrite = File.exist?(dest)
+  FileUtils.cp(src, dest)
+  if overwrite
+    log_message "Overwritten #{src} (#{File.size(src)} bytes) to #{dest}"
+  else
+    log_message "Copied #{src} (#{File.size(src)} bytes) to #{dest}"
+  end
+rescue StandardError => e
+  log_message "Failed to copy #{src} to #{dest}: #{e.message}"
+  raise e
 end
 
 def libui_ng_source_zip_url(commit_hash = 'master')
