@@ -124,11 +124,18 @@ def extract_tar(file_name)
   log_message "Extracted #{file_name} successfully."
 end
 
-def download_and_extract(library_name, library_path, file_name, expected_sha256sum, url)
-  require 'fileutils'
-  require 'open-uri'
-  require 'tmpdir'
+def download_file(file_name, url, temp_dir)
+  log_message("Downloading #{file_name} from #{url}")
+  file_path = File.join(temp_dir, file_name)
+  File.binwrite(file_path, URI.open(url).read)
+  log_message("Downloaded #{file_name} to #{file_path} (#{File.size(file_path)} bytes).")
+  file_path
+rescue StandardError => e
+  log_error("Failed to download #{file_name}: #{e.message}")
+  raise e
+end
 
+def download_and_extract(library_name, library_path, file_name, expected_sha256sum, url)
   FileUtils.mkdir_p(File.expand_path('vendor', __dir__))
   target_path = File.expand_path("vendor/#{library_name}", __dir__)
 
@@ -136,14 +143,7 @@ def download_and_extract(library_name, library_path, file_name, expected_sha256s
 
   Dir.mktmpdir do |dir|
     Dir.chdir(dir) do
-      log_message "Downloading #{file_name} from #{url}"
-      begin
-        File.binwrite(file_name, URI.open(url).read)
-      rescue StandardError => e
-        log_message "Failed to download #{file_name} from #{url}: #{e.message}"
-        raise e
-      end
-      log_message "Downloaded #{file_name} (#{File.size(file_name)} bytes) successfully."
+      download_file(file_name, url, dir)
 
       log_message "Extracting #{file_name}"
       if file_name.end_with?('zip')
