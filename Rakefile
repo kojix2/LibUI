@@ -89,135 +89,7 @@ task :release_platform do
   end
 end
 
-def libui_ng_source_zip_url(commit_hash = 'master')
-  "https://github.com/libui-ng/libui-ng/archive/#{commit_hash}.zip"
-end
-
-# kojix2/libui-ng (pre-build)
-# - release
-# - shared
-def url_kojix2_libui_ng_nightly(file_name)
-  "https://nightly.link/kojix2/libui-ng/workflows/pre-build/pre-build/#{file_name}"
-end
-
-def fetch_kojix2_libui_ng_nightly(library_name, library_path, file_name)
-  url = url_kojix2_libui_ng_nightly(file_name)
-  fetch_and_extract_file(library_name, library_path, file_name, true, url)
-end
-
-def extract_zip_file(file_name)
-  Zip::File.open(file_name) do |zip|
-    zip.each do |entry|
-      FileUtils.mkdir_p(File.dirname(entry.name))
-      # FIXME: rubyzip stable version is v2.3.2 (2024-07-20).
-      # If you do not specify the dist file absolute path,
-      # it outputs a warning "unsafe" and does not extract the file on Windows.
-      # rubyzip github master branch does not have this problem.
-      entry.extract(File.expand_path(entry.name))
-    end
-  end
-end
-
-def extract_tar_file(file_name)
-  # Tar available on Windows 10
-  system "tar xf #{file_name}"
-  log_message "Extracted #{file_name} successfully."
-end
-
-def download_file(file_name, url, temp_dir)
-  log_message("Downloading #{file_name} from #{url}")
-  file_path = File.join(temp_dir, file_name)
-  File.binwrite(file_path, URI.open(url).read)
-  log_message("Downloaded #{file_name} to #{file_path} (#{File.size(file_path)} bytes).")
-  file_path
-rescue StandardError => e
-  log_error("Failed to download #{file_name}: #{e.message}")
-  raise e
-end
-
-def fetch_and_extract_file(library_name, library_path, file_name, expected_sha256sum, url)
-  FileUtils.mkdir_p(File.expand_path('vendor', __dir__))
-  target_path = File.expand_path("vendor/#{library_name}", __dir__)
-
-  return if check_file_exist(target_path, expected_sha256sum)
-
-  Dir.mktmpdir do |dir|
-    Dir.chdir(dir) do
-      download_file(file_name, url, dir)
-
-      log_message "Extracting #{file_name}"
-      if file_name.end_with?('zip')
-        begin
-          extract_zip_file(file_name)
-          log_message "Extracted #{file_name} successfully."
-        rescue StandardError => e
-          log_message "Failed to extract #{file_name}: #{e.message}"
-          raise e
-        end
-      else
-        begin
-          extract_tar_file(file_name)
-          log_message "Extracted #{file_name} successfully."
-        rescue StandardError => e
-          log_message "Failed to extract #{file_name}: #{e.message}"
-          raise e
-        end
-      end
-
-      if expected_sha256sum == true
-        log_message 'Skip sha256sum check (development build)'
-      else
-        log_message 'Check sha256sum'
-        v = verify_sha256sum(library_path, expected_sha256sum)
-        return false unless v
-      end
-
-      begin
-        overwrite = File.exist?(target_path)
-        FileUtils.cp(library_path, target_path)
-        if overwrite
-          log_message "Overwritten #{library_path} (#{File.size(library_path)} bytes) to #{target_path}"
-        else
-          log_message "Copied #{library_path} (#{File.size(library_path)} bytes) to #{target_path}"
-        end
-      rescue StandardError => e
-        log_message "Failed to copy #{library_path} to #{target_path}: #{e.message}"
-        raise e
-      end
-    end
-  end
-end
-
-def check_file_exist(path, sha256sum)
-  if File.exist?(path)
-    log_message "#{path} already exist."
-    if verify_sha256sum(path, sha256sum)
-      log_message 'Skip downloading.'
-      return true
-    else
-      log_message 'Download the file and replace it.'
-    end
-  end
-  false
-end
-
-def verify_sha256sum(path, expected_sha256sum)
-  return nil if expected_sha256sum == true
-
-  actual_sha256sum = Digest::SHA256.hexdigest(File.binread(path))
-  if actual_sha256sum == expected_sha256sum
-    log_message 'sha256sum matches.'
-    true
-  else
-    log_message 'Warning: sha256sum does not match'
-    log_message " path:               #{path}"
-    log_message " actual_sha256sum:   #{actual_sha256sum}"
-    log_message " expected_sha256sum: #{expected_sha256sum}"
-    false
-  end
-end
-
-def build_libui_ng(commit_hash)
+def build_libui_ng_with_meson(commit_hash)
   FileUtils.mkdir_p(File.expand_path('vendor', __dir__))
   target_path = File.expand_path("vendor/libui.#{RbConfig::CONFIG['host_cpu']}.#{RbConfig::CONFIG['SOEXT']}", __dir__)
 
@@ -307,10 +179,136 @@ def build_libui_ng(commit_hash)
   end
 end
 
+def fetch_kojix2_libui_ng_nightly(library_name, library_path, file_name)
+  url = url_kojix2_libui_ng_nightly(file_name)
+  fetch_and_extract_file(library_name, library_path, file_name, true, url)
+end
+
+def fetch_and_extract_file(library_name, library_path, file_name, expected_sha256sum, url)
+  FileUtils.mkdir_p(File.expand_path('vendor', __dir__))
+  target_path = File.expand_path("vendor/#{library_name}", __dir__)
+
+  return if check_file_exist(target_path, expected_sha256sum)
+
+  Dir.mktmpdir do |dir|
+    Dir.chdir(dir) do
+      download_file(file_name, url, dir)
+
+      log_message "Extracting #{file_name}"
+      if file_name.end_with?('zip')
+        begin
+          extract_zip_file(file_name)
+          log_message "Extracted #{file_name} successfully."
+        rescue StandardError => e
+          log_message "Failed to extract #{file_name}: #{e.message}"
+          raise e
+        end
+      else
+        begin
+          extract_tar_file(file_name)
+          log_message "Extracted #{file_name} successfully."
+        rescue StandardError => e
+          log_message "Failed to extract #{file_name}: #{e.message}"
+          raise e
+        end
+      end
+
+      if expected_sha256sum == true
+        log_message 'Skip sha256sum check (development build)'
+      else
+        log_message 'Check sha256sum'
+        v = verify_sha256sum(library_path, expected_sha256sum)
+        return false unless v
+      end
+
+      begin
+        overwrite = File.exist?(target_path)
+        FileUtils.cp(library_path, target_path)
+        if overwrite
+          log_message "Overwritten #{library_path} (#{File.size(library_path)} bytes) to #{target_path}"
+        else
+          log_message "Copied #{library_path} (#{File.size(library_path)} bytes) to #{target_path}"
+        end
+      rescue StandardError => e
+        log_message "Failed to copy #{library_path} to #{target_path}: #{e.message}"
+        raise e
+      end
+    end
+  end
+end
+
+def download_file(file_name, url, temp_dir)
+  log_message("Downloading #{file_name} from #{url}")
+  file_path = File.join(temp_dir, file_name)
+  File.binwrite(file_path, URI.open(url).read)
+  log_message("Downloaded #{file_name} to #{file_path} (#{File.size(file_path)} bytes).")
+  file_path
+rescue StandardError => e
+  log_error("Failed to download #{file_name}: #{e.message}")
+  raise e
+end
+
+def extract_zip_file(file_name)
+  Zip::File.open(file_name) do |zip|
+    zip.each do |entry|
+      FileUtils.mkdir_p(File.dirname(entry.name))
+      # FIXME: rubyzip stable version is v2.3.2 (2024-07-20).
+      # If you do not specify the dist file absolute path,
+      # it outputs a warning "unsafe" and does not extract the file on Windows.
+      # rubyzip github master branch does not have this problem.
+      entry.extract(File.expand_path(entry.name))
+    end
+  end
+end
+
+def extract_tar_file(file_name)
+  # Tar available on Windows 10
+  system "tar xf #{file_name}"
+  log_message "Extracted #{file_name} successfully."
+end
+
+def check_file_exist(path, sha256sum)
+  if File.exist?(path)
+    log_message "#{path} already exist."
+    if verify_sha256sum(path, sha256sum)
+      log_message 'Skip downloading.'
+      return true
+    else
+      log_message 'Download the file and replace it.'
+    end
+  end
+  false
+end
+
+def verify_sha256sum(path, expected_sha256sum)
+  return nil if expected_sha256sum == true
+
+  actual_sha256sum = Digest::SHA256.hexdigest(File.binread(path))
+  if actual_sha256sum == expected_sha256sum
+    log_message 'sha256sum matches.'
+    true
+  else
+    log_message 'Warning: sha256sum does not match'
+    log_message " path:               #{path}"
+    log_message " actual_sha256sum:   #{actual_sha256sum}"
+    log_message " expected_sha256sum: #{expected_sha256sum}"
+    false
+  end
+end
+
+def libui_ng_source_zip_url(commit_hash = 'master')
+  "https://github.com/libui-ng/libui-ng/archive/#{commit_hash}.zip"
+end
+
+def url_kojix2_libui_ng_nightly(file_name)
+  "https://nightly.link/kojix2/libui-ng/workflows/pre-build/pre-build/#{file_name}"
+end
+
 namespace 'vendor' do
   desc 'Build libui-ng latest master [commit hash]'
   task 'build', 'hash' do |_, args|
-    s = build_libui_ng(args['hash'])
+    commit_hash = args['hash']
+    s = build_libui_ng_with_meson(commit_hash)
     abort if s == false
   end
 
