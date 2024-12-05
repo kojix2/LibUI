@@ -93,20 +93,11 @@ def libui_ng_source_zip_url(commit_hash = 'master')
   "https://github.com/libui-ng/libui-ng/archive/#{commit_hash}.zip"
 end
 
-def url_libui_ng_nightly(file_name)
-  "https://nightly.link/libui-ng/libui-ng/workflows/build/master/#{file_name}"
-end
-
 # kojix2/libui-ng (pre-build)
 # - release
 # - shared
 def url_kojix2_libui_ng_nightly(file_name)
   "https://nightly.link/kojix2/libui-ng/workflows/pre-build/pre-build/#{file_name}"
-end
-
-def download_libui_ng_nightly(library_name, library_path, file_name)
-  url = url_libui_ng_nightly(file_name)
-  download_and_extract(library_name, library_path, file_name, true, url)
 end
 
 def download_kojix2_libui_ng_nightly(library_name, library_path, file_name)
@@ -323,78 +314,21 @@ namespace 'vendor' do
     abort if s == false
   end
 
-  namespace 'libui-ng' do
-    desc 'Download latest official pre-build for Ubuntu to vendor directory'
-    task :ubuntu_x64 do
-      download_libui_ng_nightly(
-        'libui.x86_64.so',
-        'builddir/meson-out/libui.so',
-        'Ubuntu-x64-shared-debug.zip'
-      )
+  PLATFORMS = {
+    ubuntu_x64: ['libui.x86_64.so', 'builddir/meson-out/libui.so', 'Ubuntu-x64-shared-release.zip'],
+    # raspbian_aarch64: ['libui.aarch64.so', 'builddir/meson-out/libui.so', 'Raspbian-aarch64-shared-release.zip'],
+    macos_x64: ['libui.x86_64.dylib', 'builddir/meson-out/libui.dylib', 'macOS-x64-shared-release.zip'],
+    macos_arm64: ['libui.arm64.dylib', 'builddir/meson-out/libui.dylib', 'macOS-x64-shared-release.zip'],
+    windows_x64: ['libui.x64.dll', 'builddir/meson-out/libui.dll', 'Win-x64-shared-release.zip'],
+    windows_x86: ['libui.x86.dll', 'builddir/meson-out/libui.dll', 'Win-x86-shared-release.zip']
+  }
+
+  PLATFORMS.each do |name, args|
+    os, arch = name.to_s.split('_')
+    desc "Download pre-build for #{os} #{arch} to vendor directory"
+    task name do
+      download_kojix2_libui_ng_nightly(*args)
     end
-
-    desc 'Download latest official pre-build for Mac to vendor directory'
-    task :macos do
-      download_libui_ng_nightly(
-        'libui.dylib',
-        'builddir/meson-out/libui.dylib',
-        'macOS-x64-shared-debug.zip'
-      )
-    end
-  end
-
-  desc 'Download pre-build for Ubuntu to vendor directory'
-  task :ubuntu_x64 do
-    download_kojix2_libui_ng_nightly(
-      'libui.x86_64.so',
-      'builddir/meson-out/libui.so',
-      'Ubuntu-x64-shared-release.zip'
-    )
-  end
-
-  desc 'Download pre-build for Raspbian to vendor directory'
-  task :raspbian_aarch64 do
-    download_kojix2_libui_ng_nightly(
-      'libui.aarch64.so',
-      'builddir/meson-out/libui.so',
-      'Raspbian-aarch64-shared-release.zip'
-    )
-  end
-
-  desc 'Download pre-build for Mac to vendor directory'
-  task :macos_x64 do
-    download_kojix2_libui_ng_nightly(
-      'libui.x86_64.dylib',
-      'builddir/meson-out/libui.dylib',
-      'macOS-x64-shared-release.zip' # universal binary?
-    )
-  end
-
-  desc 'Download pre-build for Mac to vendor directory'
-  task :macos_arm64 do
-    download_kojix2_libui_ng_nightly(
-      'libui.arm64.dylib',
-      'builddir/meson-out/libui.dylib',
-      'macOS-x64-shared-release.zip' # universal binary?
-    )
-  end
-
-  desc 'Download pre-build for Windows to vendor directory'
-  task :windows_x64 do
-    download_kojix2_libui_ng_nightly(
-      'libui.x64.dll',
-      'builddir/meson-out/libui.dll',
-      'Win-x64-shared-release.zip'
-    )
-  end
-
-  desc 'Download pre-build for Windows to vendor directory'
-  task :windows_x86 do
-    download_kojix2_libui_ng_nightly(
-      'libui.x86.dll',
-      'builddir/meson-out/libui.dll',
-      'Win-x86-shared-release.zip'
-    )
   end
 
   # desc 'Download pre-build for your platform to vendor directory'
