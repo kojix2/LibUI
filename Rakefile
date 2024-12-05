@@ -223,6 +223,8 @@ def extract_file(file_name, dir)
   log_message "Extracting #{file_name}"
   if file_name.end_with?('.zip')
     extract_zip(file_name, dir)
+  elsif file_name.end_with?('.so', '.dylib', '.dll')
+    # Do nothing
   else
     extract_tar(file_name)
   end
@@ -252,16 +254,8 @@ def extract_tar(file_name)
   log_message "Extracted #{file_name} successfully."
 end
 
-def file_already_exists?(path, sha256sum)
-  if File.exist?(path)
-    log_message "#{path} already exists."
-    if verify_sha256sum(path, sha256sum)
-      log_message 'Skipping download.'
-      return true
-    else
-      log_message 'Checksum mismatch. Re-downloading the file.'
-    end
-  end
+def file_already_exists?(path, _sha256sum)
+  log_message "#{path} already exists." if File.exist?(path)
   false
 end
 
@@ -311,7 +305,7 @@ namespace 'vendor' do
     abort if s == false
   end
 
-  PLATFORMS = {
+  platforms = {
     ubuntu_x64: ['libui.x86_64.so', 'builddir/meson-out/libui.so', 'Ubuntu-x64-shared-release.zip'],
     # raspbian_aarch64: ['libui.aarch64.so', 'builddir/meson-out/libui.so', 'Raspbian-aarch64-shared-release.zip'],
     macos_x64: ['libui.x86_64.dylib', 'builddir/meson-out/libui.dylib', 'macOS-x64-shared-release.zip'],
@@ -320,15 +314,15 @@ namespace 'vendor' do
     windows_x86: ['libui.x86.dll', 'builddir/meson-out/libui.dll', 'Win-x86-shared-release.zip']
   }
 
-  PLATFORMS.each do |name, args|
-    os, arch = name.to_s.split('_')
-    desc "Download pre-build for #{os} #{arch} to vendor directory"
+  platforms.each do |name, args|
+    name.to_s.split('_')
+    # desc "Download pre-build for #{os} #{arch} to vendor directory"
     task name do
       fetch_kojix2_libui_ng_nightly(*args)
     end
   end
 
-  # desc 'Download pre-build for your platform to vendor directory'
+  desc 'Download pre-build for your platform to vendor directory'
   task :auto do
     case RUBY_PLATFORM
     when /linux/
@@ -348,6 +342,35 @@ namespace 'vendor' do
   task :clean do
     (Dir['vendor/*'] - Dir['vendor/{LICENSE,README}.md']).each do |f|
       FileUtils.rm_rf(f)
+    end
+  end
+
+  namespace :dev do
+    {
+      linux: ['libui.x86_64.so', 'libui_x86_64_gtk.so', 'libui_x86_64_gtk.so',
+              'e4af4f9a34c7391d59996e776e9b925526186e15ff24de805529dd304f654284',
+              'https://github.com/petabyt/libui-dev/releases/download/5-beta/libui_x86_64_gtk.so'],
+      macos: ['libui.x86_64.dylib', 'libui_x86_64.dylib', 'libui_x86_64.dylib',
+              '105f8c88cef6233c4befb3e82e5543dda82dc323ee92254699caa3aa43d29cfd',
+              'https://github.com/petabyt/libui-dev/releases/download/5-beta/libui_x86_64.dylib']
+    }.each do |name, args|
+      # desc "Download pre-build for #{name} to vendor directory"
+      task name do
+        fetch_and_extract_file(*args)
+      end
+    end
+
+    desc 'Download libui-dev for your platform to vendor directory'
+    task :auto do
+      case RUBY_PLATFORM
+      when /linux/
+        Rake::Task['vendor:dev:linux'].invoke
+      when /darwin/
+        Rake::Task['vendor:dev:macos'].invoke
+      else
+        log_message "Unknown platform: #{RUBY_PLATFORM}"
+        log_message 'TODO: Add support for your platform'
+      end
     end
   end
 end
