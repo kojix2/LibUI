@@ -5,9 +5,11 @@
 <a href="https://github.com/AndyObtiva/glimmer-dsl-libui"><img alt="glimmer-dsl-libui" src="https://github.com/AndyObtiva/glimmer/blob/master/images/glimmer-logo-hi-res.svg" width="50" height="50" align="right"></a>
 [![Pre-build](https://github.com/kojix2/libui-ng/actions/workflows/pre-build.yml/badge.svg?branch=pre-build)](https://github.com/kojix2/libui-ng/actions/workflows/pre-build.yml)
 
-LibUI is a Ruby wrapper for libui and libui-ng.
+LibUI is a Ruby wrapper for libui family.
 
 :rocket: [libui-ng](https://github.com/libui-ng/libui-ng) - A cross-platform portable GUI library
+
+:wrench: [libui-dev](https://github.com/petabyt/libui-dev) - Native UI library for C - with some extras 
 
 :radio_button: [libui](https://github.com/andlabs/libui) - Original version by andlabs.
 
