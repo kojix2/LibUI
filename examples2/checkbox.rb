@@ -1,6 +1,6 @@
 # ============================================================================ #
 # This example (checkbox.rb) shall demonstrate the following functionality
-# (5 components), as well as their implementation-status in regards to
+# (6 components), as well as their implementation-status in regards to
 # this file:
 #
 #   :new_checkbox              # [DONE]
