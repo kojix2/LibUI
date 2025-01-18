@@ -1,6 +1,6 @@
 # ============================================================================ #
 # This example (button.rb) shall demonstrate the following functionality
-# (9 components), as well as their implementation-status in regards to
+# (4 components), as well as their implementation-status in regards to
 # this file:
 #
 #   :new_button                         # [DONE]
