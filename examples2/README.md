@@ -1,4 +1,4 @@
-This directory may eventually contain code that serves the following purposes:
+This directory contains code that refers to widgets and functions via the official libui-ng bindings (and perhaps eventually libui-dev as well). The directory serves the following purposes:
 
 - Provide standalone (working) .rb files that test individual components of
 the ruby-libui suite, such as the various widgets that are part of (and supported by)
@@ -18,4 +18,5 @@ by upstream code.
 new users of this project may learn the bindings made available by kojix2
 more rapidly so.
 
-Stay tuned for more updates in this regard in the long run.
+Stay tuned for more updates in this regard in the long run. Right now only about four
+widgets have been added; expect more code in this regard over the next days and weeks. \o/
