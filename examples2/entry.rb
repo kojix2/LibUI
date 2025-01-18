@@ -24,7 +24,7 @@ LibUI.box_append(hbox, _, 1) # Add the entry here.
 @old_entry_text = 'This is a generic text for the entry.'
 LibUI.entry_set_text(_, @old_entry_text)
 
-puts 'The entry will be set to read-onlyn ext, via '\
+puts 'The entry will be set to read-only next, via '\
      'LibUI.entry_set_read_only().'
 
 LibUI.entry_set_read_only(_, 1) # We have to use 1 rather than true here, unfortunately.
