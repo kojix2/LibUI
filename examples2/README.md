@@ -1,4 +1,4 @@
-This directory contains code that refers to widgets and functions via the official libui-ng bindings (and perhaps eventually libui-dev as well). The directory serves the following purposes:
+This directory contains code that refers to widgets and functions made available via the official libui-ng bindings (and perhaps eventually libui-dev as well). The directory serves the following purposes:
 
 - Provide standalone (working) .rb files that test individual components of
 the ruby-libui suite, such as the various widgets that are part of (and supported by)
