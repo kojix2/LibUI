@@ -18,5 +18,9 @@ by upstream code.
 new users of this project may learn the bindings made available by kojix2
 more rapidly so.
 
-Stay tuned for more updates in this regard in the long run. Right now only about four
+Stay tuned for more updates in this regard in the long run. Right now eight 
 widgets have been added; expect more code in this regard over the next days and weeks. \o/
+
+I also invite others to contribute changes, including documentation. Let's improve the
+default experience of ruby + libui for new users, as well as provide working reference
+implementations for all functionality made available in ruby-libui.
