@@ -31,7 +31,7 @@ LibUI.window_set_title(main_window, 'TEST TITLE')
 puts 'The temporary title of this window is: '+
       LibUI.window_title(main_window)
 LibUI.window_set_title(main_window, 'window.rb') # And restore the title here again.
-LibUI.window_set_resizeable(main_window, 0)
+LibUI.window_set_resizeable(main_window, 1) # Making it resizeable - is better, in my opinion.
 LibUI.window_set_margined(main_window, 1)
 puts 'Is the window margined? '+
       LibUI.window_margined(main_window).to_s
