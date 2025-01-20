@@ -18,7 +18,7 @@ by upstream code.
 new users of this project may learn the bindings made available by kojix2
 more rapidly so.
 
-Stay tuned for more updates in this regard in the long run. Right now eight 
+Stay tuned for more updates in this regard in the long run. Right now nine 
 widgets have been added; expect more code in this regard over the next days and weeks. \o/
 
 I also invite others to contribute changes, including documentation. Let's improve the
