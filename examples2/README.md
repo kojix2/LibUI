@@ -24,3 +24,5 @@ widgets have been added; expect more code in this regard over the next days and 
 I also invite others to contribute changes, including documentation. Let's improve the
 default experience of ruby + libui for new users, as well as provide working reference
 implementations for all functionality made available in ruby-libui.
+
+So far (this update) almost 76 components are verified by examples in the subdirectory examples2/ here. I think we are close to 50% in total now or almost at 50%.
