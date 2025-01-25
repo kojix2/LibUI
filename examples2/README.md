@@ -1,4 +1,6 @@
-This directory contains code that refers to widgets and functions made available via the official libui-ng (see https://github.com/libui-ng/libui-ng) bindings (and perhaps eventually libui-dev as well). The rationale (and objective of) for this directory here serves at the least the following purposes:
+This directory contains code that refers to widgets and functions made available via the official libui-ng (see https://github.com/libui-ng/libui-ng) bindings (and perhaps eventually libui-dev as well).
+
+The rationale (and objective of) for this directory here serves at the least the following purposes:
 
 - Provide standalone (working) .rb files that test individual components of
 the ruby-libui suite, such as the various widgets that are part of (and supported by)
@@ -40,3 +42,5 @@ Widgets that have been added to this subdirectory include:
   search_entry.rb
   slider.rb
   window.rb
+
+Note that this subdirectory here (examples2/) is different to examples/. The examples/ subdirectory has been created by kojix2 to test various parts of ruby-libui, including more complex use cases (see the histogram example for dynamic elements).
