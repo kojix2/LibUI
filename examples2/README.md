@@ -1,4 +1,4 @@
-This directory contains code that refers to widgets and functions made available via the official libui-ng (see https://github.com/libui-ng/libui-ng) bindings (and perhaps eventually libui-dev as well).
+This directory (examples2/) contains code that refers to widgets and functions made available via the official libui-ng (see https://github.com/libui-ng/libui-ng) bindings (and perhaps eventually libui-dev as well).
 
 The rationale (and objective of) for this directory here serves at the least the following purposes:
 
