@@ -1,0 +1,67 @@
+name: test
+
+on:
+  - push
+  - pull_request
+  - workflow_dispatch
+
+jobs:
+  build:
+    name: ${{ matrix.os }} Ruby ${{ matrix.ruby }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ["ubuntu", "macos", "windows"]
+        ruby: ["2.7", "3.0", "3.1", "3.2", "3.3", "3.4", "head"]
+    runs-on: ${{ matrix.os }}-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+
+      - name: Download libui shared libraries
+        run: bundle exec rake vendor:auto
+
+      - name: Run example on Linux
+        if: matrix.os == 'ubuntu'
+        run: |
+          sudo apt-get install -y imagemagick xvfb
+          Xvfb :99 -screen 0 1024x768x24 &
+          sleep 3
+          DISPLAY=:99 bundle exec ruby examples/basic_window.rb &
+          sleep 5
+          DISPLAY=:99 import -window root screenshot-linux.png
+
+      - name: Run example on macOS
+        if: matrix.os == 'macos'
+        run: |
+          ./examples/basic_window.rb &
+          sleep 5
+          screencapture -x screenshot-mac.png
+
+      - name: Setup Windows screenshot script
+        if: matrix.os == 'windows'
+        run: |
+          echo '@echo off' > screenshot.bat
+          echo 'powershell -ExecutionPolicy Bypass -NoProfile -Command "& {Add-Type -TypeDefinition ''using System; using System.Drawing; using System.Drawing.Imaging; using System.Windows.Forms; public class Screenshot { public static void Capture(string path) { Bitmap bmp = new Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height); Graphics g = Graphics.FromImage(bmp); g.CopyFromScreen(0, 0, 0, 0, bmp.Size); bmp.Save(path, ImageFormat.Png); }}'' -Language CSharp; [Screenshot]::Capture(''screenshot-windows.png'')}"' >> screenshot.bat
+
+      - name: Run example on Windows
+        if: matrix.os == 'windows'
+        run: |
+          Start-Process -NoNewWindow -FilePath bundle -ArgumentList "exec ruby examples/basic_window.rb"
+          sleep 5
+          ./screenshot.bat
+
+      - name: Upload screenshots
+        uses: actions/upload-artifact@v3
+        with:
+          name: screenshots-${{ matrix.os }}-${{ matrix.ruby }}
+          path: |
+            screenshot-linux.png
+            screenshot-mac.png
+            screenshot-windows.png
+          if-no-files-found: ignore
