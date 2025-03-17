@@ -1,4 +1,4 @@
-name: test
+name: test2
 
 on:
   - push
@@ -57,7 +57,7 @@ jobs:
           ./screenshot.bat
 
       - name: Upload screenshots
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: screenshots-${{ matrix.os }}-${{ matrix.ruby }}
           path: |
