@@ -34,5 +34,5 @@ Gem::Specification.new do |spec|
     spec.files.concat(Dir['vendor/*.{dll,dylib,so}']) # all
   end
 
-  # spec.add_dependency 'fiddle'
+  spec.add_dependency 'fiddle'
 end
