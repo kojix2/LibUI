@@ -31,17 +31,70 @@ So far (this update) almost 82 "components" are verified by examples in the subd
 
 Widgets that have been added to this subdirectory include:
 
-  button.rb
-  checkbox.rb
-  color_button.rb
-  combobox.rb
-  date_picker.rb
-  editable_combobox.rb
-  entry.rb
-  grid.rb
-  password_entry.rb
-  search_entry.rb
-  slider.rb
-  window.rb
+    button.rb
+    checkbox.rb
+    color_button.rb
+    combobox.rb
+    date_picker.rb
+    editable_combobox.rb
+    entry.rb
+    grid.rb
+    password_entry.rb
+    search_entry.rb
+    slider.rb
+    window.rb
 
 Note that this subdirectory here (examples2/) is different to examples/. The examples/ subdirectory has been created by kojix2 to test various parts of ruby-libui, including more complex use cases (see the histogram example for dynamic elements).
+
+Available new-entries in regards to LibUI include:
+
+- new_area
+- new_attributed_string
+- new_background_attribute
+- new_button
+- new_checkbox
+- new_color_attribute
+- new_color_button
+- new_combobox
+- new_date_picker
+- new_date_time_picker
+- new_editable_combobox
+- new_entry
+- new_family_attribute
+- new_features_attribute
+- new_font_button
+- new_form
+- new_grid
+- new_group
+- new_horizontal_box
+- new_horizontal_separator
+- new_image
+- new_italic_attribute
+- new_label
+- new_menu
+- new_multiline_entry
+- new_non_wrapping_multiline_entry
+- new_open_type_features
+- new_password_entry
+- new_progress_bar
+- new_radio_buttons
+- new_scrolling_area
+- new_search_entry
+- new_size_attribute
+- new_slider
+- new_spinbox
+- new_stretch_attribute
+- new_tab
+- new_table
+- new_table_model
+- new_table_value_color
+- new_table_value_image
+- new_table_value_int
+- new_table_value_string
+- new_time_picker
+- new_underline_attribute
+- new_underline_color_attribute
+- new_vertical_box
+- new_vertical_separator
+- new_weight_attribute
+- new_window
