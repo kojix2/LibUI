@@ -29,7 +29,7 @@ implementations for all functionality made available in ruby-libui.
 
 So far (this update) almost 82 "components" are verified by examples in the subdirectory examples2/ here. I think we are close to 50% in total now or almost at 50%.
 
-Widgets that have been added to this subdirectory include:
+Widgets that have been added to this subdirectory include, as standalone files:
 
     button.rb
     checkbox.rb
