@@ -40,6 +40,7 @@ Widgets that have been added to this subdirectory include, as standalone files:
     entry.rb
     grid.rb
     password_entry.rb
+    progress_bar.rb
     search_entry.rb
     slider.rb
     window.rb
