@@ -38,6 +38,7 @@ Widgets that have been added to this subdirectory include, as standalone files:
     date_picker.rb
     editable_combobox.rb
     entry.rb
+    multiline_entry.rb
     grid.rb
     password_entry.rb
     progress_bar.rb
