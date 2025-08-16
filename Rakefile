@@ -17,22 +17,22 @@ DEBUG_DIR = 'libui/debug'
 
 # Platform-specific configuration for shared libraries
 PLATFORM_CONFIG = {
-  'arm64-darwin': [
+  'arm64-darwin' => [
     { zip: 'macOS-arm64-shared-release.zip', src: 'builddir/meson-out/libui.dylib', dest: 'vendor/libui.arm64.dylib' }
   ],
-  'x86_64-darwin': [
+  'x86_64-darwin' => [
     { zip: 'macOS-x64-shared-release.zip', src: 'builddir/meson-out/libui.dylib', dest: 'vendor/libui.x86_64.dylib' }
   ],
-  'x86_64-linux': [
+  'x86_64-linux' => [
     { zip: 'Ubuntu-x64-shared-release.zip', src: 'builddir/meson-out/libui.so', dest: 'vendor/libui.x86_64.so' }
   ],
-  'arm-linux': [
+  'arm-linux' => [
     { zip: 'Ubuntu-arm64-shared-release.zip', src: 'builddir/meson-out/libui.so', dest: 'vendor/libui.arm.so' }
   ],
-  'x64-mingw32': [
+  'x64-mingw32' => [
     { zip: 'Win-x64-shared-release.zip', src: 'builddir/meson-out/libui.dll', dest: 'vendor/libui.x64.dll' }
   ],
-  'x86-mingw32': [
+  'x86-mingw32' => [
     { zip: 'Win-x86-shared-release.zip', src: 'builddir/meson-out/libui.dll', dest: 'vendor/libui.x86.dll' }
   ]
 }.freeze
