@@ -8,7 +8,7 @@ require 'zip'
 require_relative 'lib/libui/version'
 
 # Configuration
-COMMIT_HASH = ENV['LIBUI_NG_COMMIT_HASH'] || '9283348'
+COMMIT_HASH = ENV['LIBUI_NG_COMMIT_HASH'] || '97ccc25'
 
 # Path constants
 BUILD_DIR = 'builddir'
