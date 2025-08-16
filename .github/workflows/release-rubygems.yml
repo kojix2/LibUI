@@ -27,35 +27,28 @@ jobs:
           - os: ubuntu-latest
             ruby-version: "3.3"
             gem_platform: x86_64-linux
-            expected_file: vendor/libui.x86_64.so
           - os: ubuntu-24.04-arm
             ruby-version: "3.3"
             gem_platform: aarch64-linux
-            expected_file: vendor/libui.aarch64.so
           # macOS
           - os: macos-13 # Intel
             ruby-version: "3.3"
             gem_platform: x86_64-darwin
-            expected_file: vendor/libui.x86_64.dylib
           - os: macos-14 # Apple Silicon
             ruby-version: "3.3"
             gem_platform: arm64-darwin
-            expected_file: vendor/libui.arm64.dylib
           # Windows (same binary for both platforms)
           - os: windows-latest
-            ruby-version: "2.7"  # Ruby 2.7 is used for x64-mingw32
+            ruby-version: "2.7" # Ruby 2.7 is used for x64-mingw32 because newer Ruby versions default to x64-mingw-ucrt platform, causing bundler platform resolution conflicts
             gem_platform: x64-mingw32
-            expected_file: vendor/libui.x64.dll
           - os: windows-latest
             ruby-version: "3.3"
             gem_platform: x64-mingw-ucrt
-            expected_file: vendor/libui.x64.dll
 
     runs-on: ${{ matrix.os }}
 
     env:
       GEM_PLATFORM: ${{ matrix.gem_platform }}
-      BUNDLE_WITHOUT: "development"
 
     steps:
       - name: Checkout
@@ -79,47 +72,5 @@ jobs:
           bundle exec rake vendor:auto
         shell: bash
 
-      - name: Verify vendored binary for ${{ matrix.gem_platform }}
-        run: |
-          if [ ! -f "${{ matrix.expected_file }}" ]; then
-            echo "Expected file not found: ${{ matrix.expected_file }}"
-            echo "Check that 'bundle exec rake vendor:auto' downloads this file for platform ${GEM_PLATFORM}."
-            exit 1
-          fi
-        shell: bash
-
-      - name: Build gem (platform ${{ matrix.gem_platform }})
-        run: |
-          rm -f libui-*.gem
-          gem build libui.gemspec
-          ls -l libui-*.gem
-        shell: bash
-
-      - name: Assert gem platform is ${{ matrix.gem_platform }}
-        run: |
-          GEM_FILE="$(ls -1 libui-*.gem | tail -n1)"
-          actual="$(gem specification "$GEM_FILE" | grep 'platform:' | awk '{print $2}')"
-          echo "Gem platform: $actual"
-          if [ "$actual" != "$GEM_PLATFORM" ]; then
-            echo "Gem platform mismatch: expected $GEM_PLATFORM but got $actual"
-            exit 1
-          fi
-        shell: bash
-
-      - name: Push to RubyGems
-        if: success()
-        env:
-          GEM_HOST_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
-        run: |
-          set -e
-          GEM_FILE="$(ls -1 libui-*.gem | tail -n1)"
-          echo "Pushing $GEM_FILE to RubyGems..."
-          # Try push; ignore 'already exists' error to let other matrices continue.
-          set +e
-          gem push "$GEM_FILE"
-          status=$?
-          set -e
-          if [ $status -ne 0 ]; then
-            echo "gem push failed (possibly already published for this platform). Continuing."
-          fi
-        shell: bash
+      - name: Release gem to RubyGems.org
+        uses: rubygems/release-gem@v1

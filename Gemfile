@@ -7,7 +7,7 @@ gem 'minitest'
 gem 'rake'
 gem 'rubyzip'
 
-group :development do
-  gem 'chunky_png'
-  gem 'numo-narray'
-end
+# group :development do
+#   gem 'chunky_png'
+#   gem 'numo-narray'
+# end

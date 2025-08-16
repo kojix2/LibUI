@@ -4,6 +4,7 @@ require 'rake/testtask'
 require 'rbconfig'
 require 'fileutils'
 require 'zip'
+require 'bundler/gem_tasks'
 
 require_relative 'lib/libui/version'
 
