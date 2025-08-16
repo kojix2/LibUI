@@ -287,6 +287,18 @@ rake vendor:windows_x86          # Download pre-build for Windows to vendor dire
 
 <h3 id="label-Publishing+gems">Publishing gems</h3>
 
+<h4 id="label-Automated+Publishing">Automated Publishing</h4>
+
+<p>Push a version tag to automatically publish platform-specific gems:</p>
+
+<pre class="code ruby"><code class="ruby">git tag v0.1.3
+git push origin v0.1.3
+</code></pre>
+
+<p>Requires <code>RUBYGEMS_API_KEY</code> repository secret with scoped API key.</p>
+
+<h4 id="label-Manual+Publishing">Manual Publishing</h4>
+
 <pre class="code ruby"><code class="ruby">ls vendor             # check the vendor directory
 rm -rf pkg            # remove previously built gems
 rake build_platform   # build gems
@@ -344,7 +356,7 @@ rake release_platform # publish gems
 </div></div>
 
       <div id="footer">
-  Generated on Sat Aug 16 08:08:22 2025 by
+  Generated on Sat Aug 16 08:44:35 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.5).
 </div>
