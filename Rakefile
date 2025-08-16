@@ -8,7 +8,7 @@ require 'zip'
 require_relative 'lib/libui/version'
 
 # Configuration
-COMMIT_HASH = ENV['LIBUI_NG_COMMIT_HASH'] || '8347960'
+COMMIT_HASH = ENV['LIBUI_NG_COMMIT_HASH'] || '0dfce71'
 
 # Path constants
 BUILD_DIR = 'builddir'
@@ -17,11 +17,18 @@ DEBUG_DIR = 'libui/debug'
 
 # Platform-specific configuration for shared libraries
 PLATFORM_CONFIG = {
-  darwin: [
+  darwin_arm64: [
+    { zip: 'macOS-arm64-shared-release.zip', src: 'builddir/meson-out/libui.dylib', dest: 'vendor/libui.arm64.dylib' }
+  ],
+  darwin_x64: [
     { zip: 'macOS-x64-shared-release.zip', src: 'builddir/meson-out/libui.dylib', dest: 'vendor/libui.x86_64.dylib' }
   ],
-  linux: [
+  linux_x64: [
     { zip: 'Ubuntu-x64-shared-release.zip', src: 'builddir/meson-out/libui.so', dest: 'vendor/libui.x86_64.so' }
+  ],
+  linux_arm64: [
+    # ARM64 Linux uses x64 binary (no native ARM64 build available)
+    { zip: 'Ubuntu-x64-shared-release.zip', src: 'builddir/meson-out/libui.so', dest: 'vendor/libui.aarch64.so' }
   ],
   mingw: [
     { zip: 'Win-x64-shared-release.zip', src: 'builddir/meson-out/libui.dll', dest: 'vendor/libui.x64.dll' }
@@ -49,10 +56,10 @@ end
 def download_file(file_name, url)
   log_message "Running: curl -L -o #{file_name} #{url}"
   curl_status = system("curl -L -o #{file_name} #{url}")
-  return if curl_status && File.exist?(file_name)
+  return true if curl_status && File.exist?(file_name)
 
-  warn "Error: Failed to download #{file_name} from #{url}"
-  exit 1
+  warn "Warning: Failed to download #{file_name} from #{url}"
+  false
 end
 
 def extract_zip_files(file_name, lib_paths)
@@ -93,9 +100,19 @@ def download_libui_ng_nightly(lib_paths, file_name)
 end
 
 def download_and_place(zip_name, src, dest)
-  download_libui_ng_nightly([src], zip_name)
+  url = url_for_libui_ng_commit(zip_name)
+  success = download_file(zip_name, url)
+
+  unless success
+    warn "Error: Failed to download #{zip_name}"
+    exit 1
+  end
+
+  extract_zip_files(zip_name, [src])
   FileUtils.mkdir_p File.dirname(dest)
   FileUtils.cp src, dest
+ensure
+  File.delete(zip_name) if File.exist?(zip_name)
 end
 
 # High-level processing functions
@@ -113,9 +130,19 @@ end
 def detect_platform
   case RUBY_PLATFORM
   when /darwin/
-    :darwin
+    # Detect macOS architecture
+    if RUBY_PLATFORM.include?('arm64') || RbConfig::CONFIG['host_cpu'] == 'arm64'
+      :darwin_arm64
+    else
+      :darwin_x64
+    end
   when /linux/
-    :linux
+    # Detect Linux architecture
+    if RUBY_PLATFORM.include?('aarch64') || RbConfig::CONFIG['host_cpu'] == 'aarch64'
+      :linux_arm64
+    else
+      :linux_x64
+    end
   when /mingw/
     :mingw
   when /mswin/
