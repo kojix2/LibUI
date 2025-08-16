@@ -18,6 +18,8 @@ jobs:
         with:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
+        env:
+          BUNDLE_WITHOUT: development
       - name: Download libui shared libraries
         run: bundle exec rake vendor:auto
       - name: Rake test (XVFB)
