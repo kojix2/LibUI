@@ -13,35 +13,39 @@ concurrency:
   group: rubygems-release-${{ github.ref_name }}
   cancel-in-progress: false
 
-env:
-  RUBY_VERSION: "3.3"
-
 jobs:
   build-and-publish:
     if: github.repository == 'kojix2/LibUI'
     strategy:
       fail-fast: false
       matrix:
+        # Default Ruby version: 3.3 (used for all platforms except x64-mingw32)
         include:
           # Linux
           - os: ubuntu-latest
+            ruby-version: "3.3"
             gem_platform: x86_64-linux
             expected_file: vendor/libui.x86_64.so
           - os: ubuntu-24.04-arm
+            ruby-version: "3.3"
             gem_platform: aarch64-linux
             expected_file: vendor/libui.aarch64.so
           # macOS
           - os: macos-13 # Intel
+            ruby-version: "3.3"
             gem_platform: x86_64-darwin
             expected_file: vendor/libui.x86_64.dylib
           - os: macos-14 # Apple Silicon
+            ruby-version: "3.3"
             gem_platform: arm64-darwin
             expected_file: vendor/libui.arm64.dylib
           # Windows (same binary for both platforms)
           - os: windows-latest
+            ruby-version: "3.3"
             gem_platform: x64-mingw-ucrt
             expected_file: vendor/libui.x64.dll
           - os: windows-latest
+            ruby-version: "3.1" # Ruby 3.1 is used for x64-mingw32 because Ruby 3.3 defaults to x64-mingw-ucrt platform, causing bundler platform resolution conflicts
             gem_platform: x64-mingw32
             expected_file: vendor/libui.x64.dll
 
@@ -58,7 +62,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: ${{ env.RUBY_VERSION }}
+          ruby-version: ${{ matrix.ruby-version }}
           bundler-cache: true
 
       - name: Show versions
