@@ -186,29 +186,6 @@ namespace 'vendor' do
     end
   end
 
-  desc 'Clean vendor directory keeping only shared libraries'
-  task :clean_keep_libs do
-    # Keep only shared library files and documentation
-    keep_patterns = [
-      'vendor/LICENSE*',
-      'vendor/README*',
-      'vendor/*.dylib',  # macOS shared libraries
-      'vendor/*.so',     # Linux shared libraries
-      'vendor/*.dll'     # Windows shared libraries
-    ]
-
-    all_files = Dir['vendor/*']
-    files_to_keep = keep_patterns.flat_map { |pattern| Dir[pattern] }
-    files_to_remove = all_files - files_to_keep
-
-    files_to_remove.each do |f|
-      FileUtils.rm_rf(f)
-      log_message "Removed non-library file: #{f}"
-    end
-
-    log_message "Kept #{files_to_keep.length} files (shared libraries and docs)"
-  end
-
   # Clean up temporary directory
   task :cleanup do
     if Dir.exist?(BUILD_DIR)
