@@ -7,7 +7,8 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
+  id-token: write
 
 concurrency:
   group: rubygems-release-${{ github.ref_name }}
@@ -16,6 +17,7 @@ concurrency:
 jobs:
   build-and-publish:
     if: github.repository == 'kojix2/LibUI'
+    environment: release-rubygems
     strategy:
       fail-fast: false
       matrix:
@@ -41,12 +43,12 @@ jobs:
             expected_file: vendor/libui.arm64.dylib
           # Windows (same binary for both platforms)
           - os: windows-latest
-            ruby-version: "3.3"
-            gem_platform: x64-mingw-ucrt
+            ruby-version: "2.7"  # Ruby 2.7 is used for x64-mingw32
+            gem_platform: x64-mingw32
             expected_file: vendor/libui.x64.dll
           - os: windows-latest
-            ruby-version: "3.1" # Ruby 3.1 is used for x64-mingw32 because Ruby 3.3 defaults to x64-mingw-ucrt platform, causing bundler platform resolution conflicts
-            gem_platform: x64-mingw32
+            ruby-version: "3.3"
+            gem_platform: x64-mingw-ucrt
             expected_file: vendor/libui.x64.dll
 
     runs-on: ${{ matrix.os }}
