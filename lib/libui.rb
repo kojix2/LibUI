@@ -8,7 +8,13 @@ module LibUI
     attr_accessor :ffi_lib
   end
 
-  host_cpu = RbConfig::CONFIG['host_cpu'].gsub(/i[36]86/, 'x86')
+  host_cpu = case RbConfig::CONFIG['host_cpu']
+             when /i\d86/
+               'x86'
+             else
+               RbConfig::CONFIG['host_cpu']
+             end
+
   lib_name = [
     # For libui-ng shared libraries compiled with (rake vendor:build)
     "libui.#{RbConfig::CONFIG['host_cpu']}.#{RbConfig::CONFIG['SOEXT']}",

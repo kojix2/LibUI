@@ -17,20 +17,23 @@ DEBUG_DIR = 'libui/debug'
 
 # Platform-specific configuration for shared libraries
 PLATFORM_CONFIG = {
-  darwin_arm64: [
+  'arm64-darwin': [
     { zip: 'macOS-arm64-shared-release.zip', src: 'builddir/meson-out/libui.dylib', dest: 'vendor/libui.arm64.dylib' }
   ],
-  darwin_x64: [
+  'x86_64-darwin': [
     { zip: 'macOS-x64-shared-release.zip', src: 'builddir/meson-out/libui.dylib', dest: 'vendor/libui.x86_64.dylib' }
   ],
-  linux_x64: [
+  'x86_64-linux': [
     { zip: 'Ubuntu-x64-shared-release.zip', src: 'builddir/meson-out/libui.so', dest: 'vendor/libui.x86_64.so' }
   ],
-  linux_arm64: [
-    { zip: 'Ubuntu-arm64-shared-release.zip', src: 'builddir/meson-out/libui.so', dest: 'vendor/libui.aarch64.so' }
+  'arm-linux': [
+    { zip: 'Ubuntu-arm64-shared-release.zip', src: 'builddir/meson-out/libui.so', dest: 'vendor/libui.arm.so' }
   ],
-  mingw: [
+  'x64-mingw32': [
     { zip: 'Win-x64-shared-release.zip', src: 'builddir/meson-out/libui.dll', dest: 'vendor/libui.x64.dll' }
+  ],
+  'x86-mingw32': [
+    { zip: 'Win-x86-shared-release.zip', src: 'builddir/meson-out/libui.dll', dest: 'vendor/libui.x86.dll' }
   ]
 }.freeze
 
@@ -127,39 +130,16 @@ def process_platform(platform_entries)
 end
 
 def detect_platform
-  case RUBY_PLATFORM
-  when /darwin/
-    # Detect macOS architecture
-    if RUBY_PLATFORM.include?('arm64') || RbConfig::CONFIG['host_cpu'] == 'arm64'
-      :darwin_arm64
-    else
-      :darwin_x64
-    end
-  when /linux/
-    # Detect Linux architecture
-    if RUBY_PLATFORM.include?('aarch64') || RbConfig::CONFIG['host_cpu'] == 'aarch64'
-      :linux_arm64
-    else
-      :linux_x64
-    end
-  when /mingw/
-    :mingw
-  when /mswin/
-    :msvc
-  else
-    log_message "Unknown platform: #{RUBY_PLATFORM}"
-    log_message 'TODO: Add support for your platform'
-    nil
-  end
+  Gem::Platform.local.to_s
 end
 
 # Platform gem building
 platforms = %w[
   x86_64-linux
-  aarch64-linux
+  arm-linux
   x86_64-darwin
   arm64-darwin
-  x64-mingw
+  x64-mingw32
   x86-mingw32
 ]
 

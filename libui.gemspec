@@ -20,12 +20,12 @@ Gem::Specification.new do |spec|
   case spec.platform.to_s
   when 'x86_64-linux'
     spec.files << 'vendor/libui.x86_64.so'
-  when 'aarch64-linux'
-    spec.files << 'vendor/libui.aarch64.so' # raspberry pi
+  when 'arm-linux'
+    spec.files << 'vendor/libui.arm.so'
   when 'x86_64-darwin'
-    spec.files << 'vendor/libui.x86_64.dylib' # universal binary
+    spec.files << 'vendor/libui.x86_64.dylib'
   when 'arm64-darwin'
-    spec.files << 'vendor/libui.arm64.dylib' # universal binary
+    spec.files << 'vendor/libui.arm64.dylib'
   when 'x64-mingw32', 'x64-mingw-ucrt'
     spec.files << 'vendor/libui.x64.dll'
   when 'x86-mingw32'
