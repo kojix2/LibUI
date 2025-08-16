@@ -27,7 +27,7 @@ jobs:
           - os: ubuntu-latest
             gem_platform: x86_64-linux
             expected_file: vendor/libui.x86_64.so
-          - os: ubuntu-latest
+          - os: ubuntu-24.04-arm
             gem_platform: aarch64-linux
             expected_file: vendor/libui.aarch64.so
           # macOS
@@ -37,7 +37,7 @@ jobs:
           - os: macos-14 # Apple Silicon
             gem_platform: arm64-darwin
             expected_file: vendor/libui.arm64.dylib
-          # Windows
+          # Windows (same binary for both platforms)
           - os: windows-latest
             gem_platform: x64-mingw-ucrt
             expected_file: vendor/libui.x64.dll
@@ -92,7 +92,7 @@ jobs:
       - name: Assert gem platform is ${{ matrix.gem_platform }}
         run: |
           GEM_FILE="$(ls -1 libui-*.gem | tail -n1)"
-          actual="$(gem specification "$GEM_FILE" platform | awk '{print $2}')"
+          actual="$(gem specification "$GEM_FILE" | grep 'platform:' | awk '{print $2}')"
           echo "Gem platform: $actual"
           if [ "$actual" != "$GEM_PLATFORM" ]; then
             echo "Gem platform mismatch: expected $GEM_PLATFORM but got $actual"
