@@ -75,6 +75,16 @@ def detect_platform_config_key
           current_platform.os == 'linux' &&
           %w[aarch64 arm64].include?(current_platform.cpu)
       true
+    # Custom Windows mingw matching for x64 variants
+    elsif config_key == 'x64-mingw32' &&
+          current_platform.os.start_with?('mingw') &&
+          %w[x64 x86_64].include?(current_platform.cpu)
+      true
+    # Custom Windows mingw matching for x86 variants
+    elsif config_key == 'x86-mingw32' &&
+          current_platform.os.start_with?('mingw') &&
+          %w[x86 i386 i686].include?(current_platform.cpu)
+      true
     else
       false
     end
