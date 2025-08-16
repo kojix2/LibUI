@@ -172,6 +172,9 @@ namespace 'vendor' do
       log_message 'No configuration found for current platform'
       exit 1
     end
+  ensure
+    # Clean up temporary directory after processing
+    Rake::Task['vendor:cleanup'].invoke
   end
 
   desc 'Clean vendor directory'
@@ -214,6 +217,3 @@ namespace 'vendor' do
     end
   end
 end
-
-# Add cleanup to auto task
-task 'vendor:auto' => 'vendor:cleanup'
