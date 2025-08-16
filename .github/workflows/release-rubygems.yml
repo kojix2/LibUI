@@ -1,0 +1,119 @@
+name: Release libui to RubyGems
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rubygems-release-${{ github.ref_name }}
+  cancel-in-progress: false
+
+env:
+  RUBY_VERSION: "3.3"
+
+jobs:
+  build-and-publish:
+    if: github.repository == 'kojix2/LibUI'
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Linux
+          - os: ubuntu-latest
+            gem_platform: x86_64-linux
+            expected_file: vendor/libui.x86_64.so
+          - os: ubuntu-latest
+            gem_platform: aarch64-linux
+            expected_file: vendor/libui.aarch64.so
+          # macOS
+          - os: macos-13 # Intel
+            gem_platform: x86_64-darwin
+            expected_file: vendor/libui.x86_64.dylib
+          - os: macos-14 # Apple Silicon
+            gem_platform: arm64-darwin
+            expected_file: vendor/libui.arm64.dylib
+          # Windows
+          - os: windows-latest
+            gem_platform: x64-mingw-ucrt
+            expected_file: vendor/libui.x64.dll
+          - os: windows-latest
+            gem_platform: x64-mingw32
+            expected_file: vendor/libui.x64.dll
+
+    runs-on: ${{ matrix.os }}
+
+    env:
+      GEM_PLATFORM: ${{ matrix.gem_platform }}
+      BUNDLE_WITHOUT: "development"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ env.RUBY_VERSION }}
+          bundler-cache: true
+
+      - name: Show versions
+        run: |
+          ruby -v
+          gem -v
+          bundle -v
+        shell: bash
+
+      - name: Prepare vendored binary (bundle exec rake vendor:auto)
+        run: |
+          bundle exec rake vendor:auto
+        shell: bash
+
+      - name: Verify vendored binary for ${{ matrix.gem_platform }}
+        run: |
+          if [ ! -f "${{ matrix.expected_file }}" ]; then
+            echo "Expected file not found: ${{ matrix.expected_file }}"
+            echo "Check that 'bundle exec rake vendor:auto' downloads this file for platform ${GEM_PLATFORM}."
+            exit 1
+          fi
+        shell: bash
+
+      - name: Build gem (platform ${{ matrix.gem_platform }})
+        run: |
+          rm -f libui-*.gem
+          gem build libui.gemspec
+          ls -l libui-*.gem
+        shell: bash
+
+      - name: Assert gem platform is ${{ matrix.gem_platform }}
+        run: |
+          GEM_FILE="$(ls -1 libui-*.gem | tail -n1)"
+          actual="$(gem specification "$GEM_FILE" platform | awk '{print $2}')"
+          echo "Gem platform: $actual"
+          if [ "$actual" != "$GEM_PLATFORM" ]; then
+            echo "Gem platform mismatch: expected $GEM_PLATFORM but got $actual"
+            exit 1
+          fi
+        shell: bash
+
+      - name: Push to RubyGems
+        if: success()
+        env:
+          GEM_HOST_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
+        run: |
+          set -e
+          GEM_FILE="$(ls -1 libui-*.gem | tail -n1)"
+          echo "Pushing $GEM_FILE to RubyGems..."
+          # Try push; ignore 'already exists' error to let other matrices continue.
+          set +e
+          gem push "$GEM_FILE"
+          status=$?
+          set -e
+          if [ $status -ne 0 ]; then
+            echo "gem push failed (possibly already published for this platform). Continuing."
+          fi
+        shell: bash

@@ -10,7 +10,7 @@ LibUI is a Ruby wrapper for libui family.
 
 :rocket: [libui-ng](https://github.com/libui-ng/libui-ng) - A cross-platform portable GUI library
 
-:wrench: [libui-dev](https://github.com/petabyt/libui-dev) - Native UI library for C - with some extras 
+:wrench: [libui-dev](https://github.com/petabyt/libui-dev) - Native UI library for C - with some extras
 
 :radio_button: [libui](https://github.com/andlabs/libui) - Original version by andlabs.
 
@@ -214,6 +214,19 @@ Alternatively, you can tell Ruby LibUI the location of shared libraries. Set the
 Another simple approach is to replace the shared libraries in the gem vendor directory with the ones you have compiled.
 
 ### Publishing gems
+
+#### Automated Publishing
+
+Push a version tag to automatically publish platform-specific gems:
+
+```sh
+git tag v0.1.3
+git push origin v0.1.3
+```
+
+Requires `RUBYGEMS_API_KEY` repository secret with scoped API key.
+
+#### Manual Publishing
 
 ```sh
 ls vendor             # check the vendor directory

@@ -15,8 +15,11 @@ Gem::Specification.new do |spec|
 
   spec.required_ruby_version = '>= 2.6'
 
-  # See `gem help platform` for information on platform matching.
+  # Use the GEM_PLATFORM environment variable if specified
+  gem_platform = ENV['GEM_PLATFORM']
+  spec.platform = gem_platform if gem_platform && !gem_platform.empty? && gem_platform != 'ruby'
 
+  # See `gem help platform` for information on platform matching.
   case spec.platform.to_s
   when 'x86_64-linux'
     spec.files << 'vendor/libui.x86_64.so'
