@@ -51,6 +51,36 @@ def log_message(message)
   puts "[Rake] #{message}"
 end
 
+def detect_platform_config_key
+  # Environment variable override
+  if ENV['GEM_PLATFORM']
+    platform_str = ENV['GEM_PLATFORM']
+    return platform_str if PLATFORM_CONFIG.key?(platform_str)
+  end
+
+  current_platform = Gem::Platform.local
+
+  # Try exact match first
+  return current_platform.to_s if PLATFORM_CONFIG.key?(current_platform.to_s)
+
+  # Use RubyGems matching with custom ARM support
+  PLATFORM_CONFIG.keys.find do |config_key|
+    config_platform = Gem::Platform.new(config_key)
+
+    # Standard RubyGems matching
+    if Gem::Platform.send(:match_platforms?, current_platform, [config_platform])
+      true
+    # Custom ARM64/aarch64 → arm-linux mapping
+    elsif config_key == 'arm-linux' &&
+          current_platform.os == 'linux' &&
+          %w[aarch64 arm64].include?(current_platform.cpu)
+      true
+    else
+      false
+    end
+  end
+end
+
 def url_for_libui_ng_commit(file_name)
   "https://github.com/kojix2/libui-ng/releases/download/commit-#{COMMIT_HASH}/#{file_name}"
 end
@@ -129,10 +159,6 @@ def process_platform(platform_entries)
   end
 end
 
-def detect_platform
-  Gem::Platform.local.to_s
-end
-
 # Platform gem building
 platforms = %w[
   x86_64-linux
@@ -164,12 +190,14 @@ end
 namespace 'vendor' do
   desc 'Download pre-built libraries for current platform'
   task :auto do
-    platform = detect_platform
-    if platform && PLATFORM_CONFIG[platform]
-      log_message "Processing platform: #{platform}"
-      process_platform(PLATFORM_CONFIG[platform])
+    platform_key = detect_platform_config_key
+    if platform_key && PLATFORM_CONFIG[platform_key]
+      log_message "Processing platform: #{platform_key}"
+      process_platform(PLATFORM_CONFIG[platform_key])
     else
-      log_message 'No configuration found for current platform'
+      current_platform = Gem::Platform.local
+      log_message "No configuration found for current platform: #{current_platform}"
+      log_message "Available platforms: #{PLATFORM_CONFIG.keys.join(', ')}"
       exit 1
     end
   ensure
