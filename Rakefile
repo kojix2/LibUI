@@ -8,7 +8,7 @@ require 'zip'
 require_relative 'lib/libui/version'
 
 # Configuration
-COMMIT_HASH = ENV['LIBUI_NG_COMMIT_HASH'] || '0dfce71'
+COMMIT_HASH = ENV['LIBUI_NG_COMMIT_HASH'] || '9283348'
 
 # Path constants
 BUILD_DIR = 'builddir'
@@ -27,8 +27,7 @@ PLATFORM_CONFIG = {
     { zip: 'Ubuntu-x64-shared-release.zip', src: 'builddir/meson-out/libui.so', dest: 'vendor/libui.x86_64.so' }
   ],
   linux_arm64: [
-    # ARM64 Linux uses x64 binary (no native ARM64 build available)
-    { zip: 'Ubuntu-x64-shared-release.zip', src: 'builddir/meson-out/libui.so', dest: 'vendor/libui.aarch64.so' }
+    { zip: 'Ubuntu-arm64-shared-release.zip', src: 'builddir/meson-out/libui.so', dest: 'vendor/libui.aarch64.so' }
   ],
   mingw: [
     { zip: 'Win-x64-shared-release.zip', src: 'builddir/meson-out/libui.dll', dest: 'vendor/libui.x64.dll' }
