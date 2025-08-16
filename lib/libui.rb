@@ -11,8 +11,6 @@ module LibUI
   host_cpu = case RbConfig::CONFIG['host_cpu']
              when /i\d86/
                'x86'
-             when /^(aarch64|arm64)$/
-               'arm'
              else
                RbConfig::CONFIG['host_cpu']
              end

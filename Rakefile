@@ -26,8 +26,8 @@ PLATFORM_CONFIG = {
   'x86_64-linux' => [
     { zip: 'Ubuntu-x64-shared-release.zip', src: 'builddir/meson-out/libui.so', dest: 'vendor/libui.x86_64.so' }
   ],
-  'arm-linux' => [
-    { zip: 'Ubuntu-arm64-shared-release.zip', src: 'builddir/meson-out/libui.so', dest: 'vendor/libui.arm.so' }
+  'aarch64-linux' => [
+    { zip: 'Ubuntu-arm64-shared-release.zip', src: 'builddir/meson-out/libui.so', dest: 'vendor/libui.aarch64.so' }
   ],
   'x64-mingw32' => [
     { zip: 'Win-x64-shared-release.zip', src: 'builddir/meson-out/libui.dll', dest: 'vendor/libui.x64.dll' }
@@ -63,17 +63,12 @@ def detect_platform_config_key
   # Try exact match first
   return current_platform.to_s if PLATFORM_CONFIG.key?(current_platform.to_s)
 
-  # Use RubyGems matching with custom ARM support
+  # Use RubyGems matching with custom Windows mingw support
   PLATFORM_CONFIG.keys.find do |config_key|
     config_platform = Gem::Platform.new(config_key)
 
     # Standard RubyGems matching
     if Gem::Platform.send(:match_platforms?, current_platform, [config_platform])
-      true
-    # Custom ARM64/aarch64 → arm-linux mapping
-    elsif config_key == 'arm-linux' &&
-          current_platform.os == 'linux' &&
-          %w[aarch64 arm64].include?(current_platform.cpu)
       true
     # Custom Windows mingw matching for x64 variants
     elsif config_key == 'x64-mingw32' &&
@@ -172,7 +167,7 @@ end
 # Platform gem building
 platforms = %w[
   x86_64-linux
-  arm-linux
+  aarch64-linux
   x86_64-darwin
   arm64-darwin
   x64-mingw32
