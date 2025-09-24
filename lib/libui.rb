@@ -42,15 +42,20 @@ module LibUI
 
   class << self
     def init(opt = nil)
+      # Allocate uiInitOptions if not provided
       unless opt
         opt = FFI::InitOptions.malloc
         opt.to_ptr.free = Fiddle::RUBY_FREE
       end
-      i = super(opt)
-      return if i.size.zero?
 
-      warn 'error'
-      warn UI.free_init_error(init)
+      err_ptr = super(opt) # uiInit returns const char* error or NULL on success
+      return nil if err_ptr.null?
+
+      # Convert C string to Ruby string and free the error string per API contract
+      err_msg = err_ptr.to_s
+      free_init_error(err_ptr)
+      warn err_msg
+      nil
     end
 
     # Gets the window position.
