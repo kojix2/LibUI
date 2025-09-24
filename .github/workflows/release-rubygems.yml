@@ -63,7 +63,7 @@ jobs:
       - name: Update RubyGems for Windows Ruby 2.7 (enable 'gem exec')
         if: ${{ matrix.gem_platform == 'x64-mingw32' }}
         run: |
-          gem update --system
+          gem update --system 3.4.22
           gem --version
         shell: bash
 
