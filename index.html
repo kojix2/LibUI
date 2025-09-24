@@ -295,6 +295,15 @@ find pkg -name *.gem -exec sh -c &quot;echo; echo \# {}; tar -O -f {} -x data.ta
 rake release_platform # publish gems
 </code></pre>
 
+<p>Windows Ruby 2.7 (x64-mingw32)</p>
+
+<pre class="code ruby"><code class="ruby">gem install rake rubyzip
+GEM_PLATFORM=x64-mingw32 rake vendor:clean
+GEM_PLATFORM=x64-mingw32 rake vendor:auto
+GEM_PLATFORM=x64-mingw32 gem build libui.gemspec
+gem push libui-0.2.0-x64-mingw32.gem
+</code></pre>
+
 <h3 id="label-libui+or+libui-ng">libui or libui-ng</h3>
 <ul><li>
 <p>From version 0.1.X, we plan to support only libui-ng/libui-ng.</p>
@@ -342,7 +351,7 @@ rake release_platform # publish gems
 </div></div>
 
       <div id="footer">
-  Generated on Wed Sep 24 03:15:59 2025 by
+  Generated on Wed Sep 24 03:19:13 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.6).
 </div>
