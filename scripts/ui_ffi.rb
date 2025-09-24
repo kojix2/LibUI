@@ -13,8 +13,8 @@ puts 'count try_extern'
 puts matches.count
 
 # Print try_extern calls
-puts matches.map { _1.delete_prefix("try_extern '").delete_suffix("'") }
+puts(matches.map { _1.delete_prefix("try_extern '").delete_suffix("'") })
 
 # Print enum names
-puts libui_lines.select { _1.start_with?('  # ') }
-                .map { _1.delete_prefix('  # ').strip }
+puts(libui_lines.select { _1.start_with?('  # ') }
+                .map { _1.delete_prefix('  # ').strip })

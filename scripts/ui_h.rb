@@ -23,16 +23,16 @@ end
 # - Count the occurrences of '_UI_EXTERN'
 
 puts 'count _UI_EXTERN'
-puts ui_h.count { _1.start_with?('_UI_EXTERN') }
+puts(ui_h.count { _1.start_with?('_UI_EXTERN') })
 
 # Functions
 # - Print the definitions of functions marked with '_UI_EXTERN'
 
-puts ui_h.select { _1.start_with?('_UI_EXTERN') }
-         .map { _1.delete_prefix('_UI_EXTERN ').squeeze(' ') }
+puts(ui_h.select { _1.start_with?('_UI_EXTERN') }
+         .map { _1.delete_prefix('_UI_EXTERN ').squeeze(' ') })
 
 # Enums
 # - Print the names of enums marked with '_UI_ENUM'
 
-puts ui_h.select { _1.include?('_UI_ENUM') }
-         .map { _1.match(/_UI_ENUM\(ui(\w+)/)[1] }
+puts(ui_h.select { _1.include?('_UI_ENUM') }
+         .map { _1.match(/_UI_ENUM\(ui(\w+)/)[1] })

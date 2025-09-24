@@ -37,7 +37,6 @@ def point_locations(datapoints, width, height)
   datapoints.each_with_index do |dp, i|
     val = 100 - UI.spinbox_value(dp)
     data << [xincr * i, yincr * val]
-    i += 1
   end
 
   data

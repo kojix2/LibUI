@@ -38,7 +38,7 @@ UI.menu_append_separator(edit_menu)
 disabled_item = UI.menu_append_item(edit_menu, 'Disabled Item_')
 UI.menu_item_disable(disabled_item)
 
-preferences = UI.menu_append_preferences_item(menu)
+UI.menu_append_preferences_item(menu)
 
 # Help menu
 help_menu = UI.new_menu('Help')
