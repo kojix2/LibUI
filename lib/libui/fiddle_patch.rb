@@ -16,7 +16,7 @@ module LibUI
                           when /^([\w\*\s]+[*\s])(\w+)\((.*?)\);?$/
                             [parse_ctype(Regexp.last_match(1).strip, tymap), Regexp.last_match(2), Regexp.last_match(3)]
                           else
-                            raise("can't parserake the function prototype: #{signature}")
+                            raise("can't parse the function prototype: #{signature}")
                           end
       symname = func
       callback_argument_types = {}                                              # Added
