@@ -46,6 +46,7 @@ module LibUI
       unless opt
         opt = FFI::InitOptions.malloc
         opt.to_ptr.free = Fiddle::RUBY_FREE
+        opt.Size = FFI::InitOptions.size
       end
 
       err_ptr = super(opt) # uiInit returns const char* error or NULL on success
