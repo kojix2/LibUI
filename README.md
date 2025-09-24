@@ -177,40 +177,27 @@ Add additional options below if necessary:
 git clone https://github.com/kojix2/libui
 cd libui
 bundle install
-bundle exec rake vendor:auto # vendor:build
+bundle exec rake vendor:auto
 bundle exec rake test
 ```
 
 ### Pre-built shared libraries for libui-ng
 
-Use the following rake tasks to download the shared library required for your platform:
+Download pre-built libui-ng shared libraries (per your current platform):
 
-`rake -T`
-
-```
-rake vendor:build[hash]          # Build libui-ng latest master [commit hash]
-rake vendor:libui-ng:macos       # Download latest official pre-build for Mac to vendor directory
-rake vendor:libui-ng:ubuntu_x64  # Download latest official pre-build for Ubuntu to vendor directory
-rake vendor:macos_arm64          # Download pre-build for Mac to vendor directory
-rake vendor:macos_x64            # Download pre-build for Mac to vendor directory
-rake vendor:raspbian_aarch64     # Download pre-build for Raspbian to vendor directory
-rake vendor:ubuntu_x64           # Download pre-build for Ubuntu to vendor directory
-rake vendor:windows_x64          # Download pre-build for Windows to vendor directory
-rake vendor:windows_x86          # Download pre-build for Windows to vendor directory
+```sh
+bundle exec rake vendor:auto
 ```
 
-For example, if you are using a 32-bit (x86) version of Ruby on Windows, type `vendor:windows_x86`.
-These shared libraries are [artifacts](https://github.com/kojix2/libui-ng/actions/workflows/pre-build.yml) of the [pre-build branch](https://github.com/kojix2/libui-ng/tree/pre-build) of [kojix2/libui-ng](https://github.com/kojix2/libui-ng). In that case, please let us know.
+Clean downloaded vendor files (keeps `vendor/{LICENSE,README}.md`):
 
-### Using C libui compiled from source code
+```sh
+bundle exec rake vendor:clean
+```
 
-The following Rake task will compile libui-ng. meson or ninja is required.
+### Using your own libui build
 
-`bundle exec rake vendor:build`
-
-Alternatively, you can tell Ruby LibUI the location of shared libraries. Set the environment variable `LIBUIDIR` to specify the path to the shared library. (See [#46](https://github.com/kojix2/LibUI/issues/46#issuecomment-1041575792)). This is especially useful on platforms where the LibUI gem does not provide shared library, such as the ARM architecture (used in devices like Raspberry Pi).
-
-Another simple approach is to replace the shared libraries in the gem vendor directory with the ones you have compiled.
+If you build libui-ng yourself, set `LIBUIDIR` to the directory containing the compiled `.so/.dylib/.dll` so LibUI can load it. You may also replace files under `vendor/` with your build if preferred. See [#46](https://github.com/kojix2/LibUI/issues/46#issuecomment-1041575792).
 
 ### Publishing gems
 
