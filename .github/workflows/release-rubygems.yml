@@ -63,6 +63,13 @@ jobs:
           bundle -v
         shell: bash
 
+      - name: Update RubyGems for Windows Ruby 2.7 (enable 'gem exec')
+        if: ${{ matrix.gem_platform == 'x64-mingw32' }}
+        run: |
+          gem update --system
+          gem --version
+        shell: bash
+
       - name: Prepare vendored binary (bundle exec rake vendor:auto)
         run: |
           bundle exec rake vendor:auto
