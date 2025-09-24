@@ -225,6 +225,16 @@ find pkg -name *.gem -exec sh -c "echo; echo \# {}; tar -O -f {} -x data.tar.gz 
 rake release_platform # publish gems
 ```
 
+Windows Ruby 2.7 (x64-mingw32)
+
+```sh
+gem install rake rubyzip
+GEM_PLATFORM=x64-mingw32 rake vendor:clean
+GEM_PLATFORM=x64-mingw32 rake vendor:auto
+GEM_PLATFORM=x64-mingw32 gem build libui.gemspec
+gem push libui-0.2.0-x64-mingw32.gem
+```
+
 ### libui or libui-ng
 
 - From version 0.1.X, we plan to support only libui-ng/libui-ng.
