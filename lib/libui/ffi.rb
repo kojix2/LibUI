@@ -37,7 +37,8 @@ module LibUI
       end
     end
 
-    typealias('uint32_t', 'unsigned int')
+  typealias('uint32_t', 'unsigned int')
+  typealias('uint64_t', 'unsigned long long')
 
     InitOptions = struct [
       'size_t Size'
