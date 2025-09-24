@@ -12,28 +12,25 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # Default Ruby version: 3.3 (used for all platforms except x64-mingw32)
+        # Default Ruby version: 3.4 (used for all platforms except x64-mingw32)
         include:
-          # Linux
           - os: ubuntu-latest
-            ruby-version: "3.3"
+            ruby-version: "3.4"
             gem_platform: x86_64-linux
           - os: ubuntu-24.04-arm
-            ruby-version: "3.3"
+            ruby-version: "3.4"
             gem_platform: aarch64-linux
-          # macOS
           - os: macos-13 # Intel
-            ruby-version: "3.3"
+            ruby-version: "3.4"
             gem_platform: x86_64-darwin
           - os: macos-14 # Apple Silicon
-            ruby-version: "3.3"
+            ruby-version: "3.4"
             gem_platform: arm64-darwin
-          # Windows (same binary for both platforms)
           - os: windows-latest
             ruby-version: "2.7" # Ruby 2.7 is used for x64-mingw32 because newer Ruby versions default to x64-mingw-ucrt platform, causing bundler platform resolution conflicts
             gem_platform: x64-mingw32
           - os: windows-latest
-            ruby-version: "3.3"
+            ruby-version: "3.4"
             gem_platform: x64-mingw-ucrt
 
     runs-on: ${{ matrix.os }}
