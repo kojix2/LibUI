@@ -25,11 +25,13 @@ module LibUI
           # Protect from GC
           # by giving the owner object a reference to the callback.
           # See https://github.com/kojix2/LibUI/issues/8
-          owner = if idx == 0 or   # UI.queue_main{}
-                     owner.frozen? # UI.timer(100) {}
-                    LibUIBase # or UI is better?
+          receiver = args.first
+          owner = if idx == 0 || # UI.queue_main{}
+                     receiver.nil? ||
+                     (receiver.respond_to?(:frozen?) && receiver.frozen?) # UI.timer(100) {}
+                    LibUIBase # keep a reference on an internal module to avoid GC
                   else
-                    args[0] # receiver
+                    receiver # receiver object holds the callback
                   end
           if owner.instance_variable_defined?(:@callbacks)
             owner.instance_variable_get(:@callbacks) << callback
