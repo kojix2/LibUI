@@ -9,27 +9,34 @@ including functionality to test the on-clicked event. Same for combobox.rb, whic
 should include all code specific to the combobox-widget, and so forth. Code used
 for this purpose should be contained within a single .rb file only, as well as the
 libui-bindings necessary to demonstrate its functionality (e. g. toplevel LibUI or
-UI, the main window, usually a box to contain the widget at hand, and so forth).
+UI, the main window, usually a box to contain the widget at hand, and so forth). This
+way a new user can look at the included functionality, learn from it, and quickly
+adapt it to his or her use case.
 
 - Provide explanations to any other methods and functions that are offered
 by this project, even if it may not be directly related to a specific widget.
 For instance, querying the current libui-version, if that is made available
-by upstream code.
+by upstream code, and similar functionality that new users may find useful,
+or old users may have forgotten - thus, this also serves as a quick refresher
+for remembering how to use something, with a focus on specific widgets.
 
 - Documentation and explanations within those individual .rb files. That way
 new users of this project may learn the bindings made available by kojix2
 more rapidly so.
 
-Stay tuned for more updates in this regard in the long run. Right now nine 
-widgets have been added; expect more code in this regard over the next days and weeks. \o/
+Stay tuned for more updates in this regard in the long run. Right now nine
+widgets have been added; expect more code in this regard over the next weeks
+or months. \o/
 
-I also invite others to contribute changes, including documentation. Let's improve the
-default experience of ruby + libui for new users, as well as provide working reference
+I also invite other people to contribute changes, including documentation. Let's improve
+the default experience of ruby + libui for new users, as well as provide working reference
 implementations for all functionality made available in ruby-libui.
 
-So far (this update) almost 82 "components" are verified by examples in the subdirectory examples2/ here. I think we are close to 50% in total now or almost at 50%.
+So far (this update) almost 82 "components" are verified by examples in the subdirectory examples2/ here.
+I think we are close to 50% in total now or almost at 50%.
 
-Widgets that have been added to this subdirectory include, as standalone files:
+Widgets that have been added to this subdirectory include, as standalone files, in alphabetical
+order:
 
     button.rb
     checkbox.rb
@@ -38,8 +45,8 @@ Widgets that have been added to this subdirectory include, as standalone files:
     date_picker.rb
     editable_combobox.rb
     entry.rb
-    multiline_entry.rb
     grid.rb
+    multiline_entry.rb
     password_entry.rb
     progress_bar.rb
     search_entry.rb
@@ -100,3 +107,4 @@ Available new-entries in regards to LibUI include:
 - new_vertical_separator
 - new_weight_attribute
 - new_window
+
