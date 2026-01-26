@@ -3,7 +3,6 @@ require_relative 'fiddle_patch'
 require_relative 'error'
 
 module LibUI
-
   module FFI
     extend Fiddle::Importer
     extend FiddlePatch
@@ -516,6 +515,7 @@ module LibUI
     try_extern 'void uiDrawFreeTextLayout(uiDrawTextLayout *tl)'
     try_extern 'void uiDrawText(uiDrawContext *c, uiDrawTextLayout *tl, double x, double y)'
     try_extern 'void uiDrawTextLayoutExtents(uiDrawTextLayout *tl, double *width, double *height)'
+    try_extern 'void uiDrawImage(uiDrawContext *c, uiImage *img, double x, double y, double width, double height)'
 
     # uiFontButton
 
@@ -568,6 +568,8 @@ module LibUI
 
     typealias 'uiAt', 'int'
 
+    typealias 'uiImageViewContentMode', 'int'
+
     # uiGrid
 
     try_extern 'void uiGridAppend(uiGrid *g, uiControl *c, int left, int top, int xspan, int yspan, int hexpand, uiAlign halign, int vexpand, uiAlign valign)'
@@ -581,6 +583,12 @@ module LibUI
     try_extern 'uiImage *uiNewImage(double width, double height)'
     try_extern 'void uiFreeImage(uiImage *i)'
     try_extern 'void uiImageAppend(uiImage *i, void *pixels, int pixelWidth, int pixelHeight, int byteStride)'
+
+    # uiImageView
+
+    try_extern 'uiImageView *uiNewImageView(void)'
+    try_extern 'void uiImageViewSetImage(uiImageView *iv, const uiImage *image)'
+    try_extern 'void uiImageViewSetContentMode(uiImageView *iv, uiImageViewContentMode mode)'
 
     # uiTable
     try_extern 'void uiFreeTableValue(uiTableValue *v)'

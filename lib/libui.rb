@@ -192,6 +192,10 @@ module LibUI
   DrawTextAlignCenter = 1
   DrawTextAlignRight  = 2
 
+  # ImageViewContentMode
+  ImageViewContentCenter = 0
+  ImageViewContentFit    = 1
+
   # Modifiers
   ModifierCtrl  = (1 << 0)
   ModifierAlt   = (1 << 1)
