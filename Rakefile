@@ -9,7 +9,7 @@ require 'bundler/gem_tasks'
 require_relative 'lib/libui/version'
 
 # Configuration
-COMMIT_HASH = ENV['LIBUI_NG_COMMIT_HASH'] || 'c434e03'
+COMMIT_HASH = ENV['LIBUI_NG_COMMIT_HASH'] || 'd37a4d8'
 
 # Path constants
 BUILD_DIR = 'builddir'
@@ -31,10 +31,10 @@ PLATFORM_CONFIG = {
     { zip: 'Ubuntu-arm64-shared-release.zip', src: 'builddir/meson-out/libui.so', dest: 'vendor/libui.aarch64.so' }
   ],
   'x64-mingw32' => [
-    { zip: 'Win-x64-shared-release.zip', src: 'builddir/meson-out/libui.dll', dest: 'vendor/libui.x64.dll' }
+    { zip: 'Windows-x64-msvc-shared-release.zip', src: 'builddir/meson-out/libui.dll', dest: 'vendor/libui.x64.dll' }
   ],
   'x86-mingw32' => [
-    { zip: 'Win-x86-shared-release.zip', src: 'builddir/meson-out/libui.dll', dest: 'vendor/libui.x86.dll' }
+    { zip: 'Windows-x86-msvc-shared-release.zip', src: 'builddir/meson-out/libui.dll', dest: 'vendor/libui.x86.dll' }
   ]
 }.freeze
 
