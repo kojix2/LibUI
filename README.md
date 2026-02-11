@@ -16,20 +16,12 @@ LibUI is a Ruby wrapper for libui family.
 
 ## Installation
 
-It is recommended to use libui-ng, via the --pre commandline flag:
-
 ```sh
-gem install libui --pre # libui-ng; this will fetch libui-0.1.3.pre-x86_64-linux.gem
-```
-
-If for some reason you would like to install the slightly older libui-0.1.2.gem release, issue:
-
-```sh
-gem install libui
+gem install libui # --pre
 ```
 
 - The gem package includes the libui-ng shared library for Windows, Mac, and Linux.
-  - Namely `libui.dll`, `libui.dylib`, or `libui.so`.
+  - Namely `libui.x64.dll`/`libui.x86.dll`, `libui.x86_64.dylib`/`libui.arm64.dylib`, or `libui.x86_64.so`/`libui.aarch64.so`.
 - No dependencies required.
   - The libui gem uses the standard Ruby library [Fiddle](https://github.com/ruby/fiddle) to call C functions.
 
@@ -85,7 +77,7 @@ Compared to the original libui library written in C:
   - The block will be converted to a Proc object and added as the last argument.
   - The last argument can still be omitted when nil.
 
-You can use [the documentation for libui's Go bindings](https://pkg.go.dev/github.com/andlabs/ui) as a reference.
+You can use [the libui-ng API documentation](https://libui-ng.github.io/libui-ng/) as a reference.
 
 ### DSLs for LibUI
 
@@ -206,8 +198,8 @@ If you build libui-ng yourself, set `LIBUIDIR` to the directory containing the c
 Push a version tag to automatically publish platform-specific gems:
 
 ```sh
-git tag v0.1.3
-git push origin v0.1.3
+git tag v0.2.0
+git push origin v0.2.0
 ```
 
 Requires `RUBYGEMS_API_KEY` repository secret with scoped API key.
@@ -225,7 +217,7 @@ find pkg -name *.gem -exec sh -c "echo; echo \# {}; tar -O -f {} -x data.tar.gz 
 rake release_platform # publish gems
 ```
 
-Windows Ruby 2.7 (x64-mingw32)
+Windows Ruby (x64-mingw32 or x64-mingw-ucrt)
 
 ```sh
 gem install rake rubyzip
@@ -237,7 +229,7 @@ gem push libui-0.2.0-x64-mingw32.gem
 
 ### libui or libui-ng
 
-- From version 0.1.X, we plan to support only libui-ng/libui-ng.
+- From version 0.1.X, LibUI supports only libui-ng.
 - Version 0.0.X only supports andlabs/libui.
 
 ## Contributing
