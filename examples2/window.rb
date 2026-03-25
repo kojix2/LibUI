@@ -53,6 +53,7 @@ LibUI.box_set_padded(hbox, 1)
 # ============================================================================ #
 # LibUI.window_set_content_size() is actually
 # LibUI::FFI.uiWindowSetContentSize
+#
 # The code for this is:
 #
 #   try_extern 'void uiWindowSetContentSize(uiWindow *w, int width, int height)'
@@ -65,9 +66,6 @@ LibUI.box_set_padded(hbox, 1)
 #   https://libui.dev/structui_window.html#a1f33b8462a999bdaf276bcdca07dfe28
 #
 # ============================================================================ #
-#LibUI.window_set_content_size(main_window, 500, 300)
-# ^^^ this one does not work.
-
 _ = LibUI.new_label(
   "Just testing the window-widget here.\n\n"\
   "For testing-purposes this window can not be resized, "\
@@ -116,6 +114,10 @@ LibUI.window_on_closing(main_window) {
   LibUI.quit
   1 # An Integer must be returned by this block.
 }
+
+puts 'Setting the content-size of the main window to a value of 2200, 500 next,'
+puts 'to test the method called LibUI.window_set_content_size():'
+LibUI.window_set_content_size(main_window, 2200, 500) # This actually works, I tested it recently.
 
 LibUI.main
 LibUI.uninit
