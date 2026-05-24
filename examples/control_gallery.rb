@@ -3,6 +3,12 @@ UI = LibUI
 
 UI.init
 
+def ui_text(text_pointer)
+  text_pointer.to_s
+ensure
+  UI.free_text(text_pointer) if text_pointer && !text_pointer.null?
+end
+
 # File menu
 menu = UI.new_menu('File')
 open_menu_item = UI.menu_append_item(menu, 'Open')
@@ -191,7 +197,7 @@ UI.box_append(inner2, tab, 1)
 text_entry = UI.new_entry
 UI.entry_set_text text_entry, 'Please enter your feelings'
 UI.entry_on_changed(text_entry) do |ptr|
-  puts "Current textbox data: '#{UI.entry_text(ptr)}'"
+  puts "Current textbox data: '#{ui_text(UI.entry_text(ptr))}'"
 end
 UI.box_append(hbox1, text_entry, 1)
 

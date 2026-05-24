@@ -17,6 +17,12 @@
 require 'libui'
 LibUI.init # Initialize LibUI.
 
+def ui_text(text_pointer)
+  text_pointer.to_s
+ensure
+  LibUI.free_text(text_pointer) if text_pointer && !text_pointer.null?
+end
+
 # ============================================================================ #
 # === populate_the_editable_combobox_with_this_array
 #
@@ -58,7 +64,7 @@ LibUI.editable_combobox_set_text(_, 'Testing a new default text. This will appea
 
 puts 'The current editable combobox text is:'
 puts
-puts "  #{LibUI.editable_combobox_text(_)}"
+puts "  #{ui_text(LibUI.editable_combobox_text(_))}"
 puts
 puts 'Try to change the editable combobox to a new value.'
 puts 'This will trigger LibUI.editable_combobox_on_changed().'
@@ -67,7 +73,7 @@ puts 'This will trigger LibUI.editable_combobox_on_changed().'
 # Testing support for :editable_combobox_on_changed next.
 # ============================================================================ #
 LibUI.editable_combobox_on_changed(_) { |pointer|
-  puts "The currently selected text is: `#{LibUI.editable_combobox_text(pointer)}`"
+  puts "The current text is: `#{ui_text(LibUI.editable_combobox_text(pointer))}`"
 }
 
 # ============================================================================ #

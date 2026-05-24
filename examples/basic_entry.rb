@@ -4,6 +4,12 @@ UI = LibUI
 
 UI.init
 
+def ui_text(text_pointer)
+  text_pointer.to_s
+ensure
+  UI.free_text(text_pointer) if text_pointer && !text_pointer.null?
+end
+
 main_window = UI.new_window('Basic Entry', 300, 50, 1)
 UI.window_on_closing(main_window) do
   puts 'Bye Bye'
@@ -16,14 +22,14 @@ UI.window_set_child(main_window, hbox)
 
 entry = UI.new_entry
 UI.entry_on_changed(entry) do
-  puts UI.entry_text(entry).to_s
+  puts ui_text(UI.entry_text(entry))
   $stdout.flush # For Windows
 end
 UI.box_append(hbox, entry, 1)
 
 button = UI.new_button('Button')
 UI.button_on_clicked(button) do
-  text = UI.entry_text(entry).to_s
+  text = ui_text(UI.entry_text(entry))
   UI.msg_box(main_window, 'You entered', text)
   0
 end

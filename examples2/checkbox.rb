@@ -14,6 +14,12 @@
 require 'libui'
 LibUI.init # Initialize LibUI.
 
+def ui_text(text_pointer)
+  text_pointer.to_s
+ensure
+  LibUI.free_text(text_pointer) if text_pointer && !text_pointer.null?
+end
+
 main_window = LibUI.new_window('checkbox.rb', 400, 240, 1)
 
 hbox = LibUI.new_horizontal_box
@@ -25,7 +31,7 @@ LibUI.checkbox_set_text(_, 'This is a generic text for the checkbox.')
 
 puts 'The text for our checkbox follows (obtained via LibUI.checkbox_text():'
 puts
-puts "  #{LibUI.checkbox_text(_)}"
+puts "  #{ui_text(LibUI.checkbox_text(_))}"
 puts
 
 callback_for_the_checkbox = proc {

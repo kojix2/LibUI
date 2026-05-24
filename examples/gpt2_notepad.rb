@@ -60,6 +60,12 @@ UI = LibUI
 
 UI.init
 
+def ui_text(text_pointer)
+  text_pointer.to_s
+ensure
+  UI.free_text(text_pointer) if text_pointer && !text_pointer.null?
+end
+
 main_window = UI.new_window('GPT-2 Notepad', 500, 300, 1)
 UI.window_on_closing(main_window) do
   puts 'Bye Bye'
@@ -86,7 +92,7 @@ UI.button_on_clicked(clear_button) do
 end
 
 UI.button_on_clicked(write_button) do
-  s = UI.multiline_entry_text(entry).to_s
+  s = ui_text(UI.multiline_entry_text(entry))
   if s.empty?
     UI.msg_box(main_window, 'Empty!', 'Please enter some text first.')
   else

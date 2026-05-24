@@ -24,6 +24,12 @@
 require 'libui'
 LibUI.init # Initialize LibUI.
 
+def ui_text(text_pointer)
+  text_pointer.to_s
+ensure
+  LibUI.free_text(text_pointer) if text_pointer && !text_pointer.null?
+end
+
 main_window = LibUI.new_window('search_entry.rb', 800, 440, 1)
 
 hbox = LibUI.new_horizontal_box
@@ -44,14 +50,14 @@ puts "Is this entry read-only? #{LibUI.entry_read_only(_)}"\
 puts
 puts 'The text for the current entry in use is as follows:'
 puts
-puts "  → #{LibUI.entry_text(_)}"
+puts "  → #{ui_text(LibUI.entry_text(_))}"
 puts
 puts 'Making the entry no longer read-only next:'
 puts
 LibUI.entry_set_read_only(_, 0) # We have to use 1 rather than true here, unfortunately.
 
 callback_proc = proc { |pointer|
-  new_text = LibUI.entry_text(pointer).to_s
+  new_text = ui_text(LibUI.entry_text(pointer))
   puts
   puts "The old entry-text was: '#{@old_entry_text}'"
   puts "The new entry-text is:  '#{new_text}'"
