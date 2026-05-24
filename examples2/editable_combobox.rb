@@ -18,87 +18,61 @@ require 'libui'
 LibUI.init # Initialize LibUI.
 
 # ============================================================================ #
-# === populate_the_combobox_with_this_array
+# === populate_the_editable_combobox_with_this_array
 #
-# This method is used as a helper-method, to populate the combobox we use
-# here with data (an Array).
+# This method is used as a helper-method, to populate the editable combobox
+# we use here with data (an Array).
 # ============================================================================ #
-def populate_the_combobox_with_this_array(
+def populate_the_editable_combobox_with_this_array(
     the_combobox,
     this_array
   )
   this_array.each {|this_entry|
     LibUI.editable_combobox_append(the_combobox, this_entry) # Here we add elements to the combobox.
   }
-  LibUI.combobox_set_selected(the_combobox, 0) # The first element is now the default selected entry.
 end
 
-main_window = LibUI.new_window('combobox.rb', 640, 480, 1)
+main_window = LibUI.new_window('editable_combobox.rb', 640, 480, 1)
 
 hbox = LibUI.new_horizontal_box
 LibUI.box_set_padded(hbox, 1)
 
-_  = LibUI.new_editable_combobox # Create a new combobox here.
-LibUI.box_append(hbox, _, 1) # Add the combobox here. Right now the combobox is empty.
+_  = LibUI.new_editable_combobox # Create a new editable combobox here.
+LibUI.box_append(hbox, _, 1) # Add the editable combobox here. Right now the combobox is empty.
 
 # ============================================================================ #
-# Let's add data to the combobox, as an Array:
+# Let's add suggestions to the editable combobox, as an Array:
 # ============================================================================ #
 array = %w( matz created ruby as efficient alternative to perl )
-populate_the_combobox_with_this_array(_, array)
-
-# ============================================================================ #
-# Next showing how to clear it:
-# ============================================================================ #
-LibUI.combobox_clear(_)
-populate_the_combobox_with_this_array(_, array) # And re-populate it here.
-
-# ============================================================================ #
-# Next we delete the third entry; and then insert two new elements
-# at that former position, to showcase the functionality
-# combobox_delete, as well as combobox_insert_at. Note that combobox_delete
-# takes two arguments, whereas combobox_insert_at takes three arguments.
-# ============================================================================ #
-LibUI.combobox_delete(_, 2)
-LibUI.combobox_insert_at(_, 2, 'ruby')
-
-# ============================================================================ #
-# Show how many elements are in that combobox:
-# ============================================================================ #
-puts "The combobox we are using here has a total "\
-     "of #{LibUI.combobox_num_items(_)} elements."
-
-LibUI.combobox_set_selected(_, 3) # Change the selected element next, to item 4.
-
-# ============================================================================ #
-# Show the selected entry next:
-# ============================================================================ #
-puts "The presently selected entry in our combobox is element number "\
-     "#{LibUI.combobox_selected(_)}."
-
-puts 'Last but not least, try to change the combobox to a new value.'
-puts 'This will trigger LibUI.combobox_on_selected().'
-
-# ============================================================================ #
-# Testing support for :editable_combobox_on_changed next.
-# ============================================================================ #
-LibUI.editable_combobox_on_changed(_) { |pointer|
-  selected = LibUI.combobox_selected(pointer)
-  puts "The new selection is element number `#{selected}`."
-  puts "The currently selected text is: `#{LibUI.editable_combobox_text(pointer)}`"
-}
+populate_the_editable_combobox_with_this_array(_, array)
 
 # ============================================================================ #
 # As explained by kojix2, libui-ng intentionally limits editable comboboxes
 # to simple text get/set functionality.
 #
 # Since users can freely input text in an editable combobox, the concept
-# of "which item is selected" becomes ambiguous. This is why rather
-# than using LibUI.combobox_set_selected(), LibUI.editable_combobox_set_text()
-# is used next. 
+# of "which item is selected" becomes ambiguous. This is why
+# LibUI.editable_combobox_set_text() is used next.
 # ============================================================================ #
 LibUI.editable_combobox_set_text(_, 'Testing a new default text. This will appear first.')
 
+puts 'The current editable combobox text is:'
+puts
+puts "  #{LibUI.editable_combobox_text(_)}"
+puts
+puts 'Try to change the editable combobox to a new value.'
+puts 'This will trigger LibUI.editable_combobox_on_changed().'
+
+# ============================================================================ #
+# Testing support for :editable_combobox_on_changed next.
+# ============================================================================ #
+LibUI.editable_combobox_on_changed(_) { |pointer|
+  puts "The currently selected text is: `#{LibUI.editable_combobox_text(pointer)}`"
+}
+
+# ============================================================================ #
+# Additional suggestions can be appended at any time.
+# ============================================================================ #
 LibUI.editable_combobox_append(_, 'This is a black cat.') # Here we add elements to the combobox.
 
 LibUI.window_set_child(main_window, hbox)
