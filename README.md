@@ -96,12 +96,26 @@ UI = LibUI
 UI.init
 ```
 
-To convert a pointer to a string:
+Text getter methods such as `label_text`, `entry_text`, and `window_title`
+return `Fiddle::Pointer` objects for strings allocated by libui. Convert the
+pointer to a Ruby string, then release it with `free_text`.
 
 ```ruby
 label = UI.new_label("Ruby")
-p pointer = UI.label_text(label) # #<Fiddle::Pointer>
-p pointer.to_s # Ruby
+pointer = UI.label_text(label) # #<Fiddle::Pointer>
+text = pointer.to_s
+UI.free_text(pointer)
+p text # Ruby
+```
+
+Use `ensure` if the code between conversion and cleanup can raise:
+
+```ruby
+def ui_text(text_pointer)
+  text_pointer.to_s
+ensure
+  UI.free_text(text_pointer) if text_pointer && !text_pointer.null?
+end
 ```
 
 If you need to use C structs, you can do the following:
