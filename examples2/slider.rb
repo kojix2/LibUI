@@ -32,12 +32,12 @@ LibUI.box_append(hbox, _, 1) # Add the slider here.
 # ============================================================================ #
 # The default "tooltip" is the current value of the slider at hand.
 # ============================================================================ #
-puts 'Does this slider have a tooltip? '+
+puts 'Does this slider have a tooltip? ' +
      LibUI.slider_has_tool_tip(_).to_s
 
-callback_proc_on_changed = proc {|entry| # entry is a Fiddle::Pointer
+callback_proc_on_changed = proc { |entry| # entry is a Fiddle::Pointer
   new_value = LibUI.slider_value(entry) # Obtain the current value of the slider here.
-  puts 'The slider was changed. The new value is: '+new_value.to_s
+  puts 'The slider was changed. The new value is: ' + new_value.to_s
 }
 LibUI.slider_set_has_tool_tip(_, 1) # 1 means true here
 
@@ -49,7 +49,7 @@ LibUI.slider_set_value(_, 42)
 
 LibUI.slider_on_changed(_, callback_proc_on_changed)
 
-callback_proc_on_released = proc {|entry| # entry is a Fiddle::Pointer
+callback_proc_on_released = proc { |_entry| # entry is a Fiddle::Pointer
   puts 'The slider was released.'
 }
 
@@ -58,10 +58,10 @@ LibUI.slider_on_released(_, callback_proc_on_released)
 LibUI.window_set_child(main_window, hbox)
 LibUI.control_show(main_window)
 
-LibUI.window_on_closing(main_window) {
+LibUI.window_on_closing(main_window) do
   LibUI.quit
   1
-}
+end
 
 LibUI.main
 LibUI.uninit

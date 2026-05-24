@@ -20,17 +20,17 @@ LibUI.box_set_padded(vbox, 1)
 _ = LibUI.new_font_button # Create a new font-button here.
 LibUI.box_append(vbox, _, 0) # Add the font-button here.
 
-LibUI.font_button_on_changed(_) {|entry|
-  puts 'The font was changed. (class '+entry.class.to_s+')'
-}
+LibUI.font_button_on_changed(_) do |entry|
+  puts 'The font was changed. (class ' + entry.class.to_s + ')'
+end
 
 LibUI.window_set_child(main_window, vbox)
 LibUI.control_show(main_window)
 
-LibUI.window_on_closing(main_window) {
+LibUI.window_on_closing(main_window) do
   LibUI.quit
   1
-}
+end
 
 LibUI.main
 LibUI.uninit

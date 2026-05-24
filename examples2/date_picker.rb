@@ -30,9 +30,9 @@ LibUI.box_set_padded(vbox, 1)
 _ = LibUI.new_date_picker # Create a date-picker widget here.
 LibUI.box_append(vbox, _, 0) # Add the font-button here.
 
-callback_on_changed = proc { |pointer|
+callback_on_changed = proc { |_pointer|
   puts 'The time was changed.'
-  #puts LibUI.date_time_picker_time(pointer) 
+  # puts LibUI.date_time_picker_time(pointer)
 }
 LibUI.date_time_picker_on_changed(_, callback_on_changed)
 
@@ -41,10 +41,10 @@ LibUI.date_time_picker_on_changed(_, callback_on_changed)
 LibUI.window_set_child(main_window, vbox)
 LibUI.control_show(main_window)
 
-LibUI.window_on_closing(main_window) {
+LibUI.window_on_closing(main_window) do
   LibUI.quit
   1
-}
+end
 
 LibUI.main
 LibUI.uninit

@@ -34,18 +34,18 @@ end
 
 main_window = LibUI.new_window('window.rb', 880, 640, 1)
 LibUI.window_set_title(main_window, 'TEST TITLE')
-puts 'The temporary title of this window is: '+
-      ui_text(LibUI.window_title(main_window))
+puts 'The temporary title of this window is: ' +
+     ui_text(LibUI.window_title(main_window))
 LibUI.window_set_title(main_window, 'window.rb') # And restore the title here again.
 LibUI.window_set_resizeable(main_window, 1) # Making it resizeable - is better, in my opinion.
 LibUI.window_set_margined(main_window, 1)
-puts 'Is the window margined? '+
-      LibUI.window_margined(main_window).to_s
+puts 'Is the window margined? ' +
+     LibUI.window_margined(main_window).to_s
 
 puts 'The main-window will have a margin, thanks to LibUI.window_set_margined()'
 
-puts 'Can this window be resized? '+
-      LibUI.window_resizeable(main_window).to_s
+puts 'Can this window be resized? ' +
+     LibUI.window_resizeable(main_window).to_s
 
 puts 'Setting this window to fullscreen next, by default.'
 puts '(Actually, no, because this is annoying; the code for this'
@@ -74,9 +74,9 @@ LibUI.box_set_padded(hbox, 1)
 # ============================================================================ #
 _ = LibUI.new_label(
   "Just testing the window-widget here.\n\n"\
-  "For testing-purposes this window can not be resized, "\
+  'For testing-purposes this window can not be resized, '\
   "which is\nNOT recommended. See LibUI.window_set_resizeable()"
-  ) # Create a new help-text. here.
+) # Create a new help-text. here.
 LibUI.box_append(hbox, _, 1) # Add it to a box.
 
 puts
@@ -85,18 +85,18 @@ puts 'Actually, that is not extremely useful, so we do not use it.'
 LibUI.window_set_borderless(main_window, 0)
 puts 'You can test whether it is borderless via LibUI.window_borderless(main_window)'
 
-callback_proc = proc { |pointer|
-  puts '_'*80
+callback_proc = proc { |_pointer|
+  puts '_' * 80
   puts 'The focus changed. This happens when the main-window'
   puts 'is dragged to a new position, for instance, as well as'
   puts 'on startup.'
-  puts '_'*80
+  puts '_' * 80
 }
 
 LibUI.window_on_focus_changed(main_window, callback_proc)
-puts 'Is the window focused? '+LibUI.window_focused(main_window).to_s
+puts 'Is the window focused? ' + LibUI.window_focused(main_window).to_s
 
-callback_on_content_size_changed = proc { |pointer|
+callback_on_content_size_changed = proc { |_pointer|
   puts 'The content-size of the main window was changed.'
 }
 LibUI.window_on_content_size_changed(main_window, callback_on_content_size_changed)
@@ -109,11 +109,11 @@ LibUI.window_on_content_size_changed(main_window, callback_on_content_size_chang
 
 LibUI.window_set_child(main_window, hbox)
 LibUI.control_show(main_window)
-LibUI.window_on_closing(main_window) {
+LibUI.window_on_closing(main_window) do
   # Do on-closing actions here.
   LibUI.quit
   1 # An Integer must be returned by this block.
-}
+end
 
 puts 'Setting the content-size of the main window to a value of 2200, 500 next,'
 puts 'to test the method called LibUI.window_set_content_size():'

@@ -42,10 +42,10 @@ LibUI.button_on_clicked(_, callback_for_the_button)
 LibUI.window_set_child(main_window, hbox)
 LibUI.control_show(main_window)
 
-LibUI.window_on_closing(main_window) {
+LibUI.window_on_closing(main_window) do
   LibUI.quit
   1
-}
+end
 
 LibUI.main
 LibUI.uninit

@@ -6,7 +6,7 @@
 #   :new_combobox                       [DONE]
 #   :combobox_append                    [DONE]
 #   :combobox_clear                     [DONE]
-#   :combobox_delete                    [DONE]          
+#   :combobox_delete                    [DONE]
 #   :combobox_insert_at                 [DONE]
 #   :combobox_num_items                 [DONE]
 #   :combobox_on_selected               [DONE]
@@ -24,12 +24,12 @@ LibUI.init # Initialize LibUI.
 # here with data (an Array).
 # ============================================================================ #
 def populate_the_combobox_with_this_array(
-    the_combobox,
-    this_array
-  )
-  this_array.each {|this_entry|
+  the_combobox,
+  this_array
+)
+  this_array.each do |this_entry|
     LibUI.combobox_append(the_combobox, this_entry) # Here we add elements to the combobox.
-  }
+  end
   LibUI.combobox_set_selected(the_combobox, 0) # The first element is now the default selected entry.
 end
 
@@ -38,13 +38,13 @@ main_window = LibUI.new_window('combobox.rb', 400, 240, 1)
 hbox = LibUI.new_horizontal_box
 LibUI.box_set_padded(hbox, 1)
 
-_  = LibUI.new_combobox # Create a new combobox here.
+_ = LibUI.new_combobox # Create a new combobox here.
 LibUI.box_append(hbox, _, 1) # Add the combobox here. Right now the combobox is empty.
 
 # ============================================================================ #
 # Let's add data to the combobox, as an Array:
 # ============================================================================ #
-array = %w( matz created ruby as efficient alternative to perl )
+array = %w[matz created ruby as efficient alternative to perl]
 populate_the_combobox_with_this_array(_, array)
 
 # ============================================================================ #
@@ -66,7 +66,7 @@ LibUI.combobox_insert_at(_, 2, 'awesome')
 # ============================================================================ #
 # Show how many elements are in that combobox:
 # ============================================================================ #
-puts "The combobox we are using here has a total "\
+puts 'The combobox we are using here has a total '\
      "of #{LibUI.combobox_num_items(_)} elements."
 
 LibUI.combobox_set_selected(_, 3) # Change the selected element next, to item 4.
@@ -74,24 +74,24 @@ LibUI.combobox_set_selected(_, 3) # Change the selected element next, to item 4.
 # ============================================================================ #
 # Show the selected entry next:
 # ============================================================================ #
-puts "The presently selected entry in our combobox is element number "\
+puts 'The presently selected entry in our combobox is element number '\
      "#{LibUI.combobox_selected(_)}."
 
 puts 'Last but not least, try to change the combobox to a new value.'
 puts 'This will trigger LibUI.combobox_on_selected().'
 
-LibUI.combobox_on_selected(_) { |pointer|
+LibUI.combobox_on_selected(_) do |pointer|
   selected = LibUI.combobox_selected(pointer)
   puts "The new selection is element number `#{selected}`."
-}
+end
 
 LibUI.window_set_child(main_window, hbox)
 LibUI.control_show(main_window)
 
-LibUI.window_on_closing(main_window) {
+LibUI.window_on_closing(main_window) do
   LibUI.quit
   1
-}
+end
 
 LibUI.main
 LibUI.uninit

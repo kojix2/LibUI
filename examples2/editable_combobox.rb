@@ -30,12 +30,12 @@ end
 # we use here with data (an Array).
 # ============================================================================ #
 def populate_the_editable_combobox_with_this_array(
-    the_combobox,
-    this_array
-  )
-  this_array.each {|this_entry|
+  the_combobox,
+  this_array
+)
+  this_array.each do |this_entry|
     LibUI.editable_combobox_append(the_combobox, this_entry) # Here we add elements to the combobox.
-  }
+  end
 end
 
 main_window = LibUI.new_window('editable_combobox.rb', 640, 480, 1)
@@ -43,13 +43,13 @@ main_window = LibUI.new_window('editable_combobox.rb', 640, 480, 1)
 hbox = LibUI.new_horizontal_box
 LibUI.box_set_padded(hbox, 1)
 
-_  = LibUI.new_editable_combobox # Create a new editable combobox here.
+_ = LibUI.new_editable_combobox # Create a new editable combobox here.
 LibUI.box_append(hbox, _, 1) # Add the editable combobox here. Right now the combobox is empty.
 
 # ============================================================================ #
 # Let's add suggestions to the editable combobox, as an Array:
 # ============================================================================ #
-array = %w( matz created ruby as efficient alternative to perl )
+array = %w[matz created ruby as efficient alternative to perl]
 populate_the_editable_combobox_with_this_array(_, array)
 
 # ============================================================================ #
@@ -72,9 +72,9 @@ puts 'This will trigger LibUI.editable_combobox_on_changed().'
 # ============================================================================ #
 # Testing support for :editable_combobox_on_changed next.
 # ============================================================================ #
-LibUI.editable_combobox_on_changed(_) { |pointer|
+LibUI.editable_combobox_on_changed(_) do |pointer|
   puts "The current text is: `#{ui_text(LibUI.editable_combobox_text(pointer))}`"
-}
+end
 
 # ============================================================================ #
 # Additional suggestions can be appended at any time.
@@ -84,10 +84,10 @@ LibUI.editable_combobox_append(_, 'This is a black cat.') # Here we add elements
 LibUI.window_set_child(main_window, hbox)
 LibUI.control_show(main_window)
 
-LibUI.window_on_closing(main_window) {
+LibUI.window_on_closing(main_window) do
   LibUI.quit
   1
-}
+end
 
 LibUI.main
 LibUI.uninit

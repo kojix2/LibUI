@@ -38,7 +38,7 @@ callback_proc = proc { |pointer|
   puts
   puts "The old entry-text was: '#{@old_entry_text}'"
   puts "The new entry-text is:  '#{new_text}'"
-  @old_entry_text = new_text 
+  @old_entry_text = new_text
 }
 LibUI.multiline_entry_on_changed(_, callback_proc)
 
@@ -48,10 +48,10 @@ LibUI.multiline_entry_on_changed(_, callback_proc)
 LibUI.window_set_child(main_window, hbox)
 LibUI.control_show(main_window)
 
-LibUI.window_on_closing(main_window) {
+LibUI.window_on_closing(main_window) do
   LibUI.quit
   1
-}
+end
 
 LibUI.main
 LibUI.uninit

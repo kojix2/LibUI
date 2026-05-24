@@ -25,7 +25,7 @@ LibUI.box_set_padded(hbox, 1)
 _ = LibUI.new_grid # Create a new grid here.
 LibUI.box_append(hbox, _, 1) # Add the grid here.
 LibUI.grid_set_padded(_,  0) # Here we could toggle the padded-status.
-puts 'Is the grid padded? '+LibUI.grid_padded(_).to_s+
+puts 'Is the grid padded? ' + LibUI.grid_padded(_).to_s +
      ' (1 means yes)'
 
 button1 = LibUI.new_button('Test-Button #1')
@@ -58,7 +58,6 @@ LibUI.grid_append(
   vexpand,
   valign
 )
-
 
 left    = 1
 top     = 0
@@ -141,10 +140,10 @@ LibUI.grid_append(
 LibUI.window_set_child(main_window, hbox)
 LibUI.control_show(main_window)
 
-LibUI.window_on_closing(main_window) {
+LibUI.window_on_closing(main_window) do
   LibUI.quit
   1
-}
+end
 
 LibUI.main
 LibUI.uninit

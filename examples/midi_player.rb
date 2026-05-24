@@ -17,22 +17,22 @@ class TinyMidiPlayer
   end
 
   def stop_midi
-    if @pid
-      Process.kill(:SIGKILL, @pid) if @th.alive?
-      @pid = nil
-    end
+    return unless @pid
+
+    Process.kill(:SIGKILL, @pid) if @th.alive?
+    @pid = nil
   end
 
   def play_midi
     stop_midi
-    if @pid.nil? && @selected_file
-      begin
-        @pid = spawn "timidity #{@selected_file}"
-        @th = Process.detach @pid
-      rescue Errno::ENOENT
-        warn 'Timidty++ not found. Please install Timidity++.'
-        warn 'https://sourceforge.net/projects/timidity/'
-      end
+    return unless @pid.nil? && @selected_file
+
+    begin
+      @pid = spawn "timidity #{@selected_file}"
+      @th = Process.detach @pid
+    rescue Errno::ENOENT
+      warn 'Timidty++ not found. Please install Timidity++.'
+      warn 'https://sourceforge.net/projects/timidity/'
     end
   end
 

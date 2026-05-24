@@ -18,16 +18,16 @@ _ = LibUI.new_progress_bar # Create a new progressbar here.
 LibUI.progress_bar_set_value(_, 42) # Show how to set a value to a progress bar.
 LibUI.box_append(vbox, _, 0) # Add the progressbar here.
 
-puts 'The current value of the progress bar is: '+
-      LibUI.progress_bar_value(_).to_s
+puts 'The current value of the progress bar is: ' +
+     LibUI.progress_bar_value(_).to_s
 
 LibUI.window_set_child(main_window, vbox)
 LibUI.control_show(main_window)
 
-LibUI.window_on_closing(main_window) {
+LibUI.window_on_closing(main_window) do
   LibUI.quit
   1
-}
+end
 
 LibUI.main
 LibUI.uninit

@@ -32,22 +32,22 @@ LibUI.box_set_padded(vbox, 1)
 _ = LibUI.new_color_button # Create a new color-button here.
 LibUI.box_append(vbox, _, 0) # Add the color-button here.
 
-LibUI.color_button_on_changed(_) {
+LibUI.color_button_on_changed(_) do
   puts 'The colour button was changed.'
-}
+end
 
 BRUSH             = LibUI::FFI::DrawBrush.malloc
 BRUSH.to_ptr.free = Fiddle::RUBY_FREE
 
 # === set_solid_brush
 def set_solid_brush(
-    brush = BRUSH,
-    color = 0x1E90FF,
-    alpha
-  )
+  _brush = BRUSH,
+  color = 0x1E90FF,
+  alpha
+)
   BRUSH.Type = 0 # solid
   BRUSH.R = ((color >> 16) & 0xFF) / 255.0
-  BRUSH.G = ((color >>  8) & 0xFF) / 255.0
+  BRUSH.G = ((color >> 8) & 0xFF) / 255.0
   BRUSH.B = (color & 0xFF) / 255.0
   BRUSH.A = alpha
   BRUSH
@@ -63,10 +63,10 @@ LibUI.color_button_color(_, graph_r, graph_g, graph_b, graph_a) # Use LibUI.colo
 LibUI.window_set_child(main_window, vbox)
 LibUI.control_show(main_window)
 
-LibUI.window_on_closing(main_window) {
+LibUI.window_on_closing(main_window) do
   LibUI.quit
   1
-}
+end
 
 LibUI.main
 LibUI.uninit

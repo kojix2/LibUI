@@ -37,7 +37,7 @@ puts 'The password-entry will be set to read-only next, via '\
 LibUI.entry_set_read_only(_, 1) # We have to use 1 rather than true here, unfortunately.
 puts
 puts "Is this entry read-only? #{LibUI.entry_read_only(_)}"\
-     " # note that a 1 here means yes/true"
+     ' # note that a 1 here means yes/true'
 puts
 puts 'The text for the current entry in use is as follows:'
 puts
@@ -65,10 +65,10 @@ LibUI.entry_on_changed(_, callback_proc)
 LibUI.window_set_child(main_window, hbox)
 LibUI.control_show(main_window)
 
-LibUI.window_on_closing(main_window) {
+LibUI.window_on_closing(main_window) do
   LibUI.quit
   1
-}
+end
 
 LibUI.main
 LibUI.uninit
