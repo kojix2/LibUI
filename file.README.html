@@ -159,11 +159,22 @@
 <span class='const'>UI</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="LibUI.html" title="LibUI (module)">LibUI</a></span></span>
 <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_init'>init</span>
 </code></pre>
-<p>To convert a pointer to a string:</p>
+<p>Text getter methods such as <code>label_text</code>, <code>entry_text</code>, and <code>window_title</code>
+return <code>Fiddle::Pointer</code> objects for strings allocated by libui. Convert the
+pointer to a Ruby string, then release it with <code>free_text</code>.</p>
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_label'>label</span> <span class='op'>=</span> <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_new_label'>new_label</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Ruby</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-<span class='id identifier rubyid_p'>p</span> <span class='id identifier rubyid_pointer'>pointer</span> <span class='op'>=</span> <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_label_text'>label_text</span><span class='lparen'>(</span><span class='id identifier rubyid_label'>label</span><span class='rparen'>)</span> <span class='comment'># #&lt;Fiddle::Pointer&gt;
-</span><span class='id identifier rubyid_p'>p</span> <span class='id identifier rubyid_pointer'>pointer</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='comment'># Ruby
+<span class='id identifier rubyid_pointer'>pointer</span> <span class='op'>=</span> <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_label_text'>label_text</span><span class='lparen'>(</span><span class='id identifier rubyid_label'>label</span><span class='rparen'>)</span> <span class='comment'># #&lt;Fiddle::Pointer&gt;
+</span><span class='id identifier rubyid_text'>text</span> <span class='op'>=</span> <span class='id identifier rubyid_pointer'>pointer</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+<span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_free_text'>free_text</span><span class='lparen'>(</span><span class='id identifier rubyid_pointer'>pointer</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_p'>p</span> <span class='id identifier rubyid_text'>text</span> <span class='comment'># Ruby
 </span></code></pre>
+<p>Use <code>ensure</code> if the code between conversion and cleanup can raise:</p>
+<pre class="code ruby"><code class="ruby"><span class='kw'>def</span> <span class='id identifier rubyid_ui_text'>ui_text</span><span class='lparen'>(</span><span class='id identifier rubyid_text_pointer'>text_pointer</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_text_pointer'>text_pointer</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+<span class='kw'>ensure</span>
+  <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_free_text'>free_text</span><span class='lparen'>(</span><span class='id identifier rubyid_text_pointer'>text_pointer</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_text_pointer'>text_pointer</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_text_pointer'>text_pointer</span><span class='period'>.</span><span class='id identifier rubyid_null?'>null?</span>
+<span class='kw'>end</span>
+</code></pre>
 <p>If you need to use C structs, you can do the following:</p>
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_font_button'>font_button</span> <span class='op'>=</span> <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_new_font_button'>new_font_button</span>
 
@@ -290,7 +301,7 @@ gem push libui-0.2.0-x64-mingw32.gem
 <p><a href="https://opensource.org/licenses/MIT">MIT License</a>.</p></div></div>
 
       <div id="footer">
-  Generated on Sun May 24 04:03:03 2026 by
+  Generated on Sun May 24 04:13:14 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.43 (ruby-4.0.5).
 </div>
