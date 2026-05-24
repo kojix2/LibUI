@@ -6,13 +6,13 @@
 <title>
   File: README
   
-    &mdash; Documentation by YARD 0.9.38
+    &mdash; Documentation by YARD 0.9.43
   
 </title>
 
-  <link rel="stylesheet" href="css/style.css" type="text/css" />
+  <link rel="stylesheet" href="css/style.css" type="text/css">
 
-  <link rel="stylesheet" href="css/common.css" type="text/css" />
+  <link rel="stylesheet" href="css/common.css" type="text/css">
 
 <script type="text/javascript">
   pathId = "README";
@@ -27,6 +27,8 @@
 
   </head>
   <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
     <div class="nav_wrap">
       <iframe id="nav" src="class_list.html?1"></iframe>
       <div id="resizer"></div>
@@ -57,34 +59,32 @@
         <div class="clear"></div>
       </div>
 
-      <div id="content"><div id='filecontents'>
-<h1 id="label-LibUI">LibUI</h1>
-
-<p><a href="https://github.com/kojix2/LibUI/actions/workflows/test.yml"><img src="https://github.com/kojix2/LibUI/actions/workflows/test.yml/badge.svg" alt="test"></a> <a href="https://badge.fury.io/rb/libui"><img src="https://badge.fury.io/rb/libui.svg" alt="Gem Version"></a> &lt;a href=“<a href="https://github.com/AndyObtiva/glimmer-dsl-libui">github.com/AndyObtiva/glimmer-dsl-libui</a>”&gt;&lt;img alt=“glimmer-dsl-libui” src=“<a href="https://github.com/AndyObtiva/glimmer/blob/master/images/glimmer-logo-hi-res.svg">github.com/AndyObtiva/glimmer/blob/master/images/glimmer-logo-hi-res.svg</a>” width=“50” height=“50” align=“right”&gt;&lt;/a&gt; <a href="https://github.com/kojix2/libui-ng/actions/workflows/pre-build.yml"><img src="https://github.com/kojix2/libui-ng/actions/workflows/pre-build.yml/badge.svg?branch=pre-build" alt="Pre-build"></a> <a href="https://tokei.kojix2.net/github/kojix2/LibUI"><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Ftokei.kojix2.net%2Fbadge%2Fgithub%2Fkojix2%2FLibUI%2Flines" alt="Lines of Code"></a></p>
-
+      <div id="content"><div id='filecontents'><h1 id="LibUI">LibUI</h1>
+<p><a href="https://github.com/kojix2/LibUI/actions/workflows/test.yml"><img src="https://github.com/kojix2/LibUI/actions/workflows/test.yml/badge.svg" alt="test" /></a>
+<a href="https://badge.fury.io/rb/libui"><img src="https://badge.fury.io/rb/libui.svg" alt="Gem Version" /></a>
+<a href="https://github.com/AndyObtiva/glimmer-dsl-libui"><img alt="glimmer-dsl-libui" src="https://github.com/AndyObtiva/glimmer/blob/master/images/glimmer-logo-hi-res.svg" width="50" height="50" align="right"></a>
+<a href="https://github.com/kojix2/libui-ng/actions/workflows/pre-build.yml"><img src="https://github.com/kojix2/libui-ng/actions/workflows/pre-build.yml/badge.svg?branch=pre-build" alt="Pre-build" /></a>
+<a href="https://tokei.kojix2.net/github/kojix2/LibUI"><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Ftokei.kojix2.net%2Fbadge%2Fgithub%2Fkojix2%2FLibUI%2Flines" alt="Lines of Code" /></a></p>
 <p>LibUI is a Ruby wrapper for libui family.</p>
-
 <p>:rocket: <a href="https://github.com/libui-ng/libui-ng">libui-ng</a> - A cross-platform portable GUI library</p>
-
 <p>:wrench: <a href="https://github.com/petabyt/libui-dev">libui-dev</a> - Native UI library for C - with some extras</p>
-
 <p>:radio_button: <a href="https://github.com/andlabs/libui">libui</a> - Original version by andlabs.</p>
-
-<h2 id="label-Installation">Installation</h2>
-
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_gem'>gem</span> <span class='id identifier rubyid_install'>install</span> <span class='id identifier rubyid_libui'>libui</span> <span class='comment'># --pre
-</span></code></pre>
-<ul><li>
-<p>The gem package includes the libui-ng shared library for Windows, Mac, and Linux.</p>
-</li><li>
-<p>Namely <code>libui.x64.dll</code>/<code>libui.x86.dll</code>, <code>libui.x86_64.dylib</code>/<code>libui.arm64.dylib</code>, or <code>libui.x86_64.so</code>/<code>libui.aarch64.so</code>.</p>
-</li><li>
-<p>No dependencies required.</p>
-</li><li>
-<p>The libui gem uses the standard Ruby library <a href="https://github.com/ruby/fiddle">Fiddle</a> to call C functions.</p>
-</li></ul>
-
-<table role="table">
+<h2 id="Installation">Installation</h2>
+<pre class="code sh"><code class="sh">gem install libui # --pre
+</code></pre>
+<ul>
+<li>The gem package includes the libui-ng shared library for Windows, Mac, and Linux.
+<ul>
+<li>Namely <code>libui.x64.dll</code>/<code>libui.x86.dll</code>, <code>libui.x86_64.dylib</code>/<code>libui.arm64.dylib</code>, or <code>libui.x86_64.so</code>/<code>libui.aarch64.so</code>.</li>
+</ul>
+</li>
+<li>No dependencies required.
+<ul>
+<li>The libui gem uses the standard Ruby library <a href="https://github.com/ruby/fiddle">Fiddle</a> to call C functions.</li>
+</ul>
+</li>
+</ul>
+<table>
 <thead>
 <tr>
 <th>Windows</th>
@@ -94,24 +94,19 @@
 </thead>
 <tbody>
 <tr>
-<td>&lt;img src=“<img src="https://user-images.githubusercontent.com/5798442/103118046-900ea780-46b0-11eb-81fc-32626762e4df.png" />”&gt;</td>
-<td>&lt;img src=“<img src="https://user-images.githubusercontent.com/5798442/103118059-99980f80-46b0-11eb-9d12-324ec4d297c9.png" />”&gt;</td>
-<td>&lt;img src=“<img src="https://user-images.githubusercontent.com/5798442/103118068-a0bf1d80-46b0-11eb-8c5c-3bdcc3dcfb26.png" />”&gt;</td>
+<td><img src="https://user-images.githubusercontent.com/5798442/103118046-900ea780-46b0-11eb-81fc-32626762e4df.png"></td>
+<td><img src="https://user-images.githubusercontent.com/5798442/103118059-99980f80-46b0-11eb-9d12-324ec4d297c9.png"></td>
+<td><img src="https://user-images.githubusercontent.com/5798442/103118068-a0bf1d80-46b0-11eb-8c5c-3bdcc3dcfb26.png"></td>
 </tr>
 </tbody>
 </table>
-
 <p>Notes:</p>
-<ul><li>
-<p>If you are using the 32-bit (x86) version of Ruby, you need to download the 32-bit (x86) native dll. See the <a href="#development">Development</a> section.</p>
-</li><li>
-<p>On Windows, libui may not work due to missing DLLs. In that case, you need to install <a href="https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist">Visual C++ Redistributable</a>. See (<a href="https://github.com/kojix2/LibUI/issues/48">#48</a>)</p>
-</li><li>
-<p>Users with <a href="https://www.raspberrypi.com/">Raspberry Pi</a> or other platforms will need to compile the C libui library. See the <a href="#development">Development</a> section.</p>
-</li></ul>
-
-<h2 id="label-Usage">Usage</h2>
-
+<ul>
+<li>If you are using the 32-bit (x86) version of Ruby, you need to download the 32-bit (x86) native dll. See the <a href="#development">Development</a> section.</li>
+<li>On Windows, libui may not work due to missing DLLs. In that case, you need to install <a href="https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist">Visual C++ Redistributable</a>. See (<a href="https://github.com/kojix2/LibUI/issues/48">#48</a>)</li>
+<li>Users with <a href="https://www.raspberrypi.com/">Raspberry Pi</a> or other platforms will need to compile the C libui library. See the <a href="#development">Development</a> section.</li>
+</ul>
+<h2 id="Usage">Usage</h2>
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>libui</span><span class='tstring_end'>&#39;</span></span>
 
 <span class='const'>UI</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="LibUI.html" title="LibUI (module)">LibUI</a></span></span>
@@ -138,53 +133,38 @@
 <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_main'>main</span>
 <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_quit'>quit</span>
 </code></pre>
-
 <p>For more examples, see the <a href="https://github.com/kojix2/libui/tree/main/examples">examples</a> directory.</p>
-
-<h3 id="label-General+Rules">General Rules</h3>
-
+<h3 id="General_Rules">General Rules</h3>
 <p>Compared to the original libui library written in C:</p>
-<ul><li>
-<p>Method names use snake_case.</p>
-</li><li>
-<p>The last argument can be omitted if it’s nil.</p>
-</li><li>
-<p>A block can be passed as a callback.</p>
-</li><li>
-<p>The block will be converted to a Proc object and added as the last argument.</p>
-</li><li>
-<p>The last argument can still be omitted when nil.</p>
-</li></ul>
-
+<ul>
+<li>Method names use snake_case.</li>
+<li>The last argument can be omitted if it's nil.</li>
+<li>A block can be passed as a callback.
+<ul>
+<li>The block will be converted to a Proc object and added as the last argument.</li>
+<li>The last argument can still be omitted when nil.</li>
+</ul>
+</li>
+</ul>
 <p>You can use <a href="https://libui-ng.github.io/libui-ng/">the libui-ng API documentation</a> as a reference.</p>
-
-<h3 id="label-DSLs+for+LibUI">DSLs for LibUI</h3>
-
+<h3 id="DSLs_for_LibUI">DSLs for LibUI</h3>
 <p>LibUI is not object-oriented because it is a thin Ruby wrapper (binding) for the procedural C libui library, mirroring its API structure.</p>
-
 <p>To build actual applications, it is recommended to use a DSL for LibUI, as they enable writing object-oriented code the Ruby way (instead of procedural code the C way):</p>
-<ul><li>
-<p><a href="https://github.com/AndyObtiva/glimmer-dsl-libui">Glimmer DSL for LibUI</a></p>
-</li><li>
-<p><a href="https://rubygems.org/gems/libui_paradise">libui_paradise</a></p>
-</li></ul>
-
-<h3 id="label-Working+with+fiddle+pointers">Working with fiddle pointers</h3>
-
+<ul>
+<li><a href="https://github.com/AndyObtiva/glimmer-dsl-libui">Glimmer DSL for LibUI</a></li>
+<li><a href="https://rubygems.org/gems/libui_paradise">libui_paradise</a></li>
+</ul>
+<h3 id="Working_with_fiddle_pointers">Working with fiddle pointers</h3>
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>libui</span><span class='tstring_end'>&#39;</span></span>
 <span class='const'>UI</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="LibUI.html" title="LibUI (module)">LibUI</a></span></span>
 <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_init'>init</span>
 </code></pre>
-
 <p>To convert a pointer to a string:</p>
-
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_label'>label</span> <span class='op'>=</span> <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_new_label'>new_label</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Ruby</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 <span class='id identifier rubyid_p'>p</span> <span class='id identifier rubyid_pointer'>pointer</span> <span class='op'>=</span> <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_label_text'>label_text</span><span class='lparen'>(</span><span class='id identifier rubyid_label'>label</span><span class='rparen'>)</span> <span class='comment'># #&lt;Fiddle::Pointer&gt;
 </span><span class='id identifier rubyid_p'>p</span> <span class='id identifier rubyid_pointer'>pointer</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='comment'># Ruby
 </span></code></pre>
-
 <p>If you need to use C structs, you can do the following:</p>
-
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_font_button'>font_button</span> <span class='op'>=</span> <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_new_font_button'>new_font_button</span>
 
 <span class='comment'># Allocate memory
@@ -201,84 +181,65 @@
     <span class='label'>stretch:</span> <span class='id identifier rubyid_font_descriptor'>font_descriptor</span><span class='period'>.</span><span class='const'>Stretch</span>
 <span class='kw'>end</span>
 </code></pre>
-<ul><li>
-<p>Callbacks</p>
-</li><li>
-<p>In Ruby/Fiddle, a C callback function is written as an object of <code>Fiddle::Closure::BlockCaller</code> or <code>Fiddle::Closure</code>. Be careful about Ruby’s garbage collection - if the function object is collected, memory will be freed resulting in a segmentation violation when the callback is invoked.</p>
-</li></ul>
-
+<ul>
+<li>Callbacks
+<ul>
+<li>In Ruby/Fiddle, a C callback function is written as an object of
+<code>Fiddle::Closure::BlockCaller</code> or <code>Fiddle::Closure</code>.
+Be careful about Ruby's garbage collection - if the function object is collected, memory will be freed resulting in a segmentation violation when the callback is invoked.</li>
+</ul>
+</li>
+</ul>
 <pre class="code ruby"><code class="ruby"><span class='comment'># Assign to a local variable to prevent it from being collected by GC.
 </span><span class='id identifier rubyid_handler'>handler</span><span class='period'>.</span><span class='const'>MouseEvent</span>   <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_c1'>c1</span> <span class='op'>=</span> <span class='const'>Fiddle</span><span class='op'>::</span><span class='const'>Closure</span><span class='op'>::</span><span class='const'>BlockCaller</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='int'>0</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
 <span class='id identifier rubyid_handler'>handler</span><span class='period'>.</span><span class='const'>MouseCrossed</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_c2'>c2</span> <span class='op'>=</span> <span class='const'>Fiddle</span><span class='op'>::</span><span class='const'>Closure</span><span class='op'>::</span><span class='const'>BlockCaller</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='int'>0</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
 <span class='id identifier rubyid_handler'>handler</span><span class='period'>.</span><span class='const'>DragBroken</span>   <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_c3'>c3</span> <span class='op'>=</span> <span class='const'>Fiddle</span><span class='op'>::</span><span class='const'>Closure</span><span class='op'>::</span><span class='const'>BlockCaller</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='int'>0</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
 </code></pre>
-
-<h3 id="label-Creating+a+Windows+executable+-28.exe-29+with+OCRA">Creating a Windows executable (.exe) with OCRA</h3>
-
+<h3 id="Creating_a_Windows_executable___exe__with_OCRA">Creating a Windows executable (.exe) with OCRA</h3>
 <p>OCRA (One-Click Ruby Application) builds Windows executables from Ruby source code.</p>
-<ul><li>
-<p><a href="https://github.com/larsch/ocra">github.com/larsch/ocra</a>/</p>
-</li></ul>
-
+<ul>
+<li><a href="https://github.com/larsch/ocra/">https://github.com/larsch/ocra/</a></li>
+</ul>
 <p>To build an exe with Ocra, include 3 DLLs from the ruby_builtin_dlls folder:</p>
-
-<pre class="code ruby"><code class="ruby">ocra examples/control_gallery.rb        ^
+<pre class="code sh"><code class="sh">ocra examples/control_gallery.rb        ^
   --dll ruby_builtin_dlls/libssp-0.dll  ^
   --dll ruby_builtin_dlls/libgmp-10.dll ^
   --dll ruby_builtin_dlls/libffi-7.dll  ^
   --gem-all=fiddle                      ^
 </code></pre>
-
 <p>Add additional options below if necessary:</p>
-
-<pre class="code ruby"><code class="ruby">--window                              ^
+<pre class="code sh"><code class="sh">  --window                              ^
   --add-all-core                        ^
   --chdir-first                         ^
   --icon assets\app.ico                 ^
   --verbose                             ^
   --output out\gallery.exe
 </code></pre>
-
-<h2 id="label-Development">Development</h2>
-
-<pre class="code ruby"><code class="ruby">git clone https://github.com/kojix2/libui
+<h2 id="Development">Development</h2>
+<pre class="code sh"><code class="sh">git clone https://github.com/kojix2/libui
 cd libui
 bundle install
 bundle exec rake vendor:auto
 bundle exec rake test
 </code></pre>
-
-<h3 id="label-Pre-built+shared+libraries+for+libui-ng">Pre-built shared libraries for libui-ng</h3>
-
+<h3 id="Pre_built_shared_libraries_for_libui_ng">Pre-built shared libraries for libui-ng</h3>
 <p>Download pre-built libui-ng shared libraries (per your current platform):</p>
-
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_bundle'>bundle</span> <span class='id identifier rubyid_exec'>exec</span> <span class='id identifier rubyid_rake'>rake</span> <span class='label'>vendor:</span><span class='id identifier rubyid_auto'>auto</span>
+<pre class="code sh"><code class="sh">bundle exec rake vendor:auto
 </code></pre>
-
 <p>Clean downloaded vendor files (keeps <code>vendor/{LICENSE,README}.md</code>):</p>
-
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_bundle'>bundle</span> <span class='id identifier rubyid_exec'>exec</span> <span class='id identifier rubyid_rake'>rake</span> <span class='label'>vendor:</span><span class='id identifier rubyid_clean'>clean</span>
+<pre class="code sh"><code class="sh">bundle exec rake vendor:clean
 </code></pre>
-
-<h3 id="label-Using+your+own+libui+build">Using your own libui build</h3>
-
+<h3 id="Using_your_own_libui_build">Using your own libui build</h3>
 <p>If you build libui-ng yourself, set <code>LIBUIDIR</code> to the directory containing the compiled <code>.so/.dylib/.dll</code> so LibUI can load it. You may also replace files under <code>vendor/</code> with your build if preferred. See <a href="https://github.com/kojix2/LibUI/issues/46#issuecomment-1041575792">#46</a>.</p>
-
-<h3 id="label-Publishing+gems">Publishing gems</h3>
-
-<h4 id="label-Automated+Publishing">Automated Publishing</h4>
-
+<h3 id="Publishing_gems">Publishing gems</h3>
+<h4 id="Automated_Publishing">Automated Publishing</h4>
 <p>Push a version tag to automatically publish platform-specific gems:</p>
-
-<pre class="code ruby"><code class="ruby">git tag v0.2.0
+<pre class="code sh"><code class="sh">git tag v0.2.0
 git push origin v0.2.0
 </code></pre>
-
 <p>Requires <code>RUBYGEMS_API_KEY</code> repository secret with scoped API key.</p>
-
-<h4 id="label-Manual+Publishing">Manual Publishing</h4>
-
-<pre class="code ruby"><code class="ruby">ls vendor             # check the vendor directory
+<h4 id="Manual_Publishing">Manual Publishing</h4>
+<pre class="code sh"><code class="sh">ls vendor             # check the vendor directory
 rm -rf pkg            # remove previously built gems
 rake build_platform   # build gems
 
@@ -287,66 +248,51 @@ find pkg -name *.gem -exec sh -c &quot;echo; echo \# {}; tar -O -f {} -x data.ta
 
 rake release_platform # publish gems
 </code></pre>
-
 <p>Windows Ruby (x64-mingw32 or x64-mingw-ucrt)</p>
-
-<pre class="code ruby"><code class="ruby">gem install rake rubyzip
+<pre class="code sh"><code class="sh">gem install rake rubyzip
 GEM_PLATFORM=x64-mingw32 rake vendor:clean
 GEM_PLATFORM=x64-mingw32 rake vendor:auto
 GEM_PLATFORM=x64-mingw32 gem build libui.gemspec
 gem push libui-0.2.0-x64-mingw32.gem
 </code></pre>
-
-<h3 id="label-libui+or+libui-ng">libui or libui-ng</h3>
-<ul><li>
-<p>From version 0.1.X, LibUI supports only libui-ng.</p>
-</li><li>
-<p>Version 0.0.X only supports andlabs/libui.</p>
-</li></ul>
-
-<h2 id="label-Contributing">Contributing</h2>
-
+<h3 id="libui_or_libui_ng">libui or libui-ng</h3>
+<ul>
+<li>From version 0.1.X, LibUI supports only libui-ng.</li>
+<li>Version 0.0.X only supports andlabs/libui.</li>
+</ul>
+<h2 id="Contributing">Contributing</h2>
 <p>Would you like to contribute to LibUI?</p>
-<ul><li>
-<p>Please feel free to send us your <a href="https://github.com/kojix2/libui/pulls">pull requests</a>.</p>
-</li><li>
-<p>Small corrections, such as typo fixes, are appreciated.</p>
-</li><li>
-<p>Did you find any bugs? Submit them in the <a href="https://github.com/kojix2/LibUI/issues">issues</a> section!</p>
-</li></ul>
-
+<ul>
+<li>Please feel free to send us your <a href="https://github.com/kojix2/libui/pulls">pull requests</a>.
+<ul>
+<li>Small corrections, such as typo fixes, are appreciated.</li>
+</ul>
+</li>
+<li>Did you find any bugs? Submit them in the <a href="https://github.com/kojix2/LibUI/issues">issues</a> section!</li>
+</ul>
 <p>Do you need commit rights?</p>
-<ul><li>
-<p>If you need commit rights to my repository or want to get admin rights and take over the project, please feel free to contact @kojix2.</p>
-</li><li>
-<p>Many OSS projects become abandoned because only the founder has commit rights to the original repository.</p>
-</li></ul>
-
+<ul>
+<li>If you need commit rights to my repository or want to get admin rights and take over the project, please feel free to contact @kojix2.</li>
+<li>Many OSS projects become abandoned because only the founder has commit rights to the original repository.</li>
+</ul>
 <p>Support libui-ng development</p>
-<ul><li>
-<p>Contributing to the development of libui-ng is a contribution to the entire libui community, including Ruby’s LibUI.</p>
-</li><li>
-<p>For example, it would be easier to release LibUI in Ruby if libui-ng could be built easily and official shared libraries could be distributed.</p>
-</li></ul>
-
-<h2 id="label-Acknowledgements">Acknowledgements</h2>
-
+<ul>
+<li>Contributing to the development of libui-ng is a contribution to the entire libui community, including Ruby's LibUI.</li>
+<li>For example, it would be easier to release LibUI in Ruby if libui-ng could be built easily and official shared libraries could be distributed.</li>
+</ul>
+<h2 id="Acknowledgements">Acknowledgements</h2>
 <p>This project is inspired by libui-ruby.</p>
-<ul><li>
-<p><a href="https://github.com/jamescook/libui-ruby">github.com/jamescook/libui-ruby</a></p>
-</li></ul>
-
+<ul>
+<li><a href="https://github.com/jamescook/libui-ruby">https://github.com/jamescook/libui-ruby</a></li>
+</ul>
 <p>While libui-ruby uses <a href="https://github.com/ffi/ffi">Ruby-FFI</a>, this gem uses <a href="https://github.com/ruby/fiddle">Fiddle</a>.</p>
-
-<h2 id="label-License">License</h2>
-
-<p><a href="https://opensource.org/licenses/MIT">MIT License</a>.</p>
-</div></div>
+<h2 id="License">License</h2>
+<p><a href="https://opensource.org/licenses/MIT">MIT License</a>.</p></div></div>
 
       <div id="footer">
-  Generated on Wed Mar 25 18:08:36 2026 by
+  Generated on Sun May 24 03:55:53 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.38 (ruby-4.0.2).
+  0.9.43 (ruby-4.0.5).
 </div>
 
     </div>

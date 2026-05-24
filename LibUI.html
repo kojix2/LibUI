@@ -6,13 +6,13 @@
 <title>
   Module: LibUI
   
-    &mdash; Documentation by YARD 0.9.38
+    &mdash; Documentation by YARD 0.9.43
   
 </title>
 
-  <link rel="stylesheet" href="css/style.css" type="text/css" />
+  <link rel="stylesheet" href="css/style.css" type="text/css">
 
-  <link rel="stylesheet" href="css/common.css" type="text/css" />
+  <link rel="stylesheet" href="css/common.css" type="text/css">
 
 <script type="text/javascript">
   pathId = "LibUI";
@@ -27,6 +27,8 @@
 
   </head>
   <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
     <div class="nav_wrap">
       <iframe id="nav" src="class_list.html?1"></iframe>
       <div id="resizer"></div>
@@ -78,8 +80,9 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/libui.rb<span class="defines">,<br />
-  lib/libui/ffi.rb,<br /> lib/libui/error.rb,<br /> lib/libui/utils.rb,<br /> lib/libui/version.rb,<br /> lib/libui/libui_base.rb,<br /> lib/libui/fiddle_patch.rb</span>
+    <dd>lib/libui.rb<span class="defines">,<br>
+  lib/libui/ffi.rb,<br> lib/libui/error.rb,<br> lib/libui/utils.rb,<br> lib/libui/version.rb,<br> lib/libui/libui_base.rb,<br> lib/libui/fiddle_patch.rb</span>
+
 </dd>
   </dl>
   
@@ -109,9 +112,7 @@
         <dt id="ForEachContinue-constant" class="">ForEachContinue =
           <div class="docstring">
   <div class="discussion">
-    
-<p>ForEach</p>
-
+    <p>ForEach</p>
 
   </div>
 </div>
@@ -130,9 +131,7 @@
         <dt id="WindowResizeEdgeLeft-constant" class="">WindowResizeEdgeLeft =
           <div class="docstring">
   <div class="discussion">
-    
-<p>WindowResizeEdge</p>
-
+    <p>WindowResizeEdge</p>
 
   </div>
 </div>
@@ -181,9 +180,7 @@
         <dt id="DrawBrushTypeSolid-constant" class="">DrawBrushTypeSolid =
           <div class="docstring">
   <div class="discussion">
-    
-<p>DrawBrushType</p>
-
+    <p>DrawBrushType</p>
 
   </div>
 </div>
@@ -212,9 +209,7 @@
         <dt id="DrawLineCapFlat-constant" class="">DrawLineCapFlat =
           <div class="docstring">
   <div class="discussion">
-    
-<p>DrawLineCap</p>
-
+    <p>DrawLineCap</p>
 
   </div>
 </div>
@@ -238,9 +233,7 @@
         <dt id="DrawLineJoinMiter-constant" class="">DrawLineJoinMiter =
           <div class="docstring">
   <div class="discussion">
-    
-<p>DrawLineJoin</p>
-
+    <p>DrawLineJoin</p>
 
   </div>
 </div>
@@ -269,9 +262,7 @@
         <dt id="DrawFillModeWinding-constant" class="">DrawFillModeWinding =
           <div class="docstring">
   <div class="discussion">
-    
-<p>DrawFillMode</p>
-
+    <p>DrawFillMode</p>
 
   </div>
 </div>
@@ -290,9 +281,7 @@
         <dt id="AttributeTypeFamily-constant" class="">AttributeTypeFamily =
           <div class="docstring">
   <div class="discussion">
-    
-<p>AttributeType</p>
-
+    <p>AttributeType</p>
 
   </div>
 </div>
@@ -351,9 +340,7 @@
         <dt id="TextWeightMinimum-constant" class="">TextWeightMinimum =
           <div class="docstring">
   <div class="discussion">
-    
-<p>TextWeight</p>
-
+    <p>TextWeight</p>
 
   </div>
 </div>
@@ -427,9 +414,7 @@
         <dt id="TextItalicNormal-constant" class="">TextItalicNormal =
           <div class="docstring">
   <div class="discussion">
-    
-<p>TextItalic</p>
-
+    <p>TextItalic</p>
 
   </div>
 </div>
@@ -453,9 +438,7 @@
         <dt id="TextStretchUltraCondensed-constant" class="">TextStretchUltraCondensed =
           <div class="docstring">
   <div class="discussion">
-    
-<p>TextStretch</p>
-
+    <p>TextStretch</p>
 
   </div>
 </div>
@@ -509,9 +492,7 @@
         <dt id="UnderlineNone-constant" class="">UnderlineNone =
           <div class="docstring">
   <div class="discussion">
-    
-<p>Underline</p>
-
+    <p>Underline</p>
 
   </div>
 </div>
@@ -540,9 +521,7 @@
         <dt id="UnderlineColorCustom-constant" class="">UnderlineColorCustom =
           <div class="docstring">
   <div class="discussion">
-    
-<p>UnderlineColor</p>
-
+    <p>UnderlineColor</p>
 
   </div>
 </div>
@@ -571,9 +550,7 @@
         <dt id="DrawTextAlignLeft-constant" class="">DrawTextAlignLeft =
           <div class="docstring">
   <div class="discussion">
-    
-<p>DrawTextAlign</p>
-
+    <p>DrawTextAlign</p>
 
   </div>
 </div>
@@ -597,9 +574,7 @@
         <dt id="ModifierCtrl-constant" class="">ModifierCtrl =
           <div class="docstring">
   <div class="discussion">
-    
-<p>Modifiers</p>
-
+    <p>Modifiers</p>
 
   </div>
 </div>
@@ -628,9 +603,7 @@
         <dt id="ExtKeyEscape-constant" class="">ExtKeyEscape =
           <div class="docstring">
   <div class="discussion">
-    
-<p>ExtKey</p>
-
+    <p>ExtKey</p>
 
   </div>
 </div>
@@ -834,9 +807,7 @@
         <dt id="AlignFill-constant" class="">AlignFill =
           <div class="docstring">
   <div class="discussion">
-    
-<p>Align</p>
-
+    <p>Align</p>
 
   </div>
 </div>
@@ -865,9 +836,7 @@
         <dt id="AtLeading-constant" class="">AtLeading =
           <div class="docstring">
   <div class="discussion">
-    
-<p>At</p>
-
+    <p>At</p>
 
   </div>
 </div>
@@ -896,9 +865,7 @@
         <dt id="TableValueTypeString-constant" class="">TableValueTypeString =
           <div class="docstring">
   <div class="discussion">
-    
-<p>TableValueType</p>
-
+    <p>TableValueType</p>
 
   </div>
 </div>
@@ -927,9 +894,7 @@
         <dt id="SortIndicatorNone-constant" class="">SortIndicatorNone =
           <div class="docstring">
   <div class="discussion">
-    
-<p>SortIndicator</p>
-
+    <p>SortIndicator</p>
 
   </div>
 </div>
@@ -953,9 +918,7 @@
         <dt id="TableModelColumnNeverEditable-constant" class="">TableModelColumnNeverEditable =
           <div class="docstring">
   <div class="discussion">
-    
-<p>editable</p>
-
+    <p>editable</p>
 
   </div>
 </div>
@@ -974,9 +937,7 @@
         <dt id="TableSelectionModeNone-constant" class="">TableSelectionModeNone =
           <div class="docstring">
   <div class="discussion">
-    
-<p>TableSelectionMode</p>
-
+    <p>TableSelectionMode</p>
 
   </div>
 </div>
@@ -1036,9 +997,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Returns the value of attribute ffi_lib.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute ffi_lib.</p></div></span>
   
 </li>
 
@@ -1095,9 +1054,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>FIXME: This is a workaround for a old version of Fiddle.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>FIXME: This is a workaround for a old version of Fiddle.</p></div></span>
   
 </li>
 
@@ -1163,17 +1120,17 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Gets the window position.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Gets the window position.</p></div></span>
   
 </li>
 
       
     </ul>
+    
   
 
 
+  
   
   
   
@@ -1196,9 +1153,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns the value of attribute ffi_lib.</p>
-
+    <p>Returns the value of attribute ffi_lib.</p>
 
   </div>
 </div>
@@ -1302,9 +1257,9 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>FIXME: This is a workaround for a old version of Fiddle. Fiddle 1.1.2 and above should be able to handle one character string. See <a href="https://github.com/ruby/fiddle/issues/96">github.com/ruby/fiddle/issues/96</a></p>
-
+    <p>FIXME: This is a workaround for a old version of Fiddle.
+Fiddle 1.1.2 and above should be able to handle one character string.
+See <a href="https://github.com/ruby/fiddle/issues/96">https://github.com/ruby/fiddle/issues/96</a></p>
 
   </div>
 </div>
@@ -1412,14 +1367,11 @@
     
   <div class="note notetag">
     <strong>Note:</strong>
-    <div class='inline'>
-<p>This method may return inaccurate or dummy values on Unix platforms.</p>
-</div>
+    <div class='inline'><p>This method may return inaccurate or dummy values on Unix platforms.</p></div>
   </div>
 
-
-<p>Gets the window position. Coordinates are measured from the top left corner of the screen.</p>
-
+<p>Gets the window position.
+Coordinates are measured from the top left corner of the screen.</p>
 
   </div>
 </div>
@@ -1437,9 +1389,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>Pointer of uiWindow instance.</p>
-</div>
+        <div class='inline'><p>Pointer of uiWindow instance.</p></div>
       
     </li>
   
@@ -1456,9 +1406,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>position of the window. [x, y]</p>
-</div>
+        <div class='inline'><p>position of the window. [x, y]</p></div>
       
     </li>
   
@@ -1500,9 +1448,9 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Mar 25 18:08:36 2026 by
+  Generated on Sun May 24 03:55:53 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.38 (ruby-4.0.2).
+  0.9.43 (ruby-4.0.5).
 </div>
 
     </div>
