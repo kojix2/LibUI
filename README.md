@@ -1,7 +1,7 @@
 # LibUI
 
 [![test](https://github.com/kojix2/LibUI/actions/workflows/test.yml/badge.svg)](https://github.com/kojix2/LibUI/actions/workflows/test.yml)
-[![Gem Version](https://badge.fury.io/rb/libui.svg)](https://badge.fury.io/rb/libui)
+[![Gem Version](https://img.shields.io/badge/dynamic/json?label=gem%20version&query=%24%5B0%5D.number&url=https%3A%2F%2Frubygems.org%2Fapi%2Fv1%2Fversions%2Flibui.json&color=brightgreen)](https://rubygems.org/gems/libui/versions)
 <a href="https://github.com/AndyObtiva/glimmer-dsl-libui"><img alt="glimmer-dsl-libui" src="https://github.com/AndyObtiva/glimmer/blob/master/images/glimmer-logo-hi-res.svg" width="50" height="50" align="right"></a>
 [![Pre-build](https://github.com/kojix2/libui-ng/actions/workflows/pre-build.yml/badge.svg?branch=pre-build)](https://github.com/kojix2/libui-ng/actions/workflows/pre-build.yml)
 [![Lines of Code](https://img.shields.io/endpoint?url=https%3A%2F%2Ftokei.kojix2.net%2Fbadge%2Fgithub%2Fkojix2%2FLibUI%2Flines)](https://tokei.kojix2.net/github/kojix2/LibUI)
