@@ -59,6 +59,106 @@ module LibUI
       nil
     end
 
+    def new_button(text = '')
+      super(text)
+    end
+
+    def new_checkbox(text = '')
+      super(text)
+    end
+
+    def window_set_title(window, title = '')
+      super(window, title)
+    end
+
+    def button_set_text(button, text = '')
+      super(button, text)
+    end
+
+    def checkbox_set_text(checkbox, text = '')
+      super(checkbox, text)
+    end
+
+    def entry_set_text(entry, text = '')
+      super(entry, text)
+    end
+
+    def label_set_text(label, text = '')
+      super(label, text)
+    end
+
+    def new_label(text = '')
+      super(text)
+    end
+
+    def group_set_title(group, title = '')
+      super(group, title)
+    end
+
+    def new_group(title = '')
+      super(title)
+    end
+
+    def combobox_append(combobox, text = '')
+      super(combobox, text)
+    end
+
+    def combobox_insert_at(combobox, index, text = '')
+      super(combobox, index, text)
+    end
+
+    def editable_combobox_append(combobox, text = '')
+      super(combobox, text)
+    end
+
+    def editable_combobox_set_text(combobox, text = '')
+      super(combobox, text)
+    end
+
+    def radio_buttons_append(radio_buttons, text = '')
+      super(radio_buttons, text)
+    end
+
+    def multiline_entry_set_text(entry, text = '')
+      super(entry, text)
+    end
+
+    def multiline_entry_append(entry, text = '')
+      super(entry, text)
+    end
+
+    def menu_append_item(menu, name = '')
+      super(menu, name)
+    end
+
+    def menu_append_check_item(menu, name = '')
+      super(menu, name)
+    end
+
+    def new_menu(name = '')
+      super(name)
+    end
+
+    def msg_box(parent, title, description = '')
+      super(parent, title, description)
+    end
+
+    def msg_box_error(parent, title, description = '')
+      super(parent, title, description)
+    end
+
+    def new_attributed_string(initial_string = '')
+      super(initial_string)
+    end
+
+    def attributed_string_append_unattributed(attributed_string, str = '')
+      super(attributed_string, str)
+    end
+
+    def new_table_value_string(str = '')
+      super(str)
+    end
+
     # Gets the window position.
     # Coordinates are measured from the top left corner of the screen.
     # @param w [Fiddle::Pointer] Pointer of uiWindow instance.
