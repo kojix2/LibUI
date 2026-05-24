@@ -266,29 +266,33 @@ menu_file_open = UI.menu_append_item(menu_file, 'Open Model')
 UI.menu_item_on_clicked(menu_file_open) do
   pt = UI.open_file(@main_window)
   unless pt.null?
-    file_path = pt.to_s
     begin
-      model = Marshal.load(File.binread(file_path))
-    rescue StandardError => e
-      UI.msg_box_error(
-        @main_window, '⚠️ Error',
-        "Failed to open file.\n" \
-        "#{file_path}\n" \
-        "#{e.message}"
-      )
-      next
-    end
-    if model.width == @model.width &&
-       model.height == @model.height
-      @model = model
-      UI.area_queue_redraw_all(@area)
-    else
-      UI.msg_box_error(
-        @main_window, '⚠️ Error',
-        "File shape is different.\n" \
-        "file: width #{model.width} height #{model.height}\n" \
-        "model: width #{@model.width} height #{@model.height}"
-      )
+      file_path = pt.to_s
+      begin
+        model = Marshal.load(File.binread(file_path))
+      rescue StandardError => e
+        UI.msg_box_error(
+          @main_window, '⚠️ Error',
+          "Failed to open file.\n" \
+          "#{file_path}\n" \
+          "#{e.message}"
+        )
+        next
+      end
+      if model.width == @model.width &&
+         model.height == @model.height
+        @model = model
+        UI.area_queue_redraw_all(@area)
+      else
+        UI.msg_box_error(
+          @main_window, '⚠️ Error',
+          "File shape is different.\n" \
+          "file: width #{model.width} height #{model.height}\n" \
+          "model: width #{@model.width} height #{@model.height}"
+        )
+      end
+    ensure
+      UI.free_text(pt)
     end
   end
 end
@@ -298,8 +302,12 @@ end
 save_model_as_proc = proc do
   pt = UI.save_file(@main_window)
   unless pt.null?
-    @save_file_path = pt.to_s
-    Marshal.dump(@model, File.open(@save_file_path, 'wb'))
+    begin
+      @save_file_path = pt.to_s
+      Marshal.dump(@model, File.open(@save_file_path, 'wb'))
+    ensure
+      UI.free_text(pt)
+    end
   end
 end
 
@@ -549,12 +557,16 @@ UI.button_on_clicked(button_capture) do
 
   pt = UI.save_file(@main_window)
   unless pt.null?
-    file_path = pt.to_s
-    if defined?(Magro::IO)
-      Magro::IO.imsave(file_path, image)
-    else
-      img = ChunkyPNG::Image.from_rgb_stream(model_width, model_height, image.to_string)
-      img.save(file_path)
+    begin
+      file_path = pt.to_s
+      if defined?(Magro::IO)
+        Magro::IO.imsave(file_path, image)
+      else
+        img = ChunkyPNG::Image.from_rgb_stream(model_width, model_height, image.to_string)
+        img.save(file_path)
+      end
+    ensure
+      UI.free_text(pt)
     end
   end
 end
