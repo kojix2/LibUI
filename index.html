@@ -185,11 +185,15 @@ pointer to a Ruby string, then release it with <code>free_text</code>.</p>
 </span>
 <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_font_button_on_changed'>font_button_on_changed</span><span class='lparen'>(</span><span class='id identifier rubyid_font_button'>font_button</span><span class='rparen'>)</span> <span class='kw'>do</span>
   <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_font_button_font'>font_button_font</span><span class='lparen'>(</span><span class='id identifier rubyid_font_button'>font_button</span><span class='comma'>,</span> <span class='id identifier rubyid_font_descriptor'>font_descriptor</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_p'>p</span> <span class='label'>family:</span>  <span class='id identifier rubyid_font_descriptor'>font_descriptor</span><span class='period'>.</span><span class='const'>Family</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span>
-    <span class='label'>size:</span>    <span class='id identifier rubyid_font_descriptor'>font_descriptor</span><span class='period'>.</span><span class='const'>Size</span><span class='comma'>,</span>
-    <span class='label'>weight:</span>  <span class='id identifier rubyid_font_descriptor'>font_descriptor</span><span class='period'>.</span><span class='const'>Weight</span><span class='comma'>,</span>
-    <span class='label'>italic:</span>  <span class='id identifier rubyid_font_descriptor'>font_descriptor</span><span class='period'>.</span><span class='const'>Italic</span><span class='comma'>,</span>
-    <span class='label'>stretch:</span> <span class='id identifier rubyid_font_descriptor'>font_descriptor</span><span class='period'>.</span><span class='const'>Stretch</span>
+  <span class='kw'>begin</span>
+    <span class='id identifier rubyid_p'>p</span> <span class='label'>family:</span>  <span class='id identifier rubyid_font_descriptor'>font_descriptor</span><span class='period'>.</span><span class='const'>Family</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span>
+      <span class='label'>size:</span>    <span class='id identifier rubyid_font_descriptor'>font_descriptor</span><span class='period'>.</span><span class='const'>Size</span><span class='comma'>,</span>
+      <span class='label'>weight:</span>  <span class='id identifier rubyid_font_descriptor'>font_descriptor</span><span class='period'>.</span><span class='const'>Weight</span><span class='comma'>,</span>
+      <span class='label'>italic:</span>  <span class='id identifier rubyid_font_descriptor'>font_descriptor</span><span class='period'>.</span><span class='const'>Italic</span><span class='comma'>,</span>
+      <span class='label'>stretch:</span> <span class='id identifier rubyid_font_descriptor'>font_descriptor</span><span class='period'>.</span><span class='const'>Stretch</span>
+  <span class='kw'>ensure</span>
+    <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_free_font_button_font'>free_font_button_font</span><span class='lparen'>(</span><span class='id identifier rubyid_font_descriptor'>font_descriptor</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
 <span class='kw'>end</span>
 </code></pre>
 <ul>
@@ -301,7 +305,7 @@ gem push libui-0.2.0-x64-mingw32.gem
 <p><a href="https://opensource.org/licenses/MIT">MIT License</a>.</p></div></div>
 
       <div id="footer">
-  Generated on Sun May 24 05:35:20 2026 by
+  Generated on Sun May 24 05:47:34 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.43 (ruby-4.0.5).
 </div>
