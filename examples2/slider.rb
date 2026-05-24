@@ -32,7 +32,7 @@ LibUI.box_append(hbox, _, 1) # Add the slider here.
 # ============================================================================ #
 # The default "tooltip" is the current value of the slider at hand.
 # ============================================================================ #
-puts 'Does this slider haver a tooltip? '+
+puts 'Does this slider have a tooltip? '+
      LibUI.slider_has_tool_tip(_).to_s
 
 callback_proc_on_changed = proc {|entry| # entry is a Fiddle::Pointer

@@ -137,8 +137,6 @@ handler.MouseCrossed = do_nothing
 handler.DragBroken   = do_nothing
 handler.KeyEvent     = key_event
 
-UI.freeInitError(init) unless init.nil?
-
 hbox = UI.new_horizontal_box
 UI.box_set_padded(hbox, 1)
 

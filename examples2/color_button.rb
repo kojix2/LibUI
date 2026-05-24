@@ -10,7 +10,7 @@
 #
 # See an API reference here:
 #
-#   https://libui-ng.github.io/libui-ng/structui_editable_combobox.html
+#   https://libui-ng.github.io/libui-ng/structui_color_button.html
 #
 # ============================================================================ #
 require 'libui'
@@ -30,7 +30,7 @@ graph_a = Fiddle::Pointer.malloc(8, Fiddle::RUBY_FREE) # double
 vbox = LibUI.new_vertical_box
 LibUI.box_set_padded(vbox, 1)
 _ = LibUI.new_color_button # Create a new color-button here.
-LibUI.box_append(vbox, _, 0) # Add the combobox here. Right now the combobox is empty.
+LibUI.box_append(vbox, _, 0) # Add the color-button here.
 
 LibUI.color_button_on_changed(_) {
   puts 'The colour button was changed.'

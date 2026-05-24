@@ -7,7 +7,7 @@
 #
 #   :new_date_picker             # [DONE]
 #   :date_time_picker_on_changed # [DONE]
-#   :date_time_picker_set_time   # [NOT YET IMPLEMENTED]
+#   :date_time_picker_set_time   # [AVAILABLE, NOT DEMONSTRATED]
 #
 # Documentation for the perl-API, for libui, can be seen here:
 #
@@ -36,8 +36,7 @@ callback_on_changed = proc { |pointer|
 }
 LibUI.date_time_picker_on_changed(_, callback_on_changed)
 
-# uiDateTimePickerSetTime(d : UI::DateTimePicker*, tm : LibC::Tm*)
-# LibUI.date_time_picker_set_time(_, Time.now)
+# uiDateTimePickerSetTime(d : UI::DateTimePicker*, tm : struct tm*)
 
 LibUI.window_set_child(main_window, vbox)
 LibUI.control_show(main_window)

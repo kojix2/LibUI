@@ -5,7 +5,7 @@
 #
 #  :new_window                                   # [DONE]
 #  :window_borderless                            # [DONE]
-#  :window_content_size                          # Unsure how to use this
+#  :window_content_size                          # [NOT DEMONSTRATED]
 #  :window_focused                               # [DONE] - returns whether or not the window is focused.
 #  :window_fullscreen                            # [DONE]
 #  :window_margined                              # [DONE]
@@ -83,19 +83,13 @@ puts
 puts 'The window will be borderless, thanks to LibUI.window_set_borderless()'
 puts 'Actually, that is not extremely useful, so we do not use it.'
 LibUI.window_set_borderless(main_window, 0)
-puts 'You can test whether it is borderless via LibUI.borderless()'
+puts 'You can test whether it is borderless via LibUI.window_borderless(main_window)'
 
 callback_proc = proc { |pointer|
   puts '_'*80
   puts 'The focus changed. This happens when the main-window'
   puts 'is dragged to a new position, for instance, as well as'
   puts 'on startup.'
-  # === window_content_size
-  #
-  # try_extern 'void uiWindowContentSize(uiWindow *w, int *width, int *height)'
-  #
-  # puts 'The window-content-size is '+
-  #       LibUI.window_content_size(main_window, 15,15).to_s
   puts '_'*80
 }
 

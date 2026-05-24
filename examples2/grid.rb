@@ -5,7 +5,7 @@
 #
 #   :new_grid                                   # [DONE]
 #   :grid_append                                # [DONE]
-#   :grid_insert_at                             # Unsure how to do this.
+#   :grid_insert_at                             # [NOT DEMONSTRATED]
 #   :grid_padded                                # [DONE]
 #   :grid_set_padded                            # [DONE]
 #
@@ -137,39 +137,6 @@ LibUI.grid_append(
   vexpand,
   valign
 )
-
-if false # The next clause does not work correctly yet.
-entry1  = LibUI.new_entry
-# ============================================================================ #
-# See: https://libui.dev/structui_grid.html#ad282fc62adbaed067699f949d619899c
-#
-# Arguments to LibUI.grid_insert_at() are:
-#
-#   void uiGridInsertAt	(	uiGrid *	g,
-#   uiControl *	c,
-#   uiControl *	existing,
-#   uiAt	at,
-#   int	xspan,
-#   int	yspan,
-#   int	hexpand,
-#   uiAlign	halign,
-#   int	vexpand,
-#   uiAlign	valign )
-#
-# ============================================================================ #
-LibUI.grid_insert_at(
-  _,
-  entry1,  # The widget to insert.
-  button3, # Our relative widget.
-  LibUI::AtTrailing, # at: Placement specifier in relation to existing control.
-  0, # xspan
-  1, # yspan
-  1,
-  1,
-  1,
-  1
-)
-end
 
 LibUI.window_set_child(main_window, hbox)
 LibUI.control_show(main_window)

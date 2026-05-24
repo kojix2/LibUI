@@ -4,12 +4,11 @@
 # in regards to this file:
 #
 #   :new_font_button              # [DONE]
-#   :font_button_font             # [NOT YET ADDED]
+#   :font_button_font             # [DONE]
 #   :font_button_on_changed       # [DONE]
-#   :free_font_button_font        # [NOT YET ADDED]
-#   :free_font_descriptor         #[NOT YET ADDED]
+#   :free_font_button_font        # [DONE]
+#   :free_font_descriptor         # [DONE]
 #
-# Unsure what ":load_control_ font" is.
 # ============================================================================ #
 require 'libui'
 LibUI.init # Initialize LibUI.
