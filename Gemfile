@@ -9,5 +9,5 @@ gem 'rubyzip'
 
 # group :development do
 #   gem 'chunky_png'
-#   gem 'numo-narray'
+#   gem 'numo-narray-alt'
 # end
