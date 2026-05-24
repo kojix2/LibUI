@@ -82,5 +82,19 @@ jobs:
 
       - name: Push gem to RubyGems.org
         run: |
-          gem push libui-*.gem
+          ruby -rjson -rnet/http -ruri -rrubygems/package -e '
+            gem_file = Dir["libui-*.gem"].fetch(0)
+            spec = Gem::Package.new(gem_file).spec
+            version = spec.version.to_s
+            platform = spec.platform.to_s
+            uri = URI("https://rubygems.org/api/v1/versions/#{spec.name}.json")
+            versions = JSON.parse(Net::HTTP.get(uri))
+
+            if versions.any? { |v| v["number"] == version && v["platform"] == platform }
+              puts "#{spec.name} #{version} #{platform} already pushed; skipping"
+              exit 0
+            end
+
+            exec "gem", "push", gem_file
+          '
         shell: bash
