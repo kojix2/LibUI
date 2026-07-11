@@ -86,7 +86,6 @@ LibUI is not object-oriented because it is a thin Ruby wrapper (binding) for the
 To build actual applications, it is recommended to use a DSL for LibUI, as they enable writing object-oriented code the Ruby way (instead of procedural code the C way):
 
 - [Glimmer DSL for LibUI](https://github.com/AndyObtiva/glimmer-dsl-libui)
-- [libui_paradise](https://rubygems.org/gems/libui_paradise)
 
 ### Working with fiddle pointers
 
