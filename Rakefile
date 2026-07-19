@@ -9,7 +9,7 @@ require 'bundler/gem_tasks'
 require_relative 'lib/libui/version'
 
 # Configuration
-COMMIT_HASH = ENV['LIBUI_NG_COMMIT_HASH'] || 'b3a1dcd'
+COMMIT_HASH = ENV['LIBUI_NG_COMMIT_HASH'] || '4ec7c87'
 
 # Path constants
 BUILD_DIR = 'builddir'
