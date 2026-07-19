@@ -122,21 +122,6 @@ def extract_zip_files(file_name, lib_paths)
   end
 end
 
-def download_from_url(lib_paths, file_name, url)
-  log_message "Downloading #{lib_paths} from #{url}"
-
-  download_file(file_name, url)
-  extract_zip_files(file_name, lib_paths)
-ensure
-  File.delete(file_name) if File.exist?(file_name)
-end
-
-# Mid-level functions
-def download_libui_ng_nightly(lib_paths, file_name)
-  url = url_for_libui_ng_commit(file_name)
-  download_from_url(lib_paths, file_name, url)
-end
-
 def download_and_place(zip_name, src, dest)
   url = url_for_libui_ng_commit(zip_name)
   success = download_file(zip_name, url)
