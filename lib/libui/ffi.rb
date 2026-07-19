@@ -3,7 +3,6 @@ require_relative 'fiddle_patch'
 require_relative 'error'
 
 module LibUI
-
   module FFI
     extend Fiddle::Importer
     extend FiddlePatch
