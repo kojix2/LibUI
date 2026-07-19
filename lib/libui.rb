@@ -351,6 +351,10 @@ module LibUI
   AtTrailing = 2
   AtBottom   = 3
 
+  # ImageViewContentMode
+  ImageViewContentCenter = 0
+  ImageViewContentFit    = 1
+
   # TableValueType
   TableValueTypeString = 0
   TableValueTypeImage  = 1

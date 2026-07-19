@@ -418,6 +418,7 @@ module LibUI
     try_extern 'void uiDrawClip(uiDrawContext *c, uiDrawPath *path)'
     try_extern 'void uiDrawSave(uiDrawContext *c)'
     try_extern 'void uiDrawRestore(uiDrawContext *c)'
+    try_extern 'void uiDrawImage(uiDrawContext *c, uiImage *img, double x, double y, double width, double height)'
 
     # uiAttribute
     try_extern 'void uiFreeAttribute(uiAttribute *a)'
@@ -580,6 +581,14 @@ module LibUI
     try_extern 'uiImage *uiNewImage(double width, double height)'
     try_extern 'void uiFreeImage(uiImage *i)'
     try_extern 'void uiImageAppend(uiImage *i, void *pixels, int pixelWidth, int pixelHeight, int byteStride)'
+
+    # uiImageView
+    try_extern 'uiImageView *uiNewImageView(void)'
+    try_extern 'void uiImageViewSetImage(uiImageView *iv, const uiImage *image)'
+
+    typealias 'uiImageViewContentMode', 'int'
+
+    try_extern 'void uiImageViewSetContentMode(uiImageView *iv, uiImageViewContentMode mode)'
 
     # uiTable
     try_extern 'void uiFreeTableValue(uiTableValue *v)'
