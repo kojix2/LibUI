@@ -68,9 +68,9 @@ module LibUI
       @func_map[name] = func
       # define_method(name){|*args,&block| f.call(*args,&block)}
       begin
-        /^(.+?):(\d+)/ =~ caller.first
-        file = Regexp.last_match(1)
-        line = Regexp.last_match(2).to_i
+        location = caller_locations(1, 1).first
+        file = location.path
+        line = location.lineno
       rescue StandardError
         file, line = __FILE__, __LINE__ + 3
       end
