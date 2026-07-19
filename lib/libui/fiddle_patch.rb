@@ -11,9 +11,9 @@ module LibUI
     def parse_signature(signature, tymap = nil)
       tymap ||= {}
       ctype, func, args = case compact(signature)
-                          when /^(?:[\w\*\s]+)\(\*(\w+)\((.*?)\)\)(?:\[\w*\]|\(.*?\));?$/
+                          when /^(?:[\w*\s]+)\(\*(\w+)\((.*?)\)\)(?:\[\w*\]|\(.*?\));?$/
                             [TYPE_VOIDP, Regexp.last_match(1), Regexp.last_match(2)]
-                          when /^([\w\*\s]+[*\s])(\w+)\((.*?)\);?$/
+                          when /^([\w*\s]+[*\s])(\w+)\((.*?)\);?$/
                             [parse_ctype(Regexp.last_match(1).strip, tymap), Regexp.last_match(2), Regexp.last_match(3)]
                           else
                             raise("can't parse the function prototype: #{signature}")
@@ -22,12 +22,12 @@ module LibUI
       callback_argument_types = {}                                              # Added
       argtype = split_arguments(args).collect.with_index do |arg, idx|          # Added with_index
         # Check if it is a function pointer or not
-        if arg =~ /\(\*.*\)\(.*\)/                                              # Added
+        if arg =~ /\(\*.*\)\(.*\)/ # Added
           # From the arguments, create a notation that looks like a function declaration
           # int(*f)(int *, void *) -> int f(int *, void *)
-          func_arg = arg.sub('(*', ' ').sub(')', '')                            # Added
+          func_arg = arg.sub('(*', ' ').sub(')', '') # Added
           # Use Fiddle's parse_signature method again.
-          callback_argument_types[idx] = parse_signature(func_arg)              # Added
+          callback_argument_types[idx] = parse_signature(func_arg) # Added
         end
         parse_ctype(arg, tymap)
       end
@@ -41,8 +41,8 @@ module LibUI
       func = import_function(symname, ctype, argtype, opt[:call_type])
 
       # callback_argument_types
-      func.instance_variable_set(:@callback_argument_types, 
-                                   callback_argument_types) # Added
+      func.instance_variable_set(:@callback_argument_types,
+                                 callback_argument_types) # Added
       # attr_reader
       def func.callback_argument_types
         @callback_argument_types
