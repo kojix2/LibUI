@@ -30,3 +30,30 @@ jobs:
         uses: coactions/setup-xvfb@v1
         with:
           run: bundle exec rake test
+
+  jruby:
+    name: ${{ matrix.runner }} JRuby
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: ubuntu-latest
+            jruby_opts: ""
+          - runner: macos-latest
+            jruby_opts: "-J-XstartOnFirstThread"
+    runs-on: ${{ matrix.runner }}
+    env:
+      JRUBY_OPTS: ${{ matrix.jruby_opts }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: jruby
+      - name: Install dependencies
+        run: bundle install
+      - name: Download libui shared libraries
+        run: bundle exec rake vendor:auto
+      - name: Rake test (XVFB)
+        uses: coactions/setup-xvfb@v1
+        with:
+          run: bundle exec rake test

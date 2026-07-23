@@ -186,6 +186,15 @@ bundle exec rake vendor:auto
 bundle exec rake test
 ```
 
+JRuby on macOS needs Java and AppKit must start on the first thread:
+
+```sh
+export JAVA_HOME=/path/to/openjdk
+export JRUBY_OPTS=-J-XstartOnFirstThread
+jruby -Ilib examples/basic_button.rb
+jruby -S rake test
+```
+
 ### Pre-built shared libraries for libui-ng
 
 Download pre-built libui-ng shared libraries (per your current platform):
