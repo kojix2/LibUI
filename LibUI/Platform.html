@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Module: LibUI::Platform
+  
+    &mdash; Documentation by YARD 0.9.45
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css">
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css">
+
+<script type="text/javascript">
+  pathId = "LibUI::Platform";
+  relpath = '../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
+    <div class="nav_wrap">
+      <iframe id="nav" src="../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../_index.html">Index (P)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../LibUI.html" title="LibUI (module)">LibUI</a></span></span>
+     &raquo; 
+    <span class="title">Platform</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Module: LibUI::Platform
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/libui/platform.rb
+</dd>
+  </dl>
+  
+</div>
+
+
+  
+    <h2>
+      Constant Summary
+      <small><a href="#" class="constants_summary_toggle">collapse</a></small>
+    </h2>
+
+    <dl class="constants">
+      
+        <dt id="CONFIG-constant" class="">CONFIG =
+          
+        </dt>
+        <dd><pre class="code"><span class='lbrace'>{</span>
+  <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>arm64-darwin</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span>
+    <span class='label'>vendor:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>vendor/libui.arm64.dylib</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+    <span class='label'>lib_names:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>libui.arm64.dylib</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>libui.dylib</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+    <span class='label'>release_zip:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>macOS-arm64-shared-release.zip</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+    <span class='label'>release_src:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>builddir/meson-out/libui.dylib</span><span class='tstring_end'>&#39;</span></span>
+  <span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x86_64-darwin</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span>
+    <span class='label'>vendor:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>vendor/libui.x86_64.dylib</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+    <span class='label'>lib_names:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>libui.x86_64.dylib</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>libui.dylib</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+    <span class='label'>release_zip:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>macOS-x64-shared-release.zip</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+    <span class='label'>release_src:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>builddir/meson-out/libui.dylib</span><span class='tstring_end'>&#39;</span></span>
+  <span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x86_64-linux</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span>
+    <span class='label'>vendor:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>vendor/libui.x86_64.so</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+    <span class='label'>lib_names:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>libui.x86_64.so</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>libui.so</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+    <span class='label'>release_zip:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Ubuntu-x64-shared-release.zip</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+    <span class='label'>release_src:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>builddir/meson-out/libui.so</span><span class='tstring_end'>&#39;</span></span>
+  <span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>aarch64-linux</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span>
+    <span class='label'>vendor:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>vendor/libui.aarch64.so</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+    <span class='label'>lib_names:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>libui.aarch64.so</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>libui.so</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+    <span class='label'>release_zip:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Ubuntu-arm64-shared-release.zip</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+    <span class='label'>release_src:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>builddir/meson-out/libui.so</span><span class='tstring_end'>&#39;</span></span>
+  <span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x64-mingw32</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span>
+    <span class='label'>vendor:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>vendor/libui.x64.dll</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+    <span class='label'>lib_names:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>libui.x64.dll</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>libui.dll</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+    <span class='label'>release_zip:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Windows-x64-msvc-shared-release.zip</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+    <span class='label'>release_src:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>builddir/meson-out/libui.dll</span><span class='tstring_end'>&#39;</span></span>
+  <span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x86-mingw32</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span>
+    <span class='label'>vendor:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>vendor/libui.x86.dll</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+    <span class='label'>lib_names:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>libui.x86.dll</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>libui.dll</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+    <span class='label'>release_zip:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Windows-x86-msvc-shared-release.zip</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+    <span class='label'>release_src:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>builddir/meson-out/libui.dll</span><span class='tstring_end'>&#39;</span></span>
+  <span class='rbrace'>}</span>
+<span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#config_for-class_method" title="config_for (class method)">.<strong>config_for</strong>(platform_key)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#config_keys-class_method" title="config_keys (class method)">.<strong>config_keys</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#current_config-class_method" title="current_config (class method)">.<strong>current_config</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#current_lib_names-class_method" title="current_lib_names (class method)">.<strong>current_lib_names</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#detect_platform_key-class_method" title="detect_platform_key (class method)">.<strong>detect_platform_key</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#native_platform_key-class_method" title="native_platform_key (class method)">.<strong>native_platform_key</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#normalize_platform_key-class_method" title="normalize_platform_key (class method)">.<strong>normalize_platform_key</strong>(platform_key)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Canonicalizes alternate platform spellings to the keys used in CONFIG.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#rubygems_platform_key-class_method" title="rubygems_platform_key (class method)">.<strong>rubygems_platform_key</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#vendor_file_for-class_method" title="vendor_file_for (class method)">.<strong>vendor_file_for</strong>(platform_key)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+    
+  
+
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="config_for-class_method">
+  
+    .<strong>config_for</strong>(platform_key)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+49
+50
+51</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/libui/platform.rb', line 49</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_config_for'>config_for</span><span class='lparen'>(</span><span class='id identifier rubyid_platform_key'>platform_key</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="#CONFIG-constant" title="LibUI::Platform::CONFIG (constant)">CONFIG</a></span></span><span class='lbracket'>[</span><span class='id identifier rubyid_normalize_platform_key'>normalize_platform_key</span><span class='lparen'>(</span><span class='id identifier rubyid_platform_key'>platform_key</span><span class='rparen'>)</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="config_keys-class_method">
+  
+    .<strong>config_keys</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+45
+46
+47</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/libui/platform.rb', line 45</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_config_keys'>config_keys</span>
+  <span class='const'><span class='object_link'><a href="#CONFIG-constant" title="LibUI::Platform::CONFIG (constant)">CONFIG</a></span></span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="current_config-class_method">
+  
+    .<strong>current_config</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+53
+54
+55</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/libui/platform.rb', line 53</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_current_config'>current_config</span>
+  <span class='id identifier rubyid_config_for'>config_for</span><span class='lparen'>(</span><span class='id identifier rubyid_detect_platform_key'>detect_platform_key</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="current_lib_names-class_method">
+  
+    .<strong>current_lib_names</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+120
+121
+122
+123
+124
+125
+126
+127</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/libui/platform.rb', line 120</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_current_lib_names'>current_lib_names</span>
+  <span class='comment'># host_lib_name and the bare &quot;libui.&lt;soext&gt;&quot; are fallbacks for locally
+</span>  <span class='comment'># built or manually placed libraries (e.g. via LIBUIDIR or a source
+</span>  <span class='comment'># checkout) whose file names may not match the CONFIG lib_names.
+</span>  <span class='id identifier rubyid_host_lib_name'>host_lib_name</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>libui.</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_host_cpu'>host_cpu</span><span class='embexpr_end'>}</span><span class='tstring_content'>.</span><span class='embexpr_beg'>#{</span><span class='const'>RbConfig</span><span class='op'>::</span><span class='const'>CONFIG</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>SOEXT</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_names'>names</span> <span class='op'>=</span> <span class='id identifier rubyid_current_config'>current_config</span> <span class='op'>?</span> <span class='id identifier rubyid_current_config'>current_config</span><span class='lbracket'>[</span><span class='symbol'>:lib_names</span><span class='rbracket'>]</span> <span class='op'>:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='lparen'>(</span><span class='lbracket'>[</span><span class='id identifier rubyid_host_lib_name'>host_lib_name</span><span class='rbracket'>]</span> <span class='op'>+</span> <span class='id identifier rubyid_names'>names</span> <span class='op'>+</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>libui.</span><span class='embexpr_beg'>#{</span><span class='const'>RbConfig</span><span class='op'>::</span><span class='const'>CONFIG</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>SOEXT</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="detect_platform_key-class_method">
+  
+    .<strong>detect_platform_key</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+57
+58
+59</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/libui/platform.rb', line 57</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_detect_platform_key'>detect_platform_key</span>
+  <span class='id identifier rubyid_native_platform_key'>native_platform_key</span> <span class='op'>||</span> <span class='id identifier rubyid_rubygems_platform_key'>rubygems_platform_key</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="native_platform_key-class_method">
+  
+    .<strong>native_platform_key</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/libui/platform.rb', line 61</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_native_platform_key'>native_platform_key</span>
+  <span class='id identifier rubyid_platform_key'>platform_key</span> <span class='op'>=</span> <span class='kw'>case</span> <span class='id identifier rubyid_host_os'>host_os</span>
+                 <span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>darwin</span><span class='regexp_end'>/</span></span>
+                   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_normalized_cpu'>normalized_cpu</span><span class='embexpr_end'>}</span><span class='tstring_content'>-darwin</span><span class='tstring_end'>&quot;</span></span>
+                 <span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>linux</span><span class='regexp_end'>/</span></span>
+                   <span class='comment'># libc variants (glibc vs musl) are not supported as
+</span>                   <span class='comment'># separate prebuilt targets yet; the shipped Linux
+</span>                   <span class='comment'># binaries are built on Ubuntu. Supporting musl would
+</span>                   <span class='comment'># require adding explicit *-linux-musl entries.
+</span>                   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_normalized_cpu'>normalized_cpu</span><span class='embexpr_end'>}</span><span class='tstring_content'>-linux</span><span class='tstring_end'>&quot;</span></span>
+                 <span class='kw'>when</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>mingw|mswin</span><span class='regexp_end'>/</span></span>
+                   <span class='id identifier rubyid_windows_platform_key'>windows_platform_key</span>
+                 <span class='kw'>end</span>
+
+  <span class='const'><span class='object_link'><a href="#CONFIG-constant" title="LibUI::Platform::CONFIG (constant)">CONFIG</a></span></span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='id identifier rubyid_platform_key'>platform_key</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_platform_key'>platform_key</span> <span class='op'>:</span> <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="normalize_platform_key-class_method">
+  
+    .<strong>normalize_platform_key</strong>(platform_key)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Canonicalizes alternate platform spellings to the keys used in CONFIG.
+Linux libc suffixes (-gnu / -musl) are intentionally not stripped here;
+adding libc-specific artifacts should be an explicit CONFIG change.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+108
+109
+110
+111
+112
+113</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/libui/platform.rb', line 108</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_normalize_platform_key'>normalize_platform_key</span><span class='lparen'>(</span><span class='id identifier rubyid_platform_key'>platform_key</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_platform_key'>platform_key</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+              <span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\Aarm64-linux\z</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>aarch64-linux</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+              <span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\Ax64-linux\z</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x86_64-linux</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+              <span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>-mingw-ucrt\z</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>-mingw32</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="rubygems_platform_key-class_method">
+  
+    .<strong>rubygems_platform_key</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/libui/platform.rb', line 78</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_rubygems_platform_key'>rubygems_platform_key</span>
+  <span class='id identifier rubyid_current_platform'>current_platform</span> <span class='op'>=</span> <span class='const'>Gem</span><span class='op'>::</span><span class='const'>Platform</span><span class='period'>.</span><span class='id identifier rubyid_local'>local</span>
+  <span class='id identifier rubyid_platform_key'>platform_key</span> <span class='op'>=</span> <span class='id identifier rubyid_normalize_platform_key'>normalize_platform_key</span><span class='lparen'>(</span><span class='id identifier rubyid_current_platform'>current_platform</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_platform_key'>platform_key</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="#CONFIG-constant" title="LibUI::Platform::CONFIG (constant)">CONFIG</a></span></span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='id identifier rubyid_platform_key'>platform_key</span><span class='rparen'>)</span>
+
+  <span class='const'><span class='object_link'><a href="#CONFIG-constant" title="LibUI::Platform::CONFIG (constant)">CONFIG</a></span></span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_config_key'>config_key</span><span class='op'>|</span>
+    <span class='id identifier rubyid_config_platform'>config_platform</span> <span class='op'>=</span> <span class='const'>Gem</span><span class='op'>::</span><span class='const'>Platform</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_config_key'>config_key</span><span class='rparen'>)</span>
+
+    <span class='comment'># NOTE: match_platforms? is a private RubyGems API. It is used to
+</span>    <span class='comment'># reuse RubyGems&#39; own platform matching (including the libc wildcard
+</span>    <span class='comment'># behaviour), but it may change or disappear across RubyGems versions.
+</span>    <span class='kw'>if</span> <span class='const'>Gem</span><span class='op'>::</span><span class='const'>Platform</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:match_platforms?</span><span class='comma'>,</span> <span class='id identifier rubyid_current_platform'>current_platform</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='id identifier rubyid_config_platform'>config_platform</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+      <span class='kw'>true</span>
+    <span class='kw'>elsif</span> <span class='id identifier rubyid_config_key'>config_key</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x64-mingw32</span><span class='tstring_end'>&#39;</span></span> <span class='op'>&amp;&amp;</span>
+          <span class='id identifier rubyid_current_platform'>current_platform</span><span class='period'>.</span><span class='id identifier rubyid_os'>os</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>mingw</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span>
+          <span class='qwords_beg'>%w[</span><span class='tstring_content'>x64</span><span class='words_sep'> </span><span class='tstring_content'>x86_64</span><span class='words_sep'> </span><span class='tstring_content'>amd64</span><span class='tstring_end'>]</span></span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_current_platform'>current_platform</span><span class='period'>.</span><span class='id identifier rubyid_cpu'>cpu</span><span class='rparen'>)</span>
+      <span class='kw'>true</span>
+    <span class='kw'>elsif</span> <span class='id identifier rubyid_config_key'>config_key</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x86-mingw32</span><span class='tstring_end'>&#39;</span></span> <span class='op'>&amp;&amp;</span>
+          <span class='id identifier rubyid_current_platform'>current_platform</span><span class='period'>.</span><span class='id identifier rubyid_os'>os</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>mingw</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span>
+          <span class='qwords_beg'>%w[</span><span class='tstring_content'>x86</span><span class='words_sep'> </span><span class='tstring_content'>i386</span><span class='words_sep'> </span><span class='tstring_content'>i686</span><span class='tstring_end'>]</span></span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_current_platform'>current_platform</span><span class='period'>.</span><span class='id identifier rubyid_cpu'>cpu</span><span class='rparen'>)</span>
+      <span class='kw'>true</span>
+    <span class='kw'>else</span>
+      <span class='kw'>false</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="vendor_file_for-class_method">
+  
+    .<strong>vendor_file_for</strong>(platform_key)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+115
+116
+117
+118</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/libui/platform.rb', line 115</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_vendor_file_for'>vendor_file_for</span><span class='lparen'>(</span><span class='id identifier rubyid_platform_key'>platform_key</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_config'>config</span> <span class='op'>=</span> <span class='id identifier rubyid_config_for'>config_for</span><span class='lparen'>(</span><span class='id identifier rubyid_platform_key'>platform_key</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_config'>config</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_config'>config</span><span class='lbracket'>[</span><span class='symbol'>:vendor</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Thu Jul 23 02:57:34 2026 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.45 (ruby-4.0.6).
+</div>
+
+    </div>
+  </body>
+</html>
