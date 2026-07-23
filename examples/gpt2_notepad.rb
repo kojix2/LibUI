@@ -21,7 +21,7 @@ Dir.chdir(__dir__) do
 
     print "Downloading #{fname}..."
     require 'open-uri'
-    File.binwrite(fname, URI.open(url).read)
+    URI.open(url) { |f| File.binwrite(fname, f.read) }
     puts 'done'
   end
   @encoder = BlingFire.load_model('gpt2.bin')
