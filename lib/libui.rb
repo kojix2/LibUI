@@ -1,36 +1,20 @@
 require_relative 'libui/version'
 require_relative 'libui/utils'
 require_relative 'libui/error'
-require 'rbconfig'
+require_relative 'libui/platform'
 
 module LibUI
   class << self
     attr_accessor :ffi_lib
   end
 
-  host_cpu = case RbConfig::CONFIG['host_cpu']
-             when /i\d86/
-               'x86'
-             else
-               RbConfig::CONFIG['host_cpu']
-             end
-
-  lib_name = [
-    # For libui-ng shared libraries compiled with (rake vendor:build)
-    "libui.#{RbConfig::CONFIG['host_cpu']}.#{RbConfig::CONFIG['SOEXT']}",
-    # For libui-ng shared library downloaded from RubyGems.org
-    "libui.#{host_cpu}.#{RbConfig::CONFIG['SOEXT']}",
-    # For backward compatibility or manual compilation of libui-ng
-    "libui.#{RbConfig::CONFIG['SOEXT']}"
-  ]
-
   self.ffi_lib = \
     if ENV['LIBUIDIR'] && !ENV['LIBUIDIR'].empty?
-      lib_name.lazy
+      Platform.current_lib_names.lazy
               .map { |name| File.expand_path(name, ENV['LIBUIDIR']) }
               .find { |path| File.exist?(path) }
     else
-      lib_name.lazy
+      Platform.current_lib_names.lazy
               .map { |name| File.expand_path("../vendor/#{name}", __dir__) }
               .find { |path| File.exist?(path) }
     end

@@ -7,6 +7,7 @@ require 'zip'
 require 'bundler/gem_tasks'
 
 require_relative 'lib/libui/version'
+require_relative 'lib/libui/platform'
 
 # Configuration
 COMMIT_HASH = ENV['LIBUI_NG_COMMIT_HASH'] || '138686e-experimental'
@@ -15,28 +16,6 @@ COMMIT_HASH = ENV['LIBUI_NG_COMMIT_HASH'] || '138686e-experimental'
 BUILD_DIR = 'builddir'
 MESON_OUT_DIR = "#{BUILD_DIR}/meson-out"
 DEBUG_DIR = 'libui/debug'
-
-# Platform-specific configuration for shared libraries
-PLATFORM_CONFIG = {
-  'arm64-darwin' => [
-    { zip: 'macOS-arm64-shared-release.zip', src: 'builddir/meson-out/libui.dylib', dest: 'vendor/libui.arm64.dylib' }
-  ],
-  'x86_64-darwin' => [
-    { zip: 'macOS-x64-shared-release.zip', src: 'builddir/meson-out/libui.dylib', dest: 'vendor/libui.x86_64.dylib' }
-  ],
-  'x86_64-linux' => [
-    { zip: 'Ubuntu-x64-shared-release.zip', src: 'builddir/meson-out/libui.so', dest: 'vendor/libui.x86_64.so' }
-  ],
-  'aarch64-linux' => [
-    { zip: 'Ubuntu-arm64-shared-release.zip', src: 'builddir/meson-out/libui.so', dest: 'vendor/libui.aarch64.so' }
-  ],
-  'x64-mingw32' => [
-    { zip: 'Windows-x64-msvc-shared-release.zip', src: 'builddir/meson-out/libui.dll', dest: 'vendor/libui.x64.dll' }
-  ],
-  'x86-mingw32' => [
-    { zip: 'Windows-x86-msvc-shared-release.zip', src: 'builddir/meson-out/libui.dll', dest: 'vendor/libui.x86.dll' }
-  ]
-}.freeze
 
 # Test configuration
 Rake::TestTask.new(:test) do |t|
@@ -53,38 +32,12 @@ def log_message(message)
 end
 
 def detect_platform_config_key
-  # Environment variable override
   if ENV['GEM_PLATFORM']
-    platform_str = ENV['GEM_PLATFORM']
-    return platform_str if PLATFORM_CONFIG.key?(platform_str)
+    platform_key = LibUI::Platform.normalize_platform_key(ENV['GEM_PLATFORM'])
+    return platform_key if LibUI::Platform.config_for(platform_key)
   end
 
-  current_platform = Gem::Platform.local
-
-  # Try exact match first
-  return current_platform.to_s if PLATFORM_CONFIG.key?(current_platform.to_s)
-
-  # Use RubyGems matching with custom Windows mingw support
-  PLATFORM_CONFIG.keys.find do |config_key|
-    config_platform = Gem::Platform.new(config_key)
-
-    # Standard RubyGems matching
-    if Gem::Platform.send(:match_platforms?, current_platform, [config_platform])
-      true
-    # Custom Windows mingw matching for x64 variants
-    elsif config_key == 'x64-mingw32' &&
-          current_platform.os.start_with?('mingw') &&
-          %w[x64 x86_64].include?(current_platform.cpu)
-      true
-    # Custom Windows mingw matching for x86 variants
-    elsif config_key == 'x86-mingw32' &&
-          current_platform.os.start_with?('mingw') &&
-          %w[x86 i386 i686].include?(current_platform.cpu)
-      true
-    else
-      false
-    end
-  end
+  LibUI::Platform.detect_platform_key
 end
 
 def url_for_libui_ng_commit(file_name)
@@ -141,7 +94,7 @@ end
 # High-level processing functions
 def process_config_entry(entry)
   # Standard download and place for shared libraries only
-  download_and_place(entry[:zip], entry[:src], entry[:dest])
+  download_and_place(entry[:release_zip], entry[:release_src], entry[:vendor])
 end
 
 def process_platform(platform_entries)
@@ -151,14 +104,7 @@ def process_platform(platform_entries)
 end
 
 # Platform gem building
-platforms = %w[
-  x86_64-linux
-  aarch64-linux
-  x86_64-darwin
-  arm64-darwin
-  x64-mingw32
-  x86-mingw32
-]
+platforms = LibUI::Platform.config_keys
 
 task :build_platform do
   platforms.each do |platform|
@@ -182,13 +128,14 @@ namespace 'vendor' do
   desc 'Download pre-built libraries for current platform'
   task :auto do
     platform_key = detect_platform_config_key
-    if platform_key && PLATFORM_CONFIG[platform_key]
+    platform_config = LibUI::Platform.config_for(platform_key)
+    if platform_config
       log_message "Processing platform: #{platform_key}"
-      process_platform(PLATFORM_CONFIG[platform_key])
+      process_platform([platform_config])
     else
       current_platform = Gem::Platform.local
       log_message "No configuration found for current platform: #{current_platform}"
-      log_message "Available platforms: #{PLATFORM_CONFIG.keys.join(', ')}"
+      log_message "Available platforms: #{LibUI::Platform.config_keys.join(', ')}"
       exit 1
     end
   ensure
