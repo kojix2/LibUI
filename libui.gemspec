@@ -1,4 +1,5 @@
 require_relative 'lib/libui/version'
+require_relative 'lib/libui/platform'
 
 Gem::Specification.new do |spec|
   spec.name          = 'libui'
@@ -19,22 +20,20 @@ Gem::Specification.new do |spec|
   gem_platform = ENV['GEM_PLATFORM']
   spec.platform = gem_platform if gem_platform && !gem_platform.empty? && gem_platform != 'ruby'
 
-  # See `gem help platform` for information on platform matching.
-  case spec.platform.to_s
-  when 'x86_64-linux'
-    spec.files << 'vendor/libui.x86_64.so'
-  when 'aarch64-linux'
-    spec.files << 'vendor/libui.aarch64.so'
-  when 'x86_64-darwin'
-    spec.files << 'vendor/libui.x86_64.dylib'
-  when 'arm64-darwin'
-    spec.files << 'vendor/libui.arm64.dylib'
-  when 'x64-mingw32', 'x64-mingw-ucrt'
-    spec.files << 'vendor/libui.x64.dll'
-  when 'x86-mingw32'
-    spec.files << 'vendor/libui.x86.dll'
+  platform_for_vendor = if gem_platform && !gem_platform.empty? && gem_platform != 'ruby'
+                          gem_platform
+                        else
+                          spec.platform.to_s
+                        end
+
+  vendor_file = LibUI::Platform.vendor_file_for(platform_for_vendor)
+  if vendor_file
+    # Platform-specific gem: ship only the matching native library.
+    spec.files << vendor_file
   else
-    spec.files.concat(Dir['vendor/*.{dll,dylib,so}']) # all
+    # Generic "ruby"-platform gem: include every bundled native library so
+    # runtime platform detection can select the matching one.
+    spec.files.concat(Dir['vendor/*.{dll,dylib,so}'])
   end
 
   spec.add_dependency 'fiddle'
