@@ -114,4 +114,5 @@ end
 UI.control_show(main_window)
 
 UI.main
+UI.free_attributed_string(attr_str)
 UI.uninit
