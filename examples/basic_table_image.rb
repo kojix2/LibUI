@@ -18,9 +18,7 @@ UI.window_set_child(main_window, hbox)
 
 IMAGES = Array.new(50) do |i|
   url = format('https://www.ghibli.jp/gallery/thumb-redturtle%03d.png', i + 1)
-  f = URI.open(url)
-  canvas = ChunkyPNG::Canvas.from_io(f)
-  f.close
+  canvas = URI.open(url) { |f| ChunkyPNG::Canvas.from_io(f) }
   data = canvas.to_rgba_stream
   width = canvas.width
   height = canvas.height

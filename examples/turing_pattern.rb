@@ -304,7 +304,7 @@ save_model_as_proc = proc do
   unless pt.null?
     begin
       @save_file_path = pt.to_s
-      Marshal.dump(@model, File.open(@save_file_path, 'wb'))
+      File.open(@save_file_path, 'wb') { |f| Marshal.dump(@model, f) }
     ensure
       UI.free_text(pt)
     end
@@ -316,7 +316,7 @@ end
 menu_file_save = UI.menu_append_item(menu_file, 'Save Model')
 UI.menu_item_on_clicked(menu_file_save) do
   if @save_file_path
-    Marshal.dump(@model, File.open(@save_file_path, 'wb'))
+    File.open(@save_file_path, 'wb') { |f| Marshal.dump(@model, f) }
   else
     save_model_as_proc.call
   end
