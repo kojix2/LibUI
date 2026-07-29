@@ -194,6 +194,9 @@ jruby -Ilib examples/basic_button.rb
 jruby -S rake test
 ```
 
+Take note that, as the above code shows, LibUI works via jruby as well, so you have an additional
+GUI library (aside from jruby-swing by default) to test simple User Interfaces too.
+
 ### Pre-built shared libraries for libui-ng
 
 Download pre-built libui-ng shared libraries (per your current platform):
