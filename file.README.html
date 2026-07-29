@@ -239,6 +239,8 @@ export JRUBY_OPTS=-J-XstartOnFirstThread
 jruby -Ilib examples/basic_button.rb
 jruby -S rake test
 </code></pre>
+<p>Take note that, as the above code shows, LibUI works via jruby as well, so you have an additional
+GUI library (aside from jruby-swing by default) to test simple User Interfaces too.</p>
 <h3 id="Pre_built_shared_libraries_for_libui_ng">Pre-built shared libraries for libui-ng</h3>
 <p>Download pre-built libui-ng shared libraries (per your current platform):</p>
 <pre class="code sh"><code class="sh">bundle exec rake vendor:auto
@@ -307,7 +309,7 @@ gem push libui-0.2.0-x64-mingw32.gem
 <p><a href="https://opensource.org/licenses/MIT">MIT License</a>.</p></div></div>
 
       <div id="footer">
-  Generated on Mon Jul 27 09:44:19 2026 by
+  Generated on Wed Jul 29 07:55:43 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.45 (ruby-4.0.6).
 </div>
