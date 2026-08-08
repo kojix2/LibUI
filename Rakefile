@@ -125,6 +125,16 @@ end
 
 # Vendor tasks
 namespace 'vendor' do
+  desc 'Download pre-built libraries for every supported platform'
+  task :all do
+    Rake::Task['vendor:clean'].invoke
+    platform_configs = LibUI::Platform.config_keys.map { |key| LibUI::Platform.config_for(key) }
+    log_message "Processing all platforms: #{LibUI::Platform.config_keys.join(', ')}"
+    process_platform(platform_configs)
+  ensure
+    Rake::Task['vendor:cleanup'].invoke
+  end
+
   desc 'Download pre-built libraries for current platform'
   task :auto do
     platform_key = detect_platform_config_key
