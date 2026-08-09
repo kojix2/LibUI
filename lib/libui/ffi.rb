@@ -170,6 +170,9 @@ module LibUI
     try_extern 'int uiTabNumPages(uiTab *t)'
     try_extern 'int uiTabMargined(uiTab *t, int index)'
     try_extern 'void uiTabSetMargined(uiTab *t, int index, int margined)'
+    try_extern 'int uiTabSelected(uiTab *t)'
+    try_extern 'void uiTabSetSelected(uiTab *t, int index)'
+    try_extern 'void uiTabOnSelected(uiTab *t, void (*f)(uiTab *sender, void *senderData), void *data)'
     try_extern 'uiTab *uiNewTab(void)'
 
     # uiGroup
