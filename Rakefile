@@ -10,7 +10,7 @@ require_relative 'lib/libui/version'
 require_relative 'lib/libui/platform'
 
 # Configuration
-COMMIT_HASH = ENV['LIBUI_NG_COMMIT_HASH'] || '138686e-experimental'
+COMMIT_HASH = ENV['LIBUI_NG_COMMIT_HASH'] || 'e9a11ba-experimental'
 
 # Path constants
 BUILD_DIR = 'builddir'
