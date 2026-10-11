@@ -118,6 +118,17 @@ rows = UI.table_get_selection(table)
 coordinates and return a pair. `open_type_features_get` returns the feature
 value, or `nil` when the tag is absent.
 
+Date and time picker methods use Ruby objects directly. The getter returns a
+local `Time`; the setter accepts `Time`, `DateTime`, or `Date`:
+
+```ruby
+UI.date_time_picker_set_time(picker, Time.now)
+selected = UI.date_time_picker_time(picker)
+```
+
+The picker stores whole seconds. For date-only and time-only pickers, only the
+displayed fields should be used; libui-ng does not specify the other fields.
+
 Use `LibUI::FFI` for the original pointer based C API when needed.
 
 If you need to use C structs, you can do the following:

@@ -2,6 +2,7 @@ require_relative 'libui/version'
 require_relative 'libui/utils'
 require_relative 'libui/error'
 require_relative 'libui/platform'
+require 'date'
 
 module LibUI
   class << self
@@ -201,6 +202,42 @@ module LibUI
 
     def table_value_string(value)
       read_borrowed_text(super(value))
+    end
+
+    def date_time_picker_time(picker)
+      tm = FFI::TM.malloc
+      tm.to_ptr.free = Fiddle::RUBY_FREE
+      super(picker, tm)
+      if tm.tm_isdst.negative?
+        Time.local(tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday,
+                   tm.tm_hour, tm.tm_min, tm.tm_sec)
+      else
+        # The ten-argument form preserves which side of a repeated DST hour was selected.
+        Time.local(tm.tm_sec, tm.tm_min, tm.tm_hour, tm.tm_mday,
+                   tm.tm_mon + 1, tm.tm_year + 1900, 0, 0,
+                   tm.tm_isdst != 0, nil)
+      end
+    end
+
+    def date_time_picker_set_time(picker, value)
+      local_time = case value
+                   when Time, DateTime then value.to_time.getlocal
+                   when Date then Time.local(value.year, value.month, value.day)
+                   else raise TypeError, 'expected Time, DateTime, or Date'
+                   end
+      tm = FFI::TM.malloc
+      tm.to_ptr.free = Fiddle::RUBY_FREE
+      tm.to_ptr[0, FFI::TM.size] = "\0" * FFI::TM.size
+      tm.tm_sec = local_time.sec
+      tm.tm_min = local_time.min
+      tm.tm_hour = local_time.hour
+      tm.tm_mday = local_time.day
+      tm.tm_mon = local_time.month - 1
+      tm.tm_year = local_time.year - 1900
+      tm.tm_wday = local_time.wday
+      tm.tm_yday = local_time.yday - 1
+      tm.tm_isdst = Fiddle::WINDOWS ? -1 : (local_time.dst? ? 1 : 0)
+      super(picker, tm)
     end
 
     def toolbar_item_text(item)

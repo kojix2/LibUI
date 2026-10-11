@@ -7,21 +7,10 @@ UI.init
 vbox = UI.new_vertical_box
 
 date_time_picker = UI.new_date_time_picker
-
-time = UI::FFI::TM.malloc
-time.to_ptr.free = Fiddle::RUBY_FREE
+UI.date_time_picker_set_time(date_time_picker, Time.now)
 
 UI.date_time_picker_on_changed(date_time_picker) do
-  UI.date_time_picker_time(date_time_picker, time)
-  p sec: time.tm_sec,
-    min: time.tm_min,
-    hour: time.tm_hour,
-    mday: time.tm_mday,
-    mon: time.tm_mon,
-    year: time.tm_year,
-    wday: time.tm_wday,
-    yday: time.tm_yday,
-    isdst: time.tm_isdst
+  puts UI.date_time_picker_time(date_time_picker)
 end
 UI.box_append(vbox, date_time_picker, 1)
 

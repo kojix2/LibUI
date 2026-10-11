@@ -172,47 +172,23 @@ UI.box_append(basic_box, UI.new_label('Label'), 0)
 UI.box_append(basic_box, UI.new_horizontal_separator, 0)
 
 date_picker = UI.new_date_picker
-date = UI::FFI::TM.malloc
-date.to_ptr.free = Fiddle::RUBY_FREE
 UI.date_time_picker_on_changed(date_picker) do |sender|
-  UI.date_time_picker_time(sender, date)
-  puts format(
-    'DatePicker changed: %04d-%02d-%02d',
-    date.tm_year + 1900,
-    date.tm_mon + 1,
-    date.tm_mday
-  )
+  date = UI.date_time_picker_time(sender)
+  puts "DatePicker changed: #{date.strftime('%Y-%m-%d')}"
 end
 UI.box_append(basic_box, date_picker, 0)
 
 time_picker = UI.new_time_picker
-time = UI::FFI::TM.malloc
-time.to_ptr.free = Fiddle::RUBY_FREE
 UI.date_time_picker_on_changed(time_picker) do |sender|
-  UI.date_time_picker_time(sender, time)
-  puts format(
-    'TimePicker changed: %02d:%02d:%02d',
-    time.tm_hour,
-    time.tm_min,
-    time.tm_sec
-  )
+  time = UI.date_time_picker_time(sender)
+  puts "TimePicker changed: #{time.strftime('%H:%M:%S')}"
 end
 UI.box_append(basic_box, time_picker, 0)
 
 date_time_picker = UI.new_date_time_picker
-date_time = UI::FFI::TM.malloc
-date_time.to_ptr.free = Fiddle::RUBY_FREE
 UI.date_time_picker_on_changed(date_time_picker) do |sender|
-  UI.date_time_picker_time(sender, date_time)
-  puts format(
-    'DateTimePicker changed: %04d-%02d-%02d %02d:%02d:%02d',
-    date_time.tm_year + 1900,
-    date_time.tm_mon + 1,
-    date_time.tm_mday,
-    date_time.tm_hour,
-    date_time.tm_min,
-    date_time.tm_sec
-  )
+  date_time = UI.date_time_picker_time(sender)
+  puts "DateTimePicker changed: #{date_time.strftime('%Y-%m-%d %H:%M:%S')}"
 end
 UI.box_append(basic_box, date_time_picker, 0)
 
