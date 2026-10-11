@@ -6,38 +6,38 @@ module LibUI
       'arm64-darwin' => {
         vendor: 'vendor/libui.arm64.dylib',
         lib_names: ['libui.arm64.dylib', 'libui.dylib'],
-        release_zip: 'macOS-arm64-shared-release.zip',
-        release_src: 'builddir/meson-out/libui.dylib'
+        release_zip: 'libui-ng-macos-arm64-shared-release.zip',
+        release_src: 'lib/libui.dylib'
       },
       'x86_64-darwin' => {
         vendor: 'vendor/libui.x86_64.dylib',
         lib_names: ['libui.x86_64.dylib', 'libui.dylib'],
-        release_zip: 'macOS-x64-shared-release.zip',
-        release_src: 'builddir/meson-out/libui.dylib'
+        release_zip: 'libui-ng-macos-x64-shared-release.zip',
+        release_src: 'lib/libui.dylib'
       },
       'x86_64-linux' => {
         vendor: 'vendor/libui.x86_64.so',
         lib_names: ['libui.x86_64.so', 'libui.so'],
-        release_zip: 'Ubuntu-x64-shared-release.zip',
-        release_src: 'builddir/meson-out/libui.so'
+        release_zip: 'libui-ng-ubuntu-x64-shared-release.zip',
+        release_src: 'lib/libui.so'
       },
       'aarch64-linux' => {
         vendor: 'vendor/libui.aarch64.so',
         lib_names: ['libui.aarch64.so', 'libui.so'],
-        release_zip: 'Ubuntu-arm64-shared-release.zip',
-        release_src: 'builddir/meson-out/libui.so'
+        release_zip: 'libui-ng-ubuntu-arm64-shared-release.zip',
+        release_src: 'lib/libui.so'
       },
       'x64-mingw32' => {
         vendor: 'vendor/libui.x64.dll',
         lib_names: ['libui.x64.dll', 'libui.dll'],
-        release_zip: 'Windows-x64-msvc-shared-release.zip',
-        release_src: 'builddir/meson-out/libui.dll'
+        release_zip: 'libui-ng-windows-x64-msvc-shared-md-release.zip',
+        release_src: 'bin/libui.dll'
       },
       'x86-mingw32' => {
         vendor: 'vendor/libui.x86.dll',
         lib_names: ['libui.x86.dll', 'libui.dll'],
-        release_zip: 'Windows-x86-msvc-shared-release.zip',
-        release_src: 'builddir/meson-out/libui.dll'
+        release_zip: 'libui-ng-windows-x86-msvc-shared-md-release.zip',
+        release_src: 'bin/libui.dll'
       }
     }.freeze
 
