@@ -335,6 +335,12 @@ module LibUI
   AtTrailing = 2
   AtBottom   = 3
 
+  # ToolbarDisplayMode
+  ToolbarDisplayModeIconOnly              = 0
+  ToolbarDisplayModeIconAndTextHorizontal = 1
+  ToolbarDisplayModeIconAndTextVertical   = 2
+  ToolbarDisplayModeTextOnly              = 3
+
   # ImageViewContentMode
   ImageViewContentCenter = 0
   ImageViewContentFit    = 1

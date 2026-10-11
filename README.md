@@ -94,6 +94,9 @@ Text getter methods such as `label_text`, `entry_text`, and `window_title`
 return `Fiddle::Pointer` objects for strings allocated by libui. Convert the
 pointer to a Ruby string, then release it with `free_text`.
 
+`LibUI.version` returns the loaded libui-ng build identifier as a borrowed
+pointer. Convert it with `to_s`, but do not pass it to `free_text`.
+
 ```ruby
 label = UI.new_label("Ruby")
 pointer = UI.label_text(label) # #<Fiddle::Pointer>

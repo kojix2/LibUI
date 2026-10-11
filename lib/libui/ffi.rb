@@ -45,6 +45,7 @@ module LibUI
     # https://github.com/andlabs/libui/blob/master/ui.h
     # keep same order
 
+    try_extern 'const char *uiVersion(void)'
     try_extern 'const char *uiInit(uiInitOptions *options)'
     try_extern 'void uiUninit(void)'
     try_extern 'void uiFreeInitError(const char *err)'
@@ -76,6 +77,8 @@ module LibUI
     ]
 
     try_extern 'void uiControlDestroy(uiControl *c)'
+    try_extern 'void uiControlOnDestroyed(uiControl *c, void (*f)(uiControl *c, void *data), void *data)'
+    try_extern 'void uiControlSetTooltip(uiControl *c, const char *tooltip)'
     try_extern 'uintptr_t uiControlHandle(uiControl *c)'
     try_extern 'uiControl *uiControlParent(uiControl *c)'
     try_extern 'void uiControlSetParent(uiControl *c, uiControl *parent)'
@@ -86,6 +89,7 @@ module LibUI
     try_extern 'int uiControlEnabled(uiControl *c)'
     try_extern 'void uiControlEnable(uiControl *c)'
     try_extern 'void uiControlDisable(uiControl *c)'
+    try_extern 'void uiControlSetMinimumSize(uiControl *c, int width, int height)'
 
     try_extern 'uiControl *uiAllocControl(size_t n, uint32_t OSsig, uint32_t typesig, const char *typenamestr)'
     try_extern 'void uiFreeControl(uiControl *c)'
@@ -117,6 +121,8 @@ module LibUI
     try_extern 'void uiWindowSetMargined(uiWindow *w, int margined)'
     try_extern 'int uiWindowResizeable(uiWindow *w)'
     try_extern 'void uiWindowSetResizeable(uiWindow *w, int resizeable)'
+    try_extern 'void uiWindowSetToolbar(uiWindow *w, uiToolbar *t)'
+    try_extern 'uiToolbar *uiWindowToolbar(uiWindow *w)'
     try_extern 'uiWindow *uiNewWindow(const char *title, int width, int height, int hasMenubar)'
 
     # uiButton
@@ -160,6 +166,9 @@ module LibUI
 
     try_extern 'char *uiLabelText(uiLabel *l)'
     try_extern 'void uiLabelSetText(uiLabel *l, const char *text)'
+    try_extern 'double uiLabelFontSize(uiLabel *l)'
+    try_extern 'void uiLabelSetFontSize(uiLabel *l, double size)'
+    try_extern 'void uiLabelResetFontSize(uiLabel *l)'
     try_extern 'uiLabel *uiNewLabel(const char *text)'
 
     # uiTab
@@ -285,6 +294,9 @@ module LibUI
     try_extern 'void uiMultilineEntrySetText(uiMultilineEntry *e, const char *text)'
     try_extern 'void uiMultilineEntryAppend(uiMultilineEntry *e, const char *text)'
     try_extern 'void uiMultilineEntryOnChanged(uiMultilineEntry *e, void (*f)(uiMultilineEntry *sender, void *senderData), void *data)'
+    try_extern 'double uiMultilineEntryFontSize(uiMultilineEntry *e)'
+    try_extern 'void uiMultilineEntrySetFontSize(uiMultilineEntry *e, double size)'
+    try_extern 'void uiMultilineEntryResetFontSize(uiMultilineEntry *e)'
     try_extern 'int uiMultilineEntryReadOnly(uiMultilineEntry *e)'
     try_extern 'void uiMultilineEntrySetReadOnly(uiMultilineEntry *e, int readonly)'
     try_extern 'uiMultilineEntry *uiNewMultilineEntry(void)'
@@ -421,7 +433,7 @@ module LibUI
     try_extern 'void uiDrawClip(uiDrawContext *c, uiDrawPath *path)'
     try_extern 'void uiDrawSave(uiDrawContext *c)'
     try_extern 'void uiDrawRestore(uiDrawContext *c)'
-    try_extern 'void uiDrawImage(uiDrawContext *c, uiImage *img, double x, double y, double width, double height)'
+    try_extern 'void uiDrawImage(uiDrawContext *c, const uiImage *img, double x, double y, double width, double height)'
 
     # uiAttribute
     try_extern 'void uiFreeAttribute(uiAttribute *a)'
@@ -575,6 +587,7 @@ module LibUI
 
     try_extern 'void uiGridAppend(uiGrid *g, uiControl *c, int left, int top, int xspan, int yspan, int hexpand, uiAlign halign, int vexpand, uiAlign valign)'
     try_extern 'void uiGridInsertAt(uiGrid *g, uiControl *c, uiControl *existing, uiAt at, int xspan, int yspan, int hexpand, uiAlign halign, int vexpand, uiAlign valign)'
+    try_extern 'void uiGridDelete(uiGrid *g, uiControl *c)'
     try_extern 'int uiGridPadded(uiGrid *g)'
     try_extern 'void uiGridSetPadded(uiGrid *g, int padded)'
     try_extern 'uiGrid *uiNewGrid(void)'
@@ -583,7 +596,29 @@ module LibUI
 
     try_extern 'uiImage *uiNewImage(double width, double height)'
     try_extern 'void uiFreeImage(uiImage *i)'
-    try_extern 'void uiImageAppend(uiImage *i, void *pixels, int pixelWidth, int pixelHeight, int byteStride)'
+    try_extern 'void uiImageAppend(uiImage *i, const void *pixels, int pixelWidth, int pixelHeight, int byteStride)'
+
+    # uiToolbar
+    typealias 'uiToolbarDisplayMode', 'int'
+
+    try_extern 'uiToolbar *uiNewToolbar(void)'
+    try_extern 'void uiFreeToolbar(uiToolbar *t)'
+    try_extern 'uiToolbarDisplayMode uiToolbarGetDisplayMode(uiToolbar *t)'
+    try_extern 'void uiToolbarSetDisplayMode(uiToolbar *t, uiToolbarDisplayMode mode)'
+    try_extern 'uiToolbarItem *uiToolbarAppendButton(uiToolbar *t, const char *text, uiImage *icon)'
+    try_extern 'uiToolbarItem *uiToolbarAppendToggleButton(uiToolbar *t, const char *text, uiImage *icon)'
+    try_extern 'void uiToolbarAppendSeparator(uiToolbar *t)'
+    try_extern 'char *uiToolbarItemText(uiToolbarItem *item)'
+    try_extern 'void uiToolbarItemSetText(uiToolbarItem *item, const char *text)'
+    try_extern 'void uiToolbarItemSetIcon(uiToolbarItem *item, uiImage *icon)'
+    try_extern 'char *uiToolbarItemTooltip(uiToolbarItem *item)'
+    try_extern 'void uiToolbarItemSetTooltip(uiToolbarItem *item, const char *tooltip)'
+    try_extern 'int uiToolbarItemEnabled(uiToolbarItem *item)'
+    try_extern 'void uiToolbarItemEnable(uiToolbarItem *item)'
+    try_extern 'void uiToolbarItemDisable(uiToolbarItem *item)'
+    try_extern 'void uiToolbarItemOnClicked(uiToolbarItem *item, void (*f)(uiToolbarItem *sender, void *senderData), void *data)'
+    try_extern 'int uiToolbarItemChecked(uiToolbarItem *item)'
+    try_extern 'void uiToolbarItemSetChecked(uiToolbarItem *item, int checked)'
 
     # uiImageView
     try_extern 'uiImageView *uiNewImageView(void)'
