@@ -10,7 +10,7 @@ require_relative 'lib/libui/version'
 require_relative 'lib/libui/platform'
 
 # Configuration
-COMMIT_HASH = ENV['LIBUI_NG_COMMIT_HASH'] || 'e9a11ba-experimental'
+COMMIT_HASH = ENV['LIBUI_NG_COMMIT_HASH'] || '33347aef-experimental'
 
 # Path constants
 BUILD_DIR = 'builddir'
@@ -45,33 +45,21 @@ def url_for_libui_ng_commit(file_name)
 end
 
 def download_file(file_name, url)
-  log_message "Running: curl -L -o #{file_name} #{url}"
-  curl_status = system("curl -L -o #{file_name} #{url}")
+  log_message "Running: curl -fL -o #{file_name} #{url}"
+  curl_status = system('curl', '-fL', '-o', file_name, url)
   return true if curl_status && File.exist?(file_name)
 
   warn "Warning: Failed to download #{file_name} from #{url}"
   false
 end
 
-def extract_zip_files(file_name, lib_paths)
-  return unless file_name.end_with?('.zip')
+def extract_shared_library(zip_name, src, dest)
+  Zip::File.open(zip_name) do |zip_file|
+    entry = zip_file.find_entry(src)
+    raise "#{src} missing from #{zip_name}" unless entry && !entry.directory?
 
-  Zip::File.open(file_name) do |zip_file|
-    zip_file.each do |entry|
-      # Extract only exact matches for shared libraries
-      next unless lib_paths.include?(entry.name)
-
-      print "Extracting #{entry.name} from #{file_name}..."
-
-      # Preserve complete directory structure
-      target_path = entry.name
-      FileUtils.mkdir_p(File.dirname(target_path)) unless entry.directory?
-
-      unless entry.directory?
-        entry.extract(target_path) { true } # Overwrite if exists
-      end
-      puts 'done'
-    end
+    FileUtils.mkdir_p(File.dirname(dest))
+    entry.extract(dest) { true }
   end
 end
 
@@ -84,9 +72,7 @@ def download_and_place(zip_name, src, dest)
     exit 1
   end
 
-  extract_zip_files(zip_name, [src])
-  FileUtils.mkdir_p File.dirname(dest)
-  FileUtils.cp src, dest
+  extract_shared_library(zip_name, src, dest)
 ensure
   File.delete(zip_name) if File.exist?(zip_name)
 end
