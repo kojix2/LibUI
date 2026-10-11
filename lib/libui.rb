@@ -25,6 +25,10 @@ module LibUI
   extend LibUIBase
 
   class << self
+    def version
+      super.to_s
+    end
+
     def init(opt = nil)
       # Allocate uiInitOptions if not provided
       unless opt
