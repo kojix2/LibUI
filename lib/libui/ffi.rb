@@ -45,6 +45,7 @@ module LibUI
     # https://github.com/andlabs/libui/blob/master/ui.h
     # keep same order
 
+    try_extern 'const char *uiVersion(void)'
     try_extern 'const char *uiInit(uiInitOptions *options)'
     try_extern 'void uiUninit(void)'
     try_extern 'void uiFreeInitError(const char *err)'
@@ -76,6 +77,7 @@ module LibUI
     ]
 
     try_extern 'void uiControlDestroy(uiControl *c)'
+    try_extern 'void uiControlOnDestroyed(uiControl *c, void (*f)(uiControl *c, void *data), void *data)'
     try_extern 'uintptr_t uiControlHandle(uiControl *c)'
     try_extern 'uiControl *uiControlParent(uiControl *c)'
     try_extern 'void uiControlSetParent(uiControl *c, uiControl *parent)'
@@ -86,6 +88,7 @@ module LibUI
     try_extern 'int uiControlEnabled(uiControl *c)'
     try_extern 'void uiControlEnable(uiControl *c)'
     try_extern 'void uiControlDisable(uiControl *c)'
+    try_extern 'void uiControlSetMinimumSize(uiControl *c, int width, int height)'
 
     try_extern 'uiControl *uiAllocControl(size_t n, uint32_t OSsig, uint32_t typesig, const char *typenamestr)'
     try_extern 'void uiFreeControl(uiControl *c)'
@@ -574,6 +577,7 @@ module LibUI
 
     try_extern 'void uiGridAppend(uiGrid *g, uiControl *c, int left, int top, int xspan, int yspan, int hexpand, uiAlign halign, int vexpand, uiAlign valign)'
     try_extern 'void uiGridInsertAt(uiGrid *g, uiControl *c, uiControl *existing, uiAt at, int xspan, int yspan, int hexpand, uiAlign halign, int vexpand, uiAlign valign)'
+    try_extern 'void uiGridDelete(uiGrid *g, uiControl *c)'
     try_extern 'int uiGridPadded(uiGrid *g)'
     try_extern 'void uiGridSetPadded(uiGrid *g, int padded)'
     try_extern 'uiGrid *uiNewGrid(void)'
@@ -582,7 +586,7 @@ module LibUI
 
     try_extern 'uiImage *uiNewImage(double width, double height)'
     try_extern 'void uiFreeImage(uiImage *i)'
-    try_extern 'void uiImageAppend(uiImage *i, void *pixels, int pixelWidth, int pixelHeight, int byteStride)'
+    try_extern 'void uiImageAppend(uiImage *i, const void *pixels, int pixelWidth, int pixelHeight, int byteStride)'
 
     # uiTable
     try_extern 'void uiFreeTableValue(uiTableValue *v)'
