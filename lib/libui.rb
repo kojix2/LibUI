@@ -22,6 +22,7 @@ module LibUI
 
   require_relative 'libui/ffi'
   require_relative 'libui/libui_base'
+  require_relative 'libui/font'
 
   extend LibUIBase
 
@@ -146,6 +147,45 @@ module LibUI
 
     def new_table_value_string(str = '')
       super(str)
+    end
+
+    def load_control_font(descriptor = nil)
+      return super(descriptor) if descriptor
+
+      read_font_descriptor { |native| super(native) }
+    end
+
+    def font_button_font(button, descriptor = nil)
+      return super(button, descriptor) if descriptor
+
+      read_font_descriptor { |native| super(button, native) }
+    end
+
+    def draw_new_text_layout(string_or_params, font: nil, width: -1, align: DrawTextAlignLeft)
+      return super(string_or_params) if font.nil?
+      raise TypeError, 'expected LibUI::Font' unless font.is_a?(Font)
+
+      native_family = Fiddle::Pointer.malloc(font.family.bytesize + 1, Fiddle::RUBY_FREE)
+      native_family[0, font.family.bytesize + 1] = font.family + "\0"
+      native_font = FFI::FontDescriptor.malloc
+      native_font.to_ptr.free = Fiddle::RUBY_FREE
+      native_font.Family = native_family
+      native_font.Size = font.size
+      native_font.Weight = font.weight
+      native_font.Italic = font.italic
+      native_font.Stretch = font.stretch
+
+      params = FFI::DrawTextLayoutParams.malloc
+      params.to_ptr.free = Fiddle::RUBY_FREE
+      params.String = string_or_params
+      params.DefaultFont = native_font
+      params.Width = width
+      params.Align = align
+      result = super(params)
+      # Keep both native allocations alive through the native call.
+      native_font.to_ptr.to_i
+      native_family.to_i
+      result
     end
 
     def window_title(window)
@@ -349,6 +389,19 @@ module LibUI
     end
 
     private
+
+    def read_font_descriptor
+      descriptor = FFI::FontDescriptor.malloc
+      descriptor.to_ptr.free = Fiddle::RUBY_FREE
+      filled = false
+      yield(descriptor)
+      filled = true
+      Font.new(family: descriptor.Family.to_s.force_encoding(Encoding::UTF_8),
+               size: descriptor.Size, weight: descriptor.Weight,
+               italic: descriptor.Italic, stretch: descriptor.Stretch)
+    ensure
+      free_font_descriptor(descriptor) if filled
+    end
 
     def read_owned_text(pointer)
       return nil if pointer.nil? || pointer.null?

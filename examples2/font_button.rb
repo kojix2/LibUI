@@ -1,13 +1,12 @@
 # ============================================================================ #
 # This example (font_button.rb) shall demonstrate the following
-# functionality (5 components), as well as their implementation-status
+# functionality (4 components), as well as their implementation-status
 # in regards to this file:
 #
 #   :new_font_button              # [DONE]
 #   :font_button_font             # [DONE]
 #   :font_button_on_changed       # [DONE]
-#   :free_font_button_font        # [DONE]
-#   :free_font_descriptor         # [DONE]
+#   :load_control_font           # [DONE]
 #
 # ============================================================================ #
 require 'libui'
@@ -21,8 +20,9 @@ _ = LibUI.new_font_button # Create a new font-button here.
 LibUI.box_append(vbox, _, 0) # Add the font-button here.
 
 LibUI.font_button_on_changed(_) do |entry|
-  puts 'The font was changed. (class ' + entry.class.to_s + ')'
+  puts "The font was changed: #{LibUI.font_button_font(entry).to_h}"
 end
+puts "Default control font: #{LibUI.load_control_font.to_h}"
 
 LibUI.window_set_child(main_window, vbox)
 LibUI.control_show(main_window)

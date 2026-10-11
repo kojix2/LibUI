@@ -131,29 +131,23 @@ displayed fields should be used; libui-ng does not specify the other fields.
 
 Use `LibUI::FFI` for the original pointer based C API when needed.
 
-If you need to use C structs, you can do the following:
+`LibUI::Font` stores a reusable font value. `font_button_font` and
+`load_control_font` return it and release libui-ng's descriptor internally.
+The same value can be passed to a text layout:
 
 ```ruby
 font_button = UI.new_font_button
-
-# Allocate memory
-font_descriptor = UI::FFI::FontDescriptor.malloc
-font_descriptor.to_ptr.free = Fiddle::RUBY_FREE
-# font_descriptor = UI::FFI::FontDescriptor.malloc(Fiddle::RUBY_FREE) # fiddle 1.0.1 or higher
-
-UI.font_button_on_changed(font_button) do
-  UI.font_button_font(font_button, font_descriptor)
-  begin
-    p family:  font_descriptor.Family.to_s,
-      size:    font_descriptor.Size,
-      weight:  font_descriptor.Weight,
-      italic:  font_descriptor.Italic,
-      stretch: font_descriptor.Stretch
-  ensure
-    UI.free_font_button_font(font_descriptor)
-  end
-end
+font = UI.font_button_font(font_button)
+p font.to_h # family, size, weight, italic, stretch
+attributed_string = UI.new_attributed_string('Hello')
+layout = UI.draw_new_text_layout(attributed_string, font: font, width: 300)
+UI.draw_free_text_layout(layout)
+UI.free_attributed_string(attributed_string)
 ```
+
+Use `UI::Font.new(family: 'Georgia', size: 13)` to specify a font directly.
+The default weight, italic, and stretch are normal. The original descriptor
+arguments remain supported, and `LibUI::FFI` exposes the raw C API.
 
 - Callbacks
   - In Ruby/Fiddle, a C callback function is written as an object of

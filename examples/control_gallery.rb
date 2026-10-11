@@ -193,22 +193,9 @@ end
 UI.box_append(basic_box, date_time_picker, 0)
 
 font_button = UI.new_font_button
-font_descriptor = UI::FFI::FontDescriptor.malloc
-font_descriptor.to_ptr.free = Fiddle::RUBY_FREE
 UI.font_button_on_changed(font_button) do |sender|
-  UI.font_button_font(sender, font_descriptor)
-  begin
-    puts format(
-      'Font changed: family=%s, size=%s, weight=%s, italic=%s, stretch=%s',
-      font_descriptor.Family.to_s,
-      font_descriptor.Size,
-      font_descriptor.Weight,
-      font_descriptor.Italic,
-      font_descriptor.Stretch
-    )
-  ensure
-    UI.free_font_button_font(font_descriptor)
-  end
+  font = UI.font_button_font(sender)
+  puts "Font changed: #{font.to_h}"
 end
 UI.box_append(basic_box, font_button, 0)
 

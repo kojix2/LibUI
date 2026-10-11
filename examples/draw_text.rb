@@ -86,22 +86,17 @@ def on_combobox_selected(area)
   UI.area_queue_redraw_all(area)
 end
 
-def draw_event(adp, attr_str, font_button, alignment)
+def draw_event(adp, attr_str, font, alignment)
   area_draw_params = UI::FFI::AreaDrawParams.new(adp)
-  default_font = UI::FFI::FontDescriptor.malloc
-  default_font.to_ptr.free = Fiddle::RUBY_FREE
-  params = UI::FFI::DrawTextLayoutParams.malloc
-  params.to_ptr.free = Fiddle::RUBY_FREE
-
-  params.String = attr_str
-  UI.font_button_font(font_button, default_font)
-  params.DefaultFont = default_font
-  params.Width = area_draw_params.AreaWidth
-  params.Align = UI.combobox_selected(alignment)
-  text_layout = UI.draw_new_text_layout(params)
-  UI.draw_text(area_draw_params.Context, text_layout, 0, 0)
-  UI.draw_free_text_layout(text_layout)
-  UI.free_font_button_font(default_font)
+  text_layout = UI.draw_new_text_layout(
+    attr_str, font: font, width: area_draw_params.AreaWidth,
+    align: UI.combobox_selected(alignment)
+  )
+  begin
+    UI.draw_text(area_draw_params.Context, text_layout, 0, 0)
+  ensure
+    UI.draw_free_text_layout(text_layout)
+  end
 end
 
 UI.init
@@ -110,7 +105,7 @@ handler = UI::FFI::AreaHandler.malloc
 handler.to_ptr.free = Fiddle::RUBY_FREE
 
 handler_draw_event = Fiddle::Closure::BlockCaller.new(0, [1, 1, 1]) do |_, _area, adp|
-  draw_event(adp, @attr_str, @font_button, @alignment)
+  draw_event(adp, @attr_str, @font, @alignment)
 end
 
 handler.Draw = handler_draw_event
@@ -140,7 +135,11 @@ UI.box_set_padded(vbox, 1)
 UI.box_append(hbox, vbox, 0)
 
 @font_button = UI.new_font_button
-UI.font_button_on_changed(@font_button) { on_font_changed(@area) }
+@font = UI.font_button_font(@font_button)
+UI.font_button_on_changed(@font_button) do
+  @font = UI.font_button_font(@font_button)
+  on_font_changed(@area)
+end
 UI.box_append(vbox, @font_button, 0)
 
 form = UI.new_form

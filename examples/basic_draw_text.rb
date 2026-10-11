@@ -64,28 +64,18 @@ attr_str.append(str3, :green)
 attr_str.append(str4, :red)
 attr_str.append(str5, :green)
 
-Georgia = 'Georgia'
+default_font = UI::Font.new(family: 'Georgia', size: 13, weight: 500)
 
 handler_draw_event = Fiddle::Closure::BlockCaller.new(0, [1, 1, 1]) do |_, _, adp|
   area_draw_params = UI::FFI::AreaDrawParams.new(adp)
-  default_font = UI::FFI::FontDescriptor.malloc
-  default_font.to_ptr.free = Fiddle::RUBY_FREE
-  default_font.Family = Georgia
-  default_font.Size = 13
-  default_font.Weight = 500
-  default_font.Italic = 0
-  default_font.Stretch = 4
-  params = UI::FFI::DrawTextLayoutParams.malloc
-  params.to_ptr.free = Fiddle::RUBY_FREE
-
-  # UI.font_button_font(font_button, default_font)
-  params.String = attr_str
-  params.DefaultFont = default_font
-  params.Width = area_draw_params.AreaWidth
-  params.Align = 0
-  text_layout = UI.draw_new_text_layout(params)
-  UI.draw_text(area_draw_params.Context, text_layout, 0, 0)
-  UI.draw_free_text_layout(text_layout)
+  text_layout = UI.draw_new_text_layout(
+    attr_str, font: default_font, width: area_draw_params.AreaWidth
+  )
+  begin
+    UI.draw_text(area_draw_params.Context, text_layout, 0, 0)
+  ensure
+    UI.draw_free_text_layout(text_layout)
+  end
 end
 
 handler.Draw = handler_draw_event
