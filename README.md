@@ -90,32 +90,35 @@ UI = LibUI
 UI.init
 ```
 
-Text getter methods such as `label_text`, `entry_text`, and `window_title`
-return `Fiddle::Pointer` objects for strings allocated by libui. Convert the
-pointer to a Ruby string, then release it with `free_text`.
+Text getters such as `label_text`, `entry_text`, and `window_title` return Ruby
+strings. The wrapper releases libui-ng's copy after reading it. File dialogs
+(`open_file`, `open_folder`, and `save_file`) return a path string, or `nil` if
+the dialog is canceled.
 
 `LibUI.version` returns the loaded libui-ng build identifier as a Ruby string.
 `LibUI::VERSION` is the gem version.
-`toolbar_item_text` and `toolbar_item_tooltip` also return Ruby strings and
-release the libui-ng copies internally.
+`toolbar_item_text` and `toolbar_item_tooltip` also return Ruby strings.
 
 ```ruby
 label = UI.new_label("Ruby")
-pointer = UI.label_text(label) # #<Fiddle::Pointer>
-text = pointer.to_s
-UI.free_text(pointer)
-p text # Ruby
+p UI.label_text(label) # Ruby
 ```
 
-Use `ensure` if the code between conversion and cleanup can raise:
+Size and color getters return arrays, and `table_get_selection` returns an
+array of selected row indices:
 
 ```ruby
-def ui_text(text_pointer)
-  text_pointer.to_s
-ensure
-  UI.free_text(text_pointer) if text_pointer && !text_pointer.null?
-end
+width, height = UI.window_content_size(window)
+red, green, blue, alpha = UI.color_button_color(color_button)
+rows = UI.table_get_selection(table)
 ```
+
+`attribute_underline_color` returns `[underline, red, green, blue, alpha]`.
+`draw_matrix_transform_point` and `draw_matrix_transform_size` accept numeric
+coordinates and return a pair. `open_type_features_get` returns the feature
+value, or `nil` when the tag is absent.
+
+Use `LibUI::FFI` for the original pointer based C API when needed.
 
 If you need to use C structs, you can do the following:
 

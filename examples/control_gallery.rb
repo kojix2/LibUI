@@ -12,26 +12,14 @@ file_menu = UI.new_menu('File')
 
 open_item = UI.menu_append_item(file_menu, 'Open')
 UI.menu_item_on_clicked(open_item) do |_item, window|
-  text_pointer = UI.open_file(window)
-  unless text_pointer.null?
-    begin
-      puts text_pointer.to_s
-    ensure
-      UI.free_text(text_pointer)
-    end
-  end
+  path = UI.open_file(window)
+  puts path if path
 end
 
 save_item = UI.menu_append_item(file_menu, 'Save')
 UI.menu_item_on_clicked(save_item) do |_item, window|
-  text_pointer = UI.save_file(window)
-  unless text_pointer.null?
-    begin
-      puts text_pointer.to_s
-    ensure
-      UI.free_text(text_pointer)
-    end
-  end
+  path = UI.save_file(window)
+  puts path if path
 end
 
 UI.menu_append_separator(file_menu)
@@ -107,27 +95,8 @@ UI.menu_item_on_clicked(preferences_item) do
   UI.control_show(preferences_window)
 
   main_x, main_y = UI.window_position(main_window)
-  main_width_pointer = Fiddle::Pointer.malloc(
-    Fiddle::SIZEOF_INT,
-    Fiddle::RUBY_FREE
-  )
-  main_height_pointer = Fiddle::Pointer.malloc(
-    Fiddle::SIZEOF_INT,
-    Fiddle::RUBY_FREE
-  )
-  UI.window_content_size(
-    main_window,
-    main_width_pointer,
-    main_height_pointer
-  )
-  main_width = main_width_pointer[0, Fiddle::SIZEOF_INT].unpack1('i')
-  main_height = main_height_pointer[0, Fiddle::SIZEOF_INT].unpack1('i')
-
-  width_pointer = Fiddle::Pointer.malloc(Fiddle::SIZEOF_INT, Fiddle::RUBY_FREE)
-  height_pointer = Fiddle::Pointer.malloc(Fiddle::SIZEOF_INT, Fiddle::RUBY_FREE)
-  UI.window_content_size(preferences_window, width_pointer, height_pointer)
-  width = width_pointer[0, Fiddle::SIZEOF_INT].unpack1('i')
-  height = height_pointer[0, Fiddle::SIZEOF_INT].unpack1('i')
+  main_width, main_height = UI.window_content_size(main_window)
+  width, height = UI.window_content_size(preferences_window)
 
   UI.window_set_position(
     preferences_window,
@@ -268,14 +237,8 @@ end
 UI.box_append(basic_box, font_button, 0)
 
 color_button = UI.new_color_button
-color_pointers = Array.new(4) do
-  Fiddle::Pointer.malloc(Fiddle::SIZEOF_DOUBLE, Fiddle::RUBY_FREE)
-end
 UI.color_button_on_changed(color_button) do |sender|
-  UI.color_button_color(sender, *color_pointers)
-  red, green, blue, alpha = color_pointers.map do |pointer|
-    pointer[0, Fiddle::SIZEOF_DOUBLE].unpack1('d')
-  end
+  red, green, blue, alpha = UI.color_button_color(sender)
   puts "Color changed: R=#{red}, G=#{green}, B=#{blue}, A=#{alpha}"
 end
 UI.box_append(basic_box, color_button, 0)
@@ -334,12 +297,7 @@ editable_combobox = UI.new_editable_combobox
   UI.editable_combobox_append(editable_combobox, item)
 end
 UI.editable_combobox_on_changed(editable_combobox) do |sender|
-  text_pointer = UI.editable_combobox_text(sender)
-  begin
-    puts "Editable Combobox changed: #{text_pointer.to_s}"
-  ensure
-    UI.free_text(text_pointer) unless text_pointer.null?
-  end
+  puts "Editable Combobox changed: #{UI.editable_combobox_text(sender)}"
 end
 UI.box_append(lists_box, editable_combobox, 0)
 
@@ -366,12 +324,7 @@ UI.box_append(right_column, tab, 1)
 text_entry = UI.new_entry
 UI.entry_set_text(text_entry, 'Please enter your feelings')
 UI.entry_on_changed(text_entry) do |sender|
-  text_pointer = UI.entry_text(sender)
-  begin
-    puts "Current textbox data: #{text_pointer.to_s}"
-  ensure
-    UI.free_text(text_pointer) unless text_pointer.null?
-  end
+  puts "Current textbox data: #{UI.entry_text(sender)}"
 end
 UI.box_append(page_one, text_entry, 1)
 

@@ -15,12 +15,6 @@
 require 'libui'
 LibUI.init # Initialize LibUI.
 
-def ui_text(text_pointer)
-  text_pointer.to_s
-ensure
-  LibUI.free_text(text_pointer) if text_pointer && !text_pointer.null?
-end
-
 main_window = LibUI.new_window('entry.rb', 800, 440, 1)
 
 hbox = LibUI.new_horizontal_box
@@ -34,7 +28,7 @@ puts 'Appending something next.'
 LibUI.multiline_entry_append(_, ' More content.')
 
 callback_proc = proc { |pointer|
-  new_text = ui_text(LibUI.multiline_entry_text(pointer))
+  new_text = LibUI.multiline_entry_text(pointer)
   puts
   puts "The old entry-text was: '#{@old_entry_text}'"
   puts "The new entry-text is:  '#{new_text}'"

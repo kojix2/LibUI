@@ -18,15 +18,6 @@ LibUI.init # Initialize LibUI.
 
 main_window = LibUI.new_window('color_button.rb', 640, 240, 1)
 
-# ============================================================================ #
-# Get the colours and set up the brush
-# uiColorButtonColor(colorButton, &graphR, &graphG, &graphB, &graphA)
-# ============================================================================ #
-graph_r = Fiddle::Pointer.malloc(8, Fiddle::RUBY_FREE) # double
-graph_g = Fiddle::Pointer.malloc(8, Fiddle::RUBY_FREE) # double
-graph_b = Fiddle::Pointer.malloc(8, Fiddle::RUBY_FREE) # double
-graph_a = Fiddle::Pointer.malloc(8, Fiddle::RUBY_FREE) # double
-
 vbox = LibUI.new_vertical_box
 LibUI.box_set_padded(vbox, 1)
 _ = LibUI.new_color_button # Create a new color-button here.
@@ -58,7 +49,7 @@ set_solid_brush(BRUSH, 0x1E90FF, 1.0)
 
 LibUI.color_button_set_color(_, BRUSH.R, BRUSH.G, BRUSH.B, BRUSH.A)
 
-LibUI.color_button_color(_, graph_r, graph_g, graph_b, graph_a) # Use LibUI.color_button_color() here.
+puts "Current color: #{LibUI.color_button_color(_).inspect}"
 
 LibUI.window_set_child(main_window, vbox)
 LibUI.control_show(main_window)

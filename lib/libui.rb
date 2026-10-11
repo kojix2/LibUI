@@ -147,22 +147,131 @@ module LibUI
       super(str)
     end
 
-    def toolbar_item_text(item)
-      pointer = super(item)
-      return nil if pointer.nil? || pointer.null?
+    def window_title(window)
+      read_owned_text(super(window))
+    end
 
-      pointer.to_s.force_encoding(Encoding::UTF_8)
-    ensure
-      free_text(pointer) if pointer && !pointer.null?
+    def button_text(button)
+      read_owned_text(super(button))
+    end
+
+    def checkbox_text(checkbox)
+      read_owned_text(super(checkbox))
+    end
+
+    def entry_text(entry)
+      read_owned_text(super(entry))
+    end
+
+    def label_text(label)
+      read_owned_text(super(label))
+    end
+
+    def group_title(group)
+      read_owned_text(super(group))
+    end
+
+    def editable_combobox_text(combobox)
+      read_owned_text(super(combobox))
+    end
+
+    def multiline_entry_text(entry)
+      read_owned_text(super(entry))
+    end
+
+    def open_file(window)
+      read_owned_text(super(window))
+    end
+
+    def open_folder(window)
+      read_owned_text(super(window))
+    end
+
+    def save_file(window)
+      read_owned_text(super(window))
+    end
+
+    def attribute_family(attribute)
+      read_borrowed_text(super(attribute))
+    end
+
+    def attributed_string_string(attributed_string)
+      read_borrowed_text(super(attributed_string))
+    end
+
+    def table_value_string(value)
+      read_borrowed_text(super(value))
+    end
+
+    def toolbar_item_text(item)
+      read_owned_text(super(item))
     end
 
     def toolbar_item_tooltip(item)
-      pointer = super(item)
-      return nil if pointer.nil? || pointer.null?
+      read_owned_text(super(item))
+    end
 
-      pointer.to_s.force_encoding(Encoding::UTF_8)
+    def window_content_size(window)
+      read_outputs('i', 2) { |width, height| super(window, width, height) }
+    end
+
+    def color_button_color(button)
+      read_outputs('d', 4) { |r, g, b, a| super(button, r, g, b, a) }
+    end
+
+    def table_value_color(value)
+      read_outputs('d', 4) { |r, g, b, a| super(value, r, g, b, a) }
+    end
+
+    def attribute_color(attribute)
+      read_outputs('d', 4) { |r, g, b, a| super(attribute, r, g, b, a) }
+    end
+
+    def attribute_underline_color(attribute)
+      color = nil
+      underline = read_outputs('i', 1) do |type|
+        color = read_outputs('d', 4) do |r, g, b, a|
+          super(attribute, type, r, g, b, a)
+        end
+      end
+      underline + color
+    end
+
+    def draw_text_layout_extents(layout)
+      read_outputs('d', 2) { |width, height| super(layout, width, height) }
+    end
+
+    def draw_matrix_transform_point(matrix, x, y)
+      x_pointer = Fiddle::Pointer.malloc(Fiddle::SIZEOF_DOUBLE, Fiddle::RUBY_FREE)
+      y_pointer = Fiddle::Pointer.malloc(Fiddle::SIZEOF_DOUBLE, Fiddle::RUBY_FREE)
+      x_pointer[0, Fiddle::SIZEOF_DOUBLE] = [x].pack('d')
+      y_pointer[0, Fiddle::SIZEOF_DOUBLE] = [y].pack('d')
+      super(matrix, x_pointer, y_pointer)
+      [x_pointer[0, Fiddle::SIZEOF_DOUBLE].unpack1('d'),
+       y_pointer[0, Fiddle::SIZEOF_DOUBLE].unpack1('d')]
+    end
+
+    def draw_matrix_transform_size(matrix, x, y)
+      x_pointer = Fiddle::Pointer.malloc(Fiddle::SIZEOF_DOUBLE, Fiddle::RUBY_FREE)
+      y_pointer = Fiddle::Pointer.malloc(Fiddle::SIZEOF_DOUBLE, Fiddle::RUBY_FREE)
+      x_pointer[0, Fiddle::SIZEOF_DOUBLE] = [x].pack('d')
+      y_pointer[0, Fiddle::SIZEOF_DOUBLE] = [y].pack('d')
+      super(matrix, x_pointer, y_pointer)
+      [x_pointer[0, Fiddle::SIZEOF_DOUBLE].unpack1('d'),
+       y_pointer[0, Fiddle::SIZEOF_DOUBLE].unpack1('d')]
+    end
+
+    def table_get_selection(table)
+      selection = super(table)
+      return nil if selection.nil? || selection.null?
+
+      data = FFI::TableSelection.new(selection)
+      rows = data.Rows
+      Array.new(data.NumRows) do |index|
+        rows[index * Fiddle::SIZEOF_INT, Fiddle::SIZEOF_INT].unpack1('i')
+      end
     ensure
-      free_text(pointer) if pointer && !pointer.null?
+      free_table_selection(selection) if selection && !selection.null?
     end
 
     # Gets the window position.
@@ -194,9 +303,35 @@ module LibUI
       super(otf, a, b, c, d)
     end
 
-    def open_type_features_get(otf, a, b, c, d, value)
+    def open_type_features_get(otf, a, b, c, d)
       a, b, c, d = [a, b, c, d].map { |s| s.is_a?(String) ? s.ord : s }
-      super(otf, a, b, c, d, value)
+      value = Fiddle::Pointer.malloc(Fiddle::SIZEOF_INT, Fiddle::RUBY_FREE)
+      return nil if super(otf, a, b, c, d, value).zero?
+
+      value[0, Fiddle::SIZEOF_INT].unpack1('L')
+    end
+
+    private
+
+    def read_owned_text(pointer)
+      return nil if pointer.nil? || pointer.null?
+
+      pointer.to_s.force_encoding(Encoding::UTF_8)
+    ensure
+      free_text(pointer) if pointer && !pointer.null?
+    end
+
+    def read_borrowed_text(pointer)
+      return nil if pointer.nil? || pointer.null?
+
+      pointer.to_s.force_encoding(Encoding::UTF_8)
+    end
+
+    def read_outputs(format, count)
+      size = format == 'd' ? Fiddle::SIZEOF_DOUBLE : Fiddle::SIZEOF_INT
+      pointers = Array.new(count) { Fiddle::Pointer.malloc(size, Fiddle::RUBY_FREE) }
+      yield(*pointers)
+      pointers.map { |pointer| pointer[0, size].unpack1(format) }
     end
   end
 

@@ -102,20 +102,15 @@ handler_draw_event = Fiddle::Closure::BlockCaller.new(
 
   # now get the color for the graph itself and set up the brush
   # uiColorButtonColor(colorButton, &graphR, &graphG, &graphB, &graphA)
-  graph_r = Fiddle::Pointer.malloc(8, Fiddle::RUBY_FREE) # double
-  graph_g = Fiddle::Pointer.malloc(8, Fiddle::RUBY_FREE) # double
-  graph_b = Fiddle::Pointer.malloc(8, Fiddle::RUBY_FREE) # double
-  graph_a = Fiddle::Pointer.malloc(8, Fiddle::RUBY_FREE) # double
-
-  UI.color_button_color(color_button, graph_r, graph_g, graph_b, graph_a)
+  red, green, blue, alpha = UI.color_button_color(color_button)
   brush.Type = 0 # solid
-  brush.R = graph_r[0, 8].unpack1('d')
-  brush.G = graph_g[0, 8].unpack1('d')
-  brush.B = graph_b[0, 8].unpack1('d')
+  brush.R = red
+  brush.G = green
+  brush.B = blue
 
   # now create the fill for the graph below the graph line
   path = construct_graph(datapoints, graph_width, graph_height, true)
-  brush.A = graph_a[0, 8].unpack1('d') / 2.0
+  brush.A = alpha / 2.0
   UI.draw_fill(area_draw_params.Context, path, brush)
   UI.draw_free_path(path)
 
