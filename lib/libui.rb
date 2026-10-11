@@ -147,6 +147,24 @@ module LibUI
       super(str)
     end
 
+    def toolbar_item_text(item)
+      pointer = super(item)
+      return nil if pointer.nil? || pointer.null?
+
+      pointer.to_s.force_encoding(Encoding::UTF_8)
+    ensure
+      free_text(pointer) if pointer && !pointer.null?
+    end
+
+    def toolbar_item_tooltip(item)
+      pointer = super(item)
+      return nil if pointer.nil? || pointer.null?
+
+      pointer.to_s.force_encoding(Encoding::UTF_8)
+    ensure
+      free_text(pointer) if pointer && !pointer.null?
+    end
+
     # Gets the window position.
     # Coordinates are measured from the top left corner of the screen.
     # @param w [Fiddle::Pointer] Pointer of uiWindow instance.

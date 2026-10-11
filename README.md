@@ -96,6 +96,8 @@ pointer to a Ruby string, then release it with `free_text`.
 
 `LibUI.version` returns the loaded libui-ng build identifier as a Ruby string.
 `LibUI::VERSION` is the gem version.
+`toolbar_item_text` and `toolbar_item_tooltip` also return Ruby strings and
+release the libui-ng copies internally.
 
 ```ruby
 label = UI.new_label("Ruby")
