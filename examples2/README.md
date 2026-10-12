@@ -24,7 +24,7 @@ for remembering how to use something, with a focus on specific widgets.
 new users of this project may learn the bindings made available by kojix2
 more rapidly so.
 
-Stay tuned for more updates in this regard in the long run. Right now nine
+Stay tuned for more updates in this regard in the long run. Right now fifteen
 widgets have been added; expect more code in this regard over the next weeks
 or months. \o/
 
@@ -45,6 +45,7 @@ order:
     date_picker.rb
     editable_combobox.rb
     entry.rb
+    font_button.rb
     grid.rb
     multiline_entry.rb
     password_entry.rb

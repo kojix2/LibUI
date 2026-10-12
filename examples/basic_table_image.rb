@@ -56,7 +56,7 @@ table_params.Model = model
 table_params.RowBackgroundColorModelColumn = -1
 
 table = UI.new_table(table_params)
-UI.table_append_image_column(table, 'Directed by Michaël Dudok de Wit', -1)
+UI.table_append_image_column(table, 'Directed by Michaël Dudok de Wit', 0)
 
 UI.box_append(hbox, table, 1)
 UI.control_show(main_window)

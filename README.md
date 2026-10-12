@@ -222,36 +222,36 @@ If you build libui-ng yourself, set `LIBUIDIR` to the directory containing the c
 
 #### Automated Publishing
 
-Push a version tag to automatically publish platform-specific gems:
+After updating `lib/libui/version.rb` and pushing `0.2-stable`, wait for CI to
+pass, then push the new version tag to publish platform-specific and generic gems:
 
 ```sh
-git tag v0.2.0
-git push origin v0.2.0
+git tag v0.2.5
+git push origin v0.2.5
 ```
 
-Requires `RUBYGEMS_API_KEY` repository secret with scoped API key.
+The release workflow uses RubyGems Trusted Publishing via the
+`release-rubygems` GitHub environment.
 
 #### Manual Publishing
 
 ```sh
-ls vendor             # check the vendor directory
-rm -rf pkg            # remove previously built gems
-rake build_platform   # build gems
+bundle exec rake vendor:all     # download all native libraries
+bundle exec rake build_platform # build platform gems
 
 # Check the contents of the gem
 find pkg -name *.gem -exec sh -c "echo; echo \# {}; tar -O -f {} -x data.tar.gz | tar zt" \;
 
-rake release_platform # publish gems
+bundle exec rake release_platform # publish platform gems
 ```
 
-Windows Ruby (x64-mingw32 or x64-mingw-ucrt)
+Windows Ruby (use `x64-mingw-ucrt` in place of `x64-mingw32` for UCRT):
 
 ```sh
 gem install rake rubyzip
-GEM_PLATFORM=x64-mingw32 rake vendor:clean
 GEM_PLATFORM=x64-mingw32 rake vendor:auto
 GEM_PLATFORM=x64-mingw32 gem build libui.gemspec
-gem push libui-0.2.0-x64-mingw32.gem
+gem push libui-0.2.5-x64-mingw32.gem
 ```
 
 ### libui or libui-ng
