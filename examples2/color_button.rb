@@ -20,36 +20,18 @@ main_window = LibUI.new_window('color_button.rb', 640, 240, 1)
 
 vbox = LibUI.new_vertical_box
 LibUI.box_set_padded(vbox, 1)
-_ = LibUI.new_color_button # Create a new color-button here.
-LibUI.box_append(vbox, _, 0) # Add the color-button here.
+color_button = LibUI.new_color_button
+LibUI.box_append(vbox, color_button, 0)
 
-LibUI.color_button_on_changed(_) do
+LibUI.color_button_on_changed(color_button) do
   puts 'The colour button was changed.'
 end
 
-BRUSH             = LibUI::FFI::DrawBrush.malloc
-BRUSH.to_ptr.free = Fiddle::RUBY_FREE
-
-# === set_solid_brush
-def set_solid_brush(
-  _brush = BRUSH,
-  color = 0x1E90FF,
-  alpha
-)
-  BRUSH.Type = 0 # solid
-  BRUSH.R = ((color >> 16) & 0xFF) / 255.0
-  BRUSH.G = ((color >> 8) & 0xFF) / 255.0
-  BRUSH.B = (color & 0xFF) / 255.0
-  BRUSH.A = alpha
-  BRUSH
-end
-
 puts 'Set to a blue colour next.'
-set_solid_brush(BRUSH, 0x1E90FF, 1.0)
+dodger_blue = [0x1E / 255.0, 0x90 / 255.0, 1.0, 1.0]
+LibUI.color_button_set_color(color_button, *dodger_blue)
 
-LibUI.color_button_set_color(_, BRUSH.R, BRUSH.G, BRUSH.B, BRUSH.A)
-
-puts "Current color: #{LibUI.color_button_color(_).inspect}"
+puts "Current color: #{LibUI.color_button_color(color_button).inspect}"
 
 LibUI.window_set_child(main_window, vbox)
 LibUI.control_show(main_window)
