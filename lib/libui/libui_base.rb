@@ -5,47 +5,41 @@ module LibUI
       func = FFI.func_map[original_method_name]
 
       define_method(name) do |*args, &blk|
-        # Assume that block is the last argument.
         args << blk if blk
-
-        # The proc object is converted to a Closure::BlockCaller object.
+        retained = []
         args.map!.with_index do |arg, idx|
           next arg unless arg.is_a?(Proc)
 
-          # now arg must be Proc
-
-          # The types of the function arguments are stored in advance.
-          # See the monkey patch in ffi.rb.
           _f, ret_type, arg_types = func.callback_argument_types[idx]
-          # TODO: raise some nice error if _f is nil.
+          raise ArgumentError, "#{name} does not accept a block at argument #{idx}" unless _f
 
-          callback = Fiddle::Closure::BlockCaller.new(
-            ret_type, arg_types, &arg
-          )
-          # Protect from GC
-          # by giving the owner object a reference to the callback.
-          # See https://github.com/kojix2/LibUI/issues/8
-          receiver = args.first
-          owner = if idx == 0 || # UI.queue_main{}
-                     receiver.nil? ||
-                     (receiver.respond_to?(:frozen?) && receiver.frozen?) # UI.timer(100) {}
-                    LibUIBase # keep a reference on an internal module to avoid GC
-                  else
-                    receiver # receiver object holds the callback
-                  end
-          if owner.instance_variable_defined?(:@callbacks)
-            owner.instance_variable_get(:@callbacks) << callback
-          else
-            owner.instance_variable_set(:@callbacks, [callback])
+          ruby_callback = arg
+          callback = Fiddle::Closure::BlockCaller.new(ret_type, arg_types) do |*callback_args|
+            begin
+              ruby_callback.call(*callback_args)
+            rescue StandardError => e
+              CallbackRegistry.report(e)
+              0
+            end
           end
+          retained << [idx, callback]
           callback
         end
 
-        # Make it possible to omit the last nil. This may be an over-optimization.
         siz = func.argument_types.size - 1
         args[siz] = nil if args.size == siz
 
-        FFI.public_send(original_method_name, *args)
+        result = FFI.public_send(original_method_name, *args)
+        retained.each do |idx, callback|
+          if idx.zero? || args.first.nil?
+            CallbackRegistry.global(original_method_name, callback)
+          elsif original_method_name.start_with?('uiMenuItem', 'uiToolbarItem')
+            CallbackRegistry.other(args.first, original_method_name, callback)
+          else
+            CallbackRegistry.control(args.first, original_method_name, callback)
+          end
+        end
+        result
       end
     end
   end

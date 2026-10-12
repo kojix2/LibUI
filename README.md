@@ -166,10 +166,15 @@ Use `UI::Font.new(family: 'Georgia', size: 13)` to specify a font directly.
 The default weight, italic, and stretch are normal. The original descriptor
 arguments remain supported, and `LibUI::FFI` exposes the raw C API.
 
-- Callbacks
-  - In Ruby/Fiddle, a C callback function is written as an object of
-    `Fiddle::Closure::BlockCaller` or `Fiddle::Closure`.
-    Be careful about Ruby's garbage collection - if the function object is collected, memory will be freed resulting in a segmentation violation when the callback is invoked.
+Ruby blocks passed to event methods are kept alive while their native control
+exists. Replacing an event callback releases the previous closure. The
+registry uses `uiControlOnDestroyed` to clear callbacks when a control is
+destroyed, including when its parent destroys it. A user callback registered
+with `control_on_destroyed` runs through the same notification. `queue_main`
+callbacks are released after running; timers are released when they return
+zero or `false`. Callback exceptions are reported to stderr and do not cross
+the C callback boundary. Callbacks for raw `LibUI::FFI` structs still need
+their own Ruby references:
 
 ```ruby
 # Assign to a local variable to prevent it from being collected by GC.

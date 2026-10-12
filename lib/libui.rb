@@ -21,12 +21,90 @@ module LibUI
     end
 
   require_relative 'libui/ffi'
+  require_relative 'libui/callback_registry'
   require_relative 'libui/libui_base'
   require_relative 'libui/font'
 
   extend LibUIBase
 
   class << self
+    def control_on_destroyed(control, callback = nil, data = nil, &block)
+      callback = block if block
+      unless callback.nil? || callback.respond_to?(:call)
+        raise TypeError, 'expected a callable destruction callback'
+      end
+      CallbackRegistry.on_destroyed(control, callback, data)
+      nil
+    end
+
+    def queue_main(callback = nil, data = nil, &block)
+      callback = block if block
+      raise TypeError, 'expected a callable callback' unless callback.respond_to?(:call)
+
+      key = Object.new
+      closure = Fiddle::Closure::BlockCaller.new(Fiddle::TYPE_VOID, [Fiddle::TYPE_VOIDP]) do |native_data|
+        begin
+          callback.call(native_data)
+        rescue StandardError => e
+          CallbackRegistry.report(e)
+        ensure
+          CallbackRegistry.release_global(key)
+        end
+      end
+      CallbackRegistry.global(key, closure)
+      FFI.uiQueueMain(closure, data)
+    rescue StandardError
+      CallbackRegistry.release_global(key) if key
+      raise
+    end
+
+    def timer(milliseconds, callback = nil, data = nil, &block)
+      callback = block if block
+      raise TypeError, 'expected a callable callback' unless callback.respond_to?(:call)
+
+      key = Object.new
+      closure = Fiddle::Closure::BlockCaller.new(Fiddle::TYPE_INT, [Fiddle::TYPE_VOIDP]) do |native_data|
+        result = begin
+          value = callback.call(native_data)
+          value == true ? 1 : (value == false || value.nil? ? 0 : Integer(value))
+        rescue StandardError => e
+          CallbackRegistry.report(e)
+          0
+        end
+        CallbackRegistry.release_global(key) if result.zero?
+        result
+      end
+      CallbackRegistry.global(key, closure)
+      FFI.uiTimer(milliseconds, closure, data)
+    rescue StandardError
+      CallbackRegistry.release_global(key) if key
+      raise
+    end
+
+    def uninit
+      result = super
+      CallbackRegistry.clear
+      result
+    end
+
+    def toolbar_append_button(toolbar, text, icon = nil)
+      item = super(toolbar, text, icon)
+      CallbackRegistry.track_other_child(toolbar, item)
+      item
+    end
+
+    def toolbar_append_toggle_button(toolbar, text, icon = nil)
+      item = super(toolbar, text, icon)
+      CallbackRegistry.track_other_child(toolbar, item)
+      item
+    end
+
+    def free_toolbar(toolbar)
+      result = super(toolbar)
+      CallbackRegistry.release_other(toolbar)
+      result
+    end
+
     def version
       super.to_s
     end
