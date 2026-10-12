@@ -53,15 +53,9 @@ hbox = LibUI.new_horizontal_box
 LibUI.box_set_padded(hbox, 1)
 
 # ============================================================================ #
-# LibUI.window_set_content_size() is actually
-# LibUI::FFI.uiWindowSetContentSize
-#
-# The code for this is:
-#
-#   try_extern 'void uiWindowSetContentSize(uiWindow *w, int width, int height)'
-#
-# So it needs two arguments. Note that this can be ignored by the system
-# though.
+# LibUI.window_set_content_size(window, width, height) changes the content
+# dimensions. LibUI.window_content_size(window) returns [width, height].
+# The window system can adjust the requested size.
 #
 # More documentation for this method can be seen here:
 #

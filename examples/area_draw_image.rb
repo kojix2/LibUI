@@ -27,6 +27,7 @@ pixels = sample_rgba(width, height)
 UI.init
 
 image = UI.new_image(width, height)
+# Every pixel is opaque, so these RGBA bytes are already premultiplied.
 UI.image_append(image, pixels, width, height, width * 4)
 
 white_brush = UI::Brush.new(color: [1.0, 1.0, 1.0, 1.0])

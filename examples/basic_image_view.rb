@@ -30,6 +30,7 @@ box = UI.new_vertical_box
 UI.box_set_padded(box, 1)
 
 image = UI.new_image(width, height)
+# Every pixel is opaque, so these RGBA bytes are already premultiplied.
 UI.image_append(image, pixels, width, height, width * 4)
 
 image_view = UI.new_image_view
