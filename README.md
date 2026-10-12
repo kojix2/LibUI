@@ -182,6 +182,30 @@ handler = UI::AreaHandler.new(draw: ->(event) {
 area = UI.new_area(handler)
 ```
 
+`LibUI::TableModel` builds and retains a native table model handler from Ruby
+rows and column types. `new_table(model: model)` keeps it alive while the table
+exists. Free the model after destroying the table. Cell callbacks create fresh
+`uiTableValue` objects, transferring those objects to libui-ng; image values
+refer to images you own and must keep valid during use.
+
+```ruby
+rows = [%w[cat meow], %w[dog woof]]
+model = UI::TableModel.new(column_types: [UI::TableValueTypeString] * 2,
+                           rows: rows)
+table = UI.new_table(model: model)
+UI.table_append_text_column(table, 'Animal', 0, -1)
+UI.table_append_text_column(table, 'Sound', 1, -1)
+# After the table is destroyed:
+model.free
+```
+
+Pass `cell_value:` and `set_cell_value:` callbacks to `TableModel.new` for a
+custom data source. The setter receives copied Ruby values, or `nil` for a
+button click. `row_inserted`, `row_changed`, and `row_deleted` notify tables
+after the backing data changes. Text, image-text, and checkbox-text column
+methods accept `color_model_column:` in place of a native optional-params
+struct. Existing native structs and positional arguments remain accepted.
+
 Ruby blocks passed to event methods are kept alive while their native control
 exists. Replacing an event callback releases the previous closure. The
 registry uses `uiControlOnDestroyed` to clear callbacks when a control is

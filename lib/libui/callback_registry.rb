@@ -16,7 +16,15 @@ module LibUI
           hook = Fiddle::Closure::BlockCaller.new(Fiddle::TYPE_VOID,
                                                    [Fiddle::TYPE_VOIDP, Fiddle::TYPE_VOIDP]) do |native, _data|
             begin
-              user = @controls[native]&.delete(:on_destroyed)
+              callbacks = @controls[native]
+              callbacks&.fetch(:cleanup, [])&.each do |cleanup|
+                begin
+                  cleanup.call
+                rescue StandardError => e
+                  report(e)
+                end
+              end
+              user = callbacks&.delete(:on_destroyed)
               user[0].call(native, user[1]) if user && user[0]
             rescue StandardError => e
               report(e)
@@ -39,6 +47,11 @@ module LibUI
 
       def on_destroyed(pointer, callback, data)
         control(pointer, :on_destroyed, [callback, data])
+      end
+
+      def on_cleanup(pointer, &block)
+        control(pointer, :cleanup, []) unless @controls.dig(pointer.to_i, :cleanup)
+        @controls[pointer.to_i][:cleanup] << block
       end
 
       def other(pointer, key, callback)

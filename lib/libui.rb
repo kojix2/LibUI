@@ -25,6 +25,7 @@ module LibUI
   require_relative 'libui/libui_base'
   require_relative 'libui/font'
   require_relative 'libui/area_handler'
+  require_relative 'libui/table_model'
 
   extend LibUIBase
 
@@ -120,6 +121,59 @@ module LibUI
       area = super(handler.to_ptr, width, height)
       CallbackRegistry.control(area, :area_handler, handler)
       area
+    end
+
+    def new_table_model(handler)
+      return super(handler) unless handler.is_a?(TableModelHandler)
+
+      model = super(handler.to_ptr)
+      CallbackRegistry.other(model, :table_model_handler, handler)
+      model
+    end
+
+    def free_table_model(model)
+      return model.free if model.is_a?(TableModel)
+
+      result = super(model)
+      CallbackRegistry.release_other(model)
+      result
+    end
+
+    def new_table(params = nil, model: nil, row_background_color_model_column: -1)
+      return super(params) if model.nil?
+      raise ArgumentError, 'provide params or model, not both' unless params.nil?
+      raise TypeError, 'expected LibUI::TableModel' unless model.is_a?(TableModel)
+
+      native = FFI::TableParams.malloc
+      native.to_ptr.free = Fiddle::RUBY_FREE
+      native.Model = model.to_ptr
+      native.RowBackgroundColorModelColumn = row_background_color_model_column
+      table = super(native)
+      model.attach_table
+      CallbackRegistry.control(table, :table_model, model)
+      CallbackRegistry.on_cleanup(table) { model.detach_table }
+      table
+    end
+
+    def table_append_text_column(table, name, text_column, editable_column, options = nil,
+                                 color_model_column: nil)
+      super(table, name, text_column, editable_column,
+            table_text_params(options, color_model_column))
+    end
+
+    def table_append_image_text_column(table, name, image_column, text_column,
+                                       editable_column, options = nil, color_model_column: nil)
+      super(table, name, image_column, text_column, editable_column,
+            table_text_params(options, color_model_column))
+    end
+
+    def table_append_checkbox_text_column(table, name, checkbox_column,
+                                          checkbox_editable_column, text_column,
+                                          text_editable_column, options = nil,
+                                          color_model_column: nil)
+      super(table, name, checkbox_column, checkbox_editable_column,
+            text_column, text_editable_column,
+            table_text_params(options, color_model_column))
     end
 
     def version
@@ -609,6 +663,16 @@ module LibUI
     end
 
     private
+
+    def table_text_params(options, color_model_column)
+      return options if color_model_column.nil?
+      raise ArgumentError, 'provide options or color_model_column, not both' unless options.nil?
+
+      native = FFI::TableTextColumnOptionalParams.malloc
+      native.to_ptr.free = Fiddle::RUBY_FREE
+      native.ColorModelColumn = Integer(color_model_column)
+      native
+    end
 
     def attribute_snapshot(attribute)
       type = attribute_get_type(attribute)
