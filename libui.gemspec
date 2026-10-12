@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ['kojix2']
   spec.email         = ['2xijok@gmail.com']
 
-  spec.files = Dir['*.{md,txt}', '{lib}/**/*', 'vendor/{LICENSE,README}.md']
+  spec.files = ['README.md', 'LICENSE.txt'] + Dir['lib/**/*', 'vendor/{LICENSE,README}.md']
   spec.require_paths = 'lib'
 
   spec.required_ruby_version = '>= 2.6'
