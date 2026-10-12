@@ -60,319 +60,160 @@
       </div>
 
       <div id="content"><div id='filecontents'><h1 id="LibUI">LibUI</h1>
-<p><a href="https://github.com/kojix2/LibUI/actions/workflows/test.yml"><img src="https://github.com/kojix2/LibUI/actions/workflows/test.yml/badge.svg" alt="test" /></a>
-<a href="https://rubygems.org/gems/libui/versions"><img src="https://img.shields.io/badge/dynamic/json?label=gem%20version&amp;query=%24%5B0%5D.number&amp;url=https%3A%2F%2Frubygems.org%2Fapi%2Fv1%2Fversions%2Flibui.json&amp;color=brightgreen" alt="Gem Version" /></a>
-<a href="https://tokei.kojix2.net/github/kojix2/LibUI"><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Ftokei.kojix2.net%2Fbadge%2Fgithub%2Fkojix2%2FLibUI%2Flines" alt="Lines of Code" /></a>
-<a href="https://github.com/AndyObtiva/glimmer-dsl-libui"><img alt="glimmer-dsl-libui" src="https://github.com/AndyObtiva/glimmer/blob/master/images/glimmer-logo-hi-res.svg" width="50" height="50" align="right"></a></p>
-<p>LibUI is a Ruby wrapper for libui family.</p>
-<p>:rocket: <a href="https://github.com/kojix2/libui-ng">libui-ng</a> - A cross-platform portable GUI library</p>
-<h2 id="Installation">Installation</h2>
-<pre class="code sh"><code class="sh">gem install libui # --pre
-</code></pre>
-<ul>
-<li>The gem package includes the libui-ng shared library for Windows, Mac, and Linux.
-<ul>
-<li>Namely <code>libui.x64.dll</code>/<code>libui.x86.dll</code>, <code>libui.x86_64.dylib</code>/<code>libui.arm64.dylib</code>, or <code>libui.x86_64.so</code>/<code>libui.aarch64.so</code>.</li>
-</ul>
-</li>
-<li>No dependencies required.
-<ul>
-<li>The libui gem uses the standard Ruby library <a href="https://github.com/ruby/fiddle">Fiddle</a> to call C functions.</li>
-</ul>
-</li>
-</ul>
+<p><a href="https://github.com/kojix2/LibUI/actions/workflows/test.yml"><img src="https://github.com/kojix2/LibUI/actions/workflows/test.yml/badge.svg" alt="Tests" /></a>
+<a href="https://rubygems.org/gems/libui"><img src="https://img.shields.io/gem/v/libui" alt="Gem Version" /></a></p>
+<p>LibUI is a procedural Ruby binding for <a href="https://github.com/libui-ng/libui-ng">libui-ng</a>,
+a native GUI library for Windows, macOS, and Linux. It uses
+<a href="https://github.com/ruby/fiddle">Fiddle</a> and keeps the C API's names and
+structure, with Ruby-friendly values where they help.</p>
+<h2 id="Release_lines">Release lines</h2>
+<p>This README describes the <code>main</code> branch and the 0.3.x series, which track the
+newer libui-ng dev API. The 0.2.x series is maintained separately on
+<a href="https://github.com/kojix2/LibUI/tree/0.2-stable"><code>0.2-stable</code></a> for compatibility
+with the older libui-ng pre-build API. Existing 0.2.x applications can stay on
+that series while it receives fixes and compatible additions.</p>
+<h2 id="Screenshots">Screenshots</h2>
 <table>
 <thead>
 <tr>
 <th>Windows</th>
-<th>Mac</th>
+<th>macOS</th>
 <th>Linux</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><img src="https://user-images.githubusercontent.com/5798442/103118046-900ea780-46b0-11eb-81fc-32626762e4df.png"></td>
-<td><img src="https://user-images.githubusercontent.com/5798442/103118059-99980f80-46b0-11eb-9d12-324ec4d297c9.png"></td>
-<td><img src="https://user-images.githubusercontent.com/5798442/103118068-a0bf1d80-46b0-11eb-8c5c-3bdcc3dcfb26.png"></td>
+<td><img alt="LibUI window on Windows" src="https://user-images.githubusercontent.com/5798442/103118046-900ea780-46b0-11eb-81fc-32626762e4df.png"></td>
+<td><img alt="LibUI window on macOS" src="https://user-images.githubusercontent.com/5798442/103118059-99980f80-46b0-11eb-9d12-324ec4d297c9.png"></td>
+<td><img alt="LibUI window on Linux" src="https://user-images.githubusercontent.com/5798442/103118068-a0bf1d80-46b0-11eb-8c5c-3bdcc3dcfb26.png"></td>
 </tr>
 </tbody>
 </table>
-<p>Notes:</p>
-<ul>
-<li>If you are using the 32-bit (x86) version of Ruby, you need to download the 32-bit (x86) native dll. See the <a href="#development">Development</a> section.</li>
-<li>On Windows, libui may not work due to missing DLLs. In that case, you need to install <a href="https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist">Visual C++ Redistributable</a>. See (<a href="https://github.com/kojix2/LibUI/issues/48">#48</a>)</li>
-<li>Users with <a href="https://www.raspberrypi.com/">Raspberry Pi</a> or other platforms will need to compile the C libui library. See the <a href="#development">Development</a> section.</li>
-</ul>
-<h2 id="Usage">Usage</h2>
+<h2 id="Install">Install</h2>
+<pre class="code sh"><code class="sh">gem install libui
+</code></pre>
+<p>To install a prerelease version, use <code>gem install libui --pre</code>. Gems for
+supported platforms include the libui-ng shared library. For a local libui-ng
+build, set <code>LIBUIDIR</code> to the directory containing its <code>.dll</code>, <code>.dylib</code>, or
+<code>.so</code> file. On Windows, the library may also need the
+<a href="https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist">Visual C++ Redistributable</a>.</p>
+<h2 id="Quick_start">Quick start</h2>
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>libui</span><span class='tstring_end'>&#39;</span></span>
 
 <span class='const'>UI</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="LibUI.html" title="LibUI (module)">LibUI</a></span></span>
-
 <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_init'>init</span>
 
-<span class='id identifier rubyid_main_window'>main_window</span> <span class='op'>=</span> <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_new_window'>new_window</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>hello world</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='int'>200</span><span class='comma'>,</span> <span class='int'>100</span><span class='comma'>,</span> <span class='int'>1</span><span class='rparen'>)</span>
-
-<span class='id identifier rubyid_button'>button</span> <span class='op'>=</span> <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_new_button'>new_button</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Button</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
-
+<span class='id identifier rubyid_window'>window</span> <span class='op'>=</span> <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_new_window'>new_window</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Hello</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='int'>300</span><span class='comma'>,</span> <span class='int'>100</span><span class='comma'>,</span> <span class='int'>0</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_button'>button</span> <span class='op'>=</span> <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_new_button'>new_button</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Click me</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
 <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_button_on_clicked'>button_on_clicked</span><span class='lparen'>(</span><span class='id identifier rubyid_button'>button</span><span class='rparen'>)</span> <span class='kw'>do</span>
-  <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_msg_box'>msg_box</span><span class='lparen'>(</span><span class='id identifier rubyid_main_window'>main_window</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Information</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>You clicked the button</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_msg_box'>msg_box</span><span class='lparen'>(</span><span class='id identifier rubyid_window'>window</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Hello</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Button clicked</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
 <span class='kw'>end</span>
-
-<span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_window_on_closing'>window_on_closing</span><span class='lparen'>(</span><span class='id identifier rubyid_main_window'>main_window</span><span class='rparen'>)</span> <span class='kw'>do</span>
-  <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Bye Bye</span><span class='tstring_end'>&#39;</span></span>
+<span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_window_set_child'>window_set_child</span><span class='lparen'>(</span><span class='id identifier rubyid_window'>window</span><span class='comma'>,</span> <span class='id identifier rubyid_button'>button</span><span class='rparen'>)</span>
+<span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_window_on_closing'>window_on_closing</span><span class='lparen'>(</span><span class='id identifier rubyid_window'>window</span><span class='rparen'>)</span> <span class='kw'>do</span>
   <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_quit'>quit</span>
   <span class='int'>1</span>
 <span class='kw'>end</span>
 
-<span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_window_set_child'>window_set_child</span><span class='lparen'>(</span><span class='id identifier rubyid_main_window'>main_window</span><span class='comma'>,</span> <span class='id identifier rubyid_button'>button</span><span class='rparen'>)</span>
-<span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_control_show'>control_show</span><span class='lparen'>(</span><span class='id identifier rubyid_main_window'>main_window</span><span class='rparen'>)</span>
-
+<span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_control_show'>control_show</span><span class='lparen'>(</span><span class='id identifier rubyid_window'>window</span><span class='rparen'>)</span>
 <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_main'>main</span>
-<span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_quit'>quit</span>
+<span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_uninit'>uninit</span>
 </code></pre>
-<p>For more examples, see the <a href="https://github.com/kojix2/libui/tree/main/examples">examples</a> directory.</p>
-<h3 id="General_Rules">General Rules</h3>
-<p>Compared to the original libui library written in C:</p>
+<p>Run the example with <code>ruby hello.rb</code>. Explore <a href="examples">examples</a> for
+individual controls and <a href="examples2">examples2</a> for larger applications.</p>
+<h2 id="API">API</h2>
+<p>Names follow libui-ng with <code>ui</code> removed and CamelCase converted to
+<code>snake_case</code>: <code>uiNewWindow</code> becomes <code>LibUI.new_window</code>. Event callbacks accept
+a block or <code>Proc</code>; LibUI retains them for the native owner's lifetime. The
+<a href="https://libui-ng.github.io/libui-ng/">libui-ng API reference</a> documents the
+underlying controls and functions. <code>LibUI::FFI</code> exposes the original C bindings
+when needed.</p>
+<h3 id="Ruby_values">Ruby values</h3>
+<p>Native controls, images, attributes, and text layouts are still represented by
+Fiddle pointers. Common getters and setters use Ruby values:</p>
 <ul>
-<li>Method names use snake_case.</li>
-<li>The last argument can be omitted if it's nil.</li>
-<li>A block can be passed as a callback.
-<ul>
-<li>The block will be converted to a Proc object and added as the last argument.</li>
-<li>The last argument can still be omitted when nil.</li>
+<li>Text and file dialog results are strings; a canceled file dialog returns <code>nil</code>.</li>
+<li>Size, position, color, and table selection results are arrays.</li>
+<li>Date and time picker methods use Ruby <code>Time</code>, <code>DateTime</code>, or <code>Date</code> values.</li>
+<li>Font getters return <code>LibUI::Font</code> values.</li>
 </ul>
-</li>
-</ul>
-<p>You can use <a href="https://libui-ng.github.io/libui-ng/">the libui-ng API documentation</a> as a reference.</p>
-<h3 id="DSLs_for_LibUI">DSLs for LibUI</h3>
-<p>LibUI is not object-oriented because it is a thin Ruby wrapper (binding) for the procedural C libui library, mirroring its API structure.</p>
-<p>To build actual applications, it is recommended to use a DSL for LibUI, as they enable writing object-oriented code the Ruby way (instead of procedural code the C way):</p>
-<ul>
-<li><a href="https://github.com/AndyObtiva/glimmer-dsl-libui">Glimmer DSL for LibUI</a></li>
-</ul>
-<h3 id="Working_with_fiddle_pointers">Working with fiddle pointers</h3>
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>libui</span><span class='tstring_end'>&#39;</span></span>
-<span class='const'>UI</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="LibUI.html" title="LibUI (module)">LibUI</a></span></span>
-<span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_init'>init</span>
-</code></pre>
-<p>Text getters such as <code>label_text</code>, <code>entry_text</code>, and <code>window_title</code> return Ruby
-strings. The wrapper releases libui-ng's copy after reading it. File dialogs
-(<code>open_file</code>, <code>open_folder</code>, and <code>save_file</code>) return a path string, or <code>nil</code> if
-the dialog is canceled.</p>
-<p><code>LibUI.version</code> returns the loaded libui-ng build identifier as a Ruby string.
-<code>LibUI::VERSION</code> is the gem version.
-<code>toolbar_item_text</code> and <code>toolbar_item_tooltip</code> also return Ruby strings.</p>
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_label'>label</span> <span class='op'>=</span> <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_new_label'>new_label</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Ruby</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-<span class='id identifier rubyid_p'>p</span> <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_label_text'>label_text</span><span class='lparen'>(</span><span class='id identifier rubyid_label'>label</span><span class='rparen'>)</span> <span class='comment'># Ruby
-</span></code></pre>
-<p>Size and color getters return arrays. Table selection methods use arrays of
-row indices; pass <code>[]</code> to clear the selection:</p>
+<p>For example, inside a running UI session:</p>
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_width'>width</span><span class='comma'>,</span> <span class='id identifier rubyid_height'>height</span> <span class='op'>=</span> <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_window_content_size'>window_content_size</span><span class='lparen'>(</span><span class='id identifier rubyid_window'>window</span><span class='rparen'>)</span>
-<span class='id identifier rubyid_red'>red</span><span class='comma'>,</span> <span class='id identifier rubyid_green'>green</span><span class='comma'>,</span> <span class='id identifier rubyid_blue'>blue</span><span class='comma'>,</span> <span class='id identifier rubyid_alpha'>alpha</span> <span class='op'>=</span> <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_color_button_color'>color_button_color</span><span class='lparen'>(</span><span class='id identifier rubyid_color_button'>color_button</span><span class='rparen'>)</span>
 <span class='id identifier rubyid_rows'>rows</span> <span class='op'>=</span> <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_table_get_selection'>table_get_selection</span><span class='lparen'>(</span><span class='id identifier rubyid_table'>table</span><span class='rparen'>)</span>
 <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_table_set_selection'>table_set_selection</span><span class='lparen'>(</span><span class='id identifier rubyid_table'>table</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='int'>1</span><span class='comma'>,</span> <span class='int'>3</span><span class='rbracket'>]</span><span class='rparen'>)</span>
-<span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_table_set_selection'>table_set_selection</span><span class='lparen'>(</span><span class='id identifier rubyid_table'>table</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+<span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_table_set_selection'>table_set_selection</span><span class='lparen'>(</span><span class='id identifier rubyid_table'>table</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='comment'># Clear the selection
+</span>
+<span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_open_file'>open_file</span><span class='lparen'>(</span><span class='id identifier rubyid_window'>window</span><span class='rparen'>)</span> <span class='comment'># A String, or nil if canceled
+</span><span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_date_time_picker_set_time'>date_time_picker_set_time</span><span class='lparen'>(</span><span class='id identifier rubyid_picker'>picker</span><span class='comma'>,</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_selected_time'>selected_time</span> <span class='op'>=</span> <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_date_time_picker_time'>date_time_picker_time</span><span class='lparen'>(</span><span class='id identifier rubyid_picker'>picker</span><span class='rparen'>)</span>
 </code></pre>
-<p>Selected row indices must be within the table model. The table's selection
-mode determines how many rows can be selected. Native <code>uiTableSelection</code>
-arguments remain supported.</p>
-<p><code>attribute_underline_color</code> returns <code>[underline, red, green, blue, alpha]</code>.
-<code>draw_matrix_transform_point</code> and <code>draw_matrix_transform_size</code> accept numeric
-coordinates and return a pair. <code>open_type_features_get</code> returns the feature
-value, or <code>nil</code> when the tag is absent.</p>
-<p><code>open_type_features_for_each</code> yields a four-byte tag and its value. Use
-<code>attribute_features</code> for an independent Ruby hash. The attribute iterator
-copies values before yielding <code>{type:, value:}, start_byte, end_byte</code>.
-libui-ng has no getter for a background attribute's color, so its snapshot
-has <code>value: nil</code>. Return <code>LibUI::ForEachStop</code> to stop an iterator early.</p>
-<p><code>image_append</code> checks the dimensions, stride, and known buffer length. It
-expects premultiplied RGBA bytes. For ordinary straight RGBA data from a PNG
-decoder, use <code>image_append_rgba(image, bytes, width, height)</code>; it converts a
-copy before calling libui-ng.</p>
-<p>Date and time picker methods use Ruby objects directly. The getter returns a
-local <code>Time</code>; the setter accepts <code>Time</code>, <code>DateTime</code>, or <code>Date</code>:</p>
-<pre class="code ruby"><code class="ruby"><span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_date_time_picker_set_time'>date_time_picker_set_time</span><span class='lparen'>(</span><span class='id identifier rubyid_picker'>picker</span><span class='comma'>,</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='rparen'>)</span>
-<span class='id identifier rubyid_selected'>selected</span> <span class='op'>=</span> <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_date_time_picker_time'>date_time_picker_time</span><span class='lparen'>(</span><span class='id identifier rubyid_picker'>picker</span><span class='rparen'>)</span>
-</code></pre>
-<p>The picker stores whole seconds. For date-only and time-only pickers, only the
-displayed fields should be used; libui-ng does not specify the other fields.</p>
-<p>Use <code>LibUI::FFI</code> for the original pointer based C API when needed.</p>
-<p><code>LibUI::Font</code> stores a reusable font value. <code>font_button_font</code> and
-<code>load_control_font</code> return it and release libui-ng's descriptor internally.
-The same value can be passed to a text layout:</p>
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_font_button'>font_button</span> <span class='op'>=</span> <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_new_font_button'>new_font_button</span>
-<span class='id identifier rubyid_font'>font</span> <span class='op'>=</span> <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_font_button_font'>font_button_font</span><span class='lparen'>(</span><span class='id identifier rubyid_font_button'>font_button</span><span class='rparen'>)</span>
-<span class='id identifier rubyid_p'>p</span> <span class='id identifier rubyid_font'>font</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span> <span class='comment'># family, size, weight, italic, stretch
-</span><span class='id identifier rubyid_attributed_string'>attributed_string</span> <span class='op'>=</span> <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_new_attributed_string'>new_attributed_string</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Hello</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
-<span class='id identifier rubyid_layout'>layout</span> <span class='op'>=</span> <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_draw_new_text_layout'>draw_new_text_layout</span><span class='lparen'>(</span><span class='id identifier rubyid_attributed_string'>attributed_string</span><span class='comma'>,</span> <span class='label'>font:</span> <span class='id identifier rubyid_font'>font</span><span class='comma'>,</span> <span class='label'>width:</span> <span class='int'>300</span><span class='rparen'>)</span>
-<span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_draw_free_text_layout'>draw_free_text_layout</span><span class='lparen'>(</span><span class='id identifier rubyid_layout'>layout</span><span class='rparen'>)</span>
-<span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_free_attributed_string'>free_attributed_string</span><span class='lparen'>(</span><span class='id identifier rubyid_attributed_string'>attributed_string</span><span class='rparen'>)</span>
-</code></pre>
-<p>Use <code>UI::Font.new(family: 'Georgia', size: 13)</code> to specify a font directly.
-The default weight, italic, and stretch are normal. The original descriptor
-arguments remain supported, and <code>LibUI::FFI</code> exposes the raw C API.</p>
-<p>For a custom drawing area, <code>LibUI::AreaHandler</code> owns the Fiddle closures and
-native handler struct. <code>new_area</code> and <code>new_scrolling_area</code> keep the handler
-alive until the area is destroyed. Event fields are copied to Ruby objects;
-the draw context is usable only during the draw callback.</p>
+<p>Selection indices must exist in the table model; the selection mode controls
+how many rows may be selected. <code>LibUI.version</code> returns the loaded libui-ng build
+identifier as a string; <code>LibUI::VERSION</code> is the gem version.</p>
+<h3 id="Drawing_and_tables">Drawing and tables</h3>
+<p>The Ruby value classes <code>Font</code>, <code>Brush</code>, <code>StrokeParams</code>, and <code>Matrix</code> hide native
+structs. <code>AreaHandler</code> and <code>TableModel</code> manage their callbacks. A drawing area
+can use Ruby objects instead of manually allocating native structs:</p>
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_brush'>brush</span> <span class='op'>=</span> <span class='const'>UI</span><span class='op'>::</span><span class='const'>Brush</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>color:</span> <span class='lbracket'>[</span><span class='float'>0.4</span><span class='comma'>,</span> <span class='float'>0.4</span><span class='comma'>,</span> <span class='float'>0.8</span><span class='comma'>,</span> <span class='float'>1.0</span><span class='rbracket'>]</span><span class='rparen'>)</span>
-<span class='id identifier rubyid_handler'>handler</span> <span class='op'>=</span> <span class='const'>UI</span><span class='op'>::</span><span class='const'>AreaHandler</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>draw:</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_event'>event</span><span class='rparen'>)</span> <span class='tlambeg'>{</span>
+<span class='id identifier rubyid_handler'>handler</span> <span class='op'>=</span> <span class='const'>UI</span><span class='op'>::</span><span class='const'>AreaHandler</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>draw:</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_event'>event</span><span class='rparen'>)</span> <span class='kw'>do</span>
   <span class='const'>UI</span><span class='op'>::</span><span class='const'>Path</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_path'>path</span><span class='op'>|</span>
     <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_add_rectangle'>add_rectangle</span><span class='lparen'>(</span><span class='int'>0</span><span class='comma'>,</span> <span class='int'>0</span><span class='comma'>,</span> <span class='id identifier rubyid_event'>event</span><span class='period'>.</span><span class='id identifier rubyid_area_width'>area_width</span><span class='comma'>,</span> <span class='id identifier rubyid_event'>event</span><span class='period'>.</span><span class='id identifier rubyid_area_height'>area_height</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_end_path'>end_path</span>
     <span class='id identifier rubyid_event'>event</span><span class='period'>.</span><span class='id identifier rubyid_context'>context</span><span class='period'>.</span><span class='id identifier rubyid_fill'>fill</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_brush'>brush</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
-<span class='rbrace'>}</span><span class='rparen'>)</span>
+<span class='kw'>end</span><span class='rparen'>)</span>
 <span class='id identifier rubyid_area'>area</span> <span class='op'>=</span> <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_new_area'>new_area</span><span class='lparen'>(</span><span class='id identifier rubyid_handler'>handler</span><span class='rparen'>)</span>
 </code></pre>
-<p><code>Path.open</code> frees the native path when the block finishes, including when an
-exception occurs. Call <code>end_path</code> before drawing with the path.</p>
-<p><code>LibUI::TableModel</code> builds and retains a native table model handler from Ruby
-rows and column types. <code>new_table(model: model)</code> keeps it alive while the table
-exists. Free the model after destroying the table. Cell callbacks create fresh
-<code>uiTableValue</code> objects, transferring those objects to libui-ng; image values
-refer to images you own and must keep valid during use.</p>
+<p><code>Path.open</code> frees the drawing path when the block exits. For a table, provide
+Ruby rows and their libui-ng column types:</p>
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_rows'>rows</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='qwords_beg'>%w[</span><span class='tstring_content'>cat</span><span class='words_sep'> </span><span class='tstring_content'>meow</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='qwords_beg'>%w[</span><span class='tstring_content'>dog</span><span class='words_sep'> </span><span class='tstring_content'>woof</span><span class='tstring_end'>]</span></span><span class='rbracket'>]</span>
 <span class='id identifier rubyid_model'>model</span> <span class='op'>=</span> <span class='const'>UI</span><span class='op'>::</span><span class='const'>TableModel</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>column_types:</span> <span class='lbracket'>[</span><span class='const'>UI</span><span class='op'>::</span><span class='const'>TableValueTypeString</span><span class='rbracket'>]</span> <span class='op'>*</span> <span class='int'>2</span><span class='comma'>,</span>
                            <span class='label'>rows:</span> <span class='id identifier rubyid_rows'>rows</span><span class='rparen'>)</span>
 <span class='id identifier rubyid_table'>table</span> <span class='op'>=</span> <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_new_table'>new_table</span><span class='lparen'>(</span><span class='label'>model:</span> <span class='id identifier rubyid_model'>model</span><span class='rparen'>)</span>
 <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_table_append_text_column'>table_append_text_column</span><span class='lparen'>(</span><span class='id identifier rubyid_table'>table</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Animal</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='int'>0</span><span class='comma'>,</span> <span class='op'>-</span><span class='int'>1</span><span class='rparen'>)</span>
 <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_table_append_text_column'>table_append_text_column</span><span class='lparen'>(</span><span class='id identifier rubyid_table'>table</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Sound</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='int'>1</span><span class='comma'>,</span> <span class='op'>-</span><span class='int'>1</span><span class='rparen'>)</span>
-<span class='comment'># After the table is destroyed:
-</span><span class='id identifier rubyid_model'>model</span><span class='period'>.</span><span class='id identifier rubyid_free'>free</span>
-</code></pre>
-<p>Pass <code>cell_value:</code> and <code>set_cell_value:</code> callbacks to <code>TableModel.new</code> for a
-custom data source. The setter receives copied Ruby values, or <code>nil</code> for a
-button click. <code>row_inserted</code>, <code>row_changed</code>, and <code>row_deleted</code> notify tables
-after the backing data changes. Text, image-text, and checkbox-text column
-methods accept <code>color_model_column:</code> in place of a native optional-params
-struct. Existing native structs and positional arguments remain accepted.</p>
-<p><code>LibUI::Brush</code>, <code>StrokeParams</code>, and <code>Matrix</code> wrap reusable draw structs.
-Gradient stops and dash arrays are retained by their owner. <code>draw_fill</code>,
-<code>draw_stroke</code>, and <code>draw_transform</code> accept these objects as well as native
-structs. A matrix can be composed and queried without allocating a new native
-struct for each transform:</p>
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_stroke'>stroke</span> <span class='op'>=</span> <span class='const'>UI</span><span class='op'>::</span><span class='const'>StrokeParams</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>thickness:</span> <span class='int'>2</span><span class='comma'>,</span> <span class='label'>dashes:</span> <span class='lbracket'>[</span><span class='int'>3</span><span class='comma'>,</span> <span class='int'>2</span><span class='rbracket'>]</span><span class='rparen'>)</span>
-<span class='id identifier rubyid_matrix'>matrix</span> <span class='op'>=</span> <span class='const'>UI</span><span class='op'>::</span><span class='const'>Matrix</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='period'>.</span><span class='id identifier rubyid_translate'>translate</span><span class='lparen'>(</span><span class='int'>10</span><span class='comma'>,</span> <span class='int'>20</span><span class='rparen'>)</span>
-<span class='id identifier rubyid_point'>point</span> <span class='op'>=</span> <span class='id identifier rubyid_matrix'>matrix</span><span class='period'>.</span><span class='id identifier rubyid_transform_point'>transform_point</span><span class='lparen'>(</span><span class='int'>1</span><span class='comma'>,</span> <span class='int'>2</span><span class='rparen'>)</span> <span class='comment'># [11.0, 22.0]
+<span class='comment'># After destroying the table: model.free
 </span></code></pre>
-<p>Ruby blocks passed to event methods are kept alive while their native control
-exists. Replacing an event callback releases the previous closure. The
-registry uses <code>uiControlOnDestroyed</code> to clear callbacks when a control is
-destroyed, including when its parent destroys it. A user callback registered
-with <code>control_on_destroyed</code> runs through the same notification. <code>queue_main</code>
-callbacks are released after running; timers are released when they return
-zero or <code>false</code>. Callback exceptions are reported to stderr and do not cross
-the C callback boundary. Callbacks for raw <code>LibUI::FFI</code> structs still need
-their own Ruby references:</p>
-<pre class="code ruby"><code class="ruby"><span class='comment'># Assign to a local variable to prevent it from being collected by GC.
-</span><span class='id identifier rubyid_handler'>handler</span><span class='period'>.</span><span class='const'>MouseEvent</span>   <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_c1'>c1</span> <span class='op'>=</span> <span class='const'>Fiddle</span><span class='op'>::</span><span class='const'>Closure</span><span class='op'>::</span><span class='const'>BlockCaller</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='int'>0</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-<span class='id identifier rubyid_handler'>handler</span><span class='period'>.</span><span class='const'>MouseCrossed</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_c2'>c2</span> <span class='op'>=</span> <span class='const'>Fiddle</span><span class='op'>::</span><span class='const'>Closure</span><span class='op'>::</span><span class='const'>BlockCaller</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='int'>0</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-<span class='id identifier rubyid_handler'>handler</span><span class='period'>.</span><span class='const'>DragBroken</span>   <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_c3'>c3</span> <span class='op'>=</span> <span class='const'>Fiddle</span><span class='op'>::</span><span class='const'>Closure</span><span class='op'>::</span><span class='const'>BlockCaller</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='int'>0</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+<p>See <a href="examples/basic_area.rb">basic_area.rb</a>,
+<a href="examples/basic_draw_text.rb">basic_draw_text.rb</a>, and
+<a href="examples/basic_table.rb">basic_table.rb</a> for complete programs.</p>
+<h3 id="Images">Images</h3>
+<p>Apart from library configuration, <strong><code>image_append_rgba</code> is the only procedural
+helper without a direct C counterpart</strong>. The C API's <code>uiImageAppend</code> requires
+premultiplied RGBA bytes; <code>LibUI.image_append</code> has the same requirement.
+<code>image_append_rgba(image, bytes, width, height)</code> accepts ordinary RGBA bytes,
+converts a copy, and calls <code>image_append</code>:</p>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_image'>image</span> <span class='op'>=</span> <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_new_image'>new_image</span><span class='lparen'>(</span><span class='id identifier rubyid_width'>width</span><span class='comma'>,</span> <span class='id identifier rubyid_height'>height</span><span class='rparen'>)</span>
+<span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_image_append_rgba'>image_append_rgba</span><span class='lparen'>(</span><span class='id identifier rubyid_image'>image</span><span class='comma'>,</span> <span class='id identifier rubyid_rgba_bytes'>rgba_bytes</span><span class='comma'>,</span> <span class='id identifier rubyid_width'>width</span><span class='comma'>,</span> <span class='id identifier rubyid_height'>height</span><span class='rparen'>)</span>
 </code></pre>
-<h3 id="Creating_a_Windows_executable___exe__with_OCRA">Creating a Windows executable (.exe) with OCRA</h3>
-<p>OCRA (One-Click Ruby Application) builds Windows executables from Ruby source code.</p>
-<ul>
-<li><a href="https://github.com/larsch/ocra/">https://github.com/larsch/ocra/</a></li>
-</ul>
-<p>To build an exe with Ocra, include 3 DLLs from the ruby_builtin_dlls folder:</p>
-<pre class="code sh"><code class="sh">ocra examples/control_gallery.rb        ^
-  --dll ruby_builtin_dlls/libssp-0.dll  ^
-  --dll ruby_builtin_dlls/libgmp-10.dll ^
-  --dll ruby_builtin_dlls/libffi-7.dll  ^
-  --gem-all=fiddle                      ^
-</code></pre>
-<p>Add additional options below if necessary:</p>
-<pre class="code sh"><code class="sh">  --window                              ^
-  --add-all-core                        ^
-  --chdir-first                         ^
-  --icon assets\app.ico                 ^
-  --verbose                             ^
-  --output out\gallery.exe
-</code></pre>
+<p>See <a href="examples/basic_table_image.rb">basic_table_image.rb</a> for an example using
+PNG data in a table.</p>
+<h2 id="Ownership">Ownership</h2>
+<p>Native controls follow libui-ng's parent-child ownership rules. Destroy a
+top-level control with <code>control_destroy</code>; destroying a parent also destroys its
+children. Standalone resources such as images and text layouts have matching
+<code>free_*</code> methods. Free a <code>TableModel</code> after the table using it has been
+destroyed. <code>Path.open</code> handles path cleanup.</p>
 <h2 id="Development">Development</h2>
-<pre class="code sh"><code class="sh">git clone https://github.com/kojix2/libui
-cd libui
+<pre class="code sh"><code class="sh">git clone https://github.com/kojix2/LibUI.git
+cd LibUI
 bundle install
 bundle exec rake vendor:auto
 bundle exec rake test
 </code></pre>
-<p>JRuby on macOS needs Java and AppKit must start on the first thread:</p>
-<pre class="code sh"><code class="sh">export JAVA_HOME=/path/to/openjdk
-export JRUBY_OPTS=-J-XstartOnFirstThread
-jruby -Ilib examples/basic_button.rb
-jruby -S rake test
-</code></pre>
-<p>Take note that, as the above code shows, LibUI works via jruby as well, so you have an additional
-GUI library (aside from jruby-swing by default) to test simple User Interfaces too.</p>
-<h3 id="Pre_built_shared_libraries_for_libui_ng">Pre-built shared libraries for libui-ng</h3>
-<p>Download pre-built libui-ng shared libraries (per your current platform):</p>
-<pre class="code sh"><code class="sh">bundle exec rake vendor:auto
-</code></pre>
-<p>Clean downloaded vendor files (keeps <code>vendor/{LICENSE,README}.md</code>):</p>
-<pre class="code sh"><code class="sh">bundle exec rake vendor:clean
-</code></pre>
-<h3 id="Using_your_own_libui_build">Using your own libui build</h3>
-<p>If you build libui-ng yourself, set <code>LIBUIDIR</code> to the directory containing the compiled <code>.so/.dylib/.dll</code> so LibUI can load it. You may also replace files under <code>vendor/</code> with your build if preferred. See <a href="https://github.com/kojix2/LibUI/issues/46#issuecomment-1041575792">#46</a>.</p>
-<h3 id="Publishing_gems">Publishing gems</h3>
-<h4 id="Automated_Publishing">Automated Publishing</h4>
-<p>Push a version tag to automatically publish platform-specific gems:</p>
-<pre class="code sh"><code class="sh">git tag v0.2.0
-git push origin v0.2.0
-</code></pre>
-<p>Requires <code>RUBYGEMS_API_KEY</code> repository secret with scoped API key.</p>
-<h4 id="Manual_Publishing">Manual Publishing</h4>
-<pre class="code sh"><code class="sh">ls vendor             # check the vendor directory
-rm -rf pkg            # remove previously built gems
-rake build_platform   # build gems
-
-# Check the contents of the gem
-find pkg -name *.gem -exec sh -c &quot;echo; echo \# {}; tar -O -f {} -x data.tar.gz | tar zt&quot; \;
-
-rake release_platform # publish gems
-</code></pre>
-<p>Windows Ruby (x64-mingw32 or x64-mingw-ucrt)</p>
-<pre class="code sh"><code class="sh">gem install rake rubyzip
-GEM_PLATFORM=x64-mingw32 rake vendor:clean
-GEM_PLATFORM=x64-mingw32 rake vendor:auto
-GEM_PLATFORM=x64-mingw32 gem build libui.gemspec
-gem push libui-0.2.0-x64-mingw32.gem
-</code></pre>
-<h3 id="libui_or_libui_ng">libui or libui-ng</h3>
-<ul>
-<li>From version 0.1.X, LibUI supports only libui-ng.</li>
-<li>Version 0.0.X only supports andlabs/libui.</li>
-</ul>
-<h2 id="Contributing">Contributing</h2>
-<p>Would you like to contribute to LibUI?</p>
-<ul>
-<li>Please feel free to send us your <a href="https://github.com/kojix2/libui/pulls">pull requests</a>.
-<ul>
-<li>Small corrections, such as typo fixes, are appreciated.</li>
-</ul>
-</li>
-<li>Did you find any bugs? Submit them in the <a href="https://github.com/kojix2/LibUI/issues">issues</a> section!</li>
-</ul>
-<p>Do you need commit rights?</p>
-<ul>
-<li>If you need commit rights to my repository or want to get admin rights and take over the project, please feel free to contact @kojix2.</li>
-<li>Many OSS projects become abandoned because only the founder has commit rights to the original repository.</li>
-</ul>
-<p>Support libui-ng development</p>
-<ul>
-<li>Contributing to the development of libui-ng is a contribution to the entire libui community, including Ruby's LibUI.</li>
-<li>For example, it would be easier to release LibUI in Ruby if libui-ng could be built easily and official shared libraries could be distributed.</li>
-</ul>
-<h2 id="Acknowledgements">Acknowledgements</h2>
-<p>This project is inspired by libui-ruby.</p>
-<ul>
-<li><a href="https://github.com/jamescook/libui-ruby">https://github.com/jamescook/libui-ruby</a></li>
-</ul>
-<p>While libui-ruby uses <a href="https://github.com/ffi/ffi">Ruby-FFI</a>, this gem uses <a href="https://github.com/ruby/fiddle">Fiddle</a>.</p>
+<p>The tests need a GUI display. On macOS with JRuby, set
+<code>JRUBY_OPTS=-J-XstartOnFirstThread</code>. <code>bundle exec rake vendor:clean</code> removes
+downloaded binaries. The <a href=".github/workflows/release-rubygems.yml">RubyGems release workflow</a>
+builds and publishes gems from version tags using trusted publishing.</p>
+<h2 id="Related_projects_and_contributing">Related projects and contributing</h2>
+<p>For an object-oriented DSL built on LibUI, see
+<a href="https://github.com/AndyObtiva/glimmer-dsl-libui">Glimmer DSL for LibUI</a>.
+LibUI was inspired by <a href="https://github.com/jamescook/libui-ruby">libui-ruby</a>.
+Bug reports and pull requests are welcome in the
+<a href="https://github.com/kojix2/LibUI">GitHub repository</a>.</p>
 <h2 id="License">License</h2>
-<p><a href="https://opensource.org/licenses/MIT">MIT License</a>.</p></div></div>
+<p><a href="LICENSE.txt">MIT</a></p></div></div>
 
       <div id="footer">
-  Generated on Mon Oct 12 00:52:53 2026 by
+  Generated on Mon Oct 12 01:07:02 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.45 (ruby-4.0.7).
 </div>
