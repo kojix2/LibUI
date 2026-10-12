@@ -7,14 +7,20 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
       - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: ruby
+          ruby-version: "4.0"
       - name: Generate document
-        run: gem install -N yard && yard doc
+        run: |
+          gem install yard --version '>= 0.9.39' --no-document
+          yard doc
       - name: Publish Documentation on GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:

@@ -3,6 +3,10 @@ on:
   - push
   - pull_request
   - workflow_dispatch
+
+permissions:
+  contents: read
+
 jobs:
   build:
     name: ${{ matrix.runner }} Ruby ${{ matrix.ruby }}
@@ -10,23 +14,30 @@ jobs:
       fail-fast: false
       matrix:
         runner:
-          - ubuntu-latest
+          - ubuntu-24.04
           - ubuntu-24.04-arm
           - macos-15-intel
-          - macos-latest
-          - windows-latest
-        ruby: ["2.7", "3.2", "3.3", "3.4", "4.0"]
+          - macos-15
+          - windows-2025
+        ruby: ["3.4", "4.0"]
+        include:
+          - runner: ubuntu-24.04
+            ruby: "3.2"
+          - runner: ubuntu-24.04
+            ruby: "3.3"
+          # Keep the older Windows ABI used by the x64-mingw32 gem.
+          - runner: windows-2022
+            ruby: "2.7"
     runs-on: ${{ matrix.runner }}
     steps:
       - uses: actions/checkout@v7
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
-      - name: Install dependencies
-        run: bundle install
+          bundler-cache: true
       - name: Download libui shared libraries
         run: bundle exec rake vendor:auto
-      - name: Rake test (XVFB)
+      - name: Rake test
         uses: coactions/setup-xvfb@v1
         with:
           run: bundle exec rake test
@@ -37,9 +48,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - runner: ubuntu-latest
+          - runner: ubuntu-24.04
             jruby_opts: ""
-          - runner: macos-latest
+          - runner: macos-15
             jruby_opts: "-J-XstartOnFirstThread"
     runs-on: ${{ matrix.runner }}
     env:
@@ -49,11 +60,10 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: jruby
-      - name: Install dependencies
-        run: bundle install
+          bundler-cache: true
       - name: Download libui shared libraries
         run: bundle exec rake vendor:auto
-      - name: Rake test (XVFB)
+      - name: Rake test
         uses: coactions/setup-xvfb@v1
         with:
           run: bundle exec rake test
