@@ -2914,6 +2914,28 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#window_set_toolbar-class_method" title="window_set_toolbar (class method)">.<strong>window_set_toolbar</strong>(window, toolbar)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#window_title-class_method" title="window_title (class method)">.<strong>window_title</strong>(window)  &#x21d2; Object </a>
     
 
@@ -3011,12 +3033,12 @@
       <pre class="lines">
 
 
-467
-468
-469</pre>
+481
+482
+483</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 467</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 481</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_attribute_color'>attribute_color</span><span class='lparen'>(</span><span class='id identifier rubyid_attribute'>attribute</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_read_outputs'>read_outputs</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>d</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='int'>4</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='comma'>,</span> <span class='id identifier rubyid_g'>g</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_a'>a</span><span class='op'>|</span> <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_attribute'>attribute</span><span class='comma'>,</span> <span class='id identifier rubyid_r'>r</span><span class='comma'>,</span> <span class='id identifier rubyid_g'>g</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_a'>a</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -3041,12 +3063,12 @@
       <pre class="lines">
 
 
-399
-400
-401</pre>
+413
+414
+415</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 399</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 413</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_attribute_family'>attribute_family</span><span class='lparen'>(</span><span class='id identifier rubyid_attribute'>attribute</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_read_borrowed_text'>read_borrowed_text</span><span class='lparen'>(</span><span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_attribute'>attribute</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -3071,15 +3093,15 @@
       <pre class="lines">
 
 
-652
-653
-654
-655
-656
-657</pre>
+672
+673
+674
+675
+676
+677</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 652</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 672</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_attribute_features'>attribute_features</span><span class='lparen'>(</span><span class='id identifier rubyid_attribute'>attribute</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_borrowed'>borrowed</span> <span class='op'>=</span> <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_attribute'>attribute</span><span class='rparen'>)</span>
@@ -3107,18 +3129,18 @@
       <pre class="lines">
 
 
-471
-472
-473
-474
-475
-476
-477
-478
-479</pre>
+485
+486
+487
+488
+489
+490
+491
+492
+493</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 471</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 485</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_attribute_underline_color'>attribute_underline_color</span><span class='lparen'>(</span><span class='id identifier rubyid_attribute'>attribute</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_color'>color</span> <span class='op'>=</span> <span class='kw'>nil</span>
@@ -3149,12 +3171,12 @@
       <pre class="lines">
 
 
-308
-309
-310</pre>
+322
+323
+324</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 308</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 322</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_attributed_string_append_unattributed'>attributed_string_append_unattributed</span><span class='lparen'>(</span><span class='id identifier rubyid_attributed_string'>attributed_string</span><span class='comma'>,</span> <span class='id identifier rubyid_str'>str</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_attributed_string'>attributed_string</span><span class='comma'>,</span> <span class='id identifier rubyid_str'>str</span><span class='rparen'>)</span>
@@ -3189,29 +3211,29 @@ as soon as the callback returns.</p>
       <pre class="lines">
 
 
-661
-662
-663
-664
-665
-666
-667
-668
-669
-670
-671
-672
-673
-674
-675
-676
-677
-678
-679
-680</pre>
+681
+682
+683
+684
+685
+686
+687
+688
+689
+690
+691
+692
+693
+694
+695
+696
+697
+698
+699
+700</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 661</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 681</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_attributed_string_for_each_attribute'>attributed_string_for_each_attribute</span><span class='lparen'>(</span><span class='id identifier rubyid_string'>string</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_enum_for'>enum_for</span><span class='lparen'>(</span><span class='id identifier rubyid___method__'>__method__</span><span class='comma'>,</span> <span class='id identifier rubyid_string'>string</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
@@ -3253,12 +3275,12 @@ as soon as the callback returns.</p>
       <pre class="lines">
 
 
-403
-404
-405</pre>
+417
+418
+419</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 403</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 417</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_attributed_string_string'>attributed_string_string</span><span class='lparen'>(</span><span class='id identifier rubyid_attributed_string'>attributed_string</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_read_borrowed_text'>read_borrowed_text</span><span class='lparen'>(</span><span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_attributed_string'>attributed_string</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -3283,12 +3305,12 @@ as soon as the callback returns.</p>
       <pre class="lines">
 
 
-228
-229
-230</pre>
+242
+243
+244</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 228</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 242</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_button_set_text'>button_set_text</span><span class='lparen'>(</span><span class='id identifier rubyid_button'>button</span><span class='comma'>,</span> <span class='id identifier rubyid_text'>text</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_button'>button</span><span class='comma'>,</span> <span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span>
@@ -3313,12 +3335,12 @@ as soon as the callback returns.</p>
       <pre class="lines">
 
 
-359
-360
-361</pre>
+373
+374
+375</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 359</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 373</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_button_text'>button_text</span><span class='lparen'>(</span><span class='id identifier rubyid_button'>button</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_read_owned_text'>read_owned_text</span><span class='lparen'>(</span><span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_button'>button</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -3343,12 +3365,12 @@ as soon as the callback returns.</p>
       <pre class="lines">
 
 
-232
-233
-234</pre>
+246
+247
+248</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 232</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 246</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_checkbox_set_text'>checkbox_set_text</span><span class='lparen'>(</span><span class='id identifier rubyid_checkbox'>checkbox</span><span class='comma'>,</span> <span class='id identifier rubyid_text'>text</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_checkbox'>checkbox</span><span class='comma'>,</span> <span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span>
@@ -3373,12 +3395,12 @@ as soon as the callback returns.</p>
       <pre class="lines">
 
 
-363
-364
-365</pre>
+377
+378
+379</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 363</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 377</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_checkbox_text'>checkbox_text</span><span class='lparen'>(</span><span class='id identifier rubyid_checkbox'>checkbox</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_read_owned_text'>read_owned_text</span><span class='lparen'>(</span><span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_checkbox'>checkbox</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -3403,12 +3425,12 @@ as soon as the callback returns.</p>
       <pre class="lines">
 
 
-459
-460
-461</pre>
+473
+474
+475</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 459</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 473</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_color_button_color'>color_button_color</span><span class='lparen'>(</span><span class='id identifier rubyid_button'>button</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_read_outputs'>read_outputs</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>d</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='int'>4</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='comma'>,</span> <span class='id identifier rubyid_g'>g</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_a'>a</span><span class='op'>|</span> <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_button'>button</span><span class='comma'>,</span> <span class='id identifier rubyid_r'>r</span><span class='comma'>,</span> <span class='id identifier rubyid_g'>g</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_a'>a</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -3433,12 +3455,12 @@ as soon as the callback returns.</p>
       <pre class="lines">
 
 
-256
-257
-258</pre>
+270
+271
+272</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 256</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 270</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_combobox_append'>combobox_append</span><span class='lparen'>(</span><span class='id identifier rubyid_combobox'>combobox</span><span class='comma'>,</span> <span class='id identifier rubyid_text'>text</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_combobox'>combobox</span><span class='comma'>,</span> <span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span>
@@ -3463,12 +3485,12 @@ as soon as the callback returns.</p>
       <pre class="lines">
 
 
-260
-261
-262</pre>
+274
+275
+276</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 260</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 274</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_combobox_insert_at'>combobox_insert_at</span><span class='lparen'>(</span><span class='id identifier rubyid_combobox'>combobox</span><span class='comma'>,</span> <span class='id identifier rubyid_index'>index</span><span class='comma'>,</span> <span class='id identifier rubyid_text'>text</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_combobox'>combobox</span><span class='comma'>,</span> <span class='id identifier rubyid_index'>index</span><span class='comma'>,</span> <span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span>
@@ -3533,29 +3555,29 @@ as soon as the callback returns.</p>
       <pre class="lines">
 
 
-426
-427
-428
-429
-430
-431
-432
-433
-434
-435
-436
-437
-438
-439
 440
 441
 442
 443
 444
-445</pre>
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 426</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 440</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_date_time_picker_set_time'>date_time_picker_set_time</span><span class='lparen'>(</span><span class='id identifier rubyid_picker'>picker</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_local_time'>local_time</span> <span class='op'>=</span> <span class='kw'>case</span> <span class='id identifier rubyid_value'>value</span>
@@ -3597,23 +3619,23 @@ as soon as the callback returns.</p>
       <pre class="lines">
 
 
-411
-412
-413
-414
-415
-416
-417
-418
-419
-420
-421
-422
-423
-424</pre>
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 411</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 425</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_date_time_picker_time'>date_time_picker_time</span><span class='lparen'>(</span><span class='id identifier rubyid_picker'>picker</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_tm'>tm</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="LibUI/FFI.html" title="LibUI::FFI (module)">FFI</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="LibUI/FFI.html#TM-constant" title="LibUI::FFI::TM (constant)">TM</a></span></span><span class='period'>.</span><span class='id identifier rubyid_malloc'>malloc</span>
@@ -3649,12 +3671,12 @@ as soon as the callback returns.</p>
       <pre class="lines">
 
 
-180
-181
-182</pre>
+194
+195
+196</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 180</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 194</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_draw_fill'>draw_fill</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_brush'>brush</span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_brush'>brush</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="LibUI/Brush.html" title="LibUI::Brush (class)">Brush</a></span></span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_brush'>brush</span><span class='period'>.</span><span class='id identifier rubyid_to_ptr'>to_ptr</span> <span class='op'>:</span> <span class='id identifier rubyid_brush'>brush</span><span class='rparen'>)</span>
@@ -3679,19 +3701,19 @@ as soon as the callback returns.</p>
       <pre class="lines">
 
 
-485
-486
-487
-488
-489
-490
-491
-492
-493
-494</pre>
+499
+500
+501
+502
+503
+504
+505
+506
+507
+508</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 485</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 499</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_draw_matrix_transform_point'>draw_matrix_transform_point</span><span class='lparen'>(</span><span class='id identifier rubyid_matrix'>matrix</span><span class='comma'>,</span> <span class='id identifier rubyid_x'>x</span><span class='comma'>,</span> <span class='id identifier rubyid_y'>y</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_matrix'>matrix</span> <span class='op'>=</span> <span class='id identifier rubyid_matrix'>matrix</span><span class='period'>.</span><span class='id identifier rubyid_to_ptr'>to_ptr</span> <span class='kw'>if</span> <span class='id identifier rubyid_matrix'>matrix</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="LibUI/Matrix.html" title="LibUI::Matrix (class)">Matrix</a></span></span><span class='rparen'>)</span>
@@ -3723,19 +3745,19 @@ as soon as the callback returns.</p>
       <pre class="lines">
 
 
-496
-497
-498
-499
-500
-501
-502
-503
-504
-505</pre>
+510
+511
+512
+513
+514
+515
+516
+517
+518
+519</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 496</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 510</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_draw_matrix_transform_size'>draw_matrix_transform_size</span><span class='lparen'>(</span><span class='id identifier rubyid_matrix'>matrix</span><span class='comma'>,</span> <span class='id identifier rubyid_x'>x</span><span class='comma'>,</span> <span class='id identifier rubyid_y'>y</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_matrix'>matrix</span> <span class='op'>=</span> <span class='id identifier rubyid_matrix'>matrix</span><span class='period'>.</span><span class='id identifier rubyid_to_ptr'>to_ptr</span> <span class='kw'>if</span> <span class='id identifier rubyid_matrix'>matrix</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="LibUI/Matrix.html" title="LibUI::Matrix (class)">Matrix</a></span></span><span class='rparen'>)</span>
@@ -3789,20 +3811,6 @@ as soon as the callback returns.</p>
       <pre class="lines">
 
 
-328
-329
-330
-331
-332
-333
-334
-335
-336
-337
-338
-339
-340
-341
 342
 343
 344
@@ -3814,10 +3822,24 @@ as soon as the callback returns.</p>
 350
 351
 352
-353</pre>
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 328</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 342</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_draw_new_text_layout'>draw_new_text_layout</span><span class='lparen'>(</span><span class='id identifier rubyid_string_or_params'>string_or_params</span><span class='comma'>,</span> <span class='label'>font:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>width:</span> <span class='op'>-</span><span class='int'>1</span><span class='comma'>,</span> <span class='label'>align:</span> <span class='const'><span class='object_link'><a href="#DrawTextAlignLeft-constant" title="LibUI::DrawTextAlignLeft (constant)">DrawTextAlignLeft</a></span></span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_string_or_params'>string_or_params</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_font'>font</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -3865,14 +3887,14 @@ as soon as the callback returns.</p>
       <pre class="lines">
 
 
-184
-185
-186
-187
-188</pre>
+198
+199
+200
+201
+202</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 184</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 198</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_draw_stroke'>draw_stroke</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_brush'>brush</span><span class='comma'>,</span> <span class='id identifier rubyid_stroke_params'>stroke_params</span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span>
@@ -3899,12 +3921,12 @@ as soon as the callback returns.</p>
       <pre class="lines">
 
 
-481
-482
-483</pre>
+495
+496
+497</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 481</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 495</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_draw_text_layout_extents'>draw_text_layout_extents</span><span class='lparen'>(</span><span class='id identifier rubyid_layout'>layout</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_read_outputs'>read_outputs</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>d</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='int'>2</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_width'>width</span><span class='comma'>,</span> <span class='id identifier rubyid_height'>height</span><span class='op'>|</span> <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_layout'>layout</span><span class='comma'>,</span> <span class='id identifier rubyid_width'>width</span><span class='comma'>,</span> <span class='id identifier rubyid_height'>height</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -3929,12 +3951,12 @@ as soon as the callback returns.</p>
       <pre class="lines">
 
 
-190
-191
-192</pre>
+204
+205
+206</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 190</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 204</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_draw_transform'>draw_transform</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='comma'>,</span> <span class='id identifier rubyid_matrix'>matrix</span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='comma'>,</span> <span class='id identifier rubyid_matrix'>matrix</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="LibUI/Matrix.html" title="LibUI::Matrix (class)">Matrix</a></span></span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_matrix'>matrix</span><span class='period'>.</span><span class='id identifier rubyid_to_ptr'>to_ptr</span> <span class='op'>:</span> <span class='id identifier rubyid_matrix'>matrix</span><span class='rparen'>)</span>
@@ -3959,12 +3981,12 @@ as soon as the callback returns.</p>
       <pre class="lines">
 
 
-264
-265
-266</pre>
+278
+279
+280</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 264</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 278</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_editable_combobox_append'>editable_combobox_append</span><span class='lparen'>(</span><span class='id identifier rubyid_combobox'>combobox</span><span class='comma'>,</span> <span class='id identifier rubyid_text'>text</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_combobox'>combobox</span><span class='comma'>,</span> <span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span>
@@ -3989,12 +4011,12 @@ as soon as the callback returns.</p>
       <pre class="lines">
 
 
-268
-269
-270</pre>
+282
+283
+284</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 268</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 282</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_editable_combobox_set_text'>editable_combobox_set_text</span><span class='lparen'>(</span><span class='id identifier rubyid_combobox'>combobox</span><span class='comma'>,</span> <span class='id identifier rubyid_text'>text</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_combobox'>combobox</span><span class='comma'>,</span> <span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span>
@@ -4019,12 +4041,12 @@ as soon as the callback returns.</p>
       <pre class="lines">
 
 
-379
-380
-381</pre>
+393
+394
+395</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 379</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 393</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_editable_combobox_text'>editable_combobox_text</span><span class='lparen'>(</span><span class='id identifier rubyid_combobox'>combobox</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_read_owned_text'>read_owned_text</span><span class='lparen'>(</span><span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_combobox'>combobox</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -4049,12 +4071,12 @@ as soon as the callback returns.</p>
       <pre class="lines">
 
 
-236
-237
-238</pre>
+250
+251
+252</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 236</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 250</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_entry_set_text'>entry_set_text</span><span class='lparen'>(</span><span class='id identifier rubyid_entry'>entry</span><span class='comma'>,</span> <span class='id identifier rubyid_text'>text</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_entry'>entry</span><span class='comma'>,</span> <span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span>
@@ -4079,12 +4101,12 @@ as soon as the callback returns.</p>
       <pre class="lines">
 
 
-367
-368
-369</pre>
+381
+382
+383</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 367</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 381</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_entry_text'>entry_text</span><span class='lparen'>(</span><span class='id identifier rubyid_entry'>entry</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_read_owned_text'>read_owned_text</span><span class='lparen'>(</span><span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_entry'>entry</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -4109,14 +4131,14 @@ as soon as the callback returns.</p>
       <pre class="lines">
 
 
-322
-323
-324
-325
-326</pre>
+336
+337
+338
+339
+340</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 322</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 336</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_font_button_font'>font_button_font</span><span class='lparen'>(</span><span class='id identifier rubyid_button'>button</span><span class='comma'>,</span> <span class='id identifier rubyid_descriptor'>descriptor</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_button'>button</span><span class='comma'>,</span> <span class='id identifier rubyid_descriptor'>descriptor</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_descriptor'>descriptor</span>
@@ -4143,16 +4165,16 @@ as soon as the callback returns.</p>
       <pre class="lines">
 
 
-135
-136
-137
-138
-139
-140
-141</pre>
+149
+150
+151
+152
+153
+154
+155</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 135</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 149</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_free_table_model'>free_table_model</span><span class='lparen'>(</span><span class='id identifier rubyid_model'>model</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_model'>model</span><span class='period'>.</span><span class='id identifier rubyid_free'>free</span> <span class='kw'>if</span> <span class='id identifier rubyid_model'>model</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="LibUI/TableModel.html" title="LibUI::TableModel (class)">TableModel</a></span></span><span class='rparen'>)</span>
@@ -4175,22 +4197,48 @@ as soon as the callback returns.</p>
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>RuntimeError</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-105
-106
-107
-108
-109</pre>
+109
+110
+111
+112
+113
+114
+115</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 105</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 109</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_free_toolbar'>free_toolbar</span><span class='lparen'>(</span><span class='id identifier rubyid_toolbar'>toolbar</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>RuntimeError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>detach toolbar from its window before freeing it</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>if</span> <span class='const'>CallbackRegistry</span><span class='period'>.</span><span class='id identifier rubyid_toolbar_attached?'>toolbar_attached?</span><span class='lparen'>(</span><span class='id identifier rubyid_toolbar'>toolbar</span><span class='rparen'>)</span>
+
   <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_toolbar'>toolbar</span><span class='rparen'>)</span>
   <span class='const'>CallbackRegistry</span><span class='period'>.</span><span class='id identifier rubyid_release_other'>release_other</span><span class='lparen'>(</span><span class='id identifier rubyid_toolbar'>toolbar</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_result'>result</span>
@@ -4215,12 +4263,12 @@ as soon as the callback returns.</p>
       <pre class="lines">
 
 
-248
-249
-250</pre>
+262
+263
+264</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 248</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 262</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_group_set_title'>group_set_title</span><span class='lparen'>(</span><span class='id identifier rubyid_group'>group</span><span class='comma'>,</span> <span class='id identifier rubyid_title'>title</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_group'>group</span><span class='comma'>,</span> <span class='id identifier rubyid_title'>title</span><span class='rparen'>)</span>
@@ -4245,12 +4293,12 @@ as soon as the callback returns.</p>
       <pre class="lines">
 
 
-375
-376
-377</pre>
+389
+390
+391</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 375</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 389</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_group_title'>group_title</span><span class='lparen'>(</span><span class='id identifier rubyid_group'>group</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_read_owned_text'>read_owned_text</span><span class='lparen'>(</span><span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_group'>group</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -4298,31 +4346,35 @@ premultiplied RGBA, with rows separated by byte_stride bytes.</p>
       <pre class="lines">
 
 
-595
-596
-597
-598
-599
-600
-601
-602
-603
-604
-605
-606
-607
-608
 609
-610</pre>
+610
+611
+612
+613
+614
+615
+616
+617
+618
+619
+620
+621
+622
+623
+624
+625
+626</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 595</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 609</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_image_append'>image_append</span><span class='lparen'>(</span><span class='id identifier rubyid_image'>image</span><span class='comma'>,</span> <span class='id identifier rubyid_pixels'>pixels</span><span class='comma'>,</span> <span class='id identifier rubyid_width'>width</span><span class='comma'>,</span> <span class='id identifier rubyid_height'>height</span><span class='comma'>,</span> <span class='id identifier rubyid_byte_stride'>byte_stride</span><span class='rparen'>)</span>
   <span class='lbracket'>[</span><span class='id identifier rubyid_width'>width</span><span class='comma'>,</span> <span class='id identifier rubyid_height'>height</span><span class='comma'>,</span> <span class='id identifier rubyid_byte_stride'>byte_stride</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_number'>number</span><span class='op'>|</span>
     <span class='id identifier rubyid_raise'>raise</span> <span class='const'>TypeError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>image dimensions and stride must be Integers</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_number'>number</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Integer</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>image dimensions must be positive</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_width'>width</span> <span class='op'>&lt;=</span> <span class='int'>0</span> <span class='op'>||</span> <span class='id identifier rubyid_height'>height</span> <span class='op'>&lt;=</span> <span class='int'>0</span>
+  <span class='id identifier rubyid_max_int'>max_int</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='int'>1</span> <span class='op'>&lt;&lt;</span> <span class='lparen'>(</span><span class='const'>Fiddle</span><span class='op'>::</span><span class='const'>SIZEOF_INT</span> <span class='op'>*</span> <span class='int'>8</span> <span class='op'>-</span> <span class='int'>1</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='op'>-</span> <span class='int'>1</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>RangeError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>image dimensions or stride exceed C int</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>if</span> <span class='lbracket'>[</span><span class='id identifier rubyid_width'>width</span><span class='comma'>,</span> <span class='id identifier rubyid_height'>height</span><span class='comma'>,</span> <span class='id identifier rubyid_byte_stride'>byte_stride</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_number'>number</span><span class='op'>|</span> <span class='id identifier rubyid_number'>number</span> <span class='op'>&gt;</span> <span class='id identifier rubyid_max_int'>max_int</span> <span class='rbrace'>}</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>byte stride is too small</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_byte_stride'>byte_stride</span> <span class='op'>&lt;</span> <span class='id identifier rubyid_width'>width</span> <span class='op'>*</span> <span class='int'>4</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>TypeError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>pixels must be a String or Fiddle::Pointer</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_pixels'>pixels</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_pixels'>pixels</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Fiddle</span><span class='op'>::</span><span class='const'>Pointer</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_pixels'>pixels</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_pixels'>pixels</span><span class='period'>.</span><span class='id identifier rubyid_bytesize'>bytesize</span> <span class='op'>&lt;</span> <span class='id identifier rubyid_byte_stride'>byte_stride</span> <span class='op'>*</span> <span class='id identifier rubyid_height'>height</span>
@@ -4376,29 +4428,37 @@ premultiplied RGBA, with rows separated by byte_stride bytes.</p>
       <pre class="lines">
 
 
-613
-614
-615
-616
-617
-618
-619
-620
-621
-622
-623
-624
-625
-626
-627
-628
-629</pre>
+629
+630
+631
+632
+633
+634
+635
+636
+637
+638
+639
+640
+641
+642
+643
+644
+645
+646
+647
+648
+649</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 613</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 629</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_image_append_rgba'>image_append_rgba</span><span class='lparen'>(</span><span class='id identifier rubyid_image'>image</span><span class='comma'>,</span> <span class='id identifier rubyid_pixels'>pixels</span><span class='comma'>,</span> <span class='id identifier rubyid_width'>width</span><span class='comma'>,</span> <span class='id identifier rubyid_height'>height</span><span class='comma'>,</span> <span class='id identifier rubyid_byte_stride'>byte_stride</span> <span class='op'>=</span> <span class='id identifier rubyid_width'>width</span> <span class='op'>*</span> <span class='int'>4</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>TypeError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>pixels must be a String</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_pixels'>pixels</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span>
+  <span class='lbracket'>[</span><span class='id identifier rubyid_width'>width</span><span class='comma'>,</span> <span class='id identifier rubyid_height'>height</span><span class='comma'>,</span> <span class='id identifier rubyid_byte_stride'>byte_stride</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_number'>number</span><span class='op'>|</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'>TypeError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>image dimensions and stride must be Integers</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_number'>number</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Integer</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>image dimensions must be positive</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_width'>width</span> <span class='op'>&lt;=</span> <span class='int'>0</span> <span class='op'>||</span> <span class='id identifier rubyid_height'>height</span> <span class='op'>&lt;=</span> <span class='int'>0</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>byte stride is too small</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_byte_stride'>byte_stride</span> <span class='op'>&lt;</span> <span class='id identifier rubyid_width'>width</span> <span class='op'>*</span> <span class='int'>4</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>pixel buffer is shorter than stride * height</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_pixels'>pixels</span><span class='period'>.</span><span class='id identifier rubyid_bytesize'>bytesize</span> <span class='op'>&lt;</span> <span class='id identifier rubyid_byte_stride'>byte_stride</span> <span class='op'>*</span> <span class='id identifier rubyid_height'>height</span>
 
@@ -4434,26 +4494,26 @@ premultiplied RGBA, with rows separated by byte_stride bytes.</p>
       <pre class="lines">
 
 
-198
-199
-200
-201
-202
-203
-204
-205
-206
-207
-208
-209
-210
-211
 212
 213
-214</pre>
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 198</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 212</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_init'>init</span><span class='lparen'>(</span><span class='id identifier rubyid_opt'>opt</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='comment'># Allocate uiInitOptions if not provided
@@ -4492,12 +4552,12 @@ premultiplied RGBA, with rows separated by byte_stride bytes.</p>
       <pre class="lines">
 
 
-240
-241
-242</pre>
+254
+255
+256</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 240</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 254</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_label_set_text'>label_set_text</span><span class='lparen'>(</span><span class='id identifier rubyid_label'>label</span><span class='comma'>,</span> <span class='id identifier rubyid_text'>text</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_label'>label</span><span class='comma'>,</span> <span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span>
@@ -4522,12 +4582,12 @@ premultiplied RGBA, with rows separated by byte_stride bytes.</p>
       <pre class="lines">
 
 
-371
-372
-373</pre>
+385
+386
+387</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 371</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 385</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_label_text'>label_text</span><span class='lparen'>(</span><span class='id identifier rubyid_label'>label</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_read_owned_text'>read_owned_text</span><span class='lparen'>(</span><span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_label'>label</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -4552,14 +4612,14 @@ premultiplied RGBA, with rows separated by byte_stride bytes.</p>
       <pre class="lines">
 
 
-316
-317
-318
-319
-320</pre>
+330
+331
+332
+333
+334</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 316</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 330</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_load_control_font'>load_control_font</span><span class='lparen'>(</span><span class='id identifier rubyid_descriptor'>descriptor</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_descriptor'>descriptor</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_descriptor'>descriptor</span>
@@ -4586,12 +4646,12 @@ premultiplied RGBA, with rows separated by byte_stride bytes.</p>
       <pre class="lines">
 
 
-288
-289
-290</pre>
+302
+303
+304</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 288</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 302</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_menu_append_check_item'>menu_append_check_item</span><span class='lparen'>(</span><span class='id identifier rubyid_menu'>menu</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_menu'>menu</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
@@ -4616,12 +4676,12 @@ premultiplied RGBA, with rows separated by byte_stride bytes.</p>
       <pre class="lines">
 
 
-284
-285
-286</pre>
+298
+299
+300</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 284</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 298</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_menu_append_item'>menu_append_item</span><span class='lparen'>(</span><span class='id identifier rubyid_menu'>menu</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_menu'>menu</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
@@ -4646,12 +4706,12 @@ premultiplied RGBA, with rows separated by byte_stride bytes.</p>
       <pre class="lines">
 
 
-296
-297
-298</pre>
+310
+311
+312</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 296</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 310</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_msg_box'>msg_box</span><span class='lparen'>(</span><span class='id identifier rubyid_parent'>parent</span><span class='comma'>,</span> <span class='id identifier rubyid_title'>title</span><span class='comma'>,</span> <span class='id identifier rubyid_description'>description</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_parent'>parent</span><span class='comma'>,</span> <span class='id identifier rubyid_title'>title</span><span class='comma'>,</span> <span class='id identifier rubyid_description'>description</span><span class='rparen'>)</span>
@@ -4676,12 +4736,12 @@ premultiplied RGBA, with rows separated by byte_stride bytes.</p>
       <pre class="lines">
 
 
-300
-301
-302</pre>
+314
+315
+316</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 300</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 314</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_msg_box_error'>msg_box_error</span><span class='lparen'>(</span><span class='id identifier rubyid_parent'>parent</span><span class='comma'>,</span> <span class='id identifier rubyid_title'>title</span><span class='comma'>,</span> <span class='id identifier rubyid_description'>description</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_parent'>parent</span><span class='comma'>,</span> <span class='id identifier rubyid_title'>title</span><span class='comma'>,</span> <span class='id identifier rubyid_description'>description</span><span class='rparen'>)</span>
@@ -4706,12 +4766,12 @@ premultiplied RGBA, with rows separated by byte_stride bytes.</p>
       <pre class="lines">
 
 
-280
-281
-282</pre>
+294
+295
+296</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 280</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 294</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_multiline_entry_append'>multiline_entry_append</span><span class='lparen'>(</span><span class='id identifier rubyid_entry'>entry</span><span class='comma'>,</span> <span class='id identifier rubyid_text'>text</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_entry'>entry</span><span class='comma'>,</span> <span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span>
@@ -4736,12 +4796,12 @@ premultiplied RGBA, with rows separated by byte_stride bytes.</p>
       <pre class="lines">
 
 
-276
-277
-278</pre>
+290
+291
+292</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 276</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 290</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_multiline_entry_set_text'>multiline_entry_set_text</span><span class='lparen'>(</span><span class='id identifier rubyid_entry'>entry</span><span class='comma'>,</span> <span class='id identifier rubyid_text'>text</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_entry'>entry</span><span class='comma'>,</span> <span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span>
@@ -4766,12 +4826,12 @@ premultiplied RGBA, with rows separated by byte_stride bytes.</p>
       <pre class="lines">
 
 
-383
-384
-385</pre>
+397
+398
+399</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 383</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 397</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_multiline_entry_text'>multiline_entry_text</span><span class='lparen'>(</span><span class='id identifier rubyid_entry'>entry</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_read_owned_text'>read_owned_text</span><span class='lparen'>(</span><span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_entry'>entry</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -4796,16 +4856,16 @@ premultiplied RGBA, with rows separated by byte_stride bytes.</p>
       <pre class="lines">
 
 
-111
-112
-113
-114
-115
-116
-117</pre>
+123
+124
+125
+126
+127
+128
+129</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 111</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 123</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_new_area'>new_area</span><span class='lparen'>(</span><span class='id identifier rubyid_handler'>handler</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_handler'>handler</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_handler'>handler</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="LibUI/AreaHandler.html" title="LibUI::AreaHandler (class)">AreaHandler</a></span></span><span class='rparen'>)</span>
@@ -4834,12 +4894,12 @@ premultiplied RGBA, with rows separated by byte_stride bytes.</p>
       <pre class="lines">
 
 
-304
-305
-306</pre>
+318
+319
+320</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 304</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 318</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_new_attributed_string'>new_attributed_string</span><span class='lparen'>(</span><span class='id identifier rubyid_initial_string'>initial_string</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_initial_string'>initial_string</span><span class='rparen'>)</span>
@@ -4864,12 +4924,12 @@ premultiplied RGBA, with rows separated by byte_stride bytes.</p>
       <pre class="lines">
 
 
-216
-217
-218</pre>
+230
+231
+232</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 216</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 230</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_new_button'>new_button</span><span class='lparen'>(</span><span class='id identifier rubyid_text'>text</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span>
@@ -4894,12 +4954,12 @@ premultiplied RGBA, with rows separated by byte_stride bytes.</p>
       <pre class="lines">
 
 
-220
-221
-222</pre>
+234
+235
+236</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 220</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 234</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_new_checkbox'>new_checkbox</span><span class='lparen'>(</span><span class='id identifier rubyid_text'>text</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span>
@@ -4924,12 +4984,12 @@ premultiplied RGBA, with rows separated by byte_stride bytes.</p>
       <pre class="lines">
 
 
-252
-253
-254</pre>
+266
+267
+268</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 252</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 266</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_new_group'>new_group</span><span class='lparen'>(</span><span class='id identifier rubyid_title'>title</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_title'>title</span><span class='rparen'>)</span>
@@ -4954,12 +5014,12 @@ premultiplied RGBA, with rows separated by byte_stride bytes.</p>
       <pre class="lines">
 
 
-244
-245
-246</pre>
+258
+259
+260</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 244</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 258</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_new_label'>new_label</span><span class='lparen'>(</span><span class='id identifier rubyid_text'>text</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span>
@@ -4984,12 +5044,12 @@ premultiplied RGBA, with rows separated by byte_stride bytes.</p>
       <pre class="lines">
 
 
-292
-293
-294</pre>
+306
+307
+308</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 292</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 306</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_new_menu'>new_menu</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
@@ -5014,16 +5074,16 @@ premultiplied RGBA, with rows separated by byte_stride bytes.</p>
       <pre class="lines">
 
 
-119
-120
-121
-122
-123
-124
-125</pre>
+131
+132
+133
+134
+135
+136
+137</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 119</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 131</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_new_scrolling_area'>new_scrolling_area</span><span class='lparen'>(</span><span class='id identifier rubyid_handler'>handler</span><span class='comma'>,</span> <span class='id identifier rubyid_width'>width</span><span class='comma'>,</span> <span class='id identifier rubyid_height'>height</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_handler'>handler</span><span class='comma'>,</span> <span class='id identifier rubyid_width'>width</span><span class='comma'>,</span> <span class='id identifier rubyid_height'>height</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_handler'>handler</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="LibUI/AreaHandler.html" title="LibUI::AreaHandler (class)">AreaHandler</a></span></span><span class='rparen'>)</span>
@@ -5074,24 +5134,24 @@ premultiplied RGBA, with rows separated by byte_stride bytes.</p>
       <pre class="lines">
 
 
-143
-144
-145
-146
-147
-148
-149
-150
-151
-152
-153
-154
-155
-156
-157</pre>
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 143</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 157</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_new_table'>new_table</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>model:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>row_background_color_model_column:</span> <span class='op'>-</span><span class='int'>1</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_model'>model</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -5103,9 +5163,9 @@ premultiplied RGBA, with rows separated by byte_stride bytes.</p>
   <span class='id identifier rubyid_native'>native</span><span class='period'>.</span><span class='const'>Model</span> <span class='op'>=</span> <span class='id identifier rubyid_model'>model</span><span class='period'>.</span><span class='id identifier rubyid_to_ptr'>to_ptr</span>
   <span class='id identifier rubyid_native'>native</span><span class='period'>.</span><span class='const'>RowBackgroundColorModelColumn</span> <span class='op'>=</span> <span class='id identifier rubyid_row_background_color_model_column'>row_background_color_model_column</span>
   <span class='id identifier rubyid_table'>table</span> <span class='op'>=</span> <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_native'>native</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_model'>model</span><span class='period'>.</span><span class='id identifier rubyid_attach_table'>attach_table</span>
   <span class='const'>CallbackRegistry</span><span class='period'>.</span><span class='id identifier rubyid_control'>control</span><span class='lparen'>(</span><span class='id identifier rubyid_table'>table</span><span class='comma'>,</span> <span class='symbol'>:table_model</span><span class='comma'>,</span> <span class='id identifier rubyid_model'>model</span><span class='rparen'>)</span>
   <span class='const'>CallbackRegistry</span><span class='period'>.</span><span class='id identifier rubyid_on_cleanup'>on_cleanup</span><span class='lparen'>(</span><span class='id identifier rubyid_table'>table</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_model'>model</span><span class='period'>.</span><span class='id identifier rubyid_detach_table'>detach_table</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_model'>model</span><span class='period'>.</span><span class='id identifier rubyid_attach_table'>attach_table</span>
   <span class='id identifier rubyid_table'>table</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -5122,27 +5182,53 @@ premultiplied RGBA, with rows separated by byte_stride bytes.</p>
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>RuntimeError</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-127
-128
-129
-130
-131
-132
-133</pre>
+139
+140
+141
+142
+143
+144
+145
+146
+147</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 127</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 139</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_new_table_model'>new_table_model</span><span class='lparen'>(</span><span class='id identifier rubyid_handler'>handler</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_handler'>handler</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_handler'>handler</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="LibUI/TableModelHandler.html" title="LibUI::TableModelHandler (class)">TableModelHandler</a></span></span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_model'>model</span> <span class='op'>=</span> <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_handler'>handler</span><span class='period'>.</span><span class='id identifier rubyid_to_ptr'>to_ptr</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>RuntimeError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>libui-ng could not create table model</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_model'>model</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>||</span> <span class='id identifier rubyid_model'>model</span><span class='period'>.</span><span class='id identifier rubyid_null?'>null?</span>
+
   <span class='const'>CallbackRegistry</span><span class='period'>.</span><span class='id identifier rubyid_other'>other</span><span class='lparen'>(</span><span class='id identifier rubyid_model'>model</span><span class='comma'>,</span> <span class='symbol'>:table_model_handler</span><span class='comma'>,</span> <span class='id identifier rubyid_handler'>handler</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_model'>model</span>
 <span class='kw'>end</span></pre>
@@ -5166,12 +5252,12 @@ premultiplied RGBA, with rows separated by byte_stride bytes.</p>
       <pre class="lines">
 
 
-312
-313
-314</pre>
+326
+327
+328</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 312</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 326</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_new_table_value_string'>new_table_value_string</span><span class='lparen'>(</span><span class='id identifier rubyid_str'>str</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_str'>str</span><span class='rparen'>)</span>
@@ -5196,12 +5282,12 @@ premultiplied RGBA, with rows separated by byte_stride bytes.</p>
       <pre class="lines">
 
 
-387
-388
-389</pre>
+401
+402
+403</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 387</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 401</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_open_file'>open_file</span><span class='lparen'>(</span><span class='id identifier rubyid_window'>window</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_read_owned_text'>read_owned_text</span><span class='lparen'>(</span><span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_window'>window</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -5226,12 +5312,12 @@ premultiplied RGBA, with rows separated by byte_stride bytes.</p>
       <pre class="lines">
 
 
-391
-392
-393</pre>
+405
+406
+407</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 391</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 405</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_open_folder'>open_folder</span><span class='lparen'>(</span><span class='id identifier rubyid_window'>window</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_read_owned_text'>read_owned_text</span><span class='lparen'>(</span><span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_window'>window</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -5267,13 +5353,13 @@ See <a href="https://github.com/ruby/fiddle/issues/96">https://github.com/ruby/f
       <pre class="lines">
 
 
-575
-576
-577
-578</pre>
+589
+590
+591
+592</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 575</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 589</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_open_type_features_add'>open_type_features_add</span><span class='lparen'>(</span><span class='id identifier rubyid_otf'>otf</span><span class='comma'>,</span> <span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_ord'>ord</span> <span class='op'>:</span> <span class='id identifier rubyid_s'>s</span> <span class='rbrace'>}</span>
@@ -5299,29 +5385,29 @@ See <a href="https://github.com/ruby/fiddle/issues/96">https://github.com/ruby/f
       <pre class="lines">
 
 
-631
-632
-633
-634
-635
-636
-637
-638
-639
-640
-641
-642
-643
-644
-645
-646
-647
-648
-649
-650</pre>
+651
+652
+653
+654
+655
+656
+657
+658
+659
+660
+661
+662
+663
+664
+665
+666
+667
+668
+669
+670</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 631</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 651</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_open_type_features_for_each'>open_type_features_for_each</span><span class='lparen'>(</span><span class='id identifier rubyid_features'>features</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_enum_for'>enum_for</span><span class='lparen'>(</span><span class='id identifier rubyid___method__'>__method__</span><span class='comma'>,</span> <span class='id identifier rubyid_features'>features</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
@@ -5363,16 +5449,16 @@ See <a href="https://github.com/ruby/fiddle/issues/96">https://github.com/ruby/f
       <pre class="lines">
 
 
-585
-586
-587
-588
-589
-590
-591</pre>
+599
+600
+601
+602
+603
+604
+605</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 585</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 599</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_open_type_features_get'>open_type_features_get</span><span class='lparen'>(</span><span class='id identifier rubyid_otf'>otf</span><span class='comma'>,</span> <span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_ord'>ord</span> <span class='op'>:</span> <span class='id identifier rubyid_s'>s</span> <span class='rbrace'>}</span>
@@ -5401,13 +5487,13 @@ See <a href="https://github.com/ruby/fiddle/issues/96">https://github.com/ruby/f
       <pre class="lines">
 
 
-580
-581
-582
-583</pre>
+594
+595
+596
+597</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 580</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 594</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_open_type_features_remove'>open_type_features_remove</span><span class='lparen'>(</span><span class='id identifier rubyid_otf'>otf</span><span class='comma'>,</span> <span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_a'>a</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_c'>c</span><span class='comma'>,</span> <span class='id identifier rubyid_d'>d</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_s'>s</span><span class='op'>|</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_s'>s</span><span class='period'>.</span><span class='id identifier rubyid_ord'>ord</span> <span class='op'>:</span> <span class='id identifier rubyid_s'>s</span> <span class='rbrace'>}</span>
@@ -5452,7 +5538,9 @@ See <a href="https://github.com/ruby/fiddle/issues/96">https://github.com/ruby/f
 59
 60
 61
-62</pre>
+62
+63
+64</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/libui.rb', line 43</span>
@@ -5462,6 +5550,7 @@ See <a href="https://github.com/ruby/fiddle/issues/96">https://github.com/ruby/f
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>TypeError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>expected a callable callback</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_callback'>callback</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:call</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_key'>key</span> <span class='op'>=</span> <span class='const'>Object</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='id identifier rubyid_closure'>closure</span> <span class='op'>=</span> <span class='kw'>nil</span>
   <span class='id identifier rubyid_closure'>closure</span> <span class='op'>=</span> <span class='const'>Fiddle</span><span class='op'>::</span><span class='const'>Closure</span><span class='op'>::</span><span class='const'>BlockCaller</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'>Fiddle</span><span class='op'>::</span><span class='const'>TYPE_VOID</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='const'>Fiddle</span><span class='op'>::</span><span class='const'>TYPE_VOIDP</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_native_data'>native_data</span><span class='op'>|</span>
     <span class='kw'>begin</span>
       <span class='id identifier rubyid_callback'>callback</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_native_data'>native_data</span><span class='rparen'>)</span>
@@ -5469,6 +5558,7 @@ See <a href="https://github.com/ruby/fiddle/issues/96">https://github.com/ruby/f
       <span class='const'>CallbackRegistry</span><span class='period'>.</span><span class='id identifier rubyid_report'>report</span><span class='lparen'>(</span><span class='id identifier rubyid_e'>e</span><span class='rparen'>)</span>
     <span class='kw'>ensure</span>
       <span class='const'>CallbackRegistry</span><span class='period'>.</span><span class='id identifier rubyid_release_global'>release_global</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_closure'>closure</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
   <span class='const'>CallbackRegistry</span><span class='period'>.</span><span class='id identifier rubyid_global'>global</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_closure'>closure</span><span class='rparen'>)</span>
@@ -5497,12 +5587,12 @@ See <a href="https://github.com/ruby/fiddle/issues/96">https://github.com/ruby/f
       <pre class="lines">
 
 
-272
-273
-274</pre>
+286
+287
+288</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 272</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 286</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_radio_buttons_append'>radio_buttons_append</span><span class='lparen'>(</span><span class='id identifier rubyid_radio_buttons'>radio_buttons</span><span class='comma'>,</span> <span class='id identifier rubyid_text'>text</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_radio_buttons'>radio_buttons</span><span class='comma'>,</span> <span class='id identifier rubyid_text'>text</span><span class='rparen'>)</span>
@@ -5527,12 +5617,12 @@ See <a href="https://github.com/ruby/fiddle/issues/96">https://github.com/ruby/f
       <pre class="lines">
 
 
-395
-396
-397</pre>
+409
+410
+411</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 395</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 409</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_save_file'>save_file</span><span class='lparen'>(</span><span class='id identifier rubyid_window'>window</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_read_owned_text'>read_owned_text</span><span class='lparen'>(</span><span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_window'>window</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -5557,17 +5647,17 @@ See <a href="https://github.com/ruby/fiddle/issues/96">https://github.com/ruby/f
       <pre class="lines">
 
 
-171
-172
-173
-174
-175
-176
-177
-178</pre>
+185
+186
+187
+188
+189
+190
+191
+192</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 171</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 185</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_table_append_checkbox_text_column'>table_append_checkbox_text_column</span><span class='lparen'>(</span><span class='id identifier rubyid_table'>table</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_checkbox_column'>checkbox_column</span><span class='comma'>,</span>
                                       <span class='id identifier rubyid_checkbox_editable_column'>checkbox_editable_column</span><span class='comma'>,</span> <span class='id identifier rubyid_text_column'>text_column</span><span class='comma'>,</span>
@@ -5597,14 +5687,14 @@ See <a href="https://github.com/ruby/fiddle/issues/96">https://github.com/ruby/f
       <pre class="lines">
 
 
-165
-166
-167
-168
-169</pre>
+179
+180
+181
+182
+183</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 165</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 179</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_table_append_image_text_column'>table_append_image_text_column</span><span class='lparen'>(</span><span class='id identifier rubyid_table'>table</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_image_column'>image_column</span><span class='comma'>,</span> <span class='id identifier rubyid_text_column'>text_column</span><span class='comma'>,</span>
                                    <span class='id identifier rubyid_editable_column'>editable_column</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>color_model_column:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
@@ -5631,14 +5721,14 @@ See <a href="https://github.com/ruby/fiddle/issues/96">https://github.com/ruby/f
       <pre class="lines">
 
 
-159
-160
-161
-162
-163</pre>
+173
+174
+175
+176
+177</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 159</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 173</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_table_append_text_column'>table_append_text_column</span><span class='lparen'>(</span><span class='id identifier rubyid_table'>table</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_text_column'>text_column</span><span class='comma'>,</span> <span class='id identifier rubyid_editable_column'>editable_column</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span>
                              <span class='label'>color_model_column:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
@@ -5665,21 +5755,21 @@ See <a href="https://github.com/ruby/fiddle/issues/96">https://github.com/ruby/f
       <pre class="lines">
 
 
-507
-508
-509
-510
-511
-512
-513
-514
-515
-516
-517
-518</pre>
+521
+522
+523
+524
+525
+526
+527
+528
+529
+530
+531
+532</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 507</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 521</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_table_get_selection'>table_get_selection</span><span class='lparen'>(</span><span class='id identifier rubyid_table'>table</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_selection'>selection</span> <span class='op'>=</span> <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_table'>table</span><span class='rparen'>)</span>
@@ -5735,20 +5825,6 @@ See <a href="https://github.com/ruby/fiddle/issues/96">https://github.com/ruby/f
       <pre class="lines">
 
 
-520
-521
-522
-523
-524
-525
-526
-527
-528
-529
-530
-531
-532
-533
 534
 535
 536
@@ -5769,10 +5845,24 @@ See <a href="https://github.com/ruby/fiddle/issues/96">https://github.com/ruby/f
 551
 552
 553
-554</pre>
+554
+555
+556
+557
+558
+559
+560
+561
+562
+563
+564
+565
+566
+567
+568</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 520</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 534</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_table_set_selection'>table_set_selection</span><span class='lparen'>(</span><span class='id identifier rubyid_table'>table</span><span class='comma'>,</span> <span class='id identifier rubyid_rows'>rows</span><span class='rparen'>)</span>
   <span class='kw'>unless</span> <span class='id identifier rubyid_rows'>rows</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Array</span><span class='rparen'>)</span>
@@ -5829,12 +5919,12 @@ See <a href="https://github.com/ruby/fiddle/issues/96">https://github.com/ruby/f
       <pre class="lines">
 
 
-463
-464
-465</pre>
+477
+478
+479</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 463</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 477</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_table_value_color'>table_value_color</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_read_outputs'>read_outputs</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>d</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='int'>4</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='comma'>,</span> <span class='id identifier rubyid_g'>g</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_a'>a</span><span class='op'>|</span> <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='id identifier rubyid_r'>r</span><span class='comma'>,</span> <span class='id identifier rubyid_g'>g</span><span class='comma'>,</span> <span class='id identifier rubyid_b'>b</span><span class='comma'>,</span> <span class='id identifier rubyid_a'>a</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -5859,12 +5949,12 @@ See <a href="https://github.com/ruby/fiddle/issues/96">https://github.com/ruby/f
       <pre class="lines">
 
 
-407
-408
-409</pre>
+421
+422
+423</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 407</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 421</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_table_value_string'>table_value_string</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_read_borrowed_text'>read_borrowed_text</span><span class='lparen'>(</span><span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -5889,8 +5979,6 @@ See <a href="https://github.com/ruby/fiddle/issues/96">https://github.com/ruby/f
       <pre class="lines">
 
 
-64
-65
 66
 67
 68
@@ -5910,16 +5998,21 @@ See <a href="https://github.com/ruby/fiddle/issues/96">https://github.com/ruby/f
 82
 83
 84
-85</pre>
+85
+86
+87
+88
+89</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 64</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 66</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_timer'>timer</span><span class='lparen'>(</span><span class='id identifier rubyid_milliseconds'>milliseconds</span><span class='comma'>,</span> <span class='id identifier rubyid_callback'>callback</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_callback'>callback</span> <span class='op'>=</span> <span class='id identifier rubyid_block'>block</span> <span class='kw'>if</span> <span class='id identifier rubyid_block'>block</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>TypeError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>expected a callable callback</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_callback'>callback</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:call</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_key'>key</span> <span class='op'>=</span> <span class='const'>Object</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='id identifier rubyid_closure'>closure</span> <span class='op'>=</span> <span class='kw'>nil</span>
   <span class='id identifier rubyid_closure'>closure</span> <span class='op'>=</span> <span class='const'>Fiddle</span><span class='op'>::</span><span class='const'>Closure</span><span class='op'>::</span><span class='const'>BlockCaller</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'>Fiddle</span><span class='op'>::</span><span class='const'>TYPE_INT</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='const'>Fiddle</span><span class='op'>::</span><span class='const'>TYPE_VOIDP</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_native_data'>native_data</span><span class='op'>|</span>
     <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='kw'>begin</span>
       <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_callback'>callback</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_native_data'>native_data</span><span class='rparen'>)</span>
@@ -5929,6 +6022,7 @@ See <a href="https://github.com/ruby/fiddle/issues/96">https://github.com/ruby/f
       <span class='int'>0</span>
     <span class='kw'>end</span>
     <span class='const'>CallbackRegistry</span><span class='period'>.</span><span class='id identifier rubyid_release_global'>release_global</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_zero?'>zero?</span>
+    <span class='id identifier rubyid_closure'>closure</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
     <span class='id identifier rubyid_result'>result</span>
   <span class='kw'>end</span>
   <span class='const'>CallbackRegistry</span><span class='period'>.</span><span class='id identifier rubyid_global'>global</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_closure'>closure</span><span class='rparen'>)</span>
@@ -5957,14 +6051,14 @@ See <a href="https://github.com/ruby/fiddle/issues/96">https://github.com/ruby/f
       <pre class="lines">
 
 
-93
-94
-95
-96
-97</pre>
+97
+98
+99
+100
+101</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 93</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 97</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_toolbar_append_button'>toolbar_append_button</span><span class='lparen'>(</span><span class='id identifier rubyid_toolbar'>toolbar</span><span class='comma'>,</span> <span class='id identifier rubyid_text'>text</span><span class='comma'>,</span> <span class='id identifier rubyid_icon'>icon</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_item'>item</span> <span class='op'>=</span> <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_toolbar'>toolbar</span><span class='comma'>,</span> <span class='id identifier rubyid_text'>text</span><span class='comma'>,</span> <span class='id identifier rubyid_icon'>icon</span><span class='rparen'>)</span>
@@ -5991,14 +6085,14 @@ See <a href="https://github.com/ruby/fiddle/issues/96">https://github.com/ruby/f
       <pre class="lines">
 
 
-99
-100
-101
-102
-103</pre>
+103
+104
+105
+106
+107</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 99</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 103</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_toolbar_append_toggle_button'>toolbar_append_toggle_button</span><span class='lparen'>(</span><span class='id identifier rubyid_toolbar'>toolbar</span><span class='comma'>,</span> <span class='id identifier rubyid_text'>text</span><span class='comma'>,</span> <span class='id identifier rubyid_icon'>icon</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_item'>item</span> <span class='op'>=</span> <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_toolbar'>toolbar</span><span class='comma'>,</span> <span class='id identifier rubyid_text'>text</span><span class='comma'>,</span> <span class='id identifier rubyid_icon'>icon</span><span class='rparen'>)</span>
@@ -6025,12 +6119,12 @@ See <a href="https://github.com/ruby/fiddle/issues/96">https://github.com/ruby/f
       <pre class="lines">
 
 
-447
-448
-449</pre>
+461
+462
+463</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 447</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 461</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_toolbar_item_text'>toolbar_item_text</span><span class='lparen'>(</span><span class='id identifier rubyid_item'>item</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_read_owned_text'>read_owned_text</span><span class='lparen'>(</span><span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_item'>item</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -6055,12 +6149,12 @@ See <a href="https://github.com/ruby/fiddle/issues/96">https://github.com/ruby/f
       <pre class="lines">
 
 
-451
-452
-453</pre>
+465
+466
+467</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 451</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 465</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_toolbar_item_tooltip'>toolbar_item_tooltip</span><span class='lparen'>(</span><span class='id identifier rubyid_item'>item</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_read_owned_text'>read_owned_text</span><span class='lparen'>(</span><span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_item'>item</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -6085,14 +6179,14 @@ See <a href="https://github.com/ruby/fiddle/issues/96">https://github.com/ruby/f
       <pre class="lines">
 
 
-87
-88
-89
-90
-91</pre>
+91
+92
+93
+94
+95</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 87</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 91</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_uninit'>uninit</span>
   <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='kw'>super</span>
@@ -6119,12 +6213,12 @@ See <a href="https://github.com/ruby/fiddle/issues/96">https://github.com/ruby/f
       <pre class="lines">
 
 
-194
-195
-196</pre>
+208
+209
+210</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 194</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 208</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_version'>version</span>
   <span class='kw'>super</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
@@ -6149,12 +6243,12 @@ See <a href="https://github.com/ruby/fiddle/issues/96">https://github.com/ruby/f
       <pre class="lines">
 
 
-455
-456
-457</pre>
+469
+470
+471</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 455</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 469</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_window_content_size'>window_content_size</span><span class='lparen'>(</span><span class='id identifier rubyid_window'>window</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_read_outputs'>read_outputs</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>i</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='int'>2</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_width'>width</span><span class='comma'>,</span> <span class='id identifier rubyid_height'>height</span><span class='op'>|</span> <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_window'>window</span><span class='comma'>,</span> <span class='id identifier rubyid_width'>width</span><span class='comma'>,</span> <span class='id identifier rubyid_height'>height</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -6229,17 +6323,17 @@ Coordinates are measured from the top left corner of the screen.</p>
       <pre class="lines">
 
 
-562
-563
-564
-565
-566
-567
-568
-569</pre>
+576
+577
+578
+579
+580
+581
+582
+583</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 562</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 576</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_window_position'>window_position</span><span class='lparen'>(</span><span class='id identifier rubyid_w'>w</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_x_ptr'>x_ptr</span> <span class='op'>=</span> <span class='const'>Fiddle</span><span class='op'>::</span><span class='const'>Pointer</span><span class='period'>.</span><span class='id identifier rubyid_malloc'>malloc</span><span class='lparen'>(</span><span class='const'>Fiddle</span><span class='op'>::</span><span class='const'>SIZEOF_INT</span><span class='comma'>,</span> <span class='const'>Fiddle</span><span class='op'>::</span><span class='const'>RUBY_FREE</span><span class='rparen'>)</span>
@@ -6269,15 +6363,49 @@ Coordinates are measured from the top left corner of the screen.</p>
       <pre class="lines">
 
 
-224
-225
-226</pre>
+238
+239
+240</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 224</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 238</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_window_set_title'>window_set_title</span><span class='lparen'>(</span><span class='id identifier rubyid_window'>window</span><span class='comma'>,</span> <span class='id identifier rubyid_title'>title</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_window'>window</span><span class='comma'>,</span> <span class='id identifier rubyid_title'>title</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="window_set_toolbar-class_method">
+  
+    .<strong>window_set_toolbar</strong>(window, toolbar)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+117
+118
+119
+120
+121</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 117</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_window_set_toolbar'>window_set_toolbar</span><span class='lparen'>(</span><span class='id identifier rubyid_window'>window</span><span class='comma'>,</span> <span class='id identifier rubyid_toolbar'>toolbar</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_window'>window</span><span class='comma'>,</span> <span class='id identifier rubyid_toolbar'>toolbar</span><span class='rparen'>)</span>
+  <span class='const'>CallbackRegistry</span><span class='period'>.</span><span class='id identifier rubyid_attach_toolbar'>attach_toolbar</span><span class='lparen'>(</span><span class='id identifier rubyid_window'>window</span><span class='comma'>,</span> <span class='id identifier rubyid_toolbar'>toolbar</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_result'>result</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -6299,12 +6427,12 @@ Coordinates are measured from the top left corner of the screen.</p>
       <pre class="lines">
 
 
-355
-356
-357</pre>
+369
+370
+371</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 355</span>
+      <pre class="code"><span class="info file"># File 'lib/libui.rb', line 369</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_window_title'>window_title</span><span class='lparen'>(</span><span class='id identifier rubyid_window'>window</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_read_owned_text'>read_owned_text</span><span class='lparen'>(</span><span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_window'>window</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -6319,7 +6447,7 @@ Coordinates are measured from the top left corner of the screen.</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Oct 12 00:32:27 2026 by
+  Generated on Mon Oct 12 00:37:46 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.45 (ruby-4.0.7).
 </div>
