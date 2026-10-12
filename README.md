@@ -104,14 +104,20 @@ label = UI.new_label("Ruby")
 p UI.label_text(label) # Ruby
 ```
 
-Size and color getters return arrays, and `table_get_selection` returns an
-array of selected row indices:
+Size and color getters return arrays. Table selection methods use arrays of
+row indices; pass `[]` to clear the selection:
 
 ```ruby
 width, height = UI.window_content_size(window)
 red, green, blue, alpha = UI.color_button_color(color_button)
 rows = UI.table_get_selection(table)
+UI.table_set_selection(table, [1, 3])
+UI.table_set_selection(table, [])
 ```
+
+Selected row indices must be within the table model. The table's selection
+mode determines how many rows can be selected. Native `uiTableSelection`
+arguments remain supported.
 
 `attribute_underline_color` returns `[underline, red, green, blue, alpha]`.
 `draw_matrix_transform_point` and `draw_matrix_transform_size` accept numeric

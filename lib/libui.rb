@@ -351,6 +351,42 @@ module LibUI
       free_table_selection(selection) if selection && !selection.null?
     end
 
+    def table_set_selection(table, rows)
+      unless rows.is_a?(Array)
+        valid_native = rows.is_a?(FFI::TableSelection) ||
+                       (rows.is_a?(Fiddle::Pointer) && !rows.null?)
+        raise TypeError, 'expected an Array or native uiTableSelection' unless valid_native
+
+        return super(table, rows)
+      end
+
+      max_int = (1 << (Fiddle::SIZEOF_INT * 8 - 1)) - 1
+      raise RangeError, 'too many selected rows' if rows.length > max_int
+
+      rows.each do |row|
+        raise TypeError, 'row index must be an Integer' unless row.is_a?(Integer)
+        raise RangeError, 'row index is out of range' unless row.between?(0, max_int)
+      end
+
+      native_rows = if rows.empty?
+                      Fiddle::Pointer.new(0)
+                    else
+                      packed = rows.pack('i*')
+                      pointer = Fiddle::Pointer.malloc(packed.bytesize, Fiddle::RUBY_FREE)
+                      pointer[0, packed.bytesize] = packed
+                      pointer
+                    end
+      selection = FFI::TableSelection.malloc
+      selection.to_ptr.free = Fiddle::RUBY_FREE
+      selection.NumRows = rows.length
+      selection.Rows = native_rows
+      result = super(table, selection)
+      # Keep both native allocations alive until libui-ng copies the rows.
+      selection.to_ptr.to_i
+      native_rows.to_i
+      result
+    end
+
     # Gets the window position.
     # Coordinates are measured from the top left corner of the screen.
     # @param w [Fiddle::Pointer] Pointer of uiWindow instance.

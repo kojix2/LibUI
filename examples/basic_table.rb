@@ -46,6 +46,8 @@ table_params.RowBackgroundColorModelColumn = -1
 table = UI.new_table(table_params)
 UI.table_append_text_column(table, 'Animal', 0, -1)
 UI.table_append_text_column(table, 'Description', 1, -1)
+UI.table_set_selection_mode(table, UI::TableSelectionModeZeroOrMany)
+UI.table_set_selection(table, [1, 3])
 
 UI.box_append(hbox, table, 1)
 UI.control_show(main_window)
