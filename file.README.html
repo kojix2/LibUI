@@ -180,6 +180,15 @@ arguments remain supported.</p>
 <code>draw_matrix_transform_point</code> and <code>draw_matrix_transform_size</code> accept numeric
 coordinates and return a pair. <code>open_type_features_get</code> returns the feature
 value, or <code>nil</code> when the tag is absent.</p>
+<p><code>open_type_features_for_each</code> yields a four-byte tag and its value. Use
+<code>attribute_features</code> for an independent Ruby hash. The attribute iterator
+copies values before yielding <code>{type:, value:}, start_byte, end_byte</code>.
+libui-ng has no getter for a background attribute's color, so its snapshot
+has <code>value: nil</code>. Return <code>LibUI::ForEachStop</code> to stop an iterator early.</p>
+<p><code>image_append</code> checks the dimensions, stride, and known buffer length. It
+expects premultiplied RGBA bytes. For ordinary straight RGBA data from a PNG
+decoder, use <code>image_append_rgba(image, bytes, width, height)</code>; it converts a
+copy before calling libui-ng.</p>
 <p>Date and time picker methods use Ruby objects directly. The getter returns a
 local <code>Time</code>; the setter accepts <code>Time</code>, <code>DateTime</code>, or <code>Date</code>:</p>
 <pre class="code ruby"><code class="ruby"><span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_date_time_picker_set_time'>date_time_picker_set_time</span><span class='lparen'>(</span><span class='id identifier rubyid_picker'>picker</span><span class='comma'>,</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='rparen'>)</span>
@@ -202,15 +211,58 @@ The same value can be passed to a text layout:</p>
 <p>Use <code>UI::Font.new(family: 'Georgia', size: 13)</code> to specify a font directly.
 The default weight, italic, and stretch are normal. The original descriptor
 arguments remain supported, and <code>LibUI::FFI</code> exposes the raw C API.</p>
-<ul>
-<li>Callbacks
-<ul>
-<li>In Ruby/Fiddle, a C callback function is written as an object of
-<code>Fiddle::Closure::BlockCaller</code> or <code>Fiddle::Closure</code>.
-Be careful about Ruby's garbage collection - if the function object is collected, memory will be freed resulting in a segmentation violation when the callback is invoked.</li>
-</ul>
-</li>
-</ul>
+<p>For a custom drawing area, <code>LibUI::AreaHandler</code> owns the Fiddle closures and
+native handler struct. <code>new_area</code> and <code>new_scrolling_area</code> keep the handler
+alive until the area is destroyed. Event fields are copied to Ruby objects;
+the draw context is usable only during the draw callback.</p>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_brush'>brush</span> <span class='op'>=</span> <span class='const'>UI</span><span class='op'>::</span><span class='const'>Brush</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>color:</span> <span class='lbracket'>[</span><span class='float'>0.4</span><span class='comma'>,</span> <span class='float'>0.4</span><span class='comma'>,</span> <span class='float'>0.8</span><span class='comma'>,</span> <span class='float'>1.0</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_handler'>handler</span> <span class='op'>=</span> <span class='const'>UI</span><span class='op'>::</span><span class='const'>AreaHandler</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>draw:</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_event'>event</span><span class='rparen'>)</span> <span class='tlambeg'>{</span>
+  <span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_draw_new_path'>draw_new_path</span><span class='lparen'>(</span><span class='const'>UI</span><span class='op'>::</span><span class='const'>DrawFillModeWinding</span><span class='rparen'>)</span>
+  <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_draw_path_add_rectangle'>draw_path_add_rectangle</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='int'>0</span><span class='comma'>,</span> <span class='int'>0</span><span class='comma'>,</span> <span class='id identifier rubyid_event'>event</span><span class='period'>.</span><span class='id identifier rubyid_area_width'>area_width</span><span class='comma'>,</span> <span class='id identifier rubyid_event'>event</span><span class='period'>.</span><span class='id identifier rubyid_area_height'>area_height</span><span class='rparen'>)</span>
+  <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_draw_path_end'>draw_path_end</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_event'>event</span><span class='period'>.</span><span class='id identifier rubyid_context'>context</span><span class='period'>.</span><span class='id identifier rubyid_fill'>fill</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_brush'>brush</span><span class='rparen'>)</span>
+  <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_draw_free_path'>draw_free_path</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
+<span class='rbrace'>}</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_area'>area</span> <span class='op'>=</span> <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_new_area'>new_area</span><span class='lparen'>(</span><span class='id identifier rubyid_handler'>handler</span><span class='rparen'>)</span>
+</code></pre>
+<p><code>LibUI::TableModel</code> builds and retains a native table model handler from Ruby
+rows and column types. <code>new_table(model: model)</code> keeps it alive while the table
+exists. Free the model after destroying the table. Cell callbacks create fresh
+<code>uiTableValue</code> objects, transferring those objects to libui-ng; image values
+refer to images you own and must keep valid during use.</p>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_rows'>rows</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='qwords_beg'>%w[</span><span class='tstring_content'>cat</span><span class='words_sep'> </span><span class='tstring_content'>meow</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='qwords_beg'>%w[</span><span class='tstring_content'>dog</span><span class='words_sep'> </span><span class='tstring_content'>woof</span><span class='tstring_end'>]</span></span><span class='rbracket'>]</span>
+<span class='id identifier rubyid_model'>model</span> <span class='op'>=</span> <span class='const'>UI</span><span class='op'>::</span><span class='const'>TableModel</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>column_types:</span> <span class='lbracket'>[</span><span class='const'>UI</span><span class='op'>::</span><span class='const'>TableValueTypeString</span><span class='rbracket'>]</span> <span class='op'>*</span> <span class='int'>2</span><span class='comma'>,</span>
+                           <span class='label'>rows:</span> <span class='id identifier rubyid_rows'>rows</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_table'>table</span> <span class='op'>=</span> <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_new_table'>new_table</span><span class='lparen'>(</span><span class='label'>model:</span> <span class='id identifier rubyid_model'>model</span><span class='rparen'>)</span>
+<span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_table_append_text_column'>table_append_text_column</span><span class='lparen'>(</span><span class='id identifier rubyid_table'>table</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Animal</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='int'>0</span><span class='comma'>,</span> <span class='op'>-</span><span class='int'>1</span><span class='rparen'>)</span>
+<span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_table_append_text_column'>table_append_text_column</span><span class='lparen'>(</span><span class='id identifier rubyid_table'>table</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Sound</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='int'>1</span><span class='comma'>,</span> <span class='op'>-</span><span class='int'>1</span><span class='rparen'>)</span>
+<span class='comment'># After the table is destroyed:
+</span><span class='id identifier rubyid_model'>model</span><span class='period'>.</span><span class='id identifier rubyid_free'>free</span>
+</code></pre>
+<p>Pass <code>cell_value:</code> and <code>set_cell_value:</code> callbacks to <code>TableModel.new</code> for a
+custom data source. The setter receives copied Ruby values, or <code>nil</code> for a
+button click. <code>row_inserted</code>, <code>row_changed</code>, and <code>row_deleted</code> notify tables
+after the backing data changes. Text, image-text, and checkbox-text column
+methods accept <code>color_model_column:</code> in place of a native optional-params
+struct. Existing native structs and positional arguments remain accepted.</p>
+<p><code>LibUI::Brush</code>, <code>StrokeParams</code>, and <code>Matrix</code> wrap reusable draw structs.
+Gradient stops and dash arrays are retained by their owner. <code>draw_fill</code>,
+<code>draw_stroke</code>, and <code>draw_transform</code> accept these objects as well as native
+structs. A matrix can be composed and queried without allocating a new native
+struct for each transform:</p>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_stroke'>stroke</span> <span class='op'>=</span> <span class='const'>UI</span><span class='op'>::</span><span class='const'>StrokeParams</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>thickness:</span> <span class='int'>2</span><span class='comma'>,</span> <span class='label'>dashes:</span> <span class='lbracket'>[</span><span class='int'>3</span><span class='comma'>,</span> <span class='int'>2</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_matrix'>matrix</span> <span class='op'>=</span> <span class='const'>UI</span><span class='op'>::</span><span class='const'>Matrix</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='period'>.</span><span class='id identifier rubyid_translate'>translate</span><span class='lparen'>(</span><span class='int'>10</span><span class='comma'>,</span> <span class='int'>20</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_point'>point</span> <span class='op'>=</span> <span class='id identifier rubyid_matrix'>matrix</span><span class='period'>.</span><span class='id identifier rubyid_transform_point'>transform_point</span><span class='lparen'>(</span><span class='int'>1</span><span class='comma'>,</span> <span class='int'>2</span><span class='rparen'>)</span> <span class='comment'># [11.0, 22.0]
+</span></code></pre>
+<p>Ruby blocks passed to event methods are kept alive while their native control
+exists. Replacing an event callback releases the previous closure. The
+registry uses <code>uiControlOnDestroyed</code> to clear callbacks when a control is
+destroyed, including when its parent destroys it. A user callback registered
+with <code>control_on_destroyed</code> runs through the same notification. <code>queue_main</code>
+callbacks are released after running; timers are released when they return
+zero or <code>false</code>. Callback exceptions are reported to stderr and do not cross
+the C callback boundary. Callbacks for raw <code>LibUI::FFI</code> structs still need
+their own Ruby references:</p>
 <pre class="code ruby"><code class="ruby"><span class='comment'># Assign to a local variable to prevent it from being collected by GC.
 </span><span class='id identifier rubyid_handler'>handler</span><span class='period'>.</span><span class='const'>MouseEvent</span>   <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_c1'>c1</span> <span class='op'>=</span> <span class='const'>Fiddle</span><span class='op'>::</span><span class='const'>Closure</span><span class='op'>::</span><span class='const'>BlockCaller</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='int'>0</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
 <span class='id identifier rubyid_handler'>handler</span><span class='period'>.</span><span class='const'>MouseCrossed</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_c2'>c2</span> <span class='op'>=</span> <span class='const'>Fiddle</span><span class='op'>::</span><span class='const'>Closure</span><span class='op'>::</span><span class='const'>BlockCaller</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='int'>0</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
@@ -319,7 +371,7 @@ gem push libui-0.2.0-x64-mingw32.gem
 <p><a href="https://opensource.org/licenses/MIT">MIT License</a>.</p></div></div>
 
       <div id="footer">
-  Generated on Mon Oct 12 00:01:51 2026 by
+  Generated on Mon Oct 12 00:32:27 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.45 (ruby-4.0.7).
 </div>

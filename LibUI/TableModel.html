@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: LibUI::TableModel
+  
+    &mdash; Documentation by YARD 0.9.45
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css">
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css">
+
+<script type="text/javascript">
+  pathId = "LibUI::TableModel";
+  relpath = '../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
+    <div class="nav_wrap">
+      <iframe id="nav" src="../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../_index.html">Index (T)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../LibUI.html" title="LibUI (module)">LibUI</a></span></span>
+     &raquo; 
+    <span class="title">TableModel</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: LibUI::TableModel
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">LibUI::TableModel</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/libui/table_model.rb
+</dd>
+  </dl>
+  
+</div>
+
+
+
+
+
+  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#handler-instance_method" title="#handler (instance method)">#<strong>handler</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute handler.</p></div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#attach_table-instance_method" title="#attach_table (instance method)">#<strong>attach_table</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#detach_table-instance_method" title="#detach_table (instance method)">#<strong>detach_table</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#free-instance_method" title="#free (instance method)">#<strong>free</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(handler = nil, **options)  &#x21d2; TableModel </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>A new instance of TableModel.</p></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#row_changed-instance_method" title="#row_changed (instance method)">#<strong>row_changed</strong>(index)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#row_deleted-instance_method" title="#row_deleted (instance method)">#<strong>row_deleted</strong>(index)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#row_inserted-instance_method" title="#row_inserted (instance method)">#<strong>row_inserted</strong>(index)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#to_ptr-instance_method" title="#to_ptr (instance method)">#<strong>to_ptr</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+    
+  
+
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    #<strong>initialize</strong>(handler = nil, **options)  &#x21d2; <tt><span class='object_link'><a href="" title="LibUI::TableModel (class)">TableModel</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns a new instance of TableModel.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>TypeError</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+131
+132
+133
+134
+135
+136
+137
+138</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/libui/table_model.rb', line 131</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_handler'>handler</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  <span class='ivar'>@handler</span> <span class='op'>=</span> <span class='id identifier rubyid_handler'>handler</span> <span class='op'>||</span> <span class='const'><span class='object_link'><a href="TableModelHandler.html" title="LibUI::TableModelHandler (class)">TableModelHandler</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="TableModelHandler.html#initialize-instance_method" title="LibUI::TableModelHandler#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>TypeError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>expected LibUI::TableModelHandler</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>unless</span> <span class='ivar'>@handler</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="TableModelHandler.html" title="LibUI::TableModelHandler (class)">TableModelHandler</a></span></span><span class='rparen'>)</span>
+
+  <span class='ivar'>@pointer</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../LibUI.html" title="LibUI (module)">LibUI</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new_table_model'><span class='object_link'><a href="../LibUI.html#new_table_model-class_method" title="LibUI.new_table_model (method)">new_table_model</a></span></span><span class='lparen'>(</span><span class='ivar'>@handler</span><span class='rparen'>)</span>
+  <span class='ivar'>@attached_tables</span> <span class='op'>=</span> <span class='int'>0</span>
+  <span class='ivar'>@freed</span> <span class='op'>=</span> <span class='kw'>false</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id=""></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="handler-instance_method">
+  
+    #<strong>handler</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the value of attribute handler.</p>
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+129
+130
+131</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/libui/table_model.rb', line 129</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_handler'>handler</span>
+  <span class='ivar'>@handler</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="attach_table-instance_method">
+  
+    #<strong>attach_table</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+167
+168
+169</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/libui/table_model.rb', line 167</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_attach_table'>attach_table</span>
+  <span class='ivar'>@attached_tables</span> <span class='op'>+=</span> <span class='int'>1</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="detach_table-instance_method">
+  
+    #<strong>detach_table</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+171
+172
+173</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/libui/table_model.rb', line 171</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_detach_table'>detach_table</span>
+  <span class='ivar'>@attached_tables</span> <span class='op'>-=</span> <span class='int'>1</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="free-instance_method">
+  
+    #<strong>free</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>RuntimeError</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+158
+159
+160
+161
+162
+163
+164
+165</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/libui/table_model.rb', line 158</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_free'>free</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>RuntimeError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>table model is still attached to a table</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>if</span> <span class='ivar'>@attached_tables</span><span class='period'>.</span><span class='id identifier rubyid_positive?'>positive?</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='ivar'>@freed</span>
+
+  <span class='const'><span class='object_link'><a href="../LibUI.html" title="LibUI (module)">LibUI</a></span></span><span class='period'>.</span><span class='id identifier rubyid_free_table_model'><span class='object_link'><a href="../LibUI.html#free_table_model-class_method" title="LibUI.free_table_model (method)">free_table_model</a></span></span><span class='lparen'>(</span><span class='ivar'>@pointer</span><span class='rparen'>)</span>
+  <span class='ivar'>@freed</span> <span class='op'>=</span> <span class='kw'>true</span>
+  <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="row_changed-instance_method">
+  
+    #<strong>row_changed</strong>(index)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+150
+151
+152</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/libui/table_model.rb', line 150</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_row_changed'>row_changed</span><span class='lparen'>(</span><span class='id identifier rubyid_index'>index</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="../LibUI.html" title="LibUI (module)">LibUI</a></span></span><span class='period'>.</span><span class='id identifier rubyid_table_model_row_changed'>table_model_row_changed</span><span class='lparen'>(</span><span class='id identifier rubyid_to_ptr'>to_ptr</span><span class='comma'>,</span> <span class='id identifier rubyid_index'>index</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="row_deleted-instance_method">
+  
+    #<strong>row_deleted</strong>(index)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+154
+155
+156</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/libui/table_model.rb', line 154</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_row_deleted'>row_deleted</span><span class='lparen'>(</span><span class='id identifier rubyid_index'>index</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="../LibUI.html" title="LibUI (module)">LibUI</a></span></span><span class='period'>.</span><span class='id identifier rubyid_table_model_row_deleted'>table_model_row_deleted</span><span class='lparen'>(</span><span class='id identifier rubyid_to_ptr'>to_ptr</span><span class='comma'>,</span> <span class='id identifier rubyid_index'>index</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="row_inserted-instance_method">
+  
+    #<strong>row_inserted</strong>(index)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+146
+147
+148</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/libui/table_model.rb', line 146</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_row_inserted'>row_inserted</span><span class='lparen'>(</span><span class='id identifier rubyid_index'>index</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="../LibUI.html" title="LibUI (module)">LibUI</a></span></span><span class='period'>.</span><span class='id identifier rubyid_table_model_row_inserted'>table_model_row_inserted</span><span class='lparen'>(</span><span class='id identifier rubyid_to_ptr'>to_ptr</span><span class='comma'>,</span> <span class='id identifier rubyid_index'>index</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="to_ptr-instance_method">
+  
+    #<strong>to_ptr</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>RuntimeError</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+140
+141
+142
+143
+144</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/libui/table_model.rb', line 140</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_to_ptr'>to_ptr</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>RuntimeError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>table model has been freed</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>if</span> <span class='ivar'>@freed</span>
+
+  <span class='ivar'>@pointer</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Mon Oct 12 00:32:27 2026 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.45 (ruby-4.0.7).
+</div>
+
+    </div>
+  </body>
+</html>
