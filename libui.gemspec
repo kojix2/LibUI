@@ -14,7 +14,7 @@ Gem::Specification.new do |spec|
   spec.files = Dir['*.{md,txt}', '{lib}/**/*', 'vendor/{LICENSE,README}.md']
   spec.require_paths = 'lib'
 
-  spec.required_ruby_version = '>= 2.6'
+  spec.required_ruby_version = '>= 2.7'
 
   # Use the GEM_PLATFORM environment variable if specified
   gem_platform = ENV['GEM_PLATFORM']

@@ -12,25 +12,25 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # Default Ruby version: 3.4 (Ruby 2.7 is used for x64-mingw32)
+        # Ruby 2.7 is retained for the older x64-mingw32 ABI.
         include:
           - os: ubuntu-latest
-            ruby-version: "3.4"
+            ruby-version: "4.0"
             gem_platform: x86_64-linux
           - os: ubuntu-24.04-arm
-            ruby-version: "3.4"
+            ruby-version: "4.0"
             gem_platform: aarch64-linux
           - os: macos-15-intel
-            ruby-version: "3.4"
+            ruby-version: "4.0"
             gem_platform: x86_64-darwin
-          - os: macos-14 # Apple Silicon
-            ruby-version: "3.4"
+          - os: macos-latest # Apple Silicon
+            ruby-version: "4.0"
             gem_platform: arm64-darwin
-          - os: windows-latest
-            ruby-version: "2.7" # Ruby 2.7 is used for x64-mingw32 because newer Ruby versions default to x64-mingw-ucrt platform, causing bundler platform resolution conflicts
+          - os: windows-2022
+            ruby-version: "2.7"
             gem_platform: x64-mingw32
           - os: windows-latest
-            ruby-version: "3.4"
+            ruby-version: "4.0"
             gem_platform: x64-mingw-ucrt
 
     runs-on: ${{ matrix.os }}
@@ -58,13 +58,6 @@ jobs:
           ruby -v
           gem -v
           bundle -v
-        shell: bash
-
-      - name: Update RubyGems for Windows Ruby 2.7 (enable 'gem exec')
-        if: ${{ matrix.gem_platform == 'x64-mingw32' }}
-        run: |
-          gem update --system 3.4.22
-          gem --version
         shell: bash
 
       - name: Prepare vendored binary (bundle exec rake vendor:auto)
@@ -121,7 +114,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: "3.4"
+          ruby-version: "4.0"
           bundler-cache: true
 
       - name: Show versions

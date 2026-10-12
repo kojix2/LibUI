@@ -3,6 +3,10 @@ on:
   - push
   - pull_request
   - workflow_dispatch
+
+permissions:
+  contents: read
+
 jobs:
   build:
     name: ${{ matrix.runner }} Ruby ${{ matrix.ruby }}
@@ -22,8 +26,7 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
-      - name: Install dependencies
-        run: bundle install
+          bundler-cache: true
       - name: Download libui shared libraries
         run: bundle exec rake vendor:auto
       - name: Rake test (XVFB)
@@ -49,8 +52,7 @@ jobs:
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: jruby
-      - name: Install dependencies
-        run: bundle install
+          bundler-cache: true
       - name: Download libui shared libraries
         run: bundle exec rake vendor:auto
       - name: Rake test (XVFB)
