@@ -12,6 +12,8 @@ module LibUI
 
     class << self
       def control(pointer, key, callback)
+        raise ArgumentError, 'control pointer is null' if pointer.nil? || pointer.to_i.zero?
+
         address = pointer.to_i
         callbacks = (@controls[address] ||= {})
         unless @destroy_hooks.key?(address)
@@ -77,7 +79,9 @@ module LibUI
       def attach_toolbar(window, toolbar)
         window_address = window.to_i
         @attached_toolbars.delete_if { |_toolbar, owner| owner == window_address }
-        @attached_toolbars[toolbar.to_i] = window_address if toolbar && toolbar.to_i != 0
+        return if toolbar.nil? || toolbar.to_i.zero?
+
+        @attached_toolbars[toolbar.to_i] = window_address
         return if @toolbar_window_hooks[window_address]
 
         on_cleanup(window) do

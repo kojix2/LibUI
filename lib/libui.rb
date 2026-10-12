@@ -45,6 +45,7 @@ module LibUI
       raise TypeError, 'expected a callable callback' unless callback.respond_to?(:call)
 
       key = Object.new
+      closure = nil
       closure = Fiddle::Closure::BlockCaller.new(Fiddle::TYPE_VOID, [Fiddle::TYPE_VOIDP]) do |native_data|
         begin
           callback.call(native_data)
@@ -52,6 +53,7 @@ module LibUI
           CallbackRegistry.report(e)
         ensure
           CallbackRegistry.release_global(key)
+          closure.to_i
         end
       end
       CallbackRegistry.global(key, closure)
@@ -66,6 +68,7 @@ module LibUI
       raise TypeError, 'expected a callable callback' unless callback.respond_to?(:call)
 
       key = Object.new
+      closure = nil
       closure = Fiddle::Closure::BlockCaller.new(Fiddle::TYPE_INT, [Fiddle::TYPE_VOIDP]) do |native_data|
         result = begin
           value = callback.call(native_data)
@@ -75,6 +78,7 @@ module LibUI
           0
         end
         CallbackRegistry.release_global(key) if result.zero?
+        closure.to_i
         result
       end
       CallbackRegistry.global(key, closure)
@@ -136,6 +140,8 @@ module LibUI
       return super(handler) unless handler.is_a?(TableModelHandler)
 
       model = super(handler.to_ptr)
+      raise RuntimeError, 'libui-ng could not create table model' if model.nil? || model.null?
+
       CallbackRegistry.other(model, :table_model_handler, handler)
       model
     end
@@ -158,9 +164,9 @@ module LibUI
       native.Model = model.to_ptr
       native.RowBackgroundColorModelColumn = row_background_color_model_column
       table = super(native)
-      model.attach_table
       CallbackRegistry.control(table, :table_model, model)
       CallbackRegistry.on_cleanup(table) { model.detach_table }
+      model.attach_table
       table
     end
 
