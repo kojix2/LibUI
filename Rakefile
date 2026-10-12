@@ -89,22 +89,25 @@ def process_platform(platform_entries)
   end
 end
 
-# Platform gem building
-platforms = LibUI::Platform.config_keys
+# Platform gem building (same targets as release-rubygems.yml)
+platforms = %w[
+  x86_64-linux aarch64-linux x86_64-darwin arm64-darwin
+  x64-mingw32 x64-mingw-ucrt
+].freeze
 
 task :build_platform do
-  platforms.each do |platform|
-    sh 'gem', 'build', '--platform', platform
-  end
-
   FileUtils.mkdir_p('pkg')
-  Dir['*.gem'].each do |file|
-    FileUtils.move(file, 'pkg')
+  platforms.each do |platform|
+    output = "pkg/libui-#{LibUI::VERSION}-#{platform}.gem"
+    Bundler.with_unbundled_env do
+      sh({ 'GEM_PLATFORM' => platform }, 'gem', 'build', 'libui.gemspec', '--output', output)
+    end
   end
 end
 
 task :release_platform do
-  Dir["pkg/libui-#{LibUI::VERSION}-*.gem"].each do |file|
+  platforms.each do |platform|
+    file = "pkg/libui-#{LibUI::VERSION}-#{platform}.gem"
     sh 'gem', 'push', file
   end
 end
