@@ -23,7 +23,7 @@ IMAGES = Array.new(50) do |i|
   width = canvas.width
   height = canvas.height
   image = UI.new_image(width, height)
-  UI.image_append(image, data, width, height, width * 4)
+  UI.image_append_rgba(image, data, width, height)
   image
 rescue StandardError => e
   warn url, e.message

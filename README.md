@@ -124,6 +124,17 @@ arguments remain supported.
 coordinates and return a pair. `open_type_features_get` returns the feature
 value, or `nil` when the tag is absent.
 
+`open_type_features_for_each` yields a four-byte tag and its value. Use
+`attribute_features` for an independent Ruby hash. The attribute iterator
+copies values before yielding `{type:, value:}, start_byte, end_byte`.
+libui-ng has no getter for a background attribute's color, so its snapshot
+has `value: nil`. Return `LibUI::ForEachStop` to stop an iterator early.
+
+`image_append` checks the dimensions, stride, and known buffer length. It
+expects premultiplied RGBA bytes. For ordinary straight RGBA data from a PNG
+decoder, use `image_append_rgba(image, bytes, width, height)`; it converts a
+copy before calling libui-ng.
+
 Date and time picker methods use Ruby objects directly. The getter returns a
 local `Time`; the setter accepts `Time`, `DateTime`, or `Date`:
 

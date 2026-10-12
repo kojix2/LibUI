@@ -424,7 +424,115 @@ module LibUI
       value[0, Fiddle::SIZEOF_INT].unpack1('L')
     end
 
+    # The native function copies the pixels before returning. The input must be
+    # premultiplied RGBA, with rows separated by byte_stride bytes.
+    def image_append(image, pixels, width, height, byte_stride)
+      [width, height, byte_stride].each do |number|
+        raise TypeError, 'image dimensions and stride must be Integers' unless number.is_a?(Integer)
+      end
+      raise ArgumentError, 'image dimensions must be positive' if width <= 0 || height <= 0
+      raise ArgumentError, 'byte stride is too small' if byte_stride < width * 4
+      raise TypeError, 'pixels must be a String or Fiddle::Pointer' unless pixels.is_a?(String) || pixels.is_a?(Fiddle::Pointer)
+      if pixels.is_a?(String) && pixels.bytesize < byte_stride * height
+        raise ArgumentError, 'pixel buffer is shorter than stride * height'
+      end
+      if pixels.is_a?(Fiddle::Pointer) && pixels.size.positive? && pixels.size < byte_stride * height
+        raise ArgumentError, 'pixel buffer is shorter than stride * height'
+      end
+
+      super(image, pixels, width, height, byte_stride)
+    end
+
+    # Convert straight RGBA (as used by PNG libraries) to premultiplied RGBA.
+    def image_append_rgba(image, pixels, width, height, byte_stride = width * 4)
+      raise TypeError, 'pixels must be a String' unless pixels.is_a?(String)
+      raise ArgumentError, 'byte stride is too small' if byte_stride < width * 4
+      raise ArgumentError, 'pixel buffer is shorter than stride * height' if pixels.bytesize < byte_stride * height
+
+      converted = pixels.b.dup
+      height.times do |y|
+        width.times do |x|
+          offset = y * byte_stride + x * 4
+          alpha = converted.getbyte(offset + 3)
+          3.times do |channel|
+            converted.setbyte(offset + channel, (converted.getbyte(offset + channel) * alpha + 127) / 255)
+          end
+        end
+      end
+      image_append(image, converted, width, height, byte_stride)
+    end
+
+    def open_type_features_for_each(features)
+      return enum_for(__method__, features) unless block_given?
+
+      error = nil
+      callback = Fiddle::Closure::BlockCaller.new(Fiddle::TYPE_INT,
+                                                  [Fiddle::TYPE_VOIDP] + [Fiddle::TYPE_CHAR] * 4 +
+                                                  [Fiddle::TYPE_UINT32_T, Fiddle::TYPE_VOIDP]) do |_features, a, b, c, d, value, _data|
+        begin
+          tag = [a, b, c, d].pack('C*').force_encoding(Encoding::ASCII_8BIT)
+          yield(tag, value) == ForEachStop ? ForEachStop : ForEachContinue
+        rescue StandardError => e
+          error = e
+          ForEachStop
+        end
+      end
+      FFI.uiOpenTypeFeaturesForEach(features, callback, nil)
+      raise error if error
+
+      features
+    end
+
+    def attribute_features(attribute)
+      borrowed = super(attribute)
+      return nil if borrowed.nil? || borrowed.null?
+
+      open_type_features_for_each(borrowed).to_h
+    end
+
+    # Values are copied during the callback; native attribute pointers expire
+    # as soon as the callback returns.
+    def attributed_string_for_each_attribute(string)
+      return enum_for(__method__, string) unless block_given?
+
+      error = nil
+      callback = Fiddle::Closure::BlockCaller.new(Fiddle::TYPE_INT,
+                                                  [Fiddle::TYPE_VOIDP, Fiddle::TYPE_VOIDP,
+                                                   Fiddle::TYPE_SIZE_T, Fiddle::TYPE_SIZE_T,
+                                                   Fiddle::TYPE_VOIDP]) do |_string, attribute, first, last, _data|
+        begin
+          yield(attribute_snapshot(attribute), first, last) == ForEachStop ? ForEachStop : ForEachContinue
+        rescue StandardError => e
+          error = e
+          ForEachStop
+        end
+      end
+      FFI.uiAttributedStringForEachAttribute(string, callback, nil)
+      raise error if error
+
+      string
+    end
+
     private
+
+    def attribute_snapshot(attribute)
+      type = attribute_get_type(attribute)
+      value = case type
+              when AttributeTypeFamily then attribute_family(attribute)
+              when AttributeTypeSize then attribute_size(attribute)
+              when AttributeTypeWeight then attribute_weight(attribute)
+              when AttributeTypeItalic then attribute_italic(attribute)
+              when AttributeTypeStretch then attribute_stretch(attribute)
+              when AttributeTypeColor then attribute_color(attribute)
+              # libui-ng exposes no getter for a background attribute's color.
+              when AttributeTypeBackground then nil
+              when AttributeTypeUnderline then attribute_underline(attribute)
+              when AttributeTypeUnderlineColor then attribute_underline_color(attribute)
+              when AttributeTypeFeatures then attribute_features(attribute)
+              else raise ArgumentError, "unknown attribute type: #{type}"
+              end
+      { type: type, value: value }
+    end
 
     def read_font_descriptor
       descriptor = FFI::FontDescriptor.malloc
