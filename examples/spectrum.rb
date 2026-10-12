@@ -39,49 +39,19 @@ UI = LibUI
 
 UI.init
 
-handler = UI::FFI::AreaHandler.malloc
-area    = UI.new_area(handler)
+brush = UI::Brush.new(color: [0.9, 0.2, 0.6, 1.0])
+stroke_params = UI::StrokeParams.new
 
-brush = UI::FFI::DrawBrush.malloc.tap do |b|
-  b.Type = 0
-  b.R = 0.9
-  b.G = 0.2
-  b.B = 0.6
-  b.A = 1.0
-end
-
-dashes = Fiddle::Pointer.malloc(8, Fiddle::RUBY_FREE)
-stroke_params = UI::FFI::DrawStrokeParams.malloc.tap do |sp|
-  sp.Cap = UI::DrawLineCapFlat
-  sp.Join = UI::DrawLineJoinMiter
-  sp.MiterLimit = 10
-  sp.Dashes = dashes
-  sp.NumDashes = 0
-  sp.DashPhase = 0
-  sp.Thickness = 1.0
-end
-
-handler_draw_event = Fiddle::Closure::BlockCaller.new(0, [1, 1, 1]) do |_, _, area_draw_params|
-  UI.draw_new_path(UI::DrawFillModeWinding).then do |path|
+handler = UI::AreaHandler.new(draw: ->(event) do
+  UI::Path.open do |path|
     stream.spec.each.with_index do |i, j|
-      UI.draw_path_new_figure(path, 10 + j, 121)
-      UI.draw_path_line_to(path, 10 + j, 120 - [i, 120].min)
+      path.new_figure(10 + j, 121).line_to(10 + j, 120 - [i, 120].min)
     end
-    UI.draw_path_end(path)
-
-    area_draw_params = UI::FFI::AreaDrawParams.new(area_draw_params)
-    UI.draw_stroke(area_draw_params.Context, path, brush.to_ptr, stroke_params)
-    UI.draw_free_path(path)
+    path.end_path
+    event.context.stroke(path, brush, stroke_params)
   end
-end
-
-handler.Draw = handler_draw_event
-do_nothing = Fiddle::Closure::BlockCaller.new(0, [0]) {}
-key_event  = Fiddle::Closure::BlockCaller.new(1, [0]) { 0 }
-handler.MouseEvent   = do_nothing
-handler.MouseCrossed = do_nothing
-handler.DragBroken   = do_nothing
-handler.KeyEvent     = key_event
+end)
+area = UI.new_area(handler)
 
 box = UI.new_vertical_box
 UI.box_set_padded(box, 1)

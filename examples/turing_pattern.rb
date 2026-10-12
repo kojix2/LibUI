@@ -349,14 +349,9 @@ end
 
 # area
 
-area_handler = UI::FFI::AreaHandler.malloc
-area_handler.to_ptr.free = Fiddle::RUBY_FREE
-@area = UI.new_area(area_handler)
-brush = UI::FFI::DrawBrush.malloc
-brush.to_ptr.free = Fiddle::RUBY_FREE
+brush = UI::Brush.new
 
-handler_draw_event = Fiddle::Closure::BlockCaller.new(0, [1, 1, 1]) do |_, _, area_draw_params|
-  area_draw_params = UI::FFI::AreaDrawParams.new(area_draw_params)
+area_handler = UI::AreaHandler.new(draw: ->(event) do
   rgb = (GrayScott::Color.colorize(@model.public_send(@uv.to_sym), @color_type)
                          .cast_to(Numo::SFloat)
                          .inplace / 255.0)
@@ -365,30 +360,18 @@ handler_draw_event = Fiddle::Closure::BlockCaller.new(0, [1, 1, 1]) do |_, _, ar
   # 200 x 200 => 100 x 100 because LibUI is slow...
   height.times do |y|
     width.times do |x|
-      path = UI.draw_new_path(UI::DrawFillModeWinding)
-      UI.draw_path_add_rectangle(path,
-                                 pix_size * (x + 1), pix_size * (y + 1),
-                                 pix_size, pix_size)
-      UI.draw_path_end(path)
-      brush.Type = 0
-      brush.R = rgb[y, x, 0]
-      brush.G = rgb[y, x, 1]
-      brush.B = rgb[y, x, 2]
-      brush.A = 1.0
-      UI.draw_fill(area_draw_params.Context, path, brush.to_ptr)
-      UI.draw_free_path(path)
+      UI::Path.open do |path|
+        path.add_rectangle(pix_size * (x + 1), pix_size * (y + 1),
+                           pix_size, pix_size).end_path
+        brush.color = [rgb[y, x, 0], rgb[y, x, 1], rgb[y, x, 2], 1.0]
+        event.context.fill(path, brush)
+      end
     end
   end
-end
-
-do_nothing = Fiddle::Closure::BlockCaller.new(0, [0]) {}
-key_event  = Fiddle::Closure::BlockCaller.new(1, [0]) { 0 }
-
-handler_mouse_event = Fiddle::Closure::BlockCaller.new(0, [1, 1, 1]) do |_, _, e|
-  e = UI::FFI::AreaMouseEvent.new(e)
-  if e.Down == 1
-    x = e.X * (ratio / pix_size.to_f)
-    y = e.Y * (ratio / pix_size.to_f)
+end, mouse_event: ->(event) do
+  if event.down == 1
+    x = event.x * (ratio / pix_size.to_f)
+    y = event.y * (ratio / pix_size.to_f)
     next if x >= model_width + pointer_size ||
             y >= model_height + pointer_size
 
@@ -398,13 +381,8 @@ handler_mouse_event = Fiddle::Closure::BlockCaller.new(0, [1, 1, 1]) do |_, _, e
     @model.v[yrange, xrange] = 0.5
     UI.area_queue_redraw_all(@area)
   end
-end
-
-area_handler.Draw         = handler_draw_event
-area_handler.MouseEvent   = handler_mouse_event
-area_handler.MouseCrossed = do_nothing
-area_handler.DragBroken   = do_nothing
-area_handler.KeyEvent     = key_event
+end)
+@area = UI.new_area(area_handler)
 
 # slide_feed
 
