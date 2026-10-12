@@ -4,10 +4,6 @@ UI = LibUI
 
 UI.init
 
-handler = UI::FFI::AreaHandler.malloc
-handler.to_ptr.free = Fiddle::RUBY_FREE
-area    = UI.new_area(handler)
-
 # Michael Ende (1929-1995)
 # The Neverending Story is a fantasy novel by German writer Michael Ende,
 # The English version, translated by Ralph Manheim, was published in 1983.
@@ -66,28 +62,17 @@ attr_str.append(str5, :green)
 
 default_font = UI::Font.new(family: 'Georgia', size: 13, weight: 500)
 
-handler_draw_event = Fiddle::Closure::BlockCaller.new(0, [1, 1, 1]) do |_, _, adp|
-  area_draw_params = UI::FFI::AreaDrawParams.new(adp)
+handler = UI::AreaHandler.new(draw: ->(event) do
   text_layout = UI.draw_new_text_layout(
-    attr_str, font: default_font, width: area_draw_params.AreaWidth
+    attr_str, font: default_font, width: event.area_width
   )
   begin
-    UI.draw_text(area_draw_params.Context, text_layout, 0, 0)
+    event.context.draw_text(text_layout, 0, 0)
   ensure
     UI.draw_free_text_layout(text_layout)
   end
-end
-
-handler.Draw = handler_draw_event
-
-# Assigning to local variables
-# This is intended to protect Fiddle::Closure from garbage collection.
-do_nothing = Fiddle::Closure::BlockCaller.new(0, [0]) {}
-key_event  = Fiddle::Closure::BlockCaller.new(1, [0]) { 0 }
-handler.MouseEvent   = do_nothing
-handler.MouseCrossed = do_nothing
-handler.DragBroken   = do_nothing
-handler.KeyEvent     = key_event
+end)
+area = UI.new_area(handler)
 
 box = UI.new_vertical_box
 UI.box_set_padded(box, 1)

@@ -86,14 +86,13 @@ def on_combobox_selected(area)
   UI.area_queue_redraw_all(area)
 end
 
-def draw_event(adp, attr_str, font, alignment)
-  area_draw_params = UI::FFI::AreaDrawParams.new(adp)
+def draw_event(event, attr_str, font, alignment)
   text_layout = UI.draw_new_text_layout(
-    attr_str, font: font, width: area_draw_params.AreaWidth,
+    attr_str, font: font, width: event.area_width,
     align: UI.combobox_selected(alignment)
   )
   begin
-    UI.draw_text(area_draw_params.Context, text_layout, 0, 0)
+    event.context.draw_text(text_layout, 0, 0)
   ensure
     UI.draw_free_text_layout(text_layout)
   end
@@ -101,21 +100,9 @@ end
 
 UI.init
 
-handler = UI::FFI::AreaHandler.malloc
-handler.to_ptr.free = Fiddle::RUBY_FREE
-
-handler_draw_event = Fiddle::Closure::BlockCaller.new(0, [1, 1, 1]) do |_, _area, adp|
-  draw_event(adp, @attr_str, @font, @alignment)
-end
-
-handler.Draw = handler_draw_event
-
-do_nothing = Fiddle::Closure::BlockCaller.new(0, [0]) {}
-key_event  = Fiddle::Closure::BlockCaller.new(1, [0]) { 0 }
-handler.MouseEvent   = do_nothing
-handler.MouseCrossed = do_nothing
-handler.DragBroken   = do_nothing
-handler.KeyEvent     = key_event
+handler = UI::AreaHandler.new(draw: ->(event) do
+  draw_event(event, @attr_str, @font, @alignment)
+end)
 
 @attr_str = make_attribute_string
 
