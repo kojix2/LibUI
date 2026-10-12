@@ -4,19 +4,13 @@ UI = LibUI
 
 UI.init
 
-brush   = UI::FFI::DrawBrush.malloc
-brush.to_ptr.free = Fiddle::RUBY_FREE
+brush = UI::Brush.new(color: [0.4, 0.4, 0.8, 1.0])
 
 handler = UI::AreaHandler.new(draw: ->(event) do
   path = UI.draw_new_path(0)
   UI.draw_path_add_rectangle(path, 0, 0, 400, 400)
   UI.draw_path_end(path)
-  brush.Type = 0
-  brush.R = 0.4
-  brush.G = 0.4
-  brush.B = 0.8
-  brush.A = 1.0
-  event.context.fill(path, brush.to_ptr)
+  event.context.fill(path, brush)
   UI.draw_free_path(path)
 end)
 area = UI.new_area(handler)

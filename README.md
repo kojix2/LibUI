@@ -172,6 +172,7 @@ alive until the area is destroyed. Event fields are copied to Ruby objects;
 the draw context is usable only during the draw callback.
 
 ```ruby
+brush = UI::Brush.new(color: [0.4, 0.4, 0.8, 1.0])
 handler = UI::AreaHandler.new(draw: ->(event) {
   path = UI.draw_new_path(UI::DrawFillModeWinding)
   UI.draw_path_add_rectangle(path, 0, 0, event.area_width, event.area_height)
@@ -205,6 +206,18 @@ button click. `row_inserted`, `row_changed`, and `row_deleted` notify tables
 after the backing data changes. Text, image-text, and checkbox-text column
 methods accept `color_model_column:` in place of a native optional-params
 struct. Existing native structs and positional arguments remain accepted.
+
+`LibUI::Brush`, `StrokeParams`, and `Matrix` wrap reusable draw structs.
+Gradient stops and dash arrays are retained by their owner. `draw_fill`,
+`draw_stroke`, and `draw_transform` accept these objects as well as native
+structs. A matrix can be composed and queried without allocating a new native
+struct for each transform:
+
+```ruby
+stroke = UI::StrokeParams.new(thickness: 2, dashes: [3, 2])
+matrix = UI::Matrix.new.translate(10, 20)
+point = matrix.transform_point(1, 2) # [11.0, 22.0]
+```
 
 Ruby blocks passed to event methods are kept alive while their native control
 exists. Replacing an event callback releases the previous closure. The

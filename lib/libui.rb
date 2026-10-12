@@ -26,6 +26,7 @@ module LibUI
   require_relative 'libui/font'
   require_relative 'libui/area_handler'
   require_relative 'libui/table_model'
+  require_relative 'libui/draw_values'
 
   extend LibUIBase
 
@@ -174,6 +175,20 @@ module LibUI
       super(table, name, checkbox_column, checkbox_editable_column,
             text_column, text_editable_column,
             table_text_params(options, color_model_column))
+    end
+
+    def draw_fill(context, path, brush)
+      super(context, path, brush.is_a?(Brush) ? brush.to_ptr : brush)
+    end
+
+    def draw_stroke(context, path, brush, stroke_params)
+      super(context, path,
+            brush.is_a?(Brush) ? brush.to_ptr : brush,
+            stroke_params.is_a?(StrokeParams) ? stroke_params.to_ptr : stroke_params)
+    end
+
+    def draw_transform(context, matrix)
+      super(context, matrix.is_a?(Matrix) ? matrix.to_ptr : matrix)
     end
 
     def version
@@ -468,6 +483,7 @@ module LibUI
     end
 
     def draw_matrix_transform_point(matrix, x, y)
+      matrix = matrix.to_ptr if matrix.is_a?(Matrix)
       x_pointer = Fiddle::Pointer.malloc(Fiddle::SIZEOF_DOUBLE, Fiddle::RUBY_FREE)
       y_pointer = Fiddle::Pointer.malloc(Fiddle::SIZEOF_DOUBLE, Fiddle::RUBY_FREE)
       x_pointer[0, Fiddle::SIZEOF_DOUBLE] = [x].pack('d')
@@ -478,6 +494,7 @@ module LibUI
     end
 
     def draw_matrix_transform_size(matrix, x, y)
+      matrix = matrix.to_ptr if matrix.is_a?(Matrix)
       x_pointer = Fiddle::Pointer.malloc(Fiddle::SIZEOF_DOUBLE, Fiddle::RUBY_FREE)
       y_pointer = Fiddle::Pointer.malloc(Fiddle::SIZEOF_DOUBLE, Fiddle::RUBY_FREE)
       x_pointer[0, Fiddle::SIZEOF_DOUBLE] = [x].pack('d')
