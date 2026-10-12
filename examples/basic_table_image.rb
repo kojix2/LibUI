@@ -32,7 +32,7 @@ end
 model = UI::TableModel.new(column_types: [UI::TableValueTypeImage],
                            rows: IMAGES.map { |image| [image] })
 table = UI.new_table(model: model)
-UI.table_append_image_column(table, 'Directed by Michaël Dudok de Wit', -1)
+UI.table_append_image_column(table, 'Directed by Michaël Dudok de Wit', 0)
 
 UI.box_append(hbox, table, 1)
 UI.control_show(main_window)
