@@ -8,6 +8,14 @@ a native GUI library for Windows, macOS, and Linux. It uses
 [Fiddle](https://github.com/ruby/fiddle) and keeps the C API's names and
 structure, with Ruby-friendly values where they help.
 
+## Release lines
+
+This README describes the `main` branch and the 0.3.x series, which track the
+newer libui-ng dev API. The 0.2.x series is maintained separately on
+[`0.2-stable`](https://github.com/kojix2/LibUI/tree/0.2-stable) for compatibility
+with the older libui-ng pre-build API. Existing 0.2.x applications can stay on
+that series while it receives fixes and compatible additions.
+
 ## Screenshots
 
 | Windows | macOS | Linux |
