@@ -27,6 +27,7 @@ module LibUI
   require_relative 'libui/area_handler'
   require_relative 'libui/table_model'
   require_relative 'libui/draw_values'
+  require_relative 'libui/path'
 
   extend LibUIBase
 
@@ -192,13 +193,18 @@ module LibUI
     end
 
     def draw_fill(context, path, brush)
-      super(context, path, brush.is_a?(Brush) ? brush.to_ptr : brush)
+      super(context, path.is_a?(Path) ? path.to_ptr : path,
+            brush.is_a?(Brush) ? brush.to_ptr : brush)
     end
 
     def draw_stroke(context, path, brush, stroke_params)
-      super(context, path,
+      super(context, path.is_a?(Path) ? path.to_ptr : path,
             brush.is_a?(Brush) ? brush.to_ptr : brush,
             stroke_params.is_a?(StrokeParams) ? stroke_params.to_ptr : stroke_params)
+    end
+
+    def draw_clip(context, path)
+      super(context, path.is_a?(Path) ? path.to_ptr : path)
     end
 
     def draw_transform(context, matrix)
