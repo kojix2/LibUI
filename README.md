@@ -166,6 +166,22 @@ Use `UI::Font.new(family: 'Georgia', size: 13)` to specify a font directly.
 The default weight, italic, and stretch are normal. The original descriptor
 arguments remain supported, and `LibUI::FFI` exposes the raw C API.
 
+For a custom drawing area, `LibUI::AreaHandler` owns the Fiddle closures and
+native handler struct. `new_area` and `new_scrolling_area` keep the handler
+alive until the area is destroyed. Event fields are copied to Ruby objects;
+the draw context is usable only during the draw callback.
+
+```ruby
+handler = UI::AreaHandler.new(draw: ->(event) {
+  path = UI.draw_new_path(UI::DrawFillModeWinding)
+  UI.draw_path_add_rectangle(path, 0, 0, event.area_width, event.area_height)
+  UI.draw_path_end(path)
+  event.context.fill(path, brush)
+  UI.draw_free_path(path)
+})
+area = UI.new_area(handler)
+```
+
 Ruby blocks passed to event methods are kept alive while their native control
 exists. Replacing an event callback releases the previous closure. The
 registry uses `uiControlOnDestroyed` to clear callbacks when a control is

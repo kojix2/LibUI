@@ -4,13 +4,10 @@ UI = LibUI
 
 UI.init
 
-handler = UI::FFI::AreaHandler.malloc
-handler.to_ptr.free = Fiddle::RUBY_FREE
-area    = UI.new_area(handler)
 brush   = UI::FFI::DrawBrush.malloc
 brush.to_ptr.free = Fiddle::RUBY_FREE
 
-handler_draw_event = Fiddle::Closure::BlockCaller.new(0, [1, 1, 1]) do |_, _, area_draw_params|
+handler = UI::AreaHandler.new(draw: ->(event) do
   path = UI.draw_new_path(0)
   UI.draw_path_add_rectangle(path, 0, 0, 400, 400)
   UI.draw_path_end(path)
@@ -19,19 +16,10 @@ handler_draw_event = Fiddle::Closure::BlockCaller.new(0, [1, 1, 1]) do |_, _, ar
   brush.G = 0.4
   brush.B = 0.8
   brush.A = 1.0
-  area_draw_params = UI::FFI::AreaDrawParams.new(area_draw_params)
-  UI.draw_fill(area_draw_params.Context, path, brush.to_ptr)
+  event.context.fill(path, brush.to_ptr)
   UI.draw_free_path(path)
-end
-
-do_nothing = Fiddle::Closure::BlockCaller.new(0, [0]) {}
-key_event  = Fiddle::Closure::BlockCaller.new(1, [0]) { 0 }
-
-handler.Draw         = handler_draw_event
-handler.MouseEvent   = do_nothing
-handler.MouseCrossed = do_nothing
-handler.DragBroken   = do_nothing
-handler.KeyEvent     = key_event
+end)
+area = UI.new_area(handler)
 
 box = UI.new_vertical_box
 UI.box_set_padded(box, 1)

@@ -24,6 +24,7 @@ module LibUI
   require_relative 'libui/callback_registry'
   require_relative 'libui/libui_base'
   require_relative 'libui/font'
+  require_relative 'libui/area_handler'
 
   extend LibUIBase
 
@@ -103,6 +104,22 @@ module LibUI
       result = super(toolbar)
       CallbackRegistry.release_other(toolbar)
       result
+    end
+
+    def new_area(handler)
+      return super(handler) unless handler.is_a?(AreaHandler)
+
+      area = super(handler.to_ptr)
+      CallbackRegistry.control(area, :area_handler, handler)
+      area
+    end
+
+    def new_scrolling_area(handler, width, height)
+      return super(handler, width, height) unless handler.is_a?(AreaHandler)
+
+      area = super(handler.to_ptr, width, height)
+      CallbackRegistry.control(area, :area_handler, handler)
+      area
     end
 
     def version
