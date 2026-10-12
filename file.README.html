@@ -217,14 +217,15 @@ alive until the area is destroyed. Event fields are copied to Ruby objects;
 the draw context is usable only during the draw callback.</p>
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_brush'>brush</span> <span class='op'>=</span> <span class='const'>UI</span><span class='op'>::</span><span class='const'>Brush</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>color:</span> <span class='lbracket'>[</span><span class='float'>0.4</span><span class='comma'>,</span> <span class='float'>0.4</span><span class='comma'>,</span> <span class='float'>0.8</span><span class='comma'>,</span> <span class='float'>1.0</span><span class='rbracket'>]</span><span class='rparen'>)</span>
 <span class='id identifier rubyid_handler'>handler</span> <span class='op'>=</span> <span class='const'>UI</span><span class='op'>::</span><span class='const'>AreaHandler</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>draw:</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_event'>event</span><span class='rparen'>)</span> <span class='tlambeg'>{</span>
-  <span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_draw_new_path'>draw_new_path</span><span class='lparen'>(</span><span class='const'>UI</span><span class='op'>::</span><span class='const'>DrawFillModeWinding</span><span class='rparen'>)</span>
-  <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_draw_path_add_rectangle'>draw_path_add_rectangle</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='int'>0</span><span class='comma'>,</span> <span class='int'>0</span><span class='comma'>,</span> <span class='id identifier rubyid_event'>event</span><span class='period'>.</span><span class='id identifier rubyid_area_width'>area_width</span><span class='comma'>,</span> <span class='id identifier rubyid_event'>event</span><span class='period'>.</span><span class='id identifier rubyid_area_height'>area_height</span><span class='rparen'>)</span>
-  <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_draw_path_end'>draw_path_end</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_event'>event</span><span class='period'>.</span><span class='id identifier rubyid_context'>context</span><span class='period'>.</span><span class='id identifier rubyid_fill'>fill</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_brush'>brush</span><span class='rparen'>)</span>
-  <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_draw_free_path'>draw_free_path</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
+  <span class='const'>UI</span><span class='op'>::</span><span class='const'>Path</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_path'>path</span><span class='op'>|</span>
+    <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_add_rectangle'>add_rectangle</span><span class='lparen'>(</span><span class='int'>0</span><span class='comma'>,</span> <span class='int'>0</span><span class='comma'>,</span> <span class='id identifier rubyid_event'>event</span><span class='period'>.</span><span class='id identifier rubyid_area_width'>area_width</span><span class='comma'>,</span> <span class='id identifier rubyid_event'>event</span><span class='period'>.</span><span class='id identifier rubyid_area_height'>area_height</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_end_path'>end_path</span>
+    <span class='id identifier rubyid_event'>event</span><span class='period'>.</span><span class='id identifier rubyid_context'>context</span><span class='period'>.</span><span class='id identifier rubyid_fill'>fill</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_brush'>brush</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
 <span class='rbrace'>}</span><span class='rparen'>)</span>
 <span class='id identifier rubyid_area'>area</span> <span class='op'>=</span> <span class='const'>UI</span><span class='period'>.</span><span class='id identifier rubyid_new_area'>new_area</span><span class='lparen'>(</span><span class='id identifier rubyid_handler'>handler</span><span class='rparen'>)</span>
 </code></pre>
+<p><code>Path.open</code> frees the native path when the block finishes, including when an
+exception occurs. Call <code>end_path</code> before drawing with the path.</p>
 <p><code>LibUI::TableModel</code> builds and retains a native table model handler from Ruby
 rows and column types. <code>new_table(model: model)</code> keeps it alive while the table
 exists. Free the model after destroying the table. Cell callbacks create fresh
@@ -371,7 +372,7 @@ gem push libui-0.2.0-x64-mingw32.gem
 <p><a href="https://opensource.org/licenses/MIT">MIT License</a>.</p></div></div>
 
       <div id="footer">
-  Generated on Mon Oct 12 00:37:46 2026 by
+  Generated on Mon Oct 12 00:47:43 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.45 (ruby-4.0.7).
 </div>
