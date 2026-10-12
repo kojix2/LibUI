@@ -21,7 +21,7 @@ class CallbackLifetimeTest < Minitest::Test
         GC.start
         callbacks.last.call(address, 0)
         assert_equal [:second], events
-        destroyed.first.call(address, 0)
+        destroyed.first.call(Fiddle::Pointer.new(address), 0)
         assert_equal [:second, :destroyed], events
         registry = LibUI.const_get(:CallbackRegistry)
         refute registry.instance_variable_get(:@controls).key?(address)
@@ -56,6 +56,33 @@ class CallbackLifetimeTest < Minitest::Test
         assert_equal 1, registry.instance_variable_get(:@global).length
         assert_equal 0, timed.call(0)
         assert_empty registry.instance_variable_get(:@global)
+      end
+    end
+  end
+
+  def test_attached_toolbar_keeps_item_callbacks_until_detached_and_freed
+    window = Fiddle::Pointer.malloc(8)
+    toolbar = Fiddle::Pointer.malloc(8)
+    item = Fiddle::Pointer.malloc(8)
+    destroyed = nil
+    freed = 0
+    with_ffi_stub(:uiWindowSetToolbar, proc { |_window, _toolbar| }) do
+      with_ffi_stub(:uiControlOnDestroyed, proc { |_window, callback, _data| destroyed = callback }) do
+        with_ffi_stub(:uiToolbarAppendButton, proc { |_toolbar, _text, _icon| item }) do
+          with_ffi_stub(:uiToolbarItemOnClicked, proc { |_item, _callback, _data| }) do
+            with_ffi_stub(:uiFreeToolbar, proc { |_toolbar| freed += 1 }) do
+              LibUI.toolbar_append_button(toolbar, 'Test')
+              LibUI.toolbar_item_on_clicked(item) { :clicked }
+              LibUI.window_set_toolbar(window, toolbar)
+              assert_raises(RuntimeError) { LibUI.free_toolbar(toolbar) }
+              assert_equal 0, freed
+              destroyed.call(Fiddle::Pointer.new(window.to_i), 0)
+              LibUI.free_toolbar(toolbar)
+              assert_equal 1, freed
+              refute LibUI.const_get(:CallbackRegistry).instance_variable_get(:@other).key?(item.to_i)
+            end
+          end
+        end
       end
     end
   end

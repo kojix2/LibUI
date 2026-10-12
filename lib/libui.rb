@@ -103,8 +103,16 @@ module LibUI
     end
 
     def free_toolbar(toolbar)
+      raise RuntimeError, 'detach toolbar from its window before freeing it' if CallbackRegistry.toolbar_attached?(toolbar)
+
       result = super(toolbar)
       CallbackRegistry.release_other(toolbar)
+      result
+    end
+
+    def window_set_toolbar(window, toolbar)
+      result = super(window, toolbar)
+      CallbackRegistry.attach_toolbar(window, toolbar)
       result
     end
 
@@ -597,6 +605,8 @@ module LibUI
         raise TypeError, 'image dimensions and stride must be Integers' unless number.is_a?(Integer)
       end
       raise ArgumentError, 'image dimensions must be positive' if width <= 0 || height <= 0
+      max_int = (1 << (Fiddle::SIZEOF_INT * 8 - 1)) - 1
+      raise RangeError, 'image dimensions or stride exceed C int' if [width, height, byte_stride].any? { |number| number > max_int }
       raise ArgumentError, 'byte stride is too small' if byte_stride < width * 4
       raise TypeError, 'pixels must be a String or Fiddle::Pointer' unless pixels.is_a?(String) || pixels.is_a?(Fiddle::Pointer)
       if pixels.is_a?(String) && pixels.bytesize < byte_stride * height
@@ -612,6 +622,10 @@ module LibUI
     # Convert straight RGBA (as used by PNG libraries) to premultiplied RGBA.
     def image_append_rgba(image, pixels, width, height, byte_stride = width * 4)
       raise TypeError, 'pixels must be a String' unless pixels.is_a?(String)
+      [width, height, byte_stride].each do |number|
+        raise TypeError, 'image dimensions and stride must be Integers' unless number.is_a?(Integer)
+      end
+      raise ArgumentError, 'image dimensions must be positive' if width <= 0 || height <= 0
       raise ArgumentError, 'byte stride is too small' if byte_stride < width * 4
       raise ArgumentError, 'pixel buffer is shorter than stride * height' if pixels.bytesize < byte_stride * height
 

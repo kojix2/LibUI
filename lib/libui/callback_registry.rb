@@ -6,6 +6,8 @@ module LibUI
     @destroy_hooks = {}
     @other = {}
     @other_children = {}
+    @attached_toolbars = {}
+    @toolbar_window_hooks = {}
     @global = {}
 
     class << self
@@ -13,10 +15,12 @@ module LibUI
         address = pointer.to_i
         callbacks = (@controls[address] ||= {})
         unless @destroy_hooks.key?(address)
+          hook = nil
           hook = Fiddle::Closure::BlockCaller.new(Fiddle::TYPE_VOID,
                                                    [Fiddle::TYPE_VOIDP, Fiddle::TYPE_VOIDP]) do |native, _data|
+            destroyed_address = native.to_i
             begin
-              callbacks = @controls[native]
+              callbacks = @controls[destroyed_address]
               callbacks&.fetch(:cleanup, [])&.each do |cleanup|
                 begin
                   cleanup.call
@@ -29,8 +33,9 @@ module LibUI
             rescue StandardError => e
               report(e)
             ensure
-              @controls.delete(native)
-              @destroy_hooks.delete(native)
+              @controls.delete(destroyed_address)
+              @destroy_hooks.delete(destroyed_address)
+              hook.to_i
             end
           end
           @destroy_hooks[address] = hook
@@ -62,10 +67,28 @@ module LibUI
         address = pointer.to_i
         @other.delete(address)
         (@other_children.delete(address) || []).each { |child| @other.delete(child) }
+        @attached_toolbars.delete(address)
       end
 
       def track_other_child(parent, child)
         (@other_children[parent.to_i] ||= []) << child.to_i
+      end
+
+      def attach_toolbar(window, toolbar)
+        window_address = window.to_i
+        @attached_toolbars.delete_if { |_toolbar, owner| owner == window_address }
+        @attached_toolbars[toolbar.to_i] = window_address if toolbar && toolbar.to_i != 0
+        return if @toolbar_window_hooks[window_address]
+
+        on_cleanup(window) do
+          @attached_toolbars.delete_if { |_toolbar, owner| owner == window_address }
+          @toolbar_window_hooks.delete(window_address)
+        end
+        @toolbar_window_hooks[window_address] = true
+      end
+
+      def toolbar_attached?(toolbar)
+        @attached_toolbars.key?(toolbar.to_i)
       end
 
       def global(key, callback)
@@ -81,6 +104,8 @@ module LibUI
         @destroy_hooks.clear
         @other.clear
         @other_children.clear
+        @attached_toolbars.clear
+        @toolbar_window_hooks.clear
         @global.clear
       end
 
