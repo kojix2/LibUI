@@ -1,4 +1,4 @@
-# https://github.com/jamescook/libui-ruby/blob/master/example/histogram.rb
+# Based on libui-ng's histogram example.
 
 require 'libui'
 
@@ -8,177 +8,104 @@ X_OFF_LEFT   = 20
 Y_OFF_TOP    = 20
 X_OFF_RIGHT  = 20
 Y_OFF_BOTTOM = 20
-POINT_RADIUS = 5
-
-init         = UI.init
-handler      = UI::FFI::AreaHandler.malloc
-handler.to_ptr.free = Fiddle::RUBY_FREE
-histogram    = UI.new_area(handler)
-brush        = UI::FFI::DrawBrush.malloc
-brush.to_ptr.free = Fiddle::RUBY_FREE
-color_button = UI.new_color_button
-blue         = 0x1E90FF
-datapoints   = []
 
 def graph_size(area_width, area_height)
-  graph_width = area_width - X_OFF_LEFT - X_OFF_RIGHT
-  graph_height = area_height - Y_OFF_TOP - Y_OFF_BOTTOM
-  [graph_width, graph_height]
+  [area_width - X_OFF_LEFT - X_OFF_RIGHT,
+   area_height - Y_OFF_TOP - Y_OFF_BOTTOM]
 end
-
-matrix = UI::FFI::DrawMatrix.malloc
-matrix.to_ptr.free = Fiddle::RUBY_FREE
 
 def point_locations(datapoints, width, height)
-  xincr = width / 9.0 # 10 - 1 to make the last point be at the end
+  xincr = width / 9.0
   yincr = height / 100.0
 
-  data = []
-  datapoints.each_with_index do |dp, i|
-    val = 100 - UI.spinbox_value(dp)
-    data << [xincr * i, yincr * val]
+  datapoints.each_with_index.map do |spinbox, index|
+    [xincr * index, yincr * (100 - UI.spinbox_value(spinbox))]
   end
-
-  data
 end
 
-def construct_graph(datapoints, width, height, should_extend)
+def construct_graph(datapoints, width, height, extend:)
   locations = point_locations(datapoints, width, height)
-  path = UI.draw_new_path(0) # winding
-  first_location = locations[0] # x and y
-  UI.draw_path_new_figure(path, first_location[0], first_location[1])
-  locations.each do |loc|
-    UI.draw_path_line_to(path, loc[0], loc[1])
+  UI::Path.open do |path|
+    path.new_figure(*locations.first)
+    locations.drop(1).each { |x, y| path.line_to(x, y) }
+    if extend
+      path.line_to(width, height).line_to(0, height).close_figure
+    end
+    path.end_path
+    yield path
   end
-
-  if should_extend
-    UI.draw_path_line_to(path, width, height)
-    UI.draw_path_line_to(path, 0, height)
-    UI.draw_path_close_figure(path)
-  end
-
-  UI.draw_path_end(path)
-
-  path
 end
 
-handler_draw_event = Fiddle::Closure::BlockCaller.new(
-  0, [1, 1, 1]
-) do |_area_handler, _area, area_draw_params|
-  area_draw_params = UI::FFI::AreaDrawParams.new(area_draw_params)
-  path = UI.draw_new_path(0) # winding
-  UI.draw_path_add_rectangle(path, 0, 0, area_draw_params.AreaWidth, area_draw_params.AreaHeight)
-  UI.draw_path_end(path)
-  set_solid_brush(brush, 0xFFFFFF, 1.0) # white
-  UI.draw_fill(area_draw_params.Context, path, brush.to_ptr)
-  UI.draw_free_path(path)
-  dsp = UI::FFI::DrawStrokeParams.malloc
-  dsp.to_ptr.free = Fiddle::RUBY_FREE
-  dsp.Cap = 0 # flat
-  dsp.Join = 0 # miter
-  dsp.Thickness = 2
-  dsp.MiterLimit = 10 # DEFAULT_MITER_LIMIT
-  dashes = Fiddle::Pointer.malloc(8, Fiddle::RUBY_FREE)
-  dsp.Dashes = dashes
-  dsp.NumDashes = 0
-  dsp.DashPhase = 0
-
-  # draw axes
-  set_solid_brush(brush, 0x000000, 1.0) # black
-  graph_width, graph_height = *graph_size(area_draw_params.AreaWidth, area_draw_params.AreaHeight)
-
-  path = UI.draw_new_path(0) # winding
-  UI.draw_path_new_figure(path, X_OFF_LEFT, Y_OFF_TOP)
-  UI.draw_path_line_to(path, X_OFF_LEFT, Y_OFF_TOP + graph_height)
-  UI.draw_path_line_to(path, X_OFF_LEFT + graph_width, Y_OFF_TOP + graph_height)
-  UI.draw_path_end(path)
-  UI.draw_stroke(area_draw_params.Context, path, brush, dsp)
-  UI.draw_free_path(path)
-
-  # now transform the coordinate space so (0, 0) is the top-left corner of the graph
-  UI.draw_matrix_set_identity(matrix)
-  UI.draw_matrix_translate(matrix, X_OFF_LEFT, Y_OFF_TOP)
-  UI.draw_transform(area_draw_params.Context, matrix)
-
-  # now get the color for the graph itself and set up the brush
-  # uiColorButtonColor(colorButton, &graphR, &graphG, &graphB, &graphA)
-  red, green, blue, alpha = UI.color_button_color(color_button)
-  brush.Type = 0 # solid
-  brush.R = red
-  brush.G = green
-  brush.B = blue
-
-  # now create the fill for the graph below the graph line
-  path = construct_graph(datapoints, graph_width, graph_height, true)
-  brush.A = alpha / 2.0
-  UI.draw_fill(area_draw_params.Context, path, brush)
-  UI.draw_free_path(path)
-
-  # now draw the histogram line
-  path = construct_graph(datapoints, graph_width, graph_height, false)
-  brush.A = graph_a[0, 8].unpack1('d')
-  UI.draw_stroke(area_draw_params.Context, path, brush, dsp)
-  UI.draw_free_path(path)
-end
-
-# Assigning to local variables
-# This is intended to protect Fiddle::Closure from garbage collection.
-# See https://github.com/kojix2/LibUI/issues/8
-do_nothing = Fiddle::Closure::BlockCaller.new(0, [0]) {}
-key_event  = Fiddle::Closure::BlockCaller.new(1, [0]) { 0 }
-handler.Draw         = handler_draw_event
-handler.MouseEvent   = do_nothing
-handler.MouseCrossed = do_nothing
-handler.DragBroken   = do_nothing
-handler.KeyEvent     = key_event
+UI.init
 
 hbox = UI.new_horizontal_box
 UI.box_set_padded(hbox, 1)
-
 vbox = UI.new_vertical_box
 UI.box_set_padded(vbox, 1)
 UI.box_append(hbox, vbox, 0)
-UI.box_append(hbox, histogram, 1)
 
 datapoints = Array.new(10) do
-  UI.new_spinbox(0, 100).tap do |datapoint|
-    UI.spinbox_set_value(datapoint, Random.new.rand(90))
-    UI.spinbox_on_changed(datapoint) do
-      UI.area_queue_redraw_all(histogram)
-    end
-    UI.box_append(vbox, datapoint, 0)
+  UI.new_spinbox(0, 100).tap do |spinbox|
+    UI.spinbox_set_value(spinbox, rand(90))
+    UI.box_append(vbox, spinbox, 0)
   end
 end
 
-def set_solid_brush(brush, color, alpha)
-  brush.Type = 0 # solid
-  brush.R = ((color >> 16) & 0xFF) / 255.0
-  brush.G = ((color >> 8) & 0xFF) / 255.0
-  brush.B = (color & 0xFF) / 255.0
-  brush.A = alpha
-  brush
-end
-
-set_solid_brush(brush, blue, 1.0)
-UI.color_button_set_color(color_button, brush.R, brush.G, brush.B, brush.A)
-
-UI.color_button_on_changed(color_button) do
-  UI.area_queue_redraw_all(histogram)
-end
-
+color_button = UI.new_color_button
+UI.color_button_set_color(color_button, 0x1E / 255.0, 0x90 / 255.0, 1.0, 1.0)
 UI.box_append(vbox, color_button, 0)
 
-MAIN_WINDOW = UI.new_window('histogram example', 640, 480, 1)
-UI.window_set_margined(MAIN_WINDOW, 1)
-UI.window_set_child(MAIN_WINDOW, hbox)
+white_brush = UI::Brush.new(color: [1.0, 1.0, 1.0, 1.0])
+black_brush = UI::Brush.new(color: [0.0, 0.0, 0.0, 1.0])
+graph_brush = UI::Brush.new
+stroke = UI::StrokeParams.new(thickness: 2)
+matrix = UI::Matrix.new.translate(X_OFF_LEFT, Y_OFF_TOP)
 
-UI.window_on_closing(MAIN_WINDOW) do
-  puts 'Bye Bye'
+handler = UI::AreaHandler.new(draw: ->(event) do
+  context = event.context
+  graph_width, graph_height = graph_size(event.area_width, event.area_height)
+
+  UI::Path.open do |path|
+    path.add_rectangle(0, 0, event.area_width, event.area_height).end_path
+    context.fill(path, white_brush)
+  end
+
+  UI::Path.open do |path|
+    path.new_figure(X_OFF_LEFT, Y_OFF_TOP)
+        .line_to(X_OFF_LEFT, Y_OFF_TOP + graph_height)
+        .line_to(X_OFF_LEFT + graph_width, Y_OFF_TOP + graph_height)
+        .end_path
+    context.stroke(path, black_brush, stroke)
+  end
+
+  context.transform(matrix)
+  red, green, blue, alpha = UI.color_button_color(color_button)
+  graph_brush.color = [red, green, blue, alpha / 2.0]
+  construct_graph(datapoints, graph_width, graph_height, extend: true) do |path|
+    context.fill(path, graph_brush)
+  end
+
+  graph_brush.color = [red, green, blue, alpha]
+  construct_graph(datapoints, graph_width, graph_height, extend: false) do |path|
+    context.stroke(path, graph_brush, stroke)
+  end
+end)
+
+histogram = UI.new_area(handler)
+UI.box_append(hbox, histogram, 1)
+datapoints.each do |spinbox|
+  UI.spinbox_on_changed(spinbox) { UI.area_queue_redraw_all(histogram) }
+end
+UI.color_button_on_changed(color_button) { UI.area_queue_redraw_all(histogram) }
+
+main_window = UI.new_window('histogram example', 640, 480, 1)
+UI.window_set_margined(main_window, 1)
+UI.window_set_child(main_window, hbox)
+UI.window_on_closing(main_window) do
   UI.quit
   1
 end
-
-UI.control_show(MAIN_WINDOW)
+UI.control_show(main_window)
 
 UI.main
 UI.uninit

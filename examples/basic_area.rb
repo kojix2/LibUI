@@ -7,11 +7,10 @@ UI.init
 brush = UI::Brush.new(color: [0.4, 0.4, 0.8, 1.0])
 
 handler = UI::AreaHandler.new(draw: ->(event) do
-  path = UI.draw_new_path(0)
-  UI.draw_path_add_rectangle(path, 0, 0, 400, 400)
-  UI.draw_path_end(path)
-  event.context.fill(path, brush)
-  UI.draw_free_path(path)
+  UI::Path.open do |path|
+    path.add_rectangle(0, 0, event.area_width, event.area_height).end_path
+    event.context.fill(path, brush)
+  end
 end)
 area = UI.new_area(handler)
 

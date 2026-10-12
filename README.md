@@ -174,14 +174,16 @@ the draw context is usable only during the draw callback.
 ```ruby
 brush = UI::Brush.new(color: [0.4, 0.4, 0.8, 1.0])
 handler = UI::AreaHandler.new(draw: ->(event) {
-  path = UI.draw_new_path(UI::DrawFillModeWinding)
-  UI.draw_path_add_rectangle(path, 0, 0, event.area_width, event.area_height)
-  UI.draw_path_end(path)
-  event.context.fill(path, brush)
-  UI.draw_free_path(path)
+  UI::Path.open do |path|
+    path.add_rectangle(0, 0, event.area_width, event.area_height).end_path
+    event.context.fill(path, brush)
+  end
 })
 area = UI.new_area(handler)
 ```
+
+`Path.open` frees the native path when the block finishes, including when an
+exception occurs. Call `end_path` before drawing with the path.
 
 `LibUI::TableModel` builds and retains a native table model handler from Ruby
 rows and column types. `new_table(model: model)` keeps it alive while the table
