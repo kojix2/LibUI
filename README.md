@@ -4,16 +4,16 @@
 [![Gem Version](https://img.shields.io/gem/v/libui)](https://rubygems.org/gems/libui)
 
 LibUI is a procedural Ruby binding for [libui-ng](https://github.com/libui-ng/libui-ng),
-a native GUI library for Windows, macOS, and Linux. It uses
-[Fiddle](https://github.com/ruby/fiddle) and keeps the C API's names and
-structure, with Ruby-friendly values where they help.
+a native GUI library for Windows, macOS, and Linux. 
 
 ## Release lines
 
-This README describes the `main` branch and the 0.3.x series, which track the
-newer libui-ng dev API. The 0.2.x series is maintained separately on
+:construction: This README describes the `main` branch and the 0.3.x series, which track the
+newer libui-ng dev API. The 3.0 API is currently under development and is subject to change.
+
+The 0.2.x series is maintained separately on
 [`0.2-stable`](https://github.com/kojix2/LibUI/tree/0.2-stable) for compatibility
-with the older libui-ng pre-build API. Existing 0.2.x applications can stay on
+with the older libui-ng API. Existing 0.2.x applications can stay on
 that series while it receives fixes and compatible additions.
 
 ## Screenshots
@@ -28,11 +28,12 @@ that series while it receives fixes and compatible additions.
 gem install libui
 ```
 
-To install a prerelease version, use `gem install libui --pre`. Gems for
-supported platforms include the libui-ng shared library. For a local libui-ng
+Gems for supported platforms include the libui-ng shared library. For a local libui-ng
 build, set `LIBUIDIR` to the directory containing its `.dll`, `.dylib`, or
 `.so` file. On Windows, the library may also need the
 [Visual C++ Redistributable](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist).
+
+To install a prerelease version, use `gem install libui --pre`. 
 
 ## Quick start
 
@@ -65,10 +66,8 @@ individual controls and [examples2](examples2) for larger applications.
 
 Names follow libui-ng with `ui` removed and CamelCase converted to
 `snake_case`: `uiNewWindow` becomes `LibUI.new_window`. Event callbacks accept
-a block or `Proc`; LibUI retains them for the native owner's lifetime. The
-[libui-ng API reference](https://libui-ng.github.io/libui-ng/) documents the
-underlying controls and functions. `LibUI::FFI` exposes the original C bindings
-when needed.
+a block or `Proc`; LibUI retains them for the native owner's lifetime. 
+`LibUI::FFI` exposes the original C bindings when needed.
 
 ### Ruby values
 
