@@ -63,14 +63,13 @@
 <p><a href="https://github.com/kojix2/LibUI/actions/workflows/test.yml"><img src="https://github.com/kojix2/LibUI/actions/workflows/test.yml/badge.svg" alt="Tests" /></a>
 <a href="https://rubygems.org/gems/libui"><img src="https://img.shields.io/gem/v/libui" alt="Gem Version" /></a></p>
 <p>LibUI is a procedural Ruby binding for <a href="https://github.com/libui-ng/libui-ng">libui-ng</a>,
-a native GUI library for Windows, macOS, and Linux. It uses
-<a href="https://github.com/ruby/fiddle">Fiddle</a> and keeps the C API's names and
-structure, with Ruby-friendly values where they help.</p>
+a native GUI library for Windows, macOS, and Linux.</p>
 <h2 id="Release_lines">Release lines</h2>
-<p>This README describes the <code>main</code> branch and the 0.3.x series, which track the
-newer libui-ng dev API. The 0.2.x series is maintained separately on
+<p>:construction: This README describes the <code>main</code> branch and the 0.3.x series, which track the
+newer libui-ng dev API. The 3.0 API is currently under development and is subject to change.</p>
+<p>The 0.2.x series is maintained separately on
 <a href="https://github.com/kojix2/LibUI/tree/0.2-stable"><code>0.2-stable</code></a> for compatibility
-with the older libui-ng pre-build API. Existing 0.2.x applications can stay on
+with the older libui-ng API. Existing 0.2.x applications can stay on
 that series while it receives fixes and compatible additions.</p>
 <h2 id="Screenshots">Screenshots</h2>
 <table>
@@ -92,11 +91,11 @@ that series while it receives fixes and compatible additions.</p>
 <h2 id="Install">Install</h2>
 <pre class="code sh"><code class="sh">gem install libui
 </code></pre>
-<p>To install a prerelease version, use <code>gem install libui --pre</code>. Gems for
-supported platforms include the libui-ng shared library. For a local libui-ng
+<p>Gems for supported platforms include the libui-ng shared library. For a local libui-ng
 build, set <code>LIBUIDIR</code> to the directory containing its <code>.dll</code>, <code>.dylib</code>, or
 <code>.so</code> file. On Windows, the library may also need the
 <a href="https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist">Visual C++ Redistributable</a>.</p>
+<p>To install a prerelease version, use <code>gem install libui --pre</code>.</p>
 <h2 id="Quick_start">Quick start</h2>
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>libui</span><span class='tstring_end'>&#39;</span></span>
 
@@ -123,10 +122,8 @@ individual controls and <a href="examples2">examples2</a> for larger application
 <h2 id="API">API</h2>
 <p>Names follow libui-ng with <code>ui</code> removed and CamelCase converted to
 <code>snake_case</code>: <code>uiNewWindow</code> becomes <code>LibUI.new_window</code>. Event callbacks accept
-a block or <code>Proc</code>; LibUI retains them for the native owner's lifetime. The
-<a href="https://libui-ng.github.io/libui-ng/">libui-ng API reference</a> documents the
-underlying controls and functions. <code>LibUI::FFI</code> exposes the original C bindings
-when needed.</p>
+a block or <code>Proc</code>; LibUI retains them for the native owner's lifetime.
+<code>LibUI::FFI</code> exposes the original C bindings when needed.</p>
 <h3 id="Ruby_values">Ruby values</h3>
 <p>Native controls, images, attributes, and text layouts are still represented by
 Fiddle pointers. Common getters and setters use Ruby values:</p>
@@ -213,9 +210,9 @@ Bug reports and pull requests are welcome in the
 <p><a href="LICENSE.txt">MIT</a></p></div></div>
 
       <div id="footer">
-  Generated on Mon Oct 12 02:49:58 2026 by
+  Generated on Thu Oct 22 10:45:13 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.45 (ruby-4.0.7).
+  0.9.45 (ruby-4.0.8).
 </div>
 
     </div>
